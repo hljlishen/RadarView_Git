@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 
+//master branch
 namespace TargetManagerPackage
 {
     class CycleDataMatrix : ICycleDataObserver,IDisposable      //扫描数据管理器，存储天线扫描一周的所有数据
