@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{736B149D-A5BB-4B97-B17C-87B886B34FDF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RadarDisplayPackage</RootNamespace>
+    <AssemblyName>RadarDisplayPackage</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack.DirectX, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\软件项目开发\directx\DirectX\x86\Microsoft.WindowsAPICodePack.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IControlStateObserver.cs" />
+    <Compile Include="IControlStateProvider.cs" />
+    <Compile Include="IControlStateSubject.cs" />
+    <Compile Include="扇扫视图\SweepSectionManager.cs" />
+    <Compile Include="扇扫视图\SweepSectionView.cs" />
+    <Compile Include="命令类\WaveGateDeleteActiveCommand.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_AntennaControlFixed60.cs" />
+    <Compile Include="命令类\TargetManagerDeleteActiveTargetCommand.cs" />
+    <Compile Include="目标视图类族\DataGridViewTargetView.cs" />
+    <Compile Include="目标视图类族\DataGridViewTargetViewManager.cs" />
+    <Compile Include="目标视图类族\GraphicTargetViewManager.cs" />
+    <Compile Include="命令类\TargetManagerSwitchModeCommand.cs" />
+    <Compile Include="命令类\TargetManagerCommand.cs" />
+    <Compile Include="目标视图类族\TargetViewManager.cs" />
+    <Compile Include="命令类\SystemController.cs" />
+    <Compile Include="命令类\AntennaSetRotationRateCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerAutoWaveGateCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerSemiAutoWaveGateCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerAntennaControlCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerResetCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerZoomCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerOffsetCommand.cs" />
+    <Compile Include="命令类\OverVIewDisplayerZoomStateCommand.cs" />
+    <Compile Include="命令类\WaveGateAddCommand.cs" />
+    <Compile Include="命令类\AntennaCommand.cs" />
+    <Compile Include="命令类\Command.cs" />
+    <Compile Include="命令类\WaveGateDeleteCommand.cs" />
+    <Compile Include="命令类\NullCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerCommand.cs" />
+    <Compile Include="命令类\AntennaSetNormalSweepModeCommand.cs" />
+    <Compile Include="命令类\AntennaSetSectionSweepModeCommand.cs" />
+    <Compile Include="命令类\WaveGateCommand.cs" />
+    <Compile Include="波门\GraphicWaveGateViewManager.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_Null.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleNW.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleW.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleSW.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleS.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleSE.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleE.cs" />
+    <Compile Include="目标视图类族\GraphicTargetTrackView.cs" />
+    <Compile Include="坐标系类族\CoordinateSystem.cs" />
+    <Compile Include="坐标系类族\CoordinateSystemOfPolar.cs" />
+    <Compile Include="坐标系类族\CoordinateSystemOfRetangular.cs" />
+    <Compile Include="目标视图类族\GraphicTargetDotView.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleN.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_Invisible.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleNE.cs" />
+    <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_Visible.cs" />
+    <Compile Include="目标视图类族\GraphicTargetView.cs" />
+    <Compile Include="波门\GraphicWaveGateView.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayerState.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_AntennaControl.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_WaveGate.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_AutoWaveGate.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_SemiAutoWaveGate.cs" />
+    <Compile Include="目标视图类族\TargetView.cs" />
+    <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_Zoom.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="目标显示器类族\DataGridViewDisplayer.cs" />
+    <Compile Include="背景类族\SideViewDisplayerBackground.cs" />
+    <Compile Include="天线类族\SideViewDisplayerAntenna.cs" />
+    <Compile Include="目标显示器类族\SideViewDisplayer.cs" />
+    <Compile Include="背景类族\OverViewDisplayerBackground.cs" />
+    <Compile Include="天线类族\OverViewDisplayerAntenna.cs" />
+    <Compile Include="目标显示器类族\OverViewDisplayer.cs" />
+    <Compile Include="天线类族\GraphicTrackDisplayerAntenna.cs" />
+    <Compile Include="背景类族\GraphicTrackDisplayerBackground.cs" />
+    <Compile Include="目标显示器类族\GraphicTrackDisplayer.cs" />
+    <Compile Include="目标显示器类族\TrackDisplayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CycleDataDrivePackage\CycleDataDrivePackage.csproj">
+      <Project>{5d92bfab-eae5-4488-a72b-6f1afa31e36c}</Project>
+      <Name>CycleDataDrivePackage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TargetManagerPackage\TargetManagerPackage.csproj">
+      <Project>{d47a42cb-9152-4ccc-a39e-38ebfe4f1bb0}</Project>
+      <Name>TargetManagerPackage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
