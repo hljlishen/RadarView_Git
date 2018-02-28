@@ -10,7 +10,7 @@ namespace TargetManagerPackage
     {
         private readonly List<ISweepModeObserver> _sweepModeObs;    //天线扫描状态观察者
         private AngleArea _modifiedSection;                         //去除惯性范围的区域
-        private AngleArea _section;
+        private AngleArea _sweepSection;                            //用户设置的扇扫区域
         private uint _rotationRate = 5;                             //初始状态5转每分钟
         private readonly IServoController _servoController;
         private AntennaDirection _intentionalDirection = AntennaDirection.ClockWise;     //期望的天线扫描方向，由于惯性的存在，可能与真实方向不一致
@@ -19,13 +19,13 @@ namespace TargetManagerPackage
         public AntennaManager()
         {
             _sweepModeObs = new List<ISweepModeObserver>();
-            _section = null;
+            _sweepSection = null;
             _servoController = ServoControllerFactory.CreateServoController();
         }
 
         public void SetSectionSweepMode(AngleArea area) //扇扫模式
         {
-            _section = area;
+            _sweepSection = area;
             _isSectionSweeping = true;
             var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
 
@@ -33,7 +33,7 @@ namespace TargetManagerPackage
             {
                 angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
             }
-            _modifiedSection = CalAntiInertiaSection(_section);
+            _modifiedSection = CalAntiInertiaSection(_sweepSection);
             angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
             NotifySweepModeChange();
         }
@@ -41,11 +41,11 @@ namespace TargetManagerPackage
         private AngleArea CalAntiInertiaSection(AngleArea area)
         {
             if (_rotationRate == 2)
-                return new AngleArea(area.BeginAngle , area.EndAngle);
+                return new AngleArea(area.BeginAngle - 20 , area.EndAngle + 20);
             if(_rotationRate == 5)
-                return new AngleArea(area.BeginAngle, area.EndAngle);
+                return new AngleArea(area.BeginAngle - 10, area.EndAngle + 10);
             if (_rotationRate == 10)
-                return new AngleArea(area.BeginAngle + 15 , area.EndAngle - 15);
+                return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
             return new AngleArea(area.BeginAngle, area.EndAngle);
         }
 
@@ -80,7 +80,7 @@ namespace TargetManagerPackage
             if (!_isSectionSweeping) return;        //不是扇扫状态
             var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
             angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
-            _modifiedSection = CalAntiInertiaSection(_section);
+            _modifiedSection = CalAntiInertiaSection(_sweepSection);
             angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
         }
 
@@ -114,13 +114,13 @@ namespace TargetManagerPackage
             return  (RotationRate)(countPerMinute * sign);
         }
 
-        public override float GetSweepBeginAngle() => _section.BeginAngle;
+        public override float GetSweepBeginAngle() => _sweepSection.BeginAngle;
 
-        public override float GetSweepEndAngle() => _section.EndAngle;
+        public override float GetSweepEndAngle() => _sweepSection.EndAngle;
 
         protected void StopSectionSweep()
         {
-            _section = null;
+            _sweepSection = null;
             _isSectionSweeping = false;
             TargetManagerFactory.CreateAngleAreaSurveillance().UnregisterAngleArea(this, _modifiedSection);
         }
@@ -130,7 +130,7 @@ namespace TargetManagerPackage
         private void AntennaLeaveSectionSweepAngleArea()
         {
             StartSwitchToDirection(ReversedDirection(GetAntennaDirection()));
-            _targetManagerController.DeleteOutRangedTargets(_section);
+            _targetManagerController.DeleteOutRangedTargets(_sweepSection);
         }
 
         public void RegisterSweepModeObserver(ISweepModeObserver ob)
@@ -153,6 +153,6 @@ namespace TargetManagerPackage
             }
         }
 
-        public AngleArea GetSweepSection() => _section;
+        public AngleArea GetSweepSection() => _sweepSection;
     }
 }
