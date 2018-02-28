@@ -109,6 +109,8 @@ namespace TargetManagerPackage
                 case AntennaDirection.Stopped:
                     sign = 0;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
 
             return  (RotationRate)(countPerMinute * sign);
