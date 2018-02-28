@@ -9,14 +9,14 @@ namespace AntennaControlPackage
     public enum RotationRate
     {
         Stop = 0,
-        ClockWise_2 = 2,            //顺时针，每分钟2转
-        ClockWise_5 = 5,
-        ClockWise_10 = 10,
-        ClockWise_20 = 20,
-        CounterClockWise_2 = -2,
-        CounterClockWise_5 = -5,
-        CounterClockWise_10 = -10,
-        CounterClockWise_20 = -20
+        ClockWise2 = 2,            //顺时针，每分钟2转
+        ClockWise5 = 5,
+        ClockWise10 = 10,
+        ClockWise20 = 20,
+        CounterClockWise2 = -2,
+        CounterClockWise5 = -5,
+        CounterClockWise10 = -10,
+        CounterClockWise20 = -20
     }
     public interface IServoController
     {

@@ -10,14 +10,14 @@ namespace AntennaControlPackage
     class ServoController : IServoController
     {
         private const string StopCmd = "v0\r";                      //天线停止
-        private const string ClockWise_2Cmd = "v-150\r";            //顺时针2
-        private const string ClockWise_5Cmd = "v-375\r";            //顺时针5
-        private const string ClockWise_10Cmd = "v-750\r";           //顺时针10
-        private const string ClockWise_20Cmd = "v-1500\r";          //顺时针20
-        private const string CounterClockWise_2Cmd = "v150\r";      //逆时针2
-        private const string CounterClockWise_5Cmd = "v375\r";      //逆时针5
-        private const string CounterClockWise_10Cmd = "v750\r";     //逆时针10
-        private const string CounterClockWise_20Cmd = "v1500\r";    //逆时针20
+        private const string ClockWise2Cmd = "v-150\r";            //顺时针2
+        private const string ClockWise5Cmd = "v-375\r";            //顺时针5
+        private const string ClockWise10Cmd = "v-750\r";           //顺时针10
+        private const string ClockWise20Cmd = "v-1500\r";          //顺时针20
+        private const string CounterClockWise2Cmd = "v150\r";      //逆时针2
+        private const string CounterClockWise5Cmd = "v375\r";      //逆时针5
+        private const string CounterClockWise10Cmd = "v750\r";     //逆时针10
+        private const string CounterClockWise20Cmd = "v1500\r";    //逆时针20
         private SerialPort sp;
 
         public ServoController()
@@ -31,29 +31,29 @@ namespace AntennaControlPackage
                 return;
             switch(rate)
             {
-                case RotationRate.ClockWise_2:
-                    sp.Write(ClockWise_2Cmd);
+                case RotationRate.ClockWise2:
+                    sp.Write(ClockWise2Cmd);
                     break;
-                case RotationRate.ClockWise_5:
-                    sp.Write(ClockWise_5Cmd);
+                case RotationRate.ClockWise5:
+                    sp.Write(ClockWise5Cmd);
                     break;
-                case RotationRate.ClockWise_10:
-                    sp.Write(ClockWise_10Cmd);
+                case RotationRate.ClockWise10:
+                    sp.Write(ClockWise10Cmd);
                     break;
-                case RotationRate.ClockWise_20:
-                    sp.Write(ClockWise_20Cmd);
+                case RotationRate.ClockWise20:
+                    sp.Write(ClockWise20Cmd);
                     break;
-                case RotationRate.CounterClockWise_2:
-                    sp.Write(CounterClockWise_2Cmd);
+                case RotationRate.CounterClockWise2:
+                    sp.Write(CounterClockWise2Cmd);
                     break;
-                case RotationRate.CounterClockWise_5:
-                    sp.Write(CounterClockWise_5Cmd);
+                case RotationRate.CounterClockWise5:
+                    sp.Write(CounterClockWise5Cmd);
                     break;
-                case RotationRate.CounterClockWise_10:
-                    sp.Write(CounterClockWise_10Cmd);
+                case RotationRate.CounterClockWise10:
+                    sp.Write(CounterClockWise10Cmd);
                     break;
-                case RotationRate.CounterClockWise_20:
-                    sp.Write(CounterClockWise_20Cmd);
+                case RotationRate.CounterClockWise20:
+                    sp.Write(CounterClockWise20Cmd);
                     break;
                 case RotationRate.Stop:
                     sp.Write(StopCmd);
@@ -61,7 +61,7 @@ namespace AntennaControlPackage
             }
         }
 
-        private void InitializeSerialPort(out SerialPort port)
+        private static void InitializeSerialPort(out SerialPort port)
         {
             port = new SerialPort();
 
