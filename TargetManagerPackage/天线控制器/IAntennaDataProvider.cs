@@ -61,7 +61,7 @@ namespace TargetManagerPackage
         {
             if (Math.Abs(AntennaPreviousAngle - AntennaCurrentAngle) < FloatValueEqualMinmumInterval)
             {
-                return RotateDirection.Stopped;
+                return _preRotateDirection;
             }
             else if (AntennaPreviousAngle < AntennaCurrentAngle)
             {
@@ -115,8 +115,6 @@ namespace TargetManagerPackage
                     return RotateDirection.CounterClockWise;
                 case RotateDirection.CounterClockWise:
                     return RotateDirection.ClockWise;
-                case RotateDirection.Stopped:
-                    return RotateDirection.Stopped;
             }
 
             throw new InvalidOperationException();

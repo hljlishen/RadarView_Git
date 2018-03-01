@@ -127,7 +127,7 @@ namespace RadarForm
             }
             if(rb_antennaStop.Checked)
             {
-                controller.AntennaSetNormalSweepMode(0);
+                //controller.AntennaSetNormalSweepMode(0);
             }
         }
 
@@ -212,8 +212,9 @@ namespace RadarForm
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            controller.AntennaSetNormalSweepMode(0);
-            Environment.Exit(0);    //强制退出所有线程
+            //controller.AntennaSetNormalSweepMode(0);
+            controller.AntennaSetRotationRate(0);
+            Environment.Exit(0);    //强制退出所有线程???
         }
 
         private void btn_browse_Click(object sender, EventArgs e)

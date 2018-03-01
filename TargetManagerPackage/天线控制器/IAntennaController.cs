@@ -9,7 +9,6 @@ namespace TargetManagerPackage
 {
     public enum RotateDirection
     {
-        Stopped = 0,
         ClockWise = 1,
         CounterClockWise = 2
     }

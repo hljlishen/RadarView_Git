@@ -379,6 +379,7 @@
             this.cb_antennaRotationRateN.ForeColor = System.Drawing.Color.Chartreuse;
             this.cb_antennaRotationRateN.FormattingEnabled = true;
             this.cb_antennaRotationRateN.Items.AddRange(new object[] {
+            "0",
             "2",
             "5",
             "10"});

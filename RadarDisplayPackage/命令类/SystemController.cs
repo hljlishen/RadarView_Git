@@ -123,12 +123,7 @@ namespace RadarDisplayPackage
         {
             RotateDirection d;
 
-            if (direct < 0)
-                d = RotateDirection.ClockWise;
-            else if (direct > 0)
-                d = RotateDirection.CounterClockWise;
-            else
-                d = RotateDirection.Stopped;
+            d = direct < 0 ? RotateDirection.ClockWise : RotateDirection.CounterClockWise;
 
             AntennaSetNormalSweepModeCommand cmd = new AntennaSetNormalSweepModeCommand(d);
             cmd.Execute();

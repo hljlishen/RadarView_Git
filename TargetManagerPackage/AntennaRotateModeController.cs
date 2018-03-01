@@ -6,6 +6,7 @@ namespace TargetManagerPackage
 {
     public enum RotateRate
     {
+        Rpm0 = 0,
         Rpm2 = 2,
         Rpm5 = 5,
         Rpm10 = 10,
@@ -62,8 +63,6 @@ namespace TargetManagerPackage
                     return RotateDirection.CounterClockWise;
                 case RotateDirection.CounterClockWise:
                     return RotateDirection.ClockWise;
-                case RotateDirection.Stopped:
-                    return RotateDirection.Stopped;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(d), d, null);
             }
@@ -75,7 +74,7 @@ namespace TargetManagerPackage
         }
         public static RotateMode GetSweepMode(RotateDirection direction, RotateRate rate)
         {
-            var sign = 0;
+            int sign;
 
             switch (direction)
             {
@@ -85,14 +84,11 @@ namespace TargetManagerPackage
                 case RotateDirection.CounterClockWise:
                     sign = -1;
                     break;
-                case RotateDirection.Stopped:
-                    sign = 0;
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
 
-            return (AntennaControlPackage.RotateMode)((int)rate * sign);
+            return (RotateMode)((int)rate * sign);
         }
     }
 }

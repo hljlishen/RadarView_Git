@@ -250,8 +250,6 @@ namespace TargetManagerPackage
                     return s.index == 0 ? sectors[SectorCount - 1] : sectors[s.index - 1];
                 case RotateDirection.CounterClockWise:
                     return s.index == SectorCount - 1 ? sectors[0] : sectors[s.index + 1];
-                case RotateDirection.Stopped:
-                    return null;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -266,8 +264,6 @@ namespace TargetManagerPackage
                     return s.index == SectorCount - 1 ? sectors[0] : sectors[s.index + 1];
                 case RotateDirection.CounterClockWise:
                     return s.index == 0 ? sectors[SectorCount - 1] : sectors[s.index - 1];
-                case RotateDirection.Stopped:
-                    return null;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -279,11 +275,6 @@ namespace TargetManagerPackage
             {
                 //s的编号为index
                 Sector s = (Sector)o;
-
-                if (s.index == 0)
-                {
-
-                }
                 Sector s1 = NextSector(s);
                 viewDeleter.DeleteViews(s1, false);
                 //s1 = NextSector(s1);

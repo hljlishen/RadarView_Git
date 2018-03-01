@@ -66,10 +66,11 @@ namespace TargetManagerPackage
             lock (this)
             {
                 var direction = (RotateDirection)o;
-                _intentionalDirection = direction;       
-                SetAntennaSweepState(RotateDirection.Stopped, _rotationRate);     //先让天线停止
+                _intentionalDirection = direction;
+                uint rateTmp = _rotationRate;
+                SetAntennaSweepState(direction, 0);     //先让天线停止
                 Thread.Sleep(200);                                                  //等待
-                SetAntennaSweepState(direction, _rotationRate);                    //改变天线方向，不改变当前转速
+                SetAntennaSweepState(direction, rateTmp);                    //改变天线方向，不改变当前转速
             }
         }
 
@@ -93,7 +94,7 @@ namespace TargetManagerPackage
             }
         }
 
-        public static AntennaControlPackage.RotateMode GetRotationRate(RotateDirection direction, uint countPerMinute)
+        public static RotateMode GetRotationRate(RotateDirection direction, uint countPerMinute)
         {
             var sign = 0;
 
@@ -105,14 +106,11 @@ namespace TargetManagerPackage
                 case RotateDirection.CounterClockWise:
                     sign = -1;
                     break;
-                case RotateDirection.Stopped:
-                    sign = 0;
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
 
-            return  (AntennaControlPackage.RotateMode)(countPerMinute * sign);
+            return  (RotateMode)(countPerMinute * sign);
         }
 
         public override float GetSweepBeginAngle() => _sweepSection.BeginAngle;

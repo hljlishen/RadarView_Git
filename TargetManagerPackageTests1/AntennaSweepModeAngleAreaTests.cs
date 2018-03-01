@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AntennaControlPackage;
 
 namespace TargetManagerPackage.Tests
 {
@@ -44,7 +45,25 @@ namespace TargetManagerPackage.Tests
         [TestMethod()]
         public void GetSweepModeTest()
         {
-            //Assert.Fail();
+            RotateRate rate = RotateRate.Rpm5;
+            RotateDirection direction = RotateDirection.ClockWise;
+            RotateMode expectedMode = RotateMode.ClockWise5;
+            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+
+            rate = RotateRate.Rpm0;
+            direction = RotateDirection.ClockWise;
+            expectedMode = RotateMode.Stop;
+            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+
+            rate = RotateRate.Rpm0;
+            direction = RotateDirection.CounterClockWise;
+            expectedMode = RotateMode.Stop;
+            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+
+            rate = RotateRate.Rpm10;
+            direction = RotateDirection.CounterClockWise;
+            expectedMode = RotateMode.CounterClockWise10;
+            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
         }
     }
 }
