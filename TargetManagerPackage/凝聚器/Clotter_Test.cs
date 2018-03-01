@@ -16,7 +16,7 @@ namespace TargetManagerPackage
 
             foreach (AzimuthCell cell in cells)
             {
-                foreach (object o in cell.disCells.Values)
+                foreach (object o in cell.DisCells.Values)
                 {
                     if (center.IsAngleInArea(cell.GetAngle()))
                     {

@@ -20,7 +20,7 @@ namespace TargetManagerPackage
 
             foreach (AzimuthCell cell in cells)     //将方位单元格中的每个距离单元格生成一个目标点
             {
-                foreach (object o in cell.disCells.Values)
+                foreach (object o in cell.DisCells.Values)
                 {
                     DistanceCell dis = (DistanceCell)o;
                     if (dis.adopted)

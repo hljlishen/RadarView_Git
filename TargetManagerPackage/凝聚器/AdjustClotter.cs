@@ -31,9 +31,9 @@ namespace TargetManagerPackage
                 }
                 foreach (int index in keys)   //先判断已有的区域是否延伸
                 {
-                    if(azCell.disCells.Contains(index))
+                    if(azCell.DisCells.Contains(index))
                     {
-                        ((List<DistanceCell>)ranges[index]).Add((DistanceCell)azCell.disCells[index]);
+                        ((List<DistanceCell>)ranges[index]).Add((DistanceCell)azCell.DisCells[index]);
                     }
                     else
                     {
@@ -70,7 +70,7 @@ namespace TargetManagerPackage
                         }
                     }
                 }
-                foreach (DistanceCell disCell in azCell.disCells.Values)
+                foreach (DistanceCell disCell in azCell.DisCells.Values)
                 {
                     List<DistanceCell> dis = new List<DistanceCell>();
                     dis.Add(disCell);

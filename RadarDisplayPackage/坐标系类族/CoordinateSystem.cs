@@ -12,13 +12,13 @@ namespace RadarDisplayPackage
     internal abstract class CoordinateSystem
     {
         protected double zoomPercent = 0.9;    //矩形范围的缩小比例
-        double range;                  //坐标系的最大量程，该变量在不同的坐标系下有不同的含义
-        Point2F originalPoint;        //坐标系原点在位图上的坐标
-        Rect visibleArea;      //可以显示出来的区域范围,坐标系放大以后visiableArea只是coordinateArea的一部分
-        Point2F visibleCenter;  //可视区域中心点
+        private double range;                  //坐标系的最大量程，该变量在不同的坐标系下有不同的含义
+        private Point2F originalPoint;        //坐标系原点在位图上的坐标
+        private readonly Rect visibleArea;      //可以显示出来的区域范围,坐标系放大以后visiableArea只是coordinateArea的一部分
+        readonly Point2F visibleCenter;  //可视区域中心点
         Rect coordniteArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
         protected D2DFactory factory;     //用于计算pathGeometry
-        Rect originalRect;      //视图初始化时的原始大小，复位视图时候用这个值
+        readonly Rect originalRect;      //视图初始化时的原始大小，复位视图时候用这个值
         public CoordinateSystem(Rect drawArea, double Range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
         {
             coordniteArea = FindCoordinateArea(drawArea);         //绘制坐标系的范围

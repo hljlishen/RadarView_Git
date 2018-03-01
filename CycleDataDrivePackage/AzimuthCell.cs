@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections;
 
 namespace CycleDataDrivePackage
 {
     public class AzimuthCell : IDisposable
     {
-        public Hashtable disCells;
+        public Hashtable DisCells;
         public const int HeadLength = 28; //包头28字节
         public const int TailLength = 2; //包尾2字节
         public const int DistanceCellCountLength = 2; //距离单元个数2字节
@@ -21,7 +17,7 @@ namespace CycleDataDrivePackage
         public const int DistanceCellMaxCount = 59;
         public AzimuthCell(byte[] data)
         {
-            disCells = Hashtable.Synchronized(new Hashtable());
+            DisCells = Hashtable.Synchronized(new Hashtable());
 
             int angleI = DistanceCell.MakeInt(data, HeadLength, AzimuthLength);
             Angle = ((float)angleI) * 360 / 65536;
@@ -32,8 +28,6 @@ namespace CycleDataDrivePackage
                 return;
             }
 
-            //cellCount = cellCount > DistanceCellMaxCount ? DistanceCellMaxCount : cellCount;
-
             int pos = 48;
             for(int i = 0; i < cellCount; i++)
             {
@@ -41,7 +35,7 @@ namespace CycleDataDrivePackage
                 try
                 {
                     if (CycleDataFilter.Pass(cell))     //滤波
-                        disCells.Add(cell.index, cell);
+                        DisCells.Add(cell.index, cell);
                 }
                 catch
                 {
@@ -59,7 +53,7 @@ namespace CycleDataDrivePackage
 
         public void Dispose()
         {
-            disCells.Clear();
+            DisCells.Clear();
         }
     }
 }
