@@ -14,7 +14,6 @@ namespace TargetManagerPackage
         private uint _rotationRate = 5;                             //初始状态5转每分钟
         private readonly IServoController _servoController;
         private RotateDirection _intentionalDirection = RotateDirection.ClockWise;     //期望的天线扫描方向，由于惯性的存在，可能与真实方向不一致
-        private RotateDirection _preRotateDirection = RotateDirection.ClockWise;     //前一个角度计算出的天线方向
 
         public AntennaManager()
         {
@@ -52,6 +51,7 @@ namespace TargetManagerPackage
         {
             StopSectionSweep();
             StartSwitchToDirection(direction);
+            
             NotifySweepModeChange();                            //通知观察者扫描状态改变
         }
 

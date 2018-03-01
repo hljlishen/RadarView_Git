@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AntennaRotateModeController.cs" />
+    <Compile Include="AntennaSectionSweepController.cs" />
     <Compile Include="DataSourceController.cs" />
     <Compile Include="DotViewDeleter.cs" />
     <Compile Include="ISweepModeObserver.cs" />
@@ -51,10 +52,10 @@
     <Compile Include="自由点相关器\DotCorelator_Manual.cs" />
     <Compile Include="自由点相关器\DotCorelator_WaveGate.cs" />
     <Compile Include="IDotCorelateAlgorithm.cs" />
-    <Compile Include="天线控制器\角度区域监听器\AngleAreaSurveillance.cs" />
-    <Compile Include="天线控制器\角度区域监听器\AngleArea.cs" />
-    <Compile Include="天线控制器\角度区域监听器\ILeaveAngleAreaObserver.cs" />
-    <Compile Include="天线控制器\角度区域监听器\ILeaveAngleAreaSubject.cs" />
+    <Compile Include="角度区域监听器\AngleAreaSurveillance.cs" />
+    <Compile Include="角度区域监听器\AngleArea.cs" />
+    <Compile Include="角度区域监听器\ILeaveAngleAreaObserver.cs" />
+    <Compile Include="角度区域监听器\ILeaveAngleAreaSubject.cs" />
     <Compile Include="凝聚器\AdjustClotter.cs" />
     <Compile Include="凝聚器\AdjustClotter_47End.cs" />
     <Compile Include="凝聚器\Clotter.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="SectorProcessor.cs" />
     <Compile Include="航迹相关器\TrackCorelatorV1.cs" />
     <Compile Include="航迹相关器\TrackCorrelator.cs" />
-    <Compile Include="天线控制器\AntennaManager.cs" />
     <Compile Include="CycleDataMatrix.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="TargetManager.cs" />

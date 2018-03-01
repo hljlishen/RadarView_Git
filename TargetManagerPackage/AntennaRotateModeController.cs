@@ -20,14 +20,22 @@ namespace TargetManagerPackage
         protected RotateDirection direction;
         protected RotateRate rate;
 
-        public RotateMode Mode => mode;
-        public RotateRate Rate => rate;
-        public RotateDirection Direction => direction;
-
         public AntennaRotateModeController()
         {
             ServoController = ServoControllerFactory.CreateServoController();
             SetSweepModeData(RotateDirection.ClockWise, RotateRate.Rpm5);  //默认设置为顺时针5转每分钟
+        }
+
+        public void SetRotateRate(RotateRate rotateRate)
+        {
+            SetSweepModeData(direction, rotateRate);
+            StartSweep();
+        }
+
+        public void SetRotateDirection(RotateDirection rotateDirection)
+        {
+            SetSweepModeData(rotateDirection, rate);
+            StartSweep();
         }
 
         public void SetSweepModeData(RotateDirection direction, RotateRate rate)
@@ -42,9 +50,14 @@ namespace TargetManagerPackage
             startSweepThread.Start();
         }
 
-        protected void Sweep()
+        public void StopSweep()
         {
             ServoController.SetRotationRate(RotateMode.Stop);
+        }
+
+        protected void Sweep()
+        {
+            StopSweep();
             Thread.Sleep(200);
             ServoController.SetRotationRate(mode);
         }
@@ -52,7 +65,28 @@ namespace TargetManagerPackage
         public void ReverseSweepDirection()
         {
             direction = ReversedDirection(direction);
+            mode = GetSweepMode();
             StartSweep();
+        }
+
+        public AngleArea CalAntiInertiaSection(AngleArea area)
+        {
+            switch (rate)
+            {
+                case RotateRate.Rpm0:
+                    return area;
+                case RotateRate.Rpm2:
+                    return new AngleArea(area.BeginAngle - 20, area.EndAngle + 20);
+                case RotateRate.Rpm5:
+                    return new AngleArea(area.BeginAngle - 10, area.EndAngle + 10);
+                case RotateRate.Rpm10:
+                    return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
+                case RotateRate.Rpm20:
+                    return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
+                default:
+                    return null;
+            }
+
         }
 
         public static RotateDirection ReversedDirection(RotateDirection d)

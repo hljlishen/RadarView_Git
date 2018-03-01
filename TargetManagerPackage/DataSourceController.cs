@@ -9,13 +9,15 @@ namespace TargetManagerPackage
 {
     public class DataSourceController
     {
-        AntennaManager antennaManager;
+        //AntennaManager antennaManager;
+        AntennaSectionSweepController antennaManager;
         TargetManager targetManager;
         ICycleDataSubject cycleDataSubject;
 
         public DataSourceController()
         {
-            antennaManager = (AntennaManager)TargetManagerFactory.CreateAntennaContoller();
+            //antennaManager = (AntennaManager)TargetManagerFactory.CreateAntennaContoller();
+            antennaManager = (AntennaSectionSweepController)TargetManagerFactory.CreateAntennaContoller();
             targetManager = (TargetManager)TargetManagerFactory.CreateTargetDataProvider();
         }
 
