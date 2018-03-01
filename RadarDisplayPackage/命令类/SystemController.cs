@@ -121,14 +121,14 @@ namespace RadarDisplayPackage
         //设置天线为周扫模式
         public void AntennaSetNormalSweepMode(int direct)   //0:停止；-1:顺时针；1:逆时针
         {
-            AntennaDirection d;
+            RotateDirection d;
 
             if (direct < 0)
-                d = AntennaDirection.ClockWise;
+                d = RotateDirection.ClockWise;
             else if (direct > 0)
-                d = AntennaDirection.CounterClockWise;
+                d = RotateDirection.CounterClockWise;
             else
-                d = AntennaDirection.Stopped;
+                d = RotateDirection.Stopped;
 
             AntennaSetNormalSweepModeCommand cmd = new AntennaSetNormalSweepModeCommand(d);
             cmd.Execute();

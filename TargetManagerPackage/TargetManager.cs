@@ -243,14 +243,14 @@ namespace TargetManagerPackage
 
         protected Sector PreviousSector(Sector s)   //返回该扇区的前一个扇区的引用
         {
-            AntennaDirection direction = TargetManagerFactory.GetAntennaDirection();
+            RotateDirection direction = TargetManagerFactory.GetAntennaDirection();
             switch (direction)
             {
-                case AntennaDirection.ClockWise:
+                case RotateDirection.ClockWise:
                     return s.index == 0 ? sectors[SectorCount - 1] : sectors[s.index - 1];
-                case AntennaDirection.CounterClockWise:
+                case RotateDirection.CounterClockWise:
                     return s.index == SectorCount - 1 ? sectors[0] : sectors[s.index + 1];
-                case AntennaDirection.Stopped:
+                case RotateDirection.Stopped:
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -259,14 +259,14 @@ namespace TargetManagerPackage
 
         protected Sector NextSector(Sector s)   //返回该扇区的下一个扇区的引用
         {
-            AntennaDirection direction = TargetManagerFactory.GetAntennaDirection();
+            RotateDirection direction = TargetManagerFactory.GetAntennaDirection();
             switch (direction)
             {
-                case AntennaDirection.ClockWise:
+                case RotateDirection.ClockWise:
                     return s.index == SectorCount - 1 ? sectors[0] : sectors[s.index + 1];
-                case AntennaDirection.CounterClockWise:
+                case RotateDirection.CounterClockWise:
                     return s.index == 0 ? sectors[SectorCount - 1] : sectors[s.index - 1];
-                case AntennaDirection.Stopped:
+                case RotateDirection.Stopped:
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException();

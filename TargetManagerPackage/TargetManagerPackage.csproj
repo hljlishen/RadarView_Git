@@ -41,10 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="天线控制器\AntennaState.cs" />
-    <Compile Include="天线控制器\AntennaState_ClockWise.cs" />
-    <Compile Include="天线控制器\AntennaState_CounterClockWise.cs" />
-    <Compile Include="天线控制器\AntennaState_Stopped.cs" />
+    <Compile Include="AntennaRotateModeController.cs" />
     <Compile Include="DataSourceController.cs" />
     <Compile Include="DotViewDeleter.cs" />
     <Compile Include="ISweepModeObserver.cs" />

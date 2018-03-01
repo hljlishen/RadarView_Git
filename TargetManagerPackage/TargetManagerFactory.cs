@@ -85,7 +85,7 @@ namespace TargetManagerPackage
             return angleAreaSurveillance;
         }
 
-        public static AntennaDirection GetAntennaDirection()
+        public static RotateDirection GetAntennaDirection()
         {
             if (antennaManager == null)
                 antennaManager = new AntennaManager();

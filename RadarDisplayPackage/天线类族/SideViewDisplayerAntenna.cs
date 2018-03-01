@@ -32,7 +32,7 @@ namespace RadarDisplayPackage
                 , antennaBrush, antennaWidth);
         }
 
-        protected override void DrawGlow(AntennaDirection d)
+        protected override void DrawGlow(RotateDirection d)
         {
             //Rectangle axisRect = coordinateArea;
             //originalPoint = new Point(axisRect.Left, axisRect.Bottom);
@@ -45,7 +45,7 @@ namespace RadarDisplayPackage
             //for (int i = 1; i < count; i++)
             //{
             //    Brush brush = new SolidBrush(Color.FromArgb(255 - (i * 255 / (count)), Color.Green));
-            //    //if (d == AntennaDirection.ClockWise)
+            //    //if (d == RotateDirection.ClockWise)
             //    x1 = x - i;
             //    //else
             //    //    x1 = x + i;

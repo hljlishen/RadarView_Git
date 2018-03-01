@@ -100,25 +100,25 @@ namespace TargetManagerPackage.Tests
             };
 
             //普通顺时针
-            AntennaDirection expecteDirection = AntennaDirection.ClockWise;
+            RotateDirection expecteDirection = RotateDirection.ClockWise;
             Assert.AreEqual(expecteDirection, antenna.GetAntennaDirection());
 
             //普通逆时针
             antenna.AntennaCurrentAngle = 8.99f;
             antenna.AntennaPreviousAngle = 9f;
-            expecteDirection = AntennaDirection.CounterClockWise;
+            expecteDirection = RotateDirection.CounterClockWise;
             Assert.AreEqual(expecteDirection, antenna.GetAntennaDirection());
 
             //跨越360逆时针
             antenna.AntennaCurrentAngle = 359.99f;
             antenna.AntennaPreviousAngle = 0.001f;
-            expecteDirection = AntennaDirection.CounterClockWise;
+            expecteDirection = RotateDirection.CounterClockWise;
             Assert.AreEqual(expecteDirection, antenna.GetAntennaDirection());
 
             //跨越360顺时针
             antenna.AntennaCurrentAngle = 0.000f;
             antenna.AntennaPreviousAngle = 359.99f;
-            expecteDirection = AntennaDirection.ClockWise;
+            expecteDirection = RotateDirection.ClockWise;
             Assert.AreEqual(expecteDirection, antenna.GetAntennaDirection());
         }
 
@@ -162,7 +162,7 @@ namespace TargetManagerPackage.Tests
         public void GetRotationRateTest()
         {
             antenna = new AntennaManager();
-            AntennaDirection direction = AntennaDirection.ClockWise;
+            RotateDirection direction = RotateDirection.ClockWise;
             uint count = 2;
              
         }

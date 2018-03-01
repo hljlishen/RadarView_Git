@@ -25,37 +25,37 @@ namespace AntennaControlPackage
             InitializeSerialPort(out sp);       //初始化串口设置
         }
 
-        public void SetRotationRate(RotationRate rate)
+        public void SetRotationRate(RotateMode mode)
         {
             if (!sp.IsOpen)
                 return;
-            switch(rate)
+            switch(mode)
             {
-                case RotationRate.ClockWise2:
+                case RotateMode.ClockWise2:
                     sp.Write(ClockWise2Cmd);
                     break;
-                case RotationRate.ClockWise5:
+                case RotateMode.ClockWise5:
                     sp.Write(ClockWise5Cmd);
                     break;
-                case RotationRate.ClockWise10:
+                case RotateMode.ClockWise10:
                     sp.Write(ClockWise10Cmd);
                     break;
-                case RotationRate.ClockWise20:
+                case RotateMode.ClockWise20:
                     sp.Write(ClockWise20Cmd);
                     break;
-                case RotationRate.CounterClockWise2:
+                case RotateMode.CounterClockWise2:
                     sp.Write(CounterClockWise2Cmd);
                     break;
-                case RotationRate.CounterClockWise5:
+                case RotateMode.CounterClockWise5:
                     sp.Write(CounterClockWise5Cmd);
                     break;
-                case RotationRate.CounterClockWise10:
+                case RotateMode.CounterClockWise10:
                     sp.Write(CounterClockWise10Cmd);
                     break;
-                case RotationRate.CounterClockWise20:
+                case RotateMode.CounterClockWise20:
                     sp.Write(CounterClockWise20Cmd);
                     break;
-                case RotationRate.Stop:
+                case RotateMode.Stop:
                     sp.Write(StopCmd);
                     break;
             }

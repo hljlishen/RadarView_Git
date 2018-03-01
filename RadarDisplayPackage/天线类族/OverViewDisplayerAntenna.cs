@@ -35,7 +35,7 @@ namespace RadarDisplayPackage
             //canvas.PopLayer();
         }
 
-        protected override void DrawGlow(AntennaDirection d)
+        protected override void DrawGlow(RotateDirection d)
         {
             //float fLastAngle = antennaAngle - 90;
 

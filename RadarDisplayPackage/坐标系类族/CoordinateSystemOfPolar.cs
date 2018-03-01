@@ -7,6 +7,7 @@ using System;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
 using System.Drawing;
+using SweepDirection = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.SweepDirection;
 
 namespace RadarDisplayPackage
 {

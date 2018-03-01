@@ -13,8 +13,8 @@ namespace TargetManagerPackage
         private AngleArea _sweepSection;                            //用户设置的扇扫区域
         private uint _rotationRate = 5;                             //初始状态5转每分钟
         private readonly IServoController _servoController;
-        private AntennaDirection _intentionalDirection = AntennaDirection.ClockWise;     //期望的天线扫描方向，由于惯性的存在，可能与真实方向不一致
-        private AntennaDirection _preAntennaDirection = AntennaDirection.ClockWise;     //前一个角度计算出的天线方向
+        private RotateDirection _intentionalDirection = RotateDirection.ClockWise;     //期望的天线扫描方向，由于惯性的存在，可能与真实方向不一致
+        private RotateDirection _preRotateDirection = RotateDirection.ClockWise;     //前一个角度计算出的天线方向
 
         public AntennaManager()
         {
@@ -25,14 +25,13 @@ namespace TargetManagerPackage
 
         public void SetSectionSweepMode(AngleArea area) //扇扫模式
         {
-            _sweepSection = area;
-            _isSectionSweeping = true;
-            var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
-
             if (_isSectionSweeping)
             {
-                angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
+                StopSectionSweep();     //先停止扇扫
             }
+            _isSectionSweeping = true;
+            _sweepSection = area;
+            var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
             _modifiedSection = CalAntiInertiaSection(_sweepSection);
             angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
             NotifySweepModeChange();
@@ -49,14 +48,14 @@ namespace TargetManagerPackage
             return new AngleArea(area.BeginAngle, area.EndAngle);
         }
 
-        public void SetNormalSweepMode(AntennaDirection direction)       //切换成正常扫描模式
+        public void SetNormalSweepMode(RotateDirection direction)       //切换成正常扫描模式
         {
             StopSectionSweep();
             StartSwitchToDirection(direction);
             NotifySweepModeChange();                            //通知观察者扫描状态改变
         }
 
-        private void StartSwitchToDirection(AntennaDirection direction)
+        private void StartSwitchToDirection(RotateDirection direction)
         {
             var t = new Thread(SwitchToDirection);
             t.Start(direction);
@@ -66,17 +65,17 @@ namespace TargetManagerPackage
         {
             lock (this)
             {
-                var direction = (AntennaDirection)o;
+                var direction = (RotateDirection)o;
                 _intentionalDirection = direction;       
-                SetpAntennaSweepState(AntennaDirection.Stopped, _rotationRate);     //先让天线停止
+                SetAntennaSweepState(RotateDirection.Stopped, _rotationRate);     //先让天线停止
                 Thread.Sleep(200);                                                  //等待
-                SetpAntennaSweepState(direction, _rotationRate);                    //改变天线方向，不改变当前转速
+                SetAntennaSweepState(direction, _rotationRate);                    //改变天线方向，不改变当前转速
             }
         }
 
         public void SetRotationRate(uint countPerMinute)    //不改变方向，只改变转速，界面
         {
-            SetpAntennaSweepState(_intentionalDirection, countPerMinute);
+            SetAntennaSweepState(_intentionalDirection, countPerMinute);
             if (!_isSectionSweeping) return;        //不是扇扫状态
             var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
             angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
@@ -84,7 +83,7 @@ namespace TargetManagerPackage
             angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
         }
 
-        private void SetpAntennaSweepState(AntennaDirection direction, uint countPerMinute)
+        private void SetAntennaSweepState(RotateDirection direction, uint countPerMinute)
         {
             lock (this)
             {
@@ -94,26 +93,26 @@ namespace TargetManagerPackage
             }
         }
 
-        public static RotationRate GetRotationRate(AntennaDirection direction, uint countPerMinute)
+        public static AntennaControlPackage.RotateMode GetRotationRate(RotateDirection direction, uint countPerMinute)
         {
             var sign = 0;
 
             switch (direction)
             {
-                case AntennaDirection.ClockWise:
+                case RotateDirection.ClockWise:
                     sign = 1;
                     break;
-                case AntennaDirection.CounterClockWise:
+                case RotateDirection.CounterClockWise:
                     sign = -1;
                     break;
-                case AntennaDirection.Stopped:
+                case RotateDirection.Stopped:
                     sign = 0;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
 
-            return  (RotationRate)(countPerMinute * sign);
+            return  (AntennaControlPackage.RotateMode)(countPerMinute * sign);
         }
 
         public override float GetSweepBeginAngle() => _sweepSection.BeginAngle;

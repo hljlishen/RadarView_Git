@@ -18,7 +18,7 @@ namespace TargetManagerPackage
             servoController = ServoControllerFactory.CreateServoController();   //伺服控制器
         }
 
-        public abstract AntennaDirection GetDirection();
+        public abstract RotateDirection GetDirection();
 
         public float PreciousAntennaAngle
         {
