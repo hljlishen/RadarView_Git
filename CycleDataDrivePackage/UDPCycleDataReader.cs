@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Forms;
 
 namespace CycleDataDrivePackage
 {
@@ -18,12 +15,34 @@ namespace CycleDataDrivePackage
         public UdpCycleDataReader()
         {
             _recorder = new DataRecorder();
+            Source = "192.168.1.5:2005";
         }
 
         protected override void ReadData()
         {
-            _udpSocket = SetupUdpSocketObject("192.168.1.13", Source, "192.168.1.5", "2005");
+            (string ip, string port) = TryParseIpAddressAndPort(Source);
+            //_udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", "192.168.1.5", "2005");
+            _udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", ip, port);
             ProcessUdpData();
+        }
+
+        private (string, string) TryParseIpAddressAndPort(string data)
+        {
+            string ip;
+            string port;
+            int index;
+            try
+            {
+                index = data.IndexOf(":", StringComparison.Ordinal);
+                ip = data.Substring(0, index);
+                port = data.Substring(index + 1);
+                return (ip, port);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("输入的Ip或端口不正确");
+                throw;
+            }
         }
         private Socket SetupUdpSocketObject(string localIp, string localPort, string remoteIp, string remotePort)
         {

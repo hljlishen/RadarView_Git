@@ -35,12 +35,17 @@ namespace RadarForm
             ovd = new OverViewDisplayer(panel1);
             svd = new SideViewDisplayer(pnl_sideView);
             controller = new SystemController(ovd);
-            controller.ConnectDataSource("UDP", "2013");    //默认链接UDP数据
+            controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());    //默认链接UDP数据
             dgvd = new DataGridViewDisplayer(pnl_gridView);
             ovd.RegisterObserver(this);
             svd.Distance = 1000;
             ovd.Distance = 4000;
             btn_WaveGate.Enabled = false;
+        }
+
+        private string MakeIpAddressAndPortString()
+        {
+            return tb_ipAddress.Text + ":" + tb_port.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -139,8 +144,6 @@ namespace RadarForm
                     btn_WaveGate.BackColor = Color.Khaki;
                     btn_zoom.BackColor = Color.LightSteelBlue;
                     break;
-                default:
-                    break;
             }
         }
 
@@ -151,7 +154,6 @@ namespace RadarForm
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //controller.AntennaSetNormalSweepMode(0);
             controller.AntennaSetRotationRate(0);
             Environment.Exit(0);    //强制退出所有线程???
         }
@@ -207,7 +209,7 @@ namespace RadarForm
 
         private void btn_startUDP_Click_1(object sender, EventArgs e)
         {
-            controller.ConnectDataSource("UDP", "2013");
+            controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());
         }
 
         private void btn_clockwise_Click(object sender, EventArgs e)

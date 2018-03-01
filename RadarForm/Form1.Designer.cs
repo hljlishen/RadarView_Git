@@ -48,13 +48,23 @@
             this.rb_semiAuto = new System.Windows.Forms.RadioButton();
             this.rb_auto = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_counterclockwise = new System.Windows.Forms.Button();
+            this.btn_Rpm20 = new System.Windows.Forms.Button();
+            this.btn_Rpm10 = new System.Windows.Forms.Button();
+            this.btn_Rpm5 = new System.Windows.Forms.Button();
+            this.btn_Rpm2 = new System.Windows.Forms.Button();
+            this.btn_Rpm0 = new System.Windows.Forms.Button();
+            this.btn_clockwise = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btn_start = new System.Windows.Forms.Button();
-            this.btn_pause = new System.Windows.Forms.Button();
-            this.btn_faster = new System.Windows.Forms.Button();
-            this.btn_slower = new System.Windows.Forms.Button();
-            this.btn_browse = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btn_startUDP = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tb_filePath = new System.Windows.Forms.TextBox();
+            this.btn_start = new System.Windows.Forms.Button();
+            this.btn_browse = new System.Windows.Forms.Button();
+            this.btn_pause = new System.Windows.Forms.Button();
+            this.btn_slower = new System.Windows.Forms.Button();
+            this.btn_faster = new System.Windows.Forms.Button();
             this.btn_antennaControl = new System.Windows.Forms.Button();
             this.btn_resetAntenna = new System.Windows.Forms.Button();
             this.btn_WaveGate = new System.Windows.Forms.Button();
@@ -69,16 +79,10 @@
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.btn_startUDP = new System.Windows.Forms.Button();
-            this.btn_clockwise = new System.Windows.Forms.Button();
-            this.btn_counterclockwise = new System.Windows.Forms.Button();
-            this.btn_Rpm0 = new System.Windows.Forms.Button();
-            this.btn_Rpm2 = new System.Windows.Forms.Button();
-            this.btn_Rpm5 = new System.Windows.Forms.Button();
-            this.btn_Rpm10 = new System.Windows.Forms.Button();
-            this.btn_Rpm20 = new System.Windows.Forms.Button();
+            this.tb_ipAddress = new System.Windows.Forms.TextBox();
+            this.tb_port = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -88,9 +92,9 @@
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_sideView
@@ -326,6 +330,89 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "天线控制";
             // 
+            // btn_counterclockwise
+            // 
+            this.btn_counterclockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_counterclockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_counterclockwise.Location = new System.Drawing.Point(290, 51);
+            this.btn_counterclockwise.Name = "btn_counterclockwise";
+            this.btn_counterclockwise.Size = new System.Drawing.Size(137, 23);
+            this.btn_counterclockwise.TabIndex = 17;
+            this.btn_counterclockwise.Text = "逆时针";
+            this.btn_counterclockwise.UseVisualStyleBackColor = false;
+            this.btn_counterclockwise.Click += new System.EventHandler(this.btn_counterclockwise_Click);
+            // 
+            // btn_Rpm20
+            // 
+            this.btn_Rpm20.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm20.Location = new System.Drawing.Point(371, 120);
+            this.btn_Rpm20.Name = "btn_Rpm20";
+            this.btn_Rpm20.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm20.TabIndex = 17;
+            this.btn_Rpm20.Text = "20";
+            this.btn_Rpm20.UseVisualStyleBackColor = false;
+            // 
+            // btn_Rpm10
+            // 
+            this.btn_Rpm10.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm10.Location = new System.Drawing.Point(290, 120);
+            this.btn_Rpm10.Name = "btn_Rpm10";
+            this.btn_Rpm10.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm10.TabIndex = 17;
+            this.btn_Rpm10.Text = "10";
+            this.btn_Rpm10.UseVisualStyleBackColor = false;
+            this.btn_Rpm10.Click += new System.EventHandler(this.btn_Rpm10_Click);
+            // 
+            // btn_Rpm5
+            // 
+            this.btn_Rpm5.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm5.Location = new System.Drawing.Point(201, 120);
+            this.btn_Rpm5.Name = "btn_Rpm5";
+            this.btn_Rpm5.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm5.TabIndex = 17;
+            this.btn_Rpm5.Text = "5";
+            this.btn_Rpm5.UseVisualStyleBackColor = false;
+            this.btn_Rpm5.Click += new System.EventHandler(this.btn_Rpm5_Click);
+            // 
+            // btn_Rpm2
+            // 
+            this.btn_Rpm2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm2.Location = new System.Drawing.Point(113, 120);
+            this.btn_Rpm2.Name = "btn_Rpm2";
+            this.btn_Rpm2.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm2.TabIndex = 17;
+            this.btn_Rpm2.Text = "2";
+            this.btn_Rpm2.UseVisualStyleBackColor = false;
+            this.btn_Rpm2.Click += new System.EventHandler(this.btn_Rpm2_Click);
+            // 
+            // btn_Rpm0
+            // 
+            this.btn_Rpm0.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm0.Location = new System.Drawing.Point(31, 120);
+            this.btn_Rpm0.Name = "btn_Rpm0";
+            this.btn_Rpm0.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm0.TabIndex = 17;
+            this.btn_Rpm0.Text = "0";
+            this.btn_Rpm0.UseVisualStyleBackColor = false;
+            this.btn_Rpm0.Click += new System.EventHandler(this.btn_Rpm0_Click);
+            // 
+            // btn_clockwise
+            // 
+            this.btn_clockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_clockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clockwise.Location = new System.Drawing.Point(35, 51);
+            this.btn_clockwise.Name = "btn_clockwise";
+            this.btn_clockwise.Size = new System.Drawing.Size(134, 23);
+            this.btn_clockwise.TabIndex = 17;
+            this.btn_clockwise.Text = "顺时针";
+            this.btn_clockwise.UseVisualStyleBackColor = false;
+            this.btn_clockwise.Click += new System.EventHandler(this.btn_clockwise_Click);
+            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
@@ -338,46 +425,66 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "数据源选择";
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label2);
+            this.groupBox7.Controls.Add(this.label1);
+            this.groupBox7.Controls.Add(this.tb_port);
+            this.groupBox7.Controls.Add(this.tb_ipAddress);
+            this.groupBox7.Controls.Add(this.btn_startUDP);
+            this.groupBox7.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox7.Location = new System.Drawing.Point(39, 283);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(403, 100);
+            this.groupBox7.TabIndex = 5;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "网络数据";
+            // 
+            // btn_startUDP
+            // 
+            this.btn_startUDP.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_startUDP.Location = new System.Drawing.Point(310, 43);
+            this.btn_startUDP.Name = "btn_startUDP";
+            this.btn_startUDP.Size = new System.Drawing.Size(75, 23);
+            this.btn_startUDP.TabIndex = 22;
+            this.btn_startUDP.Text = "开始读取";
+            this.btn_startUDP.UseVisualStyleBackColor = true;
+            this.btn_startUDP.Click += new System.EventHandler(this.btn_startUDP_Click_1);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.tb_filePath);
+            this.groupBox6.Controls.Add(this.btn_start);
+            this.groupBox6.Controls.Add(this.btn_browse);
+            this.groupBox6.Controls.Add(this.btn_pause);
+            this.groupBox6.Controls.Add(this.btn_slower);
+            this.groupBox6.Controls.Add(this.btn_faster);
+            this.groupBox6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox6.Location = new System.Drawing.Point(39, 33);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(403, 196);
+            this.groupBox6.TabIndex = 4;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "文件数据";
+            // 
+            // tb_filePath
+            // 
+            this.tb_filePath.Enabled = false;
+            this.tb_filePath.Location = new System.Drawing.Point(46, 37);
+            this.tb_filePath.Name = "tb_filePath";
+            this.tb_filePath.Size = new System.Drawing.Size(214, 21);
+            this.tb_filePath.TabIndex = 0;
+            // 
             // btn_start
             // 
             this.btn_start.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_start.Location = new System.Drawing.Point(224, 160);
+            this.btn_start.Location = new System.Drawing.Point(224, 147);
             this.btn_start.Name = "btn_start";
             this.btn_start.Size = new System.Drawing.Size(138, 23);
             this.btn_start.TabIndex = 3;
             this.btn_start.Text = "开始";
             this.btn_start.UseVisualStyleBackColor = true;
             this.btn_start.Click += new System.EventHandler(this.btn_start_Click);
-            // 
-            // btn_pause
-            // 
-            this.btn_pause.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_pause.Location = new System.Drawing.Point(46, 160);
-            this.btn_pause.Name = "btn_pause";
-            this.btn_pause.Size = new System.Drawing.Size(138, 23);
-            this.btn_pause.TabIndex = 3;
-            this.btn_pause.Text = "暂停";
-            this.btn_pause.UseVisualStyleBackColor = true;
-            // 
-            // btn_faster
-            // 
-            this.btn_faster.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_faster.Location = new System.Drawing.Point(224, 101);
-            this.btn_faster.Name = "btn_faster";
-            this.btn_faster.Size = new System.Drawing.Size(138, 23);
-            this.btn_faster.TabIndex = 2;
-            this.btn_faster.Text = ">>";
-            this.btn_faster.UseVisualStyleBackColor = true;
-            // 
-            // btn_slower
-            // 
-            this.btn_slower.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_slower.Location = new System.Drawing.Point(46, 101);
-            this.btn_slower.Name = "btn_slower";
-            this.btn_slower.Size = new System.Drawing.Size(138, 23);
-            this.btn_slower.TabIndex = 2;
-            this.btn_slower.Text = "<<";
-            this.btn_slower.UseVisualStyleBackColor = true;
             // 
             // btn_browse
             // 
@@ -390,13 +497,35 @@
             this.btn_browse.UseVisualStyleBackColor = true;
             this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
             // 
-            // tb_filePath
+            // btn_pause
             // 
-            this.tb_filePath.Enabled = false;
-            this.tb_filePath.Location = new System.Drawing.Point(46, 37);
-            this.tb_filePath.Name = "tb_filePath";
-            this.tb_filePath.Size = new System.Drawing.Size(214, 21);
-            this.tb_filePath.TabIndex = 0;
+            this.btn_pause.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_pause.Location = new System.Drawing.Point(46, 147);
+            this.btn_pause.Name = "btn_pause";
+            this.btn_pause.Size = new System.Drawing.Size(138, 23);
+            this.btn_pause.TabIndex = 3;
+            this.btn_pause.Text = "暂停";
+            this.btn_pause.UseVisualStyleBackColor = true;
+            // 
+            // btn_slower
+            // 
+            this.btn_slower.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_slower.Location = new System.Drawing.Point(46, 88);
+            this.btn_slower.Name = "btn_slower";
+            this.btn_slower.Size = new System.Drawing.Size(138, 23);
+            this.btn_slower.TabIndex = 2;
+            this.btn_slower.Text = "<<";
+            this.btn_slower.UseVisualStyleBackColor = true;
+            // 
+            // btn_faster
+            // 
+            this.btn_faster.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_faster.Location = new System.Drawing.Point(224, 88);
+            this.btn_faster.Name = "btn_faster";
+            this.btn_faster.Size = new System.Drawing.Size(138, 23);
+            this.btn_faster.TabIndex = 2;
+            this.btn_faster.Text = ">>";
+            this.btn_faster.UseVisualStyleBackColor = true;
             // 
             // btn_antennaControl
             // 
@@ -540,126 +669,41 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
-            // groupBox6
+            // tb_ipAddress
             // 
-            this.groupBox6.Controls.Add(this.tb_filePath);
-            this.groupBox6.Controls.Add(this.btn_start);
-            this.groupBox6.Controls.Add(this.btn_browse);
-            this.groupBox6.Controls.Add(this.btn_pause);
-            this.groupBox6.Controls.Add(this.btn_slower);
-            this.groupBox6.Controls.Add(this.btn_faster);
-            this.groupBox6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox6.Location = new System.Drawing.Point(39, 33);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(403, 196);
-            this.groupBox6.TabIndex = 4;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "文件数据";
+            this.tb_ipAddress.Location = new System.Drawing.Point(46, 43);
+            this.tb_ipAddress.Name = "tb_ipAddress";
+            this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
+            this.tb_ipAddress.TabIndex = 23;
+            this.tb_ipAddress.Text = "192.168.1.5";
             // 
-            // groupBox7
+            // tb_port
             // 
-            this.groupBox7.Controls.Add(this.btn_startUDP);
-            this.groupBox7.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox7.Location = new System.Drawing.Point(39, 283);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(403, 100);
-            this.groupBox7.TabIndex = 5;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "网络数据";
+            this.tb_port.Location = new System.Drawing.Point(224, 43);
+            this.tb_port.Name = "tb_port";
+            this.tb_port.Size = new System.Drawing.Size(69, 21);
+            this.tb_port.TabIndex = 23;
+            this.tb_port.Text = "2005";
             // 
-            // btn_startUDP
+            // label1
             // 
-            this.btn_startUDP.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_startUDP.Location = new System.Drawing.Point(287, 43);
-            this.btn_startUDP.Name = "btn_startUDP";
-            this.btn_startUDP.Size = new System.Drawing.Size(75, 23);
-            this.btn_startUDP.TabIndex = 22;
-            this.btn_startUDP.Text = "开始读取";
-            this.btn_startUDP.UseVisualStyleBackColor = true;
-            this.btn_startUDP.Click += new System.EventHandler(this.btn_startUDP_Click_1);
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label1.Location = new System.Drawing.Point(11, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "地址";
             // 
-            // btn_clockwise
+            // label2
             // 
-            this.btn_clockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_clockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_clockwise.Location = new System.Drawing.Point(35, 51);
-            this.btn_clockwise.Name = "btn_clockwise";
-            this.btn_clockwise.Size = new System.Drawing.Size(134, 23);
-            this.btn_clockwise.TabIndex = 17;
-            this.btn_clockwise.Text = "顺时针";
-            this.btn_clockwise.UseVisualStyleBackColor = false;
-            this.btn_clockwise.Click += new System.EventHandler(this.btn_clockwise_Click);
-            // 
-            // btn_counterclockwise
-            // 
-            this.btn_counterclockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_counterclockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_counterclockwise.Location = new System.Drawing.Point(290, 51);
-            this.btn_counterclockwise.Name = "btn_counterclockwise";
-            this.btn_counterclockwise.Size = new System.Drawing.Size(137, 23);
-            this.btn_counterclockwise.TabIndex = 17;
-            this.btn_counterclockwise.Text = "逆时针";
-            this.btn_counterclockwise.UseVisualStyleBackColor = false;
-            this.btn_counterclockwise.Click += new System.EventHandler(this.btn_counterclockwise_Click);
-            // 
-            // btn_Rpm0
-            // 
-            this.btn_Rpm0.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_Rpm0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm0.Location = new System.Drawing.Point(31, 120);
-            this.btn_Rpm0.Name = "btn_Rpm0";
-            this.btn_Rpm0.Size = new System.Drawing.Size(56, 23);
-            this.btn_Rpm0.TabIndex = 17;
-            this.btn_Rpm0.Text = "0";
-            this.btn_Rpm0.UseVisualStyleBackColor = false;
-            this.btn_Rpm0.Click += new System.EventHandler(this.btn_Rpm0_Click);
-            // 
-            // btn_Rpm2
-            // 
-            this.btn_Rpm2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_Rpm2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm2.Location = new System.Drawing.Point(113, 120);
-            this.btn_Rpm2.Name = "btn_Rpm2";
-            this.btn_Rpm2.Size = new System.Drawing.Size(56, 23);
-            this.btn_Rpm2.TabIndex = 17;
-            this.btn_Rpm2.Text = "2";
-            this.btn_Rpm2.UseVisualStyleBackColor = false;
-            this.btn_Rpm2.Click += new System.EventHandler(this.btn_Rpm2_Click);
-            // 
-            // btn_Rpm5
-            // 
-            this.btn_Rpm5.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_Rpm5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm5.Location = new System.Drawing.Point(201, 120);
-            this.btn_Rpm5.Name = "btn_Rpm5";
-            this.btn_Rpm5.Size = new System.Drawing.Size(56, 23);
-            this.btn_Rpm5.TabIndex = 17;
-            this.btn_Rpm5.Text = "5";
-            this.btn_Rpm5.UseVisualStyleBackColor = false;
-            this.btn_Rpm5.Click += new System.EventHandler(this.btn_Rpm5_Click);
-            // 
-            // btn_Rpm10
-            // 
-            this.btn_Rpm10.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_Rpm10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm10.Location = new System.Drawing.Point(290, 120);
-            this.btn_Rpm10.Name = "btn_Rpm10";
-            this.btn_Rpm10.Size = new System.Drawing.Size(56, 23);
-            this.btn_Rpm10.TabIndex = 17;
-            this.btn_Rpm10.Text = "10";
-            this.btn_Rpm10.UseVisualStyleBackColor = false;
-            this.btn_Rpm10.Click += new System.EventHandler(this.btn_Rpm10_Click);
-            // 
-            // btn_Rpm20
-            // 
-            this.btn_Rpm20.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_Rpm20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm20.Location = new System.Drawing.Point(371, 120);
-            this.btn_Rpm20.Name = "btn_Rpm20";
-            this.btn_Rpm20.Size = new System.Drawing.Size(56, 23);
-            this.btn_Rpm20.TabIndex = 17;
-            this.btn_Rpm20.Text = "20";
-            this.btn_Rpm20.UseVisualStyleBackColor = false;
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label2.Location = new System.Drawing.Point(189, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "端口";
             // 
             // Form1
             // 
@@ -698,11 +742,12 @@
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -760,6 +805,10 @@
         private System.Windows.Forms.Button btn_Rpm2;
         private System.Windows.Forms.Button btn_Rpm0;
         private System.Windows.Forms.Button btn_clockwise;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tb_port;
+        private System.Windows.Forms.TextBox tb_ipAddress;
     }
 }
 
