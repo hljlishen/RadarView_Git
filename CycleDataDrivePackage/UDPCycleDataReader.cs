@@ -15,32 +15,27 @@ namespace CycleDataDrivePackage
         public UdpCycleDataReader()
         {
             _recorder = new DataRecorder();
-            Source = "192.168.1.5:2005";
         }
 
         protected override void ReadData()
         {
             (string ip, string port) = TryParseIpAddressAndPort(Source);
-            //_udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", "192.168.1.5", "2005");
             _udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", ip, port);
             ProcessUdpData();
         }
 
-        private (string, string) TryParseIpAddressAndPort(string data)
+        private static (string, string) TryParseIpAddressAndPort(string data)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口
         {
-            string ip;
-            string port;
-            int index;
             try
             {
-                index = data.IndexOf(":", StringComparison.Ordinal);
-                ip = data.Substring(0, index);
-                port = data.Substring(index + 1);
+                var index = data.IndexOf(":", StringComparison.Ordinal);
+                var ip = data.Substring(0, index);
+                var port = data.Substring(index + 1);
                 return (ip, port);
             }
-            catch (Exception e)
+            catch
             {
-                MessageBox.Show("输入的Ip或端口不正确");
+                MessageBox.Show(@"输入的Ip或端口不正确");
                 throw;
             }
         }

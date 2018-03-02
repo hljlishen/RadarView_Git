@@ -5,13 +5,23 @@
         ClockWise = 1,
         CounterClockWise = 2
     }
+
+    public enum RotateRate
+    {
+        Rpm0 = 0,
+        Rpm2 = 2,
+        Rpm5 = 5,
+        Rpm10 = 10,
+        Rpm20 = 20
+    }
+
+
     public interface IAntennaController
     {
         void SetSectionSweepMode(AngleArea area);       //切换扇扫模式，并设置开始和结束角度
 
-        void SetNormalSweepMode(RotateDirection direct);       //切换成正常扫描模式
+        void SetRotateDirection(RotateDirection direct);//停止扇扫，切换成正常扫描模式
 
-        //void SetRotationRate(uint countPerMinute);               //设置转速
-        void SetRotationRate(RotateRate rate);
+        void SetRotateRate(RotateRate rate);
     }
 }

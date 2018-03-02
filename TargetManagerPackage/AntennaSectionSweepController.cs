@@ -29,14 +29,14 @@ namespace TargetManagerPackage
             NotifySweepModeChange();
         }
 
-        public void SetNormalSweepMode(RotateDirection direction)       //切换成正常扫描模式
+        public void SetRotateDirection(RotateDirection direction)       //切换成正常扫描模式
         {
             StopSectionSweep();
             _rotateModeController.SetRotateDirection(direction);
             NotifySweepModeChange();                            //通知观察者扫描状态改变
         }
 
-        public void SetRotationRate(RotateRate rate)    //不改变方向，只改变转速，界面
+        public void SetRotateRate(RotateRate rate)    //不改变方向，只改变转速，界面
         {
             _rotateModeController.SetRotateRate(rate);
             if (_isSectionSweeping)

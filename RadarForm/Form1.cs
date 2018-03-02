@@ -73,7 +73,7 @@ namespace RadarForm
         private void btn_resetAntenna_Click(object sender, EventArgs e)
         {
             controller.AntennaSetRotationRate(RotateRate.Rpm5);
-            controller.AntennaSetNormalSweepMode(-1);    //-1为顺时针
+            controller.AntennaSetRotateDirection(RotateDirection.ClockWise);    //-1为顺时针
         }
 
         private void rb_auto_CheckedChanged(object sender, EventArgs e)
@@ -217,12 +217,12 @@ namespace RadarForm
 
         private void btn_clockwise_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetNormalSweepMode(-1);
+            controller.AntennaSetRotateDirection(RotateDirection.ClockWise);
         }
 
         private void btn_counterclockwise_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetNormalSweepMode(1);
+            controller.AntennaSetRotateDirection(RotateDirection.CounterClockWise);
         }
 
         private void btn_Rpm0_Click(object sender, EventArgs e)

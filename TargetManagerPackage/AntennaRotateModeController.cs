@@ -4,15 +4,6 @@ using System.Threading;
 
 namespace TargetManagerPackage
 {
-    public enum RotateRate
-    {
-        Rpm0 = 0,
-        Rpm2 = 2,
-        Rpm5 = 5,
-        Rpm10 = 10,
-        Rpm20 = 20
-    }
-
     public class AntennaRotateModeController
     {
         protected IServoController ServoController;
