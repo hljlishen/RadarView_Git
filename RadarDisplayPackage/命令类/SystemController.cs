@@ -111,7 +111,7 @@ namespace RadarDisplayPackage
 
 
         //设置天线转速
-        public void AntennaSetRotationRate(uint rate)
+        public void AntennaSetRotationRate(RotateRate rate)
         {
             AntennaSetRotationRateCommand rotationRateCmd = new AntennaSetRotationRateCommand(rate);
             rotationRateCmd.Execute();

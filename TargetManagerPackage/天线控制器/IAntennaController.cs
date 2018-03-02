@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CycleDataDrivePackage;
-
-namespace TargetManagerPackage
+﻿namespace TargetManagerPackage
 {
     public enum RotateDirection
     {
@@ -18,6 +11,7 @@ namespace TargetManagerPackage
 
         void SetNormalSweepMode(RotateDirection direct);       //切换成正常扫描模式
 
-        void SetRotationRate(uint countPerMinute);               //设置转速
+        //void SetRotationRate(uint countPerMinute);               //设置转速
+        void SetRotationRate(RotateRate rate);
     }
 }

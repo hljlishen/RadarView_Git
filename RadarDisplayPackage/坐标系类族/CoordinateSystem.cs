@@ -1,8 +1,4 @@
 ﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Drawing;
 using TargetManagerPackage;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
@@ -12,88 +8,42 @@ namespace RadarDisplayPackage
     internal abstract class CoordinateSystem
     {
         protected double zoomPercent = 0.9;    //矩形范围的缩小比例
-        double range;                  //坐标系的最大量程，该变量在不同的坐标系下有不同的含义
-        Point2F originalPoint;        //坐标系原点在位图上的坐标
-        Rect visibleArea;      //可以显示出来的区域范围,坐标系放大以后visiableArea只是coordinateArea的一部分
-        Point2F visibleCenter;  //可视区域中心点
-        Rect coordniteArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
+        private Rect coordniteArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
         protected D2DFactory factory;     //用于计算pathGeometry
-        Rect originalRect;      //视图初始化时的原始大小，复位视图时候用这个值
-        public CoordinateSystem(Rect drawArea, double Range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
+
+        protected CoordinateSystem(Rect drawArea, double Range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
         {
+            // ReSharper disable once VirtualMemberCallInConstructor
             coordniteArea = FindCoordinateArea(drawArea);         //绘制坐标系的范围
-            originalRect = coordniteArea;
-            visibleArea = drawArea;
-            visibleCenter = FindCenterPosition(visibleArea);
-            originalPoint = FindOriginalPoint(coordniteArea);     //原点位置
-            range = Range;
+            OriginalRect = coordniteArea;
+            VisibleArea = drawArea;
+            VisibleCenter = FindCenterPosition(VisibleArea);
+            // ReSharper disable once VirtualMemberCallInConstructor
+            OriginalPoint = FindOriginalPoint(coordniteArea);     //原点位置
+            this.Range = Range;
             this.factory = factory;
         }
 
-        public Point2F OriginalPoint
-        {
-            get
-            {
-                return originalPoint;
-            }
-
-            set
-            {
-                originalPoint = value;
-                
-            }
-        }
+        public Point2F OriginalPoint { get; set; }
 
         public Rect CoordniteArea
         {
-            get
-            {
-                return coordniteArea;
-            }
+            get => coordniteArea;
 
             set
             {
                 coordniteArea = value;
-                originalPoint = FindOriginalPoint(coordniteArea);   //重新计算原点
+                OriginalPoint = FindOriginalPoint(coordniteArea);   //重新计算原点
             }
         }
 
-        public double Range
-        {
-            get
-            {
-                return range;
-            }
+        public double Range { get; set; }
 
-            set
-            {
-                range = value;
-            }
-        }
+        public Rect OriginalRect { get; }
 
-        public Rect OriginalRect
-        {
-            get
-            {
-                return originalRect;
-            }
-        }
+        public Rect VisibleArea { get; }
 
-        public Rect VisibleArea
-        {
-            get
-            {
-                return visibleArea;
-            }
-        }
-
-        public Point2F VisibleCenter
-        {
-            get
-            {
-                return visibleCenter;
-            }
-        }
+        public Point2F VisibleCenter { get; }
 
         public abstract Point2F CoordinateToPoint(PolarCoordinate coordinate);     //计算一个坐标在当前坐标系下的位置
 
@@ -106,13 +56,13 @@ namespace RadarDisplayPackage
 
         public static double AngleToRadian(double angle)
         {
-            return System.Math.PI * angle / 180;
+            return Math.PI * angle / 180;
         }       //角度转弧度
 
         public static double RadianToAngle(double radian)
         {
             double a = 180 * radian;
-            double b = a / (double)3.14159265358979323846264338;
+            double b = a / 3.14159265358979323846264338;
             return  b;
         }       //弧度转角度
 
@@ -126,16 +76,15 @@ namespace RadarDisplayPackage
 
             if (percent < 1)    //缩小
             {
-                offsetX = (rect.Width - r.Width) / 2;
-                offsetY = (rect.Height - r.Height) / 2;
+                offsetX = (double)(rect.Width - r.Width) / 2;
+                offsetY = (double)(rect.Height - r.Height) / 2;
                 location.X = rect.Left + (int)offsetX;
                 location.Y = rect.Top + (int)offsetY;
             }
             else   //放大
             {
-                percent = percent - 1;
-                offsetX = (r.Width - rect.Width) / 2;
-                offsetY = (r.Height - rect.Height) / 2;
+                offsetX = (double)(r.Width - rect.Width) / 2;
+                offsetY = (double)(r.Height - rect.Height) / 2;
                 location.X = rect.Left - (int)offsetX;
                 location.Y = rect.Top - (int)offsetY;
             }
@@ -151,9 +100,11 @@ namespace RadarDisplayPackage
         {
             if (rect == null)
                 throw (new Exception("rectangle对象为空"));
-            Point2F p = new Point2F();
-            p.X = rect.Left + rect.Width / 2;
-            p.Y = rect.Top + rect.Height / 2;
+            var p = new Point2F
+            {
+                X = rect.Left + rect.Width / 2,
+                Y = rect.Top + rect.Height / 2
+            };
 
             return p;
         }       //找矩形中心点
@@ -162,12 +113,12 @@ namespace RadarDisplayPackage
         {
             float distance = (float)DistanceBetween(center, p);
             float x = p.X - center.X;
-            float angleR = (float)Math.Asin((float)(x / distance));
+            float angleR = (float)Math.Asin(x / distance);
             double angle = RadianToAngle(angleR);
 
-            float y = center.Y - p.Y;
-            double angleR1 = Math.Acos(y / distance);
-            angleR1 = RadianToAngle(angleR1);
+            //float y = center.Y - p.Y;
+            //double angleR1 = Math.Acos(y / distance);
+            //angleR1 = RadianToAngle(angleR1);
 
             if (p.X >= center.X && p.Y <= center.Y)   //第一象限
             {
@@ -219,7 +170,7 @@ namespace RadarDisplayPackage
             return new Point((int)p.X, (int)p.Y);
         }
 
-        public static Rectangle D2DRectToGDIRectangle(Rect r)
+        public static Rectangle D2DRectToGdiRectangle(Rect r)
         {
             Rectangle ret = new Rectangle();
 
@@ -242,8 +193,8 @@ namespace RadarDisplayPackage
             angle = (float)AngleToRadian(angle);
 
             //计算起始角度对应直线与坐标系外圈圆周的交点坐标
-            ret.X = (int)(originalPoint.X + r * Math.Sin(angle));
-            ret.Y = (int)(originalPoint.Y - r * Math.Cos(angle));
+            ret.X = (int)(OriginalPoint.X + r * Math.Sin(angle));
+            ret.Y = (int)(OriginalPoint.Y - r * Math.Cos(angle));
 
             return ret;
         }   //极坐标
@@ -260,10 +211,7 @@ namespace RadarDisplayPackage
             float max = Math.Max(a, b);
             float min = Math.Min(a, b);
 
-            if (max - min <= 180)
-                return min;
-            else
-                return max;
+            return max - min <= 180 ? min : max;
         }
 
         public static float FindSmallArcEndAngle(float a, float b)
@@ -271,10 +219,7 @@ namespace RadarDisplayPackage
             float max = Math.Max(a, b);
             float min = Math.Min(a, b);
 
-            if (max - min <= 180)
-                return max;
-            else
-                return min;
+            return max - min <= 180 ? max : min;
         }
 
         public virtual PathGeometry BuildWaveGateGeometry(Point2F position1, Point2F position2)
@@ -286,15 +231,12 @@ namespace RadarDisplayPackage
 
         public bool IsPointInVisibleRect( Point2F p)
         {
-            return IsPointInRect(p, visibleArea);
+            return IsPointInRect(p, VisibleArea);
         }
 
         public bool IsPointInRect(Point2F p, Rect r)
         {
-            if (p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom)
-                return true;
-            else
-                return false;
+            return p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
         }
 
         public static float StandardAngle(float angle) //将角度转化为0-360的浮点数

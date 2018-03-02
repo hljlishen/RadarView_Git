@@ -95,6 +95,10 @@
       <Project>{736b149d-a5bb-4b97-b17c-87b886b34fdf}</Project>
       <Name>RadarDisplayPackage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TargetManagerPackage\TargetManagerPackage.csproj">
+      <Project>{d47a42cb-9152-4ccc-a39e-38ebfe4f1bb0}</Project>
+      <Name>TargetManagerPackage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,8 +9,8 @@ namespace RadarDisplayPackage
 {
     public class AntennaSetRotationRateCommand : AntennaCommand
     {
-        uint rate;
-        public AntennaSetRotationRateCommand( uint rate): base()
+        RotateRate rate;
+        public AntennaSetRotationRateCommand(RotateRate rate): base()
         {
             this.rate = rate;
         }

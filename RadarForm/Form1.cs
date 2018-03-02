@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using TargetManagerPackage;
 
 namespace RadarForm
 {
@@ -71,7 +72,7 @@ namespace RadarForm
 
         private void btn_resetAntenna_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetRotationRate(5);
+            controller.AntennaSetRotationRate(RotateRate.Rpm5);
             controller.AntennaSetNormalSweepMode(-1);    //-1为顺时针
         }
 
@@ -144,6 +145,8 @@ namespace RadarForm
                     btn_WaveGate.BackColor = Color.Khaki;
                     btn_zoom.BackColor = Color.LightSteelBlue;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
 
@@ -174,7 +177,7 @@ namespace RadarForm
 
         private void 检波门限ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            检波门限设置 win = new 检波门限设置(controller);
+            var win = new 检波门限设置(controller);
             win.Show();
         }
 
@@ -202,7 +205,7 @@ namespace RadarForm
             catch
             {
                 result = int.MaxValue;
-                MessageBox.Show("输入的不是数字");
+                MessageBox.Show(@"输入的不是数字");
                 return false;
             }
         }
@@ -224,22 +227,22 @@ namespace RadarForm
 
         private void btn_Rpm0_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetRotationRate(0);
+            controller.AntennaSetRotationRate(RotateRate.Rpm0);
         }
 
         private void btn_Rpm2_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetRotationRate(2);
+            controller.AntennaSetRotationRate(RotateRate.Rpm2);
         }
 
         private void btn_Rpm5_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetRotationRate(5);
+            controller.AntennaSetRotationRate(RotateRate.Rpm5);
         }
 
         private void btn_Rpm10_Click(object sender, EventArgs e)
         {
-            controller.AntennaSetRotationRate(10);
+            controller.AntennaSetRotationRate(RotateRate.Rpm10);
         }
     }
 }

@@ -36,9 +36,9 @@ namespace TargetManagerPackage
             NotifySweepModeChange();                            //通知观察者扫描状态改变
         }
 
-        public void SetRotationRate(uint countPerMinute)    //不改变方向，只改变转速，界面
+        public void SetRotationRate(RotateRate rate)    //不改变方向，只改变转速，界面
         {
-            _rotateModeController.SetRotateRate((RotateRate)countPerMinute);
+            _rotateModeController.SetRotateRate(rate);
             if (_isSectionSweeping)
                 StartSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
         }
