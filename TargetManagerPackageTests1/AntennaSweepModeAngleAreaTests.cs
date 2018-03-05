@@ -48,22 +48,22 @@ namespace TargetManagerPackage.Tests
             RotateRate rate = RotateRate.Rpm5;
             RotateDirection direction = RotateDirection.ClockWise;
             RotateMode expectedMode = RotateMode.ClockWise5;
-            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+            Assert.AreEqual(expectedMode, AntennaRotateController.GetSweepMode(direction, rate));
 
             rate = RotateRate.Rpm0;
             direction = RotateDirection.ClockWise;
             expectedMode = RotateMode.Stop;
-            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+            Assert.AreEqual(expectedMode, AntennaRotateController.GetSweepMode(direction, rate));
 
             rate = RotateRate.Rpm0;
             direction = RotateDirection.CounterClockWise;
             expectedMode = RotateMode.Stop;
-            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+            Assert.AreEqual(expectedMode, AntennaRotateController.GetSweepMode(direction, rate));
 
             rate = RotateRate.Rpm10;
             direction = RotateDirection.CounterClockWise;
             expectedMode = RotateMode.CounterClockWise10;
-            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+            Assert.AreEqual(expectedMode, AntennaRotateController.GetSweepMode(direction, rate));
         }
     }
 }

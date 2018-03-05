@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="天线控制器\AntennaRotateModeController.cs" />
+    <Compile Include="SweepModeSubject.cs" />
+    <Compile Include="天线控制器\AntennaRotateController.cs" />
     <Compile Include="天线控制器\AntennaSectionSweepController.cs" />
     <Compile Include="DataSourceController.cs" />
     <Compile Include="DotViewDeleter.cs" />

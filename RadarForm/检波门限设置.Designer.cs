@@ -210,9 +210,11 @@
             this.Controls.Add(this.btn_speedConfirm);
             this.Controls.Add(this.tb_speedMinimum);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Location = new System.Drawing.Point(1000, 300);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "检波门限设置";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "检波门限设置";
             this.Load += new System.EventHandler(this.检波门限设置_Load);
             this.ResumeLayout(false);

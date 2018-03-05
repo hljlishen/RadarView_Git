@@ -10,13 +10,13 @@ namespace TargetManagerPackage
         private readonly List<ISweepModeObserver> _sweepModeObs;    //天线扫描状态观察者
         private AngleArea _modifiedSection;                         //去除惯性范围的区域
         private AngleArea _sweepSection;                            //用户设置的扇扫区域
-        private readonly AntennaRotateModeController _rotateModeController;     //
+        private readonly AntennaRotateController _rotateController;     //
 
         public AntennaSectionSweepController()
         {
             _sweepModeObs = new List<ISweepModeObserver>();
             _sweepSection = null;
-            _rotateModeController = new AntennaRotateModeController();
+            _rotateController = new AntennaRotateController();
         }
 
         public void SetSectionSweepMode(AngleArea area) //扇扫模式
@@ -32,13 +32,13 @@ namespace TargetManagerPackage
         public void SetRotateDirection(RotateDirection direction)       //切换成正常扫描模式
         {
             StopSectionSweep();
-            _rotateModeController.SetRotateDirection(direction);
+            _rotateController.SetRotateDirection(direction);
             NotifySweepModeChange();                            //通知观察者扫描状态改变
         }
 
         public void SetRotateRate(RotateRate rate)    //不改变方向，只改变转速，界面
         {
-            _rotateModeController.SetRotateRate(rate);
+            _rotateController.SetRotateRate(rate);
             if (_isSectionSweeping)
                 StartSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
         }
@@ -49,7 +49,7 @@ namespace TargetManagerPackage
             _sweepSection = area;
             var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
             angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
-            _modifiedSection = _rotateModeController.CalAntiInertiaSection(area);
+            _modifiedSection = _rotateController.CalAntiInertiaSection(area);
             angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
         }
 
@@ -68,7 +68,7 @@ namespace TargetManagerPackage
 
         private void AntennaLeaveSectionSweepAngleArea()
         {
-            _rotateModeController.ReverseSweepDirection();
+            _rotateController.ReverseSweepDirection();
             TargetManagerController.DeleteOutRangedTargets(_sweepSection);
         }
 

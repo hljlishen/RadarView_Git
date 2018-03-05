@@ -39,16 +39,16 @@ namespace TargetManagerPackage.Tests
         [TestMethod()]
         public void GetSweepModeTest()
         {
-            AntennaRotateModeController controller = new AntennaRotateModeController();
+            AntennaRotateController controller = new AntennaRotateController();
             RotateDirection direction = RotateDirection.ClockWise;
             RotateRate rate = RotateRate.Rpm10;
             RotateMode expectedMode = RotateMode.ClockWise10;
-            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+            Assert.AreEqual(expectedMode, AntennaRotateController.GetSweepMode(direction, rate));
 
             direction = RotateDirection.CounterClockWise;
             rate = RotateRate.Rpm10;
             expectedMode = RotateMode.CounterClockWise10;
-            Assert.AreEqual(expectedMode, AntennaRotateModeController.GetSweepMode(direction, rate));
+            Assert.AreEqual(expectedMode, AntennaRotateController.GetSweepMode(direction, rate));
         }
     }
 }

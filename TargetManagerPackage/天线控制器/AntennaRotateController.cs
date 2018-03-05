@@ -4,14 +4,14 @@ using System.Threading;
 
 namespace TargetManagerPackage
 {
-    public class AntennaRotateModeController
+    public class AntennaRotateController
     {
         protected IServoController ServoController;
-        protected RotateMode mode;
-        protected RotateDirection direction;
-        protected RotateRate rate;
+        protected RotateMode Mode;
+        protected RotateDirection Direction;
+        protected RotateRate Rate;
 
-        public AntennaRotateModeController()
+        public AntennaRotateController()
         {
             ServoController = ServoControllerFactory.CreateServoController();
             SetSweepModeData(RotateDirection.ClockWise, RotateRate.Rpm5);  //默认设置为顺时针5转每分钟
@@ -19,21 +19,21 @@ namespace TargetManagerPackage
 
         public void SetRotateRate(RotateRate rotateRate)
         {
-            SetSweepModeData(direction, rotateRate);
+            SetSweepModeData(Direction, rotateRate);
             StartSweep();
         }
 
         public void SetRotateDirection(RotateDirection rotateDirection)
         {
-            SetSweepModeData(rotateDirection, rate);
+            SetSweepModeData(rotateDirection, Rate);
             StartSweep();
         }
 
         public void SetSweepModeData(RotateDirection direction, RotateRate rate)
         {
-            this.direction = direction;
-            this.rate = rate;
-            mode = GetSweepMode();     //默认值为顺时针5转每分钟
+            Direction = direction;
+            Rate = rate;
+            Mode = GetSweepMode();     //默认值为顺时针5转每分钟
         }
         public void StartSweep()
         {
@@ -50,19 +50,19 @@ namespace TargetManagerPackage
         {
             StopSweep();
             Thread.Sleep(200);
-            ServoController.SetRotationRate(mode);
+            ServoController.SetRotationRate(Mode);
         }
 
         public void ReverseSweepDirection()
         {
-            direction = ReversedDirection(direction);
-            mode = GetSweepMode();
+            Direction = ReversedDirection(Direction);
+            Mode = GetSweepMode();
             StartSweep();
         }
 
         public AngleArea CalAntiInertiaSection(AngleArea area)
         {
-            switch (rate)
+            switch (Rate)
             {
                 case RotateRate.Rpm0:
                     return area;
@@ -95,7 +95,7 @@ namespace TargetManagerPackage
 
         protected RotateMode GetSweepMode()
         {
-            return GetSweepMode(direction, rate);
+            return GetSweepMode(Direction, Rate);
         }
         public static RotateMode GetSweepMode(RotateDirection direction, RotateRate rate)
         {

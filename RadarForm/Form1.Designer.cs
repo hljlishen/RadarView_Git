@@ -57,6 +57,10 @@
             this.btn_clockwise = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tb_port = new System.Windows.Forms.TextBox();
+            this.tb_ipAddress = new System.Windows.Forms.TextBox();
             this.btn_startUDP = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tb_filePath = new System.Windows.Forms.TextBox();
@@ -79,10 +83,6 @@
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tb_ipAddress = new System.Windows.Forms.TextBox();
-            this.tb_port = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -440,6 +440,42 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "网络数据";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label2.Location = new System.Drawing.Point(189, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "端口";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label1.Location = new System.Drawing.Point(11, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "地址";
+            // 
+            // tb_port
+            // 
+            this.tb_port.Location = new System.Drawing.Point(224, 43);
+            this.tb_port.Name = "tb_port";
+            this.tb_port.Size = new System.Drawing.Size(69, 21);
+            this.tb_port.TabIndex = 23;
+            this.tb_port.Text = "2005";
+            // 
+            // tb_ipAddress
+            // 
+            this.tb_ipAddress.Location = new System.Drawing.Point(46, 43);
+            this.tb_ipAddress.Name = "tb_ipAddress";
+            this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
+            this.tb_ipAddress.TabIndex = 23;
+            this.tb_ipAddress.Text = "192.168.1.5";
+            // 
             // btn_startUDP
             // 
             this.btn_startUDP.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -653,6 +689,8 @@
             // 检波门限ToolStripMenuItem
             // 
             this.检波门限ToolStripMenuItem.Name = "检波门限ToolStripMenuItem";
+            this.检波门限ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D1)));
+            this.检波门限ToolStripMenuItem.ShowShortcutKeys = false;
             this.检波门限ToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
             this.检波门限ToolStripMenuItem.Text = "检波门限";
             this.检波门限ToolStripMenuItem.Click += new System.EventHandler(this.检波门限ToolStripMenuItem_Click);
@@ -668,42 +706,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // tb_ipAddress
-            // 
-            this.tb_ipAddress.Location = new System.Drawing.Point(46, 43);
-            this.tb_ipAddress.Name = "tb_ipAddress";
-            this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
-            this.tb_ipAddress.TabIndex = 23;
-            this.tb_ipAddress.Text = "192.168.1.5";
-            // 
-            // tb_port
-            // 
-            this.tb_port.Location = new System.Drawing.Point(224, 43);
-            this.tb_port.Name = "tb_port";
-            this.tb_port.Size = new System.Drawing.Size(69, 21);
-            this.tb_port.TabIndex = 23;
-            this.tb_port.Text = "2005";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label1.Location = new System.Drawing.Point(11, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "地址";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label2.Location = new System.Drawing.Point(189, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "端口";
             // 
             // Form1
             // 
