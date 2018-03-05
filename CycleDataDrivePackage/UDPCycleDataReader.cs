@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Forms;
 
 namespace CycleDataDrivePackage
 {
@@ -22,8 +19,25 @@ namespace CycleDataDrivePackage
 
         protected override void ReadData()
         {
-            _udpSocket = SetupUdpSocketObject("192.168.1.13", Source, "192.168.1.5", "2005");
+            (string ip, string port) = TryParseIpAddressAndPort(Source);
+            _udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", ip, port);
             ProcessUdpData();
+        }
+
+        private static (string, string) TryParseIpAddressAndPort(string data)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口
+        {
+            try
+            {
+                var index = data.IndexOf(":", StringComparison.Ordinal);
+                var ip = data.Substring(0, index);
+                var port = data.Substring(index + 1);
+                return (ip, port);
+            }
+            catch
+            {
+                MessageBox.Show(@"输入的Ip或端口不正确");
+                throw;
+            }
         }
         private Socket SetupUdpSocketObject(string localIp, string localPort, string remoteIp, string remotePort)
         {

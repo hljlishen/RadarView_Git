@@ -9,15 +9,15 @@ namespace RadarDisplayPackage
 {
     public class AntennaSetNormalSweepModeCommand : AntennaCommand
     {
-        AntennaDirection direction;
-        public AntennaSetNormalSweepModeCommand( AntennaDirection direction) : base()
+        RotateDirection direction;
+        public AntennaSetNormalSweepModeCommand( RotateDirection direction) : base()
         {
             this.direction = direction;
         }
 
         public override void Execute()
         {
-            antenna.SetNormalSweepMode(direction);
+            antenna.SetRotateDirection(direction);
         }
     }
 }

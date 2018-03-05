@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AntennaControlPackage
 {
-    public enum RotationRate
+    public enum RotateMode
     {
         Stop = 0,
         ClockWise2 = 2,            //顺时针，每分钟2转
@@ -20,6 +20,6 @@ namespace AntennaControlPackage
     }
     public interface IServoController
     {
-        void SetRotationRate(RotationRate rate);
+        void SetRotationRate(RotateMode mode);
     }
 }

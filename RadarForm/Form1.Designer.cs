@@ -35,7 +35,6 @@
             this.pnl_control = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btn_startUDP = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tb_distance = new System.Windows.Forms.TextBox();
             this.btn_distance = new System.Windows.Forms.Button();
@@ -49,27 +48,23 @@
             this.rb_semiAuto = new System.Windows.Forms.RadioButton();
             this.rb_auto = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btn_antennaConfirmN = new System.Windows.Forms.Button();
-            this.cb_antennaRotationRateN = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rb_antennaStop = new System.Windows.Forms.RadioButton();
-            this.btn_sweepModeConfirm = new System.Windows.Forms.Button();
-            this.tb_angleEnd = new System.Windows.Forms.TextBox();
-            this.tb_angleBegin = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.rb_clockWise = new System.Windows.Forms.RadioButton();
-            this.rb_counterClockWise = new System.Windows.Forms.RadioButton();
-            this.rb_section = new System.Windows.Forms.RadioButton();
+            this.btn_counterclockwise = new System.Windows.Forms.Button();
+            this.btn_Rpm20 = new System.Windows.Forms.Button();
+            this.btn_Rpm10 = new System.Windows.Forms.Button();
+            this.btn_Rpm5 = new System.Windows.Forms.Button();
+            this.btn_Rpm2 = new System.Windows.Forms.Button();
+            this.btn_Rpm0 = new System.Windows.Forms.Button();
+            this.btn_clockwise = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btn_start = new System.Windows.Forms.Button();
-            this.btn_pause = new System.Windows.Forms.Button();
-            this.btn_faster = new System.Windows.Forms.Button();
-            this.btn_slower = new System.Windows.Forms.Button();
-            this.btn_browse = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btn_startUDP = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tb_filePath = new System.Windows.Forms.TextBox();
+            this.btn_start = new System.Windows.Forms.Button();
+            this.btn_browse = new System.Windows.Forms.Button();
+            this.btn_pause = new System.Windows.Forms.Button();
+            this.btn_slower = new System.Windows.Forms.Button();
+            this.btn_faster = new System.Windows.Forms.Button();
             this.btn_antennaControl = new System.Windows.Forms.Button();
             this.btn_resetAntenna = new System.Windows.Forms.Button();
             this.btn_WaveGate = new System.Windows.Forms.Button();
@@ -84,6 +79,10 @@
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_ipAddress = new System.Windows.Forms.TextBox();
+            this.tb_port = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -92,9 +91,9 @@
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -158,7 +157,6 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Black;
-            this.tabPage1.Controls.Add(this.btn_startUDP);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox1);
@@ -168,16 +166,6 @@
             this.tabPage1.Size = new System.Drawing.Size(480, 408);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "控制";
-            // 
-            // btn_startUDP
-            // 
-            this.btn_startUDP.Location = new System.Drawing.Point(376, 370);
-            this.btn_startUDP.Name = "btn_startUDP";
-            this.btn_startUDP.Size = new System.Drawing.Size(75, 23);
-            this.btn_startUDP.TabIndex = 21;
-            this.btn_startUDP.Text = "开始读取";
-            this.btn_startUDP.UseVisualStyleBackColor = true;
-            this.btn_startUDP.Click += new System.EventHandler(this.btn_startUDP_Click);
             // 
             // groupBox5
             // 
@@ -327,8 +315,13 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.groupBox3);
+            this.groupBox1.Controls.Add(this.btn_counterclockwise);
+            this.groupBox1.Controls.Add(this.btn_Rpm20);
+            this.groupBox1.Controls.Add(this.btn_Rpm10);
+            this.groupBox1.Controls.Add(this.btn_Rpm5);
+            this.groupBox1.Controls.Add(this.btn_Rpm2);
+            this.groupBox1.Controls.Add(this.btn_Rpm0);
+            this.groupBox1.Controls.Add(this.btn_clockwise);
             this.groupBox1.ForeColor = System.Drawing.Color.Chartreuse;
             this.groupBox1.Location = new System.Drawing.Point(6, 77);
             this.groupBox1.Name = "groupBox1";
@@ -337,229 +330,166 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "天线控制";
             // 
-            // groupBox2
+            // btn_counterclockwise
             // 
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.btn_antennaConfirmN);
-            this.groupBox2.Controls.Add(this.cb_antennaRotationRateN);
-            this.groupBox2.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox2.Location = new System.Drawing.Point(302, 20);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(159, 158);
-            this.groupBox2.TabIndex = 20;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "天线转速";
+            this.btn_counterclockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_counterclockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_counterclockwise.Location = new System.Drawing.Point(290, 51);
+            this.btn_counterclockwise.Name = "btn_counterclockwise";
+            this.btn_counterclockwise.Size = new System.Drawing.Size(137, 23);
+            this.btn_counterclockwise.TabIndex = 17;
+            this.btn_counterclockwise.Text = "逆时针";
+            this.btn_counterclockwise.UseVisualStyleBackColor = false;
+            this.btn_counterclockwise.Click += new System.EventHandler(this.btn_counterclockwise_Click);
             // 
-            // label6
+            // btn_Rpm20
             // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label6.Location = new System.Drawing.Point(27, 44);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "转速";
+            this.btn_Rpm20.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm20.Location = new System.Drawing.Point(371, 120);
+            this.btn_Rpm20.Name = "btn_Rpm20";
+            this.btn_Rpm20.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm20.TabIndex = 17;
+            this.btn_Rpm20.Text = "20";
+            this.btn_Rpm20.UseVisualStyleBackColor = false;
             // 
-            // btn_antennaConfirmN
+            // btn_Rpm10
             // 
-            this.btn_antennaConfirmN.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_antennaConfirmN.ForeColor = System.Drawing.Color.Chartreuse;
-            this.btn_antennaConfirmN.Location = new System.Drawing.Point(62, 108);
-            this.btn_antennaConfirmN.Name = "btn_antennaConfirmN";
-            this.btn_antennaConfirmN.Size = new System.Drawing.Size(80, 23);
-            this.btn_antennaConfirmN.TabIndex = 13;
-            this.btn_antennaConfirmN.Text = "设置";
-            this.btn_antennaConfirmN.UseVisualStyleBackColor = false;
-            this.btn_antennaConfirmN.Click += new System.EventHandler(this.btn_antennaConfirmN_Click);
+            this.btn_Rpm10.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm10.Location = new System.Drawing.Point(290, 120);
+            this.btn_Rpm10.Name = "btn_Rpm10";
+            this.btn_Rpm10.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm10.TabIndex = 17;
+            this.btn_Rpm10.Text = "10";
+            this.btn_Rpm10.UseVisualStyleBackColor = false;
+            this.btn_Rpm10.Click += new System.EventHandler(this.btn_Rpm10_Click);
             // 
-            // cb_antennaRotationRateN
+            // btn_Rpm5
             // 
-            this.cb_antennaRotationRateN.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.cb_antennaRotationRateN.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_antennaRotationRateN.ForeColor = System.Drawing.Color.Chartreuse;
-            this.cb_antennaRotationRateN.FormattingEnabled = true;
-            this.cb_antennaRotationRateN.Items.AddRange(new object[] {
-            "2",
-            "5",
-            "10"});
-            this.cb_antennaRotationRateN.Location = new System.Drawing.Point(62, 41);
-            this.cb_antennaRotationRateN.Name = "cb_antennaRotationRateN";
-            this.cb_antennaRotationRateN.Size = new System.Drawing.Size(80, 20);
-            this.cb_antennaRotationRateN.TabIndex = 12;
+            this.btn_Rpm5.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm5.Location = new System.Drawing.Point(201, 120);
+            this.btn_Rpm5.Name = "btn_Rpm5";
+            this.btn_Rpm5.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm5.TabIndex = 17;
+            this.btn_Rpm5.Text = "5";
+            this.btn_Rpm5.UseVisualStyleBackColor = false;
+            this.btn_Rpm5.Click += new System.EventHandler(this.btn_Rpm5_Click);
             // 
-            // groupBox3
+            // btn_Rpm2
             // 
-            this.groupBox3.Controls.Add(this.rb_antennaStop);
-            this.groupBox3.Controls.Add(this.btn_sweepModeConfirm);
-            this.groupBox3.Controls.Add(this.tb_angleEnd);
-            this.groupBox3.Controls.Add(this.tb_angleBegin);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.rb_clockWise);
-            this.groupBox3.Controls.Add(this.rb_counterClockWise);
-            this.groupBox3.Controls.Add(this.rb_section);
-            this.groupBox3.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox3.Location = new System.Drawing.Point(12, 20);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(284, 158);
-            this.groupBox3.TabIndex = 15;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "扫描方式";
+            this.btn_Rpm2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm2.Location = new System.Drawing.Point(113, 120);
+            this.btn_Rpm2.Name = "btn_Rpm2";
+            this.btn_Rpm2.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm2.TabIndex = 17;
+            this.btn_Rpm2.Text = "2";
+            this.btn_Rpm2.UseVisualStyleBackColor = false;
+            this.btn_Rpm2.Click += new System.EventHandler(this.btn_Rpm2_Click);
             // 
-            // rb_antennaStop
+            // btn_Rpm0
             // 
-            this.rb_antennaStop.AutoSize = true;
-            this.rb_antennaStop.Location = new System.Drawing.Point(22, 111);
-            this.rb_antennaStop.Name = "rb_antennaStop";
-            this.rb_antennaStop.Size = new System.Drawing.Size(47, 16);
-            this.rb_antennaStop.TabIndex = 17;
-            this.rb_antennaStop.TabStop = true;
-            this.rb_antennaStop.Text = "停止";
-            this.rb_antennaStop.UseVisualStyleBackColor = true;
+            this.btn_Rpm0.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_Rpm0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Rpm0.Location = new System.Drawing.Point(31, 120);
+            this.btn_Rpm0.Name = "btn_Rpm0";
+            this.btn_Rpm0.Size = new System.Drawing.Size(56, 23);
+            this.btn_Rpm0.TabIndex = 17;
+            this.btn_Rpm0.Text = "0";
+            this.btn_Rpm0.UseVisualStyleBackColor = false;
+            this.btn_Rpm0.Click += new System.EventHandler(this.btn_Rpm0_Click);
             // 
-            // btn_sweepModeConfirm
+            // btn_clockwise
             // 
-            this.btn_sweepModeConfirm.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_sweepModeConfirm.ForeColor = System.Drawing.Color.Chartreuse;
-            this.btn_sweepModeConfirm.Location = new System.Drawing.Point(148, 108);
-            this.btn_sweepModeConfirm.Name = "btn_sweepModeConfirm";
-            this.btn_sweepModeConfirm.Size = new System.Drawing.Size(120, 23);
-            this.btn_sweepModeConfirm.TabIndex = 16;
-            this.btn_sweepModeConfirm.Text = "设置";
-            this.btn_sweepModeConfirm.UseVisualStyleBackColor = false;
-            this.btn_sweepModeConfirm.Click += new System.EventHandler(this.btn_sweepModeConfirm_Click);
-            // 
-            // tb_angleEnd
-            // 
-            this.tb_angleEnd.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tb_angleEnd.ForeColor = System.Drawing.Color.Chartreuse;
-            this.tb_angleEnd.Location = new System.Drawing.Point(213, 66);
-            this.tb_angleEnd.Name = "tb_angleEnd";
-            this.tb_angleEnd.Size = new System.Drawing.Size(33, 21);
-            this.tb_angleEnd.TabIndex = 15;
-            // 
-            // tb_angleBegin
-            // 
-            this.tb_angleBegin.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tb_angleBegin.ForeColor = System.Drawing.Color.Chartreuse;
-            this.tb_angleBegin.Location = new System.Drawing.Point(151, 66);
-            this.tb_angleBegin.Name = "tb_angleBegin";
-            this.tb_angleBegin.Size = new System.Drawing.Size(33, 21);
-            this.tb_angleBegin.TabIndex = 15;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label4.Location = new System.Drawing.Point(254, 71);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 12);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "度";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label2.Location = new System.Drawing.Point(190, 71);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 12);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "至";
-            // 
-            // rb_clockWise
-            // 
-            this.rb_clockWise.AutoSize = true;
-            this.rb_clockWise.Checked = true;
-            this.rb_clockWise.ForeColor = System.Drawing.Color.Chartreuse;
-            this.rb_clockWise.Location = new System.Drawing.Point(22, 24);
-            this.rb_clockWise.Name = "rb_clockWise";
-            this.rb_clockWise.Size = new System.Drawing.Size(83, 16);
-            this.rb_clockWise.TabIndex = 0;
-            this.rb_clockWise.TabStop = true;
-            this.rb_clockWise.Text = "周扫顺时针";
-            this.rb_clockWise.UseVisualStyleBackColor = true;
-            // 
-            // rb_counterClockWise
-            // 
-            this.rb_counterClockWise.AutoSize = true;
-            this.rb_counterClockWise.ForeColor = System.Drawing.Color.Chartreuse;
-            this.rb_counterClockWise.Location = new System.Drawing.Point(22, 67);
-            this.rb_counterClockWise.Name = "rb_counterClockWise";
-            this.rb_counterClockWise.Size = new System.Drawing.Size(83, 16);
-            this.rb_counterClockWise.TabIndex = 0;
-            this.rb_counterClockWise.Text = "周扫逆时针";
-            this.rb_counterClockWise.UseVisualStyleBackColor = true;
-            // 
-            // rb_section
-            // 
-            this.rb_section.AutoSize = true;
-            this.rb_section.ForeColor = System.Drawing.Color.Chartreuse;
-            this.rb_section.Location = new System.Drawing.Point(148, 24);
-            this.rb_section.Name = "rb_section";
-            this.rb_section.Size = new System.Drawing.Size(59, 16);
-            this.rb_section.TabIndex = 14;
-            this.rb_section.TabStop = true;
-            this.rb_section.Text = "扇  扫";
-            this.rb_section.UseVisualStyleBackColor = true;
-            this.rb_section.CheckedChanged += new System.EventHandler(this.rb_section_CheckedChanged);
+            this.btn_clockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_clockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clockwise.Location = new System.Drawing.Point(35, 51);
+            this.btn_clockwise.Name = "btn_clockwise";
+            this.btn_clockwise.Size = new System.Drawing.Size(134, 23);
+            this.btn_clockwise.TabIndex = 17;
+            this.btn_clockwise.Text = "顺时针";
+            this.btn_clockwise.UseVisualStyleBackColor = false;
+            this.btn_clockwise.Click += new System.EventHandler(this.btn_clockwise_Click);
             // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Black;
-            this.tabPage2.Controls.Add(this.btn_start);
-            this.tabPage2.Controls.Add(this.btn_pause);
-            this.tabPage2.Controls.Add(this.btn_faster);
-            this.tabPage2.Controls.Add(this.btn_slower);
-            this.tabPage2.Controls.Add(this.btn_browse);
-            this.tabPage2.Controls.Add(this.tb_filePath);
+            this.tabPage2.Controls.Add(this.groupBox7);
+            this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(480, 408);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "数据回放";
+            this.tabPage2.Text = "数据源选择";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label2);
+            this.groupBox7.Controls.Add(this.label1);
+            this.groupBox7.Controls.Add(this.tb_port);
+            this.groupBox7.Controls.Add(this.tb_ipAddress);
+            this.groupBox7.Controls.Add(this.btn_startUDP);
+            this.groupBox7.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox7.Location = new System.Drawing.Point(39, 283);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(403, 100);
+            this.groupBox7.TabIndex = 5;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "网络数据";
+            // 
+            // btn_startUDP
+            // 
+            this.btn_startUDP.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_startUDP.Location = new System.Drawing.Point(310, 43);
+            this.btn_startUDP.Name = "btn_startUDP";
+            this.btn_startUDP.Size = new System.Drawing.Size(75, 23);
+            this.btn_startUDP.TabIndex = 22;
+            this.btn_startUDP.Text = "开始读取";
+            this.btn_startUDP.UseVisualStyleBackColor = true;
+            this.btn_startUDP.Click += new System.EventHandler(this.btn_startUDP_Click_1);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.tb_filePath);
+            this.groupBox6.Controls.Add(this.btn_start);
+            this.groupBox6.Controls.Add(this.btn_browse);
+            this.groupBox6.Controls.Add(this.btn_pause);
+            this.groupBox6.Controls.Add(this.btn_slower);
+            this.groupBox6.Controls.Add(this.btn_faster);
+            this.groupBox6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox6.Location = new System.Drawing.Point(39, 33);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(403, 196);
+            this.groupBox6.TabIndex = 4;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "文件数据";
+            // 
+            // tb_filePath
+            // 
+            this.tb_filePath.Enabled = false;
+            this.tb_filePath.Location = new System.Drawing.Point(46, 37);
+            this.tb_filePath.Name = "tb_filePath";
+            this.tb_filePath.Size = new System.Drawing.Size(214, 21);
+            this.tb_filePath.TabIndex = 0;
             // 
             // btn_start
             // 
-            this.btn_start.Location = new System.Drawing.Point(290, 241);
+            this.btn_start.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_start.Location = new System.Drawing.Point(224, 147);
             this.btn_start.Name = "btn_start";
-            this.btn_start.Size = new System.Drawing.Size(75, 23);
+            this.btn_start.Size = new System.Drawing.Size(138, 23);
             this.btn_start.TabIndex = 3;
             this.btn_start.Text = "开始";
             this.btn_start.UseVisualStyleBackColor = true;
             this.btn_start.Click += new System.EventHandler(this.btn_start_Click);
             // 
-            // btn_pause
-            // 
-            this.btn_pause.Location = new System.Drawing.Point(80, 241);
-            this.btn_pause.Name = "btn_pause";
-            this.btn_pause.Size = new System.Drawing.Size(75, 23);
-            this.btn_pause.TabIndex = 3;
-            this.btn_pause.Text = "暂停";
-            this.btn_pause.UseVisualStyleBackColor = true;
-            // 
-            // btn_faster
-            // 
-            this.btn_faster.Location = new System.Drawing.Point(242, 182);
-            this.btn_faster.Name = "btn_faster";
-            this.btn_faster.Size = new System.Drawing.Size(138, 23);
-            this.btn_faster.TabIndex = 2;
-            this.btn_faster.Text = ">>";
-            this.btn_faster.UseVisualStyleBackColor = true;
-            // 
-            // btn_slower
-            // 
-            this.btn_slower.Location = new System.Drawing.Point(64, 182);
-            this.btn_slower.Name = "btn_slower";
-            this.btn_slower.Size = new System.Drawing.Size(138, 23);
-            this.btn_slower.TabIndex = 2;
-            this.btn_slower.Text = "<<";
-            this.btn_slower.UseVisualStyleBackColor = true;
-            // 
             // btn_browse
             // 
-            this.btn_browse.Location = new System.Drawing.Point(305, 118);
+            this.btn_browse.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_browse.Location = new System.Drawing.Point(287, 37);
             this.btn_browse.Name = "btn_browse";
             this.btn_browse.Size = new System.Drawing.Size(75, 23);
             this.btn_browse.TabIndex = 1;
@@ -567,13 +497,35 @@
             this.btn_browse.UseVisualStyleBackColor = true;
             this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
             // 
-            // tb_filePath
+            // btn_pause
             // 
-            this.tb_filePath.Enabled = false;
-            this.tb_filePath.Location = new System.Drawing.Point(64, 118);
-            this.tb_filePath.Name = "tb_filePath";
-            this.tb_filePath.Size = new System.Drawing.Size(214, 21);
-            this.tb_filePath.TabIndex = 0;
+            this.btn_pause.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_pause.Location = new System.Drawing.Point(46, 147);
+            this.btn_pause.Name = "btn_pause";
+            this.btn_pause.Size = new System.Drawing.Size(138, 23);
+            this.btn_pause.TabIndex = 3;
+            this.btn_pause.Text = "暂停";
+            this.btn_pause.UseVisualStyleBackColor = true;
+            // 
+            // btn_slower
+            // 
+            this.btn_slower.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_slower.Location = new System.Drawing.Point(46, 88);
+            this.btn_slower.Name = "btn_slower";
+            this.btn_slower.Size = new System.Drawing.Size(138, 23);
+            this.btn_slower.TabIndex = 2;
+            this.btn_slower.Text = "<<";
+            this.btn_slower.UseVisualStyleBackColor = true;
+            // 
+            // btn_faster
+            // 
+            this.btn_faster.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_faster.Location = new System.Drawing.Point(224, 88);
+            this.btn_faster.Name = "btn_faster";
+            this.btn_faster.Size = new System.Drawing.Size(138, 23);
+            this.btn_faster.TabIndex = 2;
+            this.btn_faster.Text = ">>";
+            this.btn_faster.UseVisualStyleBackColor = true;
             // 
             // btn_antennaControl
             // 
@@ -717,6 +669,42 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
+            // tb_ipAddress
+            // 
+            this.tb_ipAddress.Location = new System.Drawing.Point(46, 43);
+            this.tb_ipAddress.Name = "tb_ipAddress";
+            this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
+            this.tb_ipAddress.TabIndex = 23;
+            this.tb_ipAddress.Text = "192.168.1.5";
+            // 
+            // tb_port
+            // 
+            this.tb_port.Location = new System.Drawing.Point(224, 43);
+            this.tb_port.Name = "tb_port";
+            this.tb_port.Size = new System.Drawing.Size(69, 21);
+            this.tb_port.TabIndex = 23;
+            this.tb_port.Text = "2005";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label1.Location = new System.Drawing.Point(11, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "地址";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Chartreuse;
+            this.label2.Location = new System.Drawing.Point(189, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "端口";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -753,12 +741,11 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -786,24 +773,11 @@
         private System.Windows.Forms.Button btn_del;
         private System.Windows.Forms.Button btn_resetAntenna;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btn_antennaConfirmN;
-        private System.Windows.Forms.ComboBox cb_antennaRotationRateN;
-        private System.Windows.Forms.RadioButton rb_counterClockWise;
-        private System.Windows.Forms.RadioButton rb_clockWise;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.RadioButton rb_intelligent;
         private System.Windows.Forms.RadioButton rb_manual;
         private System.Windows.Forms.RadioButton rb_semiAuto;
         private System.Windows.Forms.RadioButton rb_auto;
-        private System.Windows.Forms.RadioButton rb_section;
-        private System.Windows.Forms.Button btn_sweepModeConfirm;
-        private System.Windows.Forms.TextBox tb_angleEnd;
-        private System.Windows.Forms.TextBox tb_angleBegin;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 视图ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 系统ToolStripMenuItem;
@@ -812,7 +786,6 @@
         private System.Windows.Forms.ToolStripMenuItem 航机显示ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 检波门限ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 警戒区寿命ToolStripMenuItem;
-        private System.Windows.Forms.RadioButton rb_antennaStop;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -822,7 +795,20 @@
         private System.Windows.Forms.Button btn_slower;
         private System.Windows.Forms.Button btn_browse;
         private System.Windows.Forms.TextBox tb_filePath;
+        private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button btn_startUDP;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btn_counterclockwise;
+        private System.Windows.Forms.Button btn_Rpm20;
+        private System.Windows.Forms.Button btn_Rpm10;
+        private System.Windows.Forms.Button btn_Rpm5;
+        private System.Windows.Forms.Button btn_Rpm2;
+        private System.Windows.Forms.Button btn_Rpm0;
+        private System.Windows.Forms.Button btn_clockwise;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tb_port;
+        private System.Windows.Forms.TextBox tb_ipAddress;
     }
 }
 

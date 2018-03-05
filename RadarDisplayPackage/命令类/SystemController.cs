@@ -1,8 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using System;
 using TargetManagerPackage;
 using CycleDataDrivePackage;
 
@@ -10,28 +6,23 @@ namespace RadarDisplayPackage
 {
     public class SystemController       //命令类族的门面类
     {
-        OverViewDisplayer ovd;
-
         //目标显示器命令
-        OverViewDisplayerAntennaControlCommand antennaControlStateCmd;
-        OverViewDisplayerAutoWaveGateCommand autoWaveGateStateCmd;
-        OverViewDisplayerSemiAutoWaveGateCommand semiAutoWaveGateCmd;
-        OverViewDisplayerZoomStateCommand zoomStateCmd;
-        OverViewDisplayerResetCommand ResetDisplayerCmd;
+        private readonly OverViewDisplayerAntennaControlCommand antennaControlStateCmd;
+        private readonly OverViewDisplayerAutoWaveGateCommand autoWaveGateStateCmd;
+        private readonly OverViewDisplayerSemiAutoWaveGateCommand semiAutoWaveGateCmd;
+        private readonly OverViewDisplayerZoomStateCommand zoomStateCmd;
+        private readonly OverViewDisplayerResetCommand ResetDisplayerCmd;
 
         //目标管理器命令
-        TargetManagerDeleteActiveTargetCommand delAvtiveTarget;
+        private readonly TargetManagerDeleteActiveTargetCommand delAvtiveTarget;
 
         //数据源控制器
-        DataSourceController dataSourceController;
-        //overviewdisplayer显示器的控制模式切换到放缩
+        private readonly DataSourceController dataSourceController;
 
         //波门命令
-        WaveGateDeleteActiveCommand deleteActiveWaveGatesCmd;
+        private readonly WaveGateDeleteActiveCommand deleteActiveWaveGatesCmd;
         public SystemController( OverViewDisplayer ovd )
         {
-            this.ovd = ovd;
-
             //目标显示器命令初始化
             antennaControlStateCmd = new OverViewDisplayerAntennaControlCommand(ovd);
             autoWaveGateStateCmd = new OverViewDisplayerAutoWaveGateCommand(ovd);
@@ -75,8 +66,12 @@ namespace RadarDisplayPackage
                 case TargetManagerMode.SemiAuto:
                     SwitchToSemiAutoWaveGateSate();
                     break;
-                default:
+                case TargetManagerMode.Manual:
                     break;
+                case TargetManagerMode.Intelligent:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -111,7 +106,7 @@ namespace RadarDisplayPackage
 
 
         //设置天线转速
-        public void AntennaSetRotationRate(uint rate)
+        public void AntennaSetRotationRate(RotateRate rate)
         {
             AntennaSetRotationRateCommand rotationRateCmd = new AntennaSetRotationRateCommand(rate);
             rotationRateCmd.Execute();
@@ -119,18 +114,9 @@ namespace RadarDisplayPackage
 
 
         //设置天线为周扫模式
-        public void AntennaSetNormalSweepMode(int direct)   //0:停止；-1:顺时针；1:逆时针
+        public void AntennaSetRotateDirection(RotateDirection direct)
         {
-            AntennaDirection d;
-
-            if (direct < 0)
-                d = AntennaDirection.ClockWise;
-            else if (direct > 0)
-                d = AntennaDirection.CounterClockWise;
-            else
-                d = AntennaDirection.Stopped;
-
-            AntennaSetNormalSweepModeCommand cmd = new AntennaSetNormalSweepModeCommand(d);
+            AntennaSetNormalSweepModeCommand cmd = new AntennaSetNormalSweepModeCommand(direct);
             cmd.Execute();
         }
 
@@ -172,7 +158,7 @@ namespace RadarDisplayPackage
             dataSourceController.ConnectDataSource(readerType, scr);
         }
 
-        public void SetCycleDataFilterAMThreshold(int am)
+        public void SetCycleDataFilterAmThreshold(int am)
         {
             if(am >= 0)
                 CycleDataFilter.AMThreshold = am;
@@ -188,7 +174,7 @@ namespace RadarDisplayPackage
             CycleDataFilter.SpeedMaximum = speed;
         }
 
-        public int GetCycleDataFilterAMThreshold()
+        public int GetCycleDataFilterAmThreshold()
         {
             return CycleDataFilter.AMThreshold;
         }

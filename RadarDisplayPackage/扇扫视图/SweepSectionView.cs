@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TargetManagerPackage;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using SweepDirection = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.SweepDirection;
 
 namespace RadarDisplayPackage
 {

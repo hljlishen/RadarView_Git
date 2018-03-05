@@ -9,15 +9,15 @@ namespace TargetManagerPackage
 {
     class AntennaState_CounterClockWise : AntennaState
     {
-        public override AntennaDirection GetDirection()
+        public override RotateDirection GetDirection()
         {
-            return AntennaDirection.CounterClockWise;
+            return RotateDirection.CounterClockWise;
         }
 
         public override void SetRotationRate(uint rate)
         {
             base.SetRotationRate(rate);
-            servoController.SetRotationRate((RotationRate)(-rate));
+            servoController.SetRotationRate((AntennaControlPackage.RotateMode)(-rate));
         }
     }
 }

@@ -66,7 +66,7 @@ namespace RadarDisplayPackage
         }
 
         abstract protected void DrawAntenna();
-        abstract protected void DrawGlow(AntennaDirection d);
+        abstract protected void DrawGlow(RotateDirection d);
 
         public void AntennaNotifyChange()
         {
