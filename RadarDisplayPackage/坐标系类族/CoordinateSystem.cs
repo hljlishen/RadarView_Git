@@ -7,33 +7,33 @@ namespace RadarDisplayPackage
 {
     internal abstract class CoordinateSystem
     {
-        protected double zoomPercent = 0.9;    //矩形范围的缩小比例
-        private Rect coordniteArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
-        protected D2DFactory factory;     //用于计算pathGeometry
+        protected double ZoomPercent = 0.9;    //矩形范围的缩小比例
+        private Rect _coordniteArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
+        protected D2DFactory Factory;     //用于计算pathGeometry
 
-        protected CoordinateSystem(Rect drawArea, double Range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
+        protected CoordinateSystem(Rect drawArea, double range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
         {
             // ReSharper disable once VirtualMemberCallInConstructor
-            coordniteArea = FindCoordinateArea(drawArea);         //绘制坐标系的范围
-            OriginalRect = coordniteArea;
+            _coordniteArea = FindCoordinateArea(drawArea);         //绘制坐标系的范围
+            OriginalRect = _coordniteArea;
             VisibleArea = drawArea;
             VisibleCenter = FindCenterPosition(VisibleArea);
             // ReSharper disable once VirtualMemberCallInConstructor
-            OriginalPoint = FindOriginalPoint(coordniteArea);     //原点位置
-            this.Range = Range;
-            this.factory = factory;
+            OriginalPoint = FindOriginalPoint(_coordniteArea);     //原点位置
+            Range = range;
+            Factory = factory;
         }
 
         public Point2F OriginalPoint { get; set; }
 
         public Rect CoordniteArea
         {
-            get => coordniteArea;
+            get => _coordniteArea;
 
             set
             {
-                coordniteArea = value;
-                OriginalPoint = FindOriginalPoint(coordniteArea);   //重新计算原点
+                _coordniteArea = value;
+                OriginalPoint = FindOriginalPoint(_coordniteArea);   //重新计算原点
             }
         }
 
@@ -51,7 +51,7 @@ namespace RadarDisplayPackage
 
         protected virtual Rect FindCoordinateArea(Rect drawArea)  //计算绘制坐标系的矩形范围
         {
-            return ZoomRectangle(drawArea, zoomPercent);
+            return ZoomRectangle(drawArea, ZoomPercent);
         }
 
         public static double AngleToRadian(double angle)
@@ -61,15 +61,15 @@ namespace RadarDisplayPackage
 
         public static double RadianToAngle(double radian)
         {
-            double a = 180 * radian;
-            double b = a / 3.14159265358979323846264338;
+            var a = 180 * radian;
+            var b = a / 3.14159265358979323846264338;
             return  b;
         }       //弧度转角度
 
         public static Rect ZoomRectangle(Rect rect, double percent)     //以rect的中心点为中心，将rect放缩percent的百分比
         {
-            Rect r = new Rect();
-            Point2F location = new Point2F();
+            var r = new Rect();
+            var location = new Point2F();
             double offsetX, offsetY;
             r.Width =(int)( rect.Width * percent);
             r.Height = (int)(rect.Height * percent);
@@ -111,10 +111,10 @@ namespace RadarDisplayPackage
 
         public static float AngleToNorth(Point2F center, Point2F p)    //两点连线与垂直线的夹角
         {
-            float distance = (float)DistanceBetween(center, p);
-            float x = p.X - center.X;
-            float angleR = (float)Math.Asin(x / distance);
-            double angle = RadianToAngle(angleR);
+            var distance = (float)DistanceBetween(center, p);
+            var x = p.X - center.X;
+            var angleR = (float)Math.Asin(x / distance);
+            var angle = RadianToAngle(angleR);
 
             //float y = center.Y - p.Y;
             //double angleR1 = Math.Acos(y / distance);
@@ -142,16 +142,16 @@ namespace RadarDisplayPackage
 
         public static double DistanceBetween(Point2F p1, Point2F p2)
         {
-            double a = Math.Pow((double)p1.X - p2.X, 2);
-            double b = Math.Pow((double)p1.Y - p2.Y, 2);
-            double c = Math.Sqrt(a + b);
+            var a = Math.Pow((double)p1.X - p2.X, 2);
+            var b = Math.Pow((double)p1.Y - p2.Y, 2);
+            var c = Math.Sqrt(a + b);
 
             return c;
         }   //两点间的距离
 
         public static Rect MoveRect(Rect r, Point2F p) //将r横向移动p.x, 纵向移动p.y
         {
-            Rect ret = r;
+            var ret = r;
             ret.Left += (int)p.X;
             ret.Right += (int)p.X;
             ret.Top += (int)p.Y;
@@ -172,10 +172,10 @@ namespace RadarDisplayPackage
 
         public static Rectangle D2DRectToGdiRectangle(Rect r)
         {
-            Rectangle ret = new Rectangle();
+            var ret = new Rectangle();
 
             //左上角位置
-            Point p = new Point(r.Left, r.Top);
+            var p = new Point(r.Left, r.Top);
             ret.Location = p;
 
             ret.Width = r.Right - r.Left;
@@ -186,10 +186,10 @@ namespace RadarDisplayPackage
 
         public Point2F RadiusWiseZoomPosition(Point2F p, double r)
         {
-            Point2F ret = new Point2F();
+            var ret = new Point2F();
 
             //计算拖拽位置和坐标原点连线的正北夹角
-            float angle = AngleToNorth(OriginalPoint, p);
+            var angle = AngleToNorth(OriginalPoint, p);
             angle = (float)AngleToRadian(angle);
 
             //计算起始角度对应直线与坐标系外圈圆周的交点坐标
@@ -208,16 +208,16 @@ namespace RadarDisplayPackage
 
         public static float FindSmallArcBeginAngle(float a, float b)
         {
-            float max = Math.Max(a, b);
-            float min = Math.Min(a, b);
+            var max = Math.Max(a, b);
+            var min = Math.Min(a, b);
 
             return max - min <= 180 ? min : max;
         }
 
         public static float FindSmallArcEndAngle(float a, float b)
         {
-            float max = Math.Max(a, b);
-            float min = Math.Min(a, b);
+            var max = Math.Max(a, b);
+            var min = Math.Min(a, b);
 
             return max - min <= 180 ? max : min;
         }

@@ -15,7 +15,7 @@ namespace RadarDisplayPackage
     {
         public CoordinateSystemOfPolar(Rect drawArea, double Range, D2DFactory factory) :base(drawArea, Range, factory)
         {
-            zoomPercent = 1.5;
+            ZoomPercent = 1.5;
             this.Range = Range;
         }
 
@@ -73,7 +73,7 @@ namespace RadarDisplayPackage
         public override PathGeometry BuildWaveGateGeometry(Point2F position1, Point2F position2)
         {
             Point2F innerLeft, outterLeft, outterRight, innerRight;
-            PathGeometry waveGate = factory.CreatePathGeometry();
+            PathGeometry waveGate = Factory.CreatePathGeometry();
 
             float mouseBeginAngle = CoordinateSystem.AngleToNorth(OriginalPoint, position1);
             float mouseEndAngle = CoordinateSystem.AngleToNorth(OriginalPoint, position2);
