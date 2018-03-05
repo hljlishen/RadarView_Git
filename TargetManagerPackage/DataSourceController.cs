@@ -9,41 +9,57 @@ namespace TargetManagerPackage
 {
     public class DataSourceController
     {
-        //AntennaManager antennaManager;
-        AntennaSectionSweepController antennaManager;
-        TargetManager targetManager;
-        ICycleDataSubject cycleDataSubject;
+        private readonly AntennaSectionSweepController _antennaManager;
+        private readonly TargetManager _targetManager;
+        private ICycleDataSubject _cycleDataSubject;
 
         public DataSourceController()
         {
-            //antennaManager = (AntennaManager)TargetManagerFactory.CreateAntennaContoller();
-            antennaManager = (AntennaSectionSweepController)TargetManagerFactory.CreateAntennaContoller();
-            targetManager = (TargetManager)TargetManagerFactory.CreateTargetDataProvider();
+            _antennaManager = (AntennaSectionSweepController)TargetManagerFactory.CreateAntennaContoller();
+            _targetManager = (TargetManager)TargetManagerFactory.CreateTargetDataProvider();
         }
 
         public void ConnectDataSource(string type, string source)
         {
-            cycleDataSubject?.UnregisterObserver(targetManager.Matrix);  //注销观察者
-            cycleDataSubject?.UnregisterObserver(antennaManager);        //注销观察者
-            cycleDataSubject?.Dispose();    //销毁对象
+            DestroyOldCycleDataSubject();
 
+            ConnectNewCycleDataSubject(type, source);
+
+            StartCycleDataSubject();
+        }
+
+        private static ICycleDataSubject GetCycleDataSubject(string type)
+        {
             switch (type)
             {
                 case "BIN":
-                    cycleDataSubject = CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.BIN);
-                    break;
+                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.BIN);
                 case "UDP":
-                    cycleDataSubject = CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.UDP);
-                    break;
+                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.UDP);
                 default:
-                    cycleDataSubject = CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.UDP);    //，默认返回UDP
-                    break;
+                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.UDP);    //，默认返回UDP
             }
+        }
 
-            targetManager.ConnectDataSource(cycleDataSubject);      //注册观察者
-            antennaManager.ConnectDataSource(cycleDataSubject);     //注册观察者
-            cycleDataSubject.RebindSource(source);                  //绑定数据源
-            cycleDataSubject.StartReading();                        //开始读取数据
+        private void DestroyOldCycleDataSubject()   //废除之前的数据源对象
+        {
+            _cycleDataSubject?.UnregisterObserver(_targetManager.Matrix);  //注销观察者
+            _cycleDataSubject?.UnregisterObserver(_antennaManager);        //注销观察者
+            _cycleDataSubject?.Dispose();    //销毁对象
+        }
+
+        private void ConnectNewCycleDataSubject(string type, string source)     //链接新数据源
+        {
+            _cycleDataSubject = GetCycleDataSubject(type);       //获取新的周期数据对象
+
+            _targetManager.ConnectDataSource(_cycleDataSubject);      //注册观察者
+            _antennaManager.ConnectDataSource(_cycleDataSubject);     //注册观察者
+            _cycleDataSubject.RebindSource(source);                  //绑定数据源
+        }
+
+        private void StartCycleDataSubject()    //数据源开始读取数据
+        {
+            _cycleDataSubject.StartReading();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace TargetManagerPackage
         //protected void NotifyAllObservers(Target t, NotifyType type)
         //{
         //    foreach (ITargetObserver ob in obs)
-        //        ob.NotifyChange(t, type);
+        //        ob.NotifyAntennaDataChange(t, type);
         //}
 
         protected void NotifyUpdateSectorDot(Sector s)

@@ -16,7 +16,7 @@ namespace RadarForm
         private void 检波门限设置_Load(object sender, EventArgs e)
         {
             //获取当前设置的值
-            tb_amThreshold.Text = _controller.GetCycleDataFilterAMThreshold().ToString();
+            tb_amThreshold.Text = _controller.GetCycleDataFilterAmThreshold().ToString();
             tb_speedMinimum.Text = _controller.GetCycleDataFilterSpeedMinimum().ToString();
             tb_speedMaximum.Text = _controller.GetCycleDataFilterSpeedMaximum().ToString();
         }
@@ -30,7 +30,7 @@ namespace RadarForm
         private void btn_amConfirm_Click(object sender, EventArgs e)
         {
             if (Form1.ParseInt(tb_amThreshold, out var am))
-                _controller.SetCycleDataFilterAMThreshold(am);
+                _controller.SetCycleDataFilterAmThreshold(am);
         }
 
         private void btn_speedDown_Click(object sender, EventArgs e)
@@ -48,13 +48,13 @@ namespace RadarForm
         private void btn_amDown_Click(object sender, EventArgs e)
         {
             tb_amThreshold.Text = StringPlusInt(tb_amThreshold.Text, -2);
-            _controller.SetCycleDataFilterAMThreshold(int.Parse(tb_amThreshold.Text));
+            _controller.SetCycleDataFilterAmThreshold(int.Parse(tb_amThreshold.Text));
         }
 
         private void btn_amUp_Click(object sender, EventArgs e)
         {
             tb_amThreshold.Text = StringPlusInt(tb_amThreshold.Text, 2);
-            _controller.SetCycleDataFilterAMThreshold(int.Parse(tb_amThreshold.Text));
+            _controller.SetCycleDataFilterAmThreshold(int.Parse(tb_amThreshold.Text));
         }
 
         private void tb_speedThreshold_KeyDown(object sender, KeyEventArgs e)

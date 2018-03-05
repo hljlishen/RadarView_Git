@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
@@ -26,11 +23,12 @@ namespace TargetManagerPackage
         public float AntennaCurrentAngle;      //天线当前角度
         public float AntennaPreviousAngle;     //天线的前一个角度
         protected const float FloatValueEqualMinmumInterval = 0.001f;    //判断天线停止的最小角度
-        protected ITargetManagerController _targetManagerController;
+        protected ITargetManagerController TargetManagerController;
         protected bool _isSectionSweeping;
         private RotateDirection _preRotateDirection = RotateDirection.ClockWise;     //前一个角度计算出的天线方向
 
         protected AntennaDataManager() => _antennaObservers = new List<IAntennaObserver>();
+
         public void RegisterObserver(IAntennaObserver ob)
         {
             if (ob != null && !_antennaObservers.Contains(ob))
@@ -43,7 +41,7 @@ namespace TargetManagerPackage
                 _antennaObservers.Remove(ob);
         }
 
-        public void NotifyChange()
+        public void NotifyAntennaDataChange()
         {
             foreach (IAntennaObserver ob in _antennaObservers)
                 ob.AntennaNotifyChange();
@@ -63,24 +61,23 @@ namespace TargetManagerPackage
             {
                 return _preRotateDirection;
             }
-            else if (AntennaPreviousAngle < AntennaCurrentAngle)
+
+            if (AntennaPreviousAngle < AntennaCurrentAngle)
             {
                 if (AntennaPreviousAngle < 1 && AntennaCurrentAngle > 350)  //逆时针跨越360度
                     return RotateDirection.CounterClockWise;
                 return RotateDirection.ClockWise;
             }
-            else
-            {
-                if (AntennaPreviousAngle > 350 && AntennaCurrentAngle < 1)
-                    return RotateDirection.ClockWise;
-                return RotateDirection.CounterClockWise;
-            }
+
+            if (AntennaPreviousAngle > 350 && AntennaCurrentAngle < 1)
+                return RotateDirection.ClockWise;
+            return RotateDirection.CounterClockWise;
         }
 
         public void ConnectDataSource(ICycleDataSubject subject)
         {
             subject.RegisterObserver(this);
-            _targetManagerController = TargetManagerFactory.CreateTargetManagerController();
+            TargetManagerController = TargetManagerFactory.CreateTargetManagerController();
         }
 
         public void NotifyNewCycleData(AzimuthCell data)
@@ -96,28 +93,15 @@ namespace TargetManagerPackage
                 if (newDirection != _preRotateDirection)
                 {
                     _preRotateDirection = newDirection;
-                    _targetManagerController.ClearRawData();
+                    TargetManagerController.ClearRawData();
                 }
 
-                NotifyChange();     //通知观察者，天线角度已改变
+                NotifyAntennaDataChange();     //通知观察者，天线角度已改变
             }
             catch
             {
                 // ignored
             }
-        }
-
-        public static RotateDirection ReversedDirection(RotateDirection d)
-        {
-            switch (d)
-            {
-                case RotateDirection.ClockWise:
-                    return RotateDirection.CounterClockWise;
-                case RotateDirection.CounterClockWise:
-                    return RotateDirection.ClockWise;
-            }
-
-            throw new InvalidOperationException();
         }
     }
 }

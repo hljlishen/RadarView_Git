@@ -9,20 +9,20 @@ namespace TargetManagerPackage
 {
     public class TargetManagerFactory
     {
-        private static WaveGateManager_Test waveGateManager = null;
-        private static TargetManager targetManager = null;
-        private static AntennaSectionSweepController sectionSweepController = null;
-        private static DataSourceController dataSourcController = null;
-        private static AngleAreaSurveillance angleAreaSurveillance = null;
+        private static WaveGateManager_Test _waveGateManager;
+        private static TargetManager _targetManager;
+        private static AntennaSectionSweepController _sectionSweepController;
+        private static DataSourceController _dataSourcController;
+        private static AngleAreaSurveillance _angleAreaSurveillance;
 
         public static DataSourceController CreateDataSourceController()
         {
-            return dataSourcController ?? (dataSourcController = new DataSourceController());
+            return _dataSourcController ?? (_dataSourcController = new DataSourceController());
         }
 
         internal static TargetManager CreateTrackManager()
         {
-            return targetManager ?? (targetManager = new TargetManager());
+            return _targetManager ?? (_targetManager = new TargetManager());
         }
 
         public static ITargetDataProvider CreateTargetDataProvider()
@@ -42,7 +42,7 @@ namespace TargetManagerPackage
 
         private static WaveGateManager_Test CreateWaveGateManager()
         {
-            return waveGateManager ?? (waveGateManager = new WaveGateManager_Test());
+            return _waveGateManager ?? (_waveGateManager = new WaveGateManager_Test());
         }   //返回WaveGateManager_Test类
 
         public static IWaveGateController CreateWaveGateController()
@@ -52,7 +52,7 @@ namespace TargetManagerPackage
 
         private static AntennaSectionSweepController CreateAntennaManager()
         {
-            return sectionSweepController ?? (sectionSweepController = new AntennaSectionSweepController());
+            return _sectionSweepController ?? (_sectionSweepController = new AntennaSectionSweepController());
         }
 
         public static IAntennaController CreateAntennaContoller()
@@ -67,12 +67,12 @@ namespace TargetManagerPackage
 
         public static AngleAreaSurveillance CreateAngleAreaSurveillance()
         {
-            return angleAreaSurveillance ?? (angleAreaSurveillance = new AngleAreaSurveillance());
+            return _angleAreaSurveillance ?? (_angleAreaSurveillance = new AngleAreaSurveillance());
         }
 
         public static RotateDirection GetAntennaDirection()
         {
-            return CreateAntennaManager().GetAntennaDirection();
+            return (CreateAntennaManager() as IAntennaDataProvider).GetAntennaDirection();
         }
 
         public static ISweepModeSubject CreateSweepModeSubject()

@@ -41,17 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AntennaRotateModeController.cs" />
-    <Compile Include="AntennaSectionSweepController.cs" />
+    <Compile Include="天线控制器\AntennaRotateModeController.cs" />
+    <Compile Include="天线控制器\AntennaSectionSweepController.cs" />
     <Compile Include="DataSourceController.cs" />
     <Compile Include="DotViewDeleter.cs" />
-    <Compile Include="ISweepModeObserver.cs" />
-    <Compile Include="ISweepModeSubject.cs" />
+    <Compile Include="天线控制器\ISweepModeObserver.cs" />
+    <Compile Include="天线控制器\ISweepModeSubject.cs" />
     <Compile Include="自由点相关器\DotCorelatorAlgorithm_DistanceNear.cs" />
     <Compile Include="自由点相关器\DotCorelator_Intelligence.cs" />
     <Compile Include="自由点相关器\DotCorelator_Manual.cs" />
     <Compile Include="自由点相关器\DotCorelator_WaveGate.cs" />
-    <Compile Include="IDotCorelateAlgorithm.cs" />
+    <Compile Include="凝聚器\IDotCorelateAlgorithm.cs" />
     <Compile Include="角度区域监听器\AngleAreaSurveillance.cs" />
     <Compile Include="角度区域监听器\AngleArea.cs" />
     <Compile Include="角度区域监听器\ILeaveAngleAreaObserver.cs" />
