@@ -33,7 +33,7 @@ namespace RadarDisplayPackage
 
             Point2F p2 = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.EndAngle);
             //扇形的X轴Y轴半径是矩形框width的一半
-            SizeF size = new SizeF(displayer.coordinateSystem.CoordniteArea.Width / 2, displayer.coordinateSystem.CoordniteArea.Height / 2);
+            SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);
 
             //添加弧线
             ArcSegment arc = new ArcSegment(p2, size, 0, SweepDirection.Clockwise, ArcSize.Small);

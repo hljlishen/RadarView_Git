@@ -49,10 +49,10 @@ namespace RadarDisplayPackage
             angleLineBrush = canvas.CreateSolidColorBrush(new ColorF(128, 138, 135));   //冷灰
 
             //初始化四个距离分划线
-            ellipse1 = new Ellipse(csp.OriginalPoint, csp.CoordniteArea.Width / 2, csp.CoordniteArea.Height / 2);
-            ellipse2 = new Ellipse(csp.OriginalPoint, csp.CoordniteArea.Width * 3 / 8, csp.CoordniteArea.Height * 3 / 8);
-            ellipse3 = new Ellipse(csp.OriginalPoint, csp.CoordniteArea.Width / 4, csp.CoordniteArea.Height / 4);
-            ellipse4 = new Ellipse(csp.OriginalPoint, csp.CoordniteArea.Width / 8, csp.CoordniteArea.Height / 8);
+            ellipse1 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 2, csp.CoordinateArea.Height / 2);
+            ellipse2 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width * 3 / 8, csp.CoordinateArea.Height * 3 / 8);
+            ellipse3 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 4, csp.CoordinateArea.Height / 4);
+            ellipse4 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 8, csp.CoordinateArea.Height / 8);
 
             distanceNumbers = new float[] { Distance * 0.25f, Distance * 0.5f, Distance * 0.75f, Distance };
 
@@ -76,8 +76,8 @@ namespace RadarDisplayPackage
             //角度虚线
             foreach (float angle in angleLines)
             {
-                x = coordinateSystem.OriginalPoint.X + ((float)coordinateSystem.CoordniteArea.Width / 2) * (float)Math.Sin(DegreeToRadian(angle));
-                y = coordinateSystem.OriginalPoint.Y - ((float)coordinateSystem.CoordniteArea.Height / 2) * (float)Math.Cos(DegreeToRadian(angle));
+                x = coordinateSystem.OriginalPoint.X + ((float)coordinateSystem.CoordinateArea.Width / 2) * (float)Math.Sin(DegreeToRadian(angle));
+                y = coordinateSystem.OriginalPoint.Y - ((float)coordinateSystem.CoordinateArea.Height / 2) * (float)Math.Cos(DegreeToRadian(angle));
                 canvas.DrawLine(coordinateSystem.OriginalPoint, new Point2F((int)x, (int)y), angleLineBrush, angleLineWidth, AngleLineStrokeStyle);    //画线
             }
 
@@ -137,19 +137,19 @@ namespace RadarDisplayPackage
             text = angleLines[11].ToString("0") + "°";
             canvas.DrawText(text, leftTextFromation, new RectF(p[11].X - 45, p[11].Y - 20, p[11].X + 2, p[11].Y - 2), textBrush);
 
-            Point2F l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordniteArea.Width / 2);
+            Point2F l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordinateArea.Width / 2);
             text = distanceNumbers[3].ToString("0");
             canvas.DrawText(text, leftTextFromation, new RectF(l.X - 45, l.Y + 2, l.X - 2, l.Y + 20), textBrush);
 
-            l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordniteArea.Width * 3 / 8);
+            l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordinateArea.Width * 3 / 8);
             text = distanceNumbers[2].ToString("0");
             canvas.DrawText(text, leftTextFromation, new RectF(l.X - 45, l.Y + 2, l.X - 2, l.Y + 20), textBrush);
 
-            l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordniteArea.Width / 4);
+            l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordinateArea.Width / 4);
             text = distanceNumbers[1].ToString("0");
             canvas.DrawText(text, leftTextFromation, new RectF(l.X - 45, l.Y + 2, l.X - 2, l.Y + 20), textBrush);
 
-            l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordniteArea.Width / 8);
+            l = ((CoordinateSystemOfPolar)coordinateSystem).CalIntersectionPoint(0, coordinateSystem.CoordinateArea.Width / 8);
             text = distanceNumbers[0].ToString("0");
             canvas.DrawText(text, leftTextFromation, new RectF(l.X - 45, l.Y + 2, l.X - 2, l.Y + 20), textBrush);
         }

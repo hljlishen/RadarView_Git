@@ -47,8 +47,19 @@ namespace TargetManagerPackage
         {
             _isSectionSweeping = true;
             _sweepSection = area;
+            UnregisterAngleAreaSurveillance();
+            RegisterAngleAreaSurveillance(area);
+        }
+
+        private void UnregisterAngleAreaSurveillance()
+        {
             var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
             angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
+        }
+
+        private void RegisterAngleAreaSurveillance(AngleArea area)
+        {
+            var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
             _modifiedSection = _rotateController.CalAntiInertiaSection(area);
             angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
         }
@@ -61,7 +72,7 @@ namespace TargetManagerPackage
         {
             _sweepSection = null;
             _isSectionSweeping = false;
-            TargetManagerFactory.CreateAngleAreaSurveillance().UnregisterAngleArea(this, _modifiedSection);
+            UnregisterAngleAreaSurveillance();
         }
 
         public void NotifyLeaveAngleArea(AngleArea area) => AntennaLeaveSectionSweepAngleArea();//天线扫过了扇扫区域，需要翻转天线

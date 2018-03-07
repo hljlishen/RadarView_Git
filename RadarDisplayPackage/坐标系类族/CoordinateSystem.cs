@@ -8,32 +8,32 @@ namespace RadarDisplayPackage
     internal abstract class CoordinateSystem
     {
         protected double ZoomPercent = 0.9;    //矩形范围的缩小比例
-        private Rect _coordniteArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
+        private Rect _coordinateArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
         protected D2DFactory Factory;     //用于计算pathGeometry
 
         protected CoordinateSystem(Rect drawArea, double range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
         {
             // ReSharper disable once VirtualMemberCallInConstructor
-            _coordniteArea = FindCoordinateArea(drawArea);         //绘制坐标系的范围
-            OriginalRect = _coordniteArea;
+            _coordinateArea = FindCoordinateArea(drawArea);         //绘制坐标系的范围
+            OriginalRect = _coordinateArea;
             VisibleArea = drawArea;
             VisibleCenter = FindCenterPosition(VisibleArea);
             // ReSharper disable once VirtualMemberCallInConstructor
-            OriginalPoint = FindOriginalPoint(_coordniteArea);     //原点位置
+            OriginalPoint = FindOriginalPoint(_coordinateArea);     //原点位置
             Range = range;
             Factory = factory;
         }
 
         public Point2F OriginalPoint { get; set; }
 
-        public Rect CoordniteArea
+        public Rect CoordinateArea
         {
-            get => _coordniteArea;
+            get => _coordinateArea;
 
             set
             {
-                _coordniteArea = value;
-                OriginalPoint = FindOriginalPoint(_coordniteArea);   //重新计算原点
+                _coordinateArea = value;
+                OriginalPoint = FindOriginalPoint(_coordinateArea);   //重新计算原点
             }
         }
 

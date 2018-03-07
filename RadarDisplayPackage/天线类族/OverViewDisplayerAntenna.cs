@@ -27,7 +27,7 @@ namespace RadarDisplayPackage
             //lp.Opacity = 1;
             //canvas.PushLayer(lp, layer);
             Point2F center = coordinateSystem.OriginalPoint;
-            Rect coordinateArea = coordinateSystem.CoordniteArea;
+            Rect coordinateArea = coordinateSystem.CoordinateArea;
 
             float x1 = center.X + (int)(coordinateArea.Width / 2 * Math.Sin(GraphicTrackDisplayerBackground.DegreeToRadian(antennaAngle)));
             float y1 = center.Y - (int)(coordinateArea.Width / 2 * Math.Cos(GraphicTrackDisplayerBackground.DegreeToRadian(antennaAngle)));

@@ -34,7 +34,7 @@ namespace RadarDisplayPackage
         }
         public override void Draw()
         {
-            SizeF size = new SizeF(displayer.coordinateSystem.CoordniteArea.Width / 2, displayer.coordinateSystem.CoordniteArea.Height / 2);
+            SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);
             if (isMouseDown)
             {
                 Pie = displayer.Factory.CreatePathGeometry();   //扇形区域

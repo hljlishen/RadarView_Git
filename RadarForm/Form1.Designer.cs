@@ -689,16 +689,15 @@
             // 检波门限ToolStripMenuItem
             // 
             this.检波门限ToolStripMenuItem.Name = "检波门限ToolStripMenuItem";
-            this.检波门限ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D1)));
-            this.检波门限ToolStripMenuItem.ShowShortcutKeys = false;
-            this.检波门限ToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
+            this.检波门限ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Z)));
+            this.检波门限ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.检波门限ToolStripMenuItem.Text = "检波门限";
             this.检波门限ToolStripMenuItem.Click += new System.EventHandler(this.检波门限ToolStripMenuItem_Click);
             // 
             // 警戒区寿命ToolStripMenuItem
             // 
             this.警戒区寿命ToolStripMenuItem.Name = "警戒区寿命ToolStripMenuItem";
-            this.警戒区寿命ToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
+            this.警戒区寿命ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.警戒区寿命ToolStripMenuItem.Text = "警戒区寿命";
             // 
             // 关于ToolStripMenuItem
@@ -725,6 +724,8 @@
             this.Controls.Add(this.btn_resetOverView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

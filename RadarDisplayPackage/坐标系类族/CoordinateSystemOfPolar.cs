@@ -34,7 +34,7 @@ namespace RadarDisplayPackage
 
             //projectedDistance = coordinate.Dis;     //会导致波门绘制失效
 
-            double r = (((double)CoordniteArea.Width / 2) / (Range)) * (projectedDistance);
+            double r = (((double)CoordinateArea.Width / 2) / (Range)) * (projectedDistance);
             double sin = Math.Sin(AngleToRadian(coordinate.Az));
             double cos = Math.Cos(AngleToRadian(coordinate.Az));
             double x1 = r * sin;
@@ -52,7 +52,7 @@ namespace RadarDisplayPackage
             PolarCoordinate c = new PolarCoordinate();
             c.Az = AngleToNorth(OriginalPoint, p);
             float r = (float)DistanceBetween(OriginalPoint, p);
-            float projectedDistance = (float)(r * Range * 2 / CoordniteArea.Width);
+            float projectedDistance = (float)(r * Range * 2 / CoordinateArea.Width);
             c.ProjectedDis = projectedDistance;
             c.El = -1;
             c.Dis = -1;
@@ -64,7 +64,7 @@ namespace RadarDisplayPackage
         {
             float distance = (float)DistanceBetween(OriginalPoint, PointToPoint2F(p));
 
-            if (distance > CoordniteArea.Width / 2)
+            if (distance > CoordinateArea.Width / 2)
                 return true;
             else
                 return false;
@@ -145,8 +145,8 @@ namespace RadarDisplayPackage
 
         public override Point2F CalIntersectionPoint(float angle)
         {
-            double x = CoordniteArea.Width * Math.Sin(AngleToRadian(angle)) / 2 + OriginalPoint.X;
-            double y = OriginalPoint.Y - CoordniteArea.Width * Math.Cos(AngleToRadian(angle)) / 2;
+            double x = CoordinateArea.Width * Math.Sin(AngleToRadian(angle)) / 2 + OriginalPoint.X;
+            double y = OriginalPoint.Y - CoordinateArea.Width * Math.Cos(AngleToRadian(angle)) / 2;
 
             return new Point2F((float)x, (float)y);
         }

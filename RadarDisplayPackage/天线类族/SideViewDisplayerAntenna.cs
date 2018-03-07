@@ -21,7 +21,7 @@ namespace RadarDisplayPackage
         protected override void DrawAntenna()
         {
             Point2F originalPoint = coordinateSystem.OriginalPoint;
-            Rect coordinateArea = coordinateSystem.CoordniteArea;
+            Rect coordinateArea = coordinateSystem.CoordinateArea;
             if (antennaAngle < 0)
                 antennaAngle += 360;
             antennaAngle %= 360;
@@ -63,8 +63,8 @@ namespace RadarDisplayPackage
             Point2F sweepBorderLinePoints1 = coordinateSystem.CalIntersectionPoint(sweepBeginAngle);
             Point2F sweepBorderLinePoints2 = coordinateSystem.CalIntersectionPoint(sweepEndAngle);
 
-            canvas.DrawLine(new Point2F(sweepBorderLinePoints1.X, coordinateSystem.CoordniteArea.Top), sweepBorderLinePoints1, sweepBorderBrush, 3);
-            canvas.DrawLine(new Point2F(sweepBorderLinePoints2.X, coordinateSystem.CoordniteArea.Top), sweepBorderLinePoints2, sweepBorderBrush, 3);
+            canvas.DrawLine(new Point2F(sweepBorderLinePoints1.X, coordinateSystem.CoordinateArea.Top), sweepBorderLinePoints1, sweepBorderBrush, 3);
+            canvas.DrawLine(new Point2F(sweepBorderLinePoints2.X, coordinateSystem.CoordinateArea.Top), sweepBorderLinePoints2, sweepBorderBrush, 3);
         }
     }
 }

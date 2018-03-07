@@ -74,23 +74,23 @@ namespace RadarDisplayPackage
             //Y轴画虚线
             for (int i = 1; i < Ysteps; i++)
             {
-                int step = coordinateSystem.CoordniteArea.Height / Ysteps;
-                int y = (int)(coordinateSystem.CoordniteArea.Bottom - (step * i));
-                canvas.DrawLine(new Point2F(coordinateSystem.CoordniteArea.Left, y), new Point2F(coordinateSystem.CoordniteArea.Right, y),
+                int step = coordinateSystem.CoordinateArea.Height / Ysteps;
+                int y = (int)(coordinateSystem.CoordinateArea.Bottom - (step * i));
+                canvas.DrawLine(new Point2F(coordinateSystem.CoordinateArea.Left, y), new Point2F(coordinateSystem.CoordinateArea.Right, y),
                     dashLineBrush, dashLineStrokewidth, DashLineStrokeStyle);
             }
 
             //X轴画虚线
             foreach (float angle in angleLines)
             {
-                float x = coordinateSystem.OriginalPoint.X + (int)((coordinateSystem.CoordniteArea.Width * angle) / 360);
-                canvas.DrawLine(new Point2F(x, coordinateSystem.CoordniteArea.Bottom), new Point2F(x, coordinateSystem.CoordniteArea.Top)
+                float x = coordinateSystem.OriginalPoint.X + (int)((coordinateSystem.CoordinateArea.Width * angle) / 360);
+                canvas.DrawLine(new Point2F(x, coordinateSystem.CoordinateArea.Bottom), new Point2F(x, coordinateSystem.CoordinateArea.Top)
                     , dashLineBrush, dashLineStrokewidth, DashLineStrokeStyle);
             }
 
             //坐标框
-            RectF rf = new RectF(coordinateSystem.CoordniteArea.Left, coordinateSystem.CoordniteArea.Top,
-                coordinateSystem.CoordniteArea.Right, coordinateSystem.CoordniteArea.Bottom);
+            RectF rf = new RectF(coordinateSystem.CoordinateArea.Left, coordinateSystem.CoordinateArea.Top,
+                coordinateSystem.CoordinateArea.Right, coordinateSystem.CoordinateArea.Bottom);
             canvas.DrawRectangle(rf, axisBrush, axisStrokeWidth);
 
             //画坐标刻度

@@ -24,7 +24,7 @@ namespace RadarDisplayPackage
 
         public override bool PointOutOfRange(Point p)
         {
-            if (p.X >= CoordniteArea.Left && p.X <= CoordniteArea.Right && p.Y >= CoordniteArea.Top && p.Y <= CoordniteArea.Bottom)
+            if (p.X >= CoordinateArea.Left && p.X <= CoordinateArea.Right && p.Y >= CoordinateArea.Top && p.Y <= CoordinateArea.Bottom)
                 return false;
             else
                 return true;
@@ -32,7 +32,7 @@ namespace RadarDisplayPackage
 
         public override Point2F CoordinateToPoint(PolarCoordinate coordinate)
         {
-            double r = (coordinate.Az / 360) * CoordniteArea.Width; //
+            double r = (coordinate.Az / 360) * CoordinateArea.Width; //
             double height = coordinate.Dis * Math.Sin(AngleToRadian(coordinate.El));
 
             //if (height > Range)     //是否超出范围
@@ -41,7 +41,7 @@ namespace RadarDisplayPackage
             //    return false;
             //}
             
-            double h = height * CoordniteArea.Height / Range;
+            double h = height * CoordinateArea.Height / Range;
 
             float x1 = OriginalPoint.X + (int)r;
             float y1 = OriginalPoint.Y - (int)h;
@@ -58,8 +58,8 @@ namespace RadarDisplayPackage
 
         public override Point2F CalIntersectionPoint(float angle)
         {
-            double x = CoordniteArea.Width * angle / 360 + OriginalPoint.X;
-            double y = CoordniteArea.Bottom;
+            double x = CoordinateArea.Width * angle / 360 + OriginalPoint.X;
+            double y = CoordinateArea.Bottom;
 
             return new Point2F((float)x, (float)y);
         }

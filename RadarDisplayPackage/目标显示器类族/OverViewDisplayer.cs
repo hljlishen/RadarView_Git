@@ -43,33 +43,32 @@ namespace RadarDisplayPackage
 
         public override float Distance
         {
-            get
-            {
-                return base.Distance;
-            }
+            get => base.Distance;
 
             set
             {
                 base.Distance = value;
                 background.Distance = value;
-                SetCoordinateArea(coordinateSystem.CoordniteArea);
+                SetCoordinateArea(coordinateSystem.CoordinateArea);
             }
         }
         public void ZoomArea(Rect zoomArea)    //视图放大
         {
-            Rect coordinateArea = coordinateSystem.CoordniteArea;       //当前显示区域，需要将zoomArea放大到这个区域
+            Rect coordinateArea = coordinateSystem.CoordinateArea;       //当前显示区域，需要将zoomArea放大到这个区域
             float mul = coordinateArea.Width / (float)zoomArea.Width;   //放大的倍数
             int x = zoomArea.Left - coordinateArea.Left;    //待放大区域左侧距离坐标区域左侧的差值
             int y = zoomArea.Top - coordinateArea.Top;      //待放大区域顶部距离坐标区域顶部的差值
-            Rect zoomedCoordinateArea = new Rect();            //放大后的coordinateArea
+            Rect zoomedCoordinateArea = new Rect
+            {
+                Left = coordinateArea.Left - (int) (x * mul),
+                Top = coordinateArea.Top - (int) (y * mul),
+                Width = (int) (coordinateArea.Width * mul),
+                Height = (int) (coordinateArea.Height * mul)
+            }; //放大后的coordinateArea
 
             //计算放大后左上角坐标
-            zoomedCoordinateArea.Left = coordinateArea.Left - (int)(x * mul);
-            zoomedCoordinateArea.Top = coordinateArea.Top - (int)(y * mul);
 
             //计算放大后的宽度和高度
-            zoomedCoordinateArea.Width = (int)(coordinateArea.Width * mul);
-            zoomedCoordinateArea.Height = (int)(coordinateArea.Height * mul);
 
             if (zoomedCoordinateArea.Width / drawArea.Width > MaximumZoom)  //放大超过极限
             {
@@ -82,14 +81,14 @@ namespace RadarDisplayPackage
         {
             //float x = position.X - coordinateSystem.OriginalPoint.X;
             //float y = position.Y - coordinateSystem.OriginalPoint.Y;
-            //Rect r = CoordinateSystem.MoveRect(coordinateSystem.CoordniteArea, new Point2F(x, y));
+            //Rect r = CoordinateSystem.MoveRect(coordinateSystem.CoordinateArea, new Point2F(x, y));
             //SetCoordinateArea(r);
         }
 
         private void SetCoordinateArea(Rect area)   //重新设置坐标系的位置，并根据新位置生成新的背景，天线，目标图层
         {
             Dispose();  //释放当前资源
-            coordinateSystem.CoordniteArea = area;  //最先重算坐标系位置和大小，坐标系是其他部件的基础
+            coordinateSystem.CoordinateArea = area;  //最先重算坐标系位置和大小，坐标系是其他部件的基础
             background = CreateBackground();        //根据坐标系重算背景位置大小
             antenna = CreateAntenna();              //根据坐标系重算天线位置大小
             waveGateViewManager = CreateWaveGateViewManager();  //根据坐标系重算波门位置大小
@@ -165,7 +164,10 @@ namespace RadarDisplayPackage
                 displayControl.MouseMove -= viewState.MouseMove;
             }
             catch
-            { }
+            {
+                // ignored
+            }
+
             viewState?.Dispose();
         }
 
@@ -173,10 +175,7 @@ namespace RadarDisplayPackage
         {
             if (state == viewState.GetState())
                 return;
-            else
-            {
-                viewState = CreateState(state);
-            }
+            viewState = CreateState(state);
 
             NotifyAllControlStateObservers();   //通知观察者
         }

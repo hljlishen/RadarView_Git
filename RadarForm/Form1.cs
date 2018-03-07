@@ -44,25 +44,13 @@ namespace RadarForm
             btn_WaveGate.Enabled = false;
         }
 
-        private string MakeIpAddressAndPortString()
-        {
-            return tb_ipAddress.Text + ":" + tb_port.Text;
-        }
+        private string MakeIpAddressAndPortString() => tb_ipAddress.Text + ":" + tb_port.Text;
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            controller.ResetDisplayer();
-        }
+        private void button1_Click(object sender, EventArgs e) => controller.ResetDisplayer();
 
-        private void btn_antennaControl_Click(object sender, EventArgs e)
-        {
-            controller.SwitchToAntennaControlState();
-        }
+        private void btn_antennaControl_Click(object sender, EventArgs e) => controller.SwitchToAntennaControlState();
 
-        private void btn_zoom_Click(object sender, EventArgs e)
-        {
-            controller.SwitchToZoomState();
-        }
+        private void btn_zoom_Click(object sender, EventArgs e) => controller.SwitchToZoomState();
 
         private void btn_auto_Click(object sender, EventArgs e)
         {
@@ -78,48 +66,37 @@ namespace RadarForm
 
         private void rb_auto_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_auto.Checked)
-            {
-                controller.TargetManagerSwitchMode(rb_auto.Text);   //切换到自动模式
-                controller.SwitchToZoomState();     //操作模式重置为放缩
-                btn_WaveGate.Enabled = true;
-            }
+            if (!rb_auto.Checked) return;
+            controller.TargetManagerSwitchMode(rb_auto.Text);   //切换到自动模式
+            controller.SwitchToZoomState();     //操作模式重置为放缩
+            btn_WaveGate.Enabled = true;
         }
 
         private void rb_semiAuto_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_semiAuto.Checked)
-            {
-                controller.TargetManagerSwitchMode(rb_semiAuto.Text);
-                controller.SwitchToZoomState();
-                btn_WaveGate.Enabled = true;
-            }
+            if (!rb_semiAuto.Checked) return;
+            controller.TargetManagerSwitchMode(rb_semiAuto.Text);
+            controller.SwitchToZoomState();
+            btn_WaveGate.Enabled = true;
         }
 
         private void rb_manual_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_manual.Checked)
-            { 
-                controller.TargetManagerSwitchMode(rb_manual.Text);
-                controller.SwitchToZoomState();
-                btn_WaveGate.Enabled = false;
-            }
+            if (!rb_manual.Checked) return;
+            controller.TargetManagerSwitchMode(rb_manual.Text);
+            controller.SwitchToZoomState();
+            btn_WaveGate.Enabled = false;
         }
 
         private void rb_intelligent_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_intelligent.Checked)
-            { 
-                controller.TargetManagerSwitchMode(rb_intelligent.Text);
-                controller.SwitchToZoomState();
-                btn_WaveGate.Enabled = false;
-            }
+            if (!rb_intelligent.Checked) return;
+            controller.TargetManagerSwitchMode(rb_intelligent.Text);
+            controller.SwitchToZoomState();
+            btn_WaveGate.Enabled = false;
         }
 
-        private void btn_WaveGate_Click(object sender, EventArgs e)
-        {
-            controller.SwitchToWaveGateState();
-        }
+        private void btn_WaveGate_Click(object sender, EventArgs e) => controller.SwitchToWaveGateState();
 
         public void NotifyChange(OverViewState state)
         {
@@ -170,10 +147,7 @@ namespace RadarForm
             }
         }
 
-        private void btn_start_Click(object sender, EventArgs e)
-        {
-            controller.ConnectDataSource("BIN", tb_filePath.Text);
-        }
+        private void btn_start_Click(object sender, EventArgs e) => controller.ConnectDataSource("BIN", tb_filePath.Text);
 
         private void 检波门限ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -210,39 +184,18 @@ namespace RadarForm
             }
         }
 
-        private void btn_startUDP_Click_1(object sender, EventArgs e)
-        {
-            controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());
-        }
+        private void btn_startUDP_Click_1(object sender, EventArgs e) => controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());
 
-        private void btn_clockwise_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetRotateDirection(RotateDirection.ClockWise);
-        }
+        private void btn_clockwise_Click(object sender, EventArgs e) => controller.AntennaSetRotateDirection(RotateDirection.ClockWise);
 
-        private void btn_counterclockwise_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetRotateDirection(RotateDirection.CounterClockWise);
-        }
+        private void btn_counterclockwise_Click(object sender, EventArgs e) => controller.AntennaSetRotateDirection(RotateDirection.CounterClockWise);
 
-        private void btn_Rpm0_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetRotationRate(RotateRate.Rpm0);
-        }
+        private void btn_Rpm0_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm0);
 
-        private void btn_Rpm2_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetRotationRate(RotateRate.Rpm2);
-        }
+        private void btn_Rpm2_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm2);
 
-        private void btn_Rpm5_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetRotationRate(RotateRate.Rpm5);
-        }
+        private void btn_Rpm5_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm5);
 
-        private void btn_Rpm10_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetRotationRate(RotateRate.Rpm10);
-        }
+        private void btn_Rpm10_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm10);
     }
 }

@@ -62,7 +62,7 @@ namespace RadarDisplayPackage
                 }
 
                 //扇形的X轴Y轴半径是矩形框width的一半
-                SizeF size = new SizeF(displayer.coordinateSystem.CoordniteArea.Width / 2, displayer.coordinateSystem.CoordniteArea.Height / 2);
+                SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);
 
                 //添加弧线
                 ArcSegment arc = new ArcSegment(dragLinePoint, size, 0, sd, ArcSize.Small);
@@ -93,7 +93,7 @@ namespace RadarDisplayPackage
                 dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
 
                 //计算拖动位置
-                dragLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F(e.Location), displayer.coordinateSystem.CoordniteArea.Width / 2);
+                dragLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F(e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
             }
         }
 
@@ -111,7 +111,7 @@ namespace RadarDisplayPackage
                 dragAngle = beginAngle;
 
                 //计算第一条线与圆周的夹角
-                beginLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F( e.Location), displayer.coordinateSystem.CoordniteArea.Width / 2);
+                beginLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F( e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
                 dragLinePoint = beginLinePoint;
             }
         }
