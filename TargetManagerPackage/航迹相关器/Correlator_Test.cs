@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TargetManagerPackage
+﻿namespace TargetManagerPackage
 {
-     class Corelator_Test : TrackCorelator
+    class Corelator_Test : TrackCorelator
     {
         public override void Corelate(Sector center, Sector left, Sector right)
         {

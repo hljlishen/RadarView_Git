@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.IO;
 
 namespace CycleDataDrivePackage
 {
@@ -62,10 +57,7 @@ namespace CycleDataDrivePackage
 
         public override string Source
         {
-            get
-            {
-                return base.Source;
-            }
+            get => base.Source;
 
             set
             {

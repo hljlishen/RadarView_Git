@@ -64,14 +64,14 @@ namespace TargetManagerPackage
 
             if (AntennaPreviousAngle < AntennaCurrentAngle)
             {
-                if (AntennaPreviousAngle < 1 && AntennaCurrentAngle > 350)  //逆时针跨越360度
-                    return RotateDirection.CounterClockWise;
-                return RotateDirection.ClockWise;
+                return AntennaPreviousAngle < 1 && AntennaCurrentAngle > 350
+                    ? RotateDirection.CounterClockWise
+                    : RotateDirection.ClockWise;
             }
 
-            if (AntennaPreviousAngle > 350 && AntennaCurrentAngle < 1)
-                return RotateDirection.ClockWise;
-            return RotateDirection.CounterClockWise;
+            return AntennaPreviousAngle > 350 && AntennaCurrentAngle < 1
+                ? RotateDirection.ClockWise
+                : RotateDirection.CounterClockWise;
         }
 
         public void ConnectDataSource(ICycleDataSubject subject)

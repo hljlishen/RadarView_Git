@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TargetManagerPackage
 {
@@ -48,17 +45,11 @@ namespace TargetManagerPackage
             {
                 return null;
             }
-            else
-            {
-                if(trackid == 1)
-                {
 
-                }
-                TargetTrack t = new TargetTrack(current);
-                t.locations.Add(pre);   //上周期自由点的位置添加为历史位置
-                t.trackID = trackid + 1;
-                return t;
-            }
+            TargetTrack t = new TargetTrack(current);
+            t.locations.Add(pre);   //上周期自由点的位置添加为历史位置
+            t.trackID = trackid + 1;
+            return t;
         }
 
         public static void ReleaseAllTrackIDs()

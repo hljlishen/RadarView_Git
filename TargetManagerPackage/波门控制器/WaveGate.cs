@@ -4,67 +4,21 @@ namespace TargetManagerPackage
 {
     public class WaveGate : AngleArea
     {
-        float beginDistance;
-        float endDistance;
-        bool isSemiAuto;
-        int sweepCount = 0;
-        bool active = false;
+        public float BeginDistance { get; }
 
-        public float BeginDistance
-        {
-            get
-            {
-                return beginDistance;
-            }
-        }
+        public float EndDistance { get; }
 
-        public float EndDistance
-        {
-            get
-            {
-                return endDistance;
-            }
-        }
+        public bool IsSemiAuto { get; }
 
-        public bool IsSemiAuto
-        {
-            get
-            {
-                return isSemiAuto;
-            }
-        }
+        public int SweepCount { get; set; } = 0;
 
-        public int SweepCount
-        {
-            get
-            {
-                return sweepCount;
-            }
-
-            set
-            {
-                sweepCount = value;
-            }
-        }
-
-        public bool Active
-        {
-            get
-            {
-                return active;
-            }
-
-            set
-            {
-                active = value;
-            }
-        }
+        public bool Active { get; set; } = false;
 
         public WaveGate(float beginAngle, float endAngle, float distance1, float distance2, bool isSemi) : base(beginAngle, endAngle)
         {
-            beginDistance = Math.Min(distance1,distance2);
-            endDistance = Math.Max(distance1, distance2);
-            isSemiAuto = isSemi;
+            BeginDistance = Math.Min(distance1,distance2);
+            EndDistance = Math.Max(distance1, distance2);
+            IsSemiAuto = isSemi;
         }
 
         public bool IsCoordinateInWaveGate(PolarCoordinate c)
@@ -72,23 +26,12 @@ namespace TargetManagerPackage
             if (c == null)
                 return false;
 
-            //if(IsAngleInWaveGateRange(c.Az) && IsDistanceInWaveGateRange(c.ProjectedDis))
-            if (IsAngleInArea(c.Az) && IsDistanceInWaveGateRange(c.ProjectedDis))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return IsAngleInArea(c.Az) && IsDistanceInWaveGateRange(c.ProjectedDis);
         }
 
         public bool IsDistanceInWaveGateRange(float distance)
         {
-            if (distance >= BeginDistance && distance <= EndDistance)
-                return true;
-            else
-                return false;
+            return distance >= BeginDistance && distance <= EndDistance;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace TargetManagerPackage
             {
                 StopSectionSweep();     //先停止扇扫
             }
-            StartSectionSweep(area);
+            BeginSectionSweep(area);
             NotifySweepModeChange();
         }
 
@@ -40,28 +40,28 @@ namespace TargetManagerPackage
         {
             _rotateController.SetRotateRate(rate);
             if (_isSectionSweeping)
-                StartSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
+                BeginSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
         }
 
-        private void StartSectionSweep(AngleArea area)
+        private void BeginSectionSweep(AngleArea area)
         {
             _isSectionSweeping = true;
             _sweepSection = area;
-            UnregisterAngleAreaSurveillance();
-            RegisterAngleAreaSurveillance(area);
+            UnregisterAngleAreaNotification();
+            RegisterAngleAreaNotification(area);
         }
 
-        private void UnregisterAngleAreaSurveillance()
+        private void UnregisterAngleAreaNotification()
         {
-            var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
-            angleAreaSurveillance.UnregisterAngleArea(this, _modifiedSection);
+            var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
+            antennaLeaveAngleAreaSubject.UnregisterAngleArea(this, _modifiedSection);
         }
 
-        private void RegisterAngleAreaSurveillance(AngleArea area)
+        private void RegisterAngleAreaNotification(AngleArea area)
         {
-            var angleAreaSurveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
+            var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
             _modifiedSection = _rotateController.CalAntiInertiaSection(area);
-            angleAreaSurveillance.RegisterAngleArea(this, _modifiedSection);
+            antennaLeaveAngleAreaSubject.RegisterAngleArea(this, _modifiedSection);
         }
 
         public override float GetSweepBeginAngle() => _sweepSection.BeginAngle;
@@ -72,7 +72,7 @@ namespace TargetManagerPackage
         {
             _sweepSection = null;
             _isSectionSweeping = false;
-            UnregisterAngleAreaSurveillance();
+            UnregisterAngleAreaNotification();
         }
 
         public void NotifyLeaveAngleArea(AngleArea area) => AntennaLeaveSectionSweepAngleArea();//天线扫过了扇扫区域，需要翻转天线

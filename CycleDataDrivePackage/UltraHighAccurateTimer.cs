@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
+using System.Threading;
 
 namespace CycleDataDrivePackage
 {
@@ -13,7 +8,6 @@ namespace CycleDataDrivePackage
     {
         public delegate void ManualTimerEventHandler();
         public event ManualTimerEventHandler tick;
-        private object threadLock = new object();       // for thread safe
         private long clockFrequency;            // result of QueryPerformanceFrequency() 
         bool running = true;
         Thread thread;
@@ -25,11 +19,11 @@ namespace CycleDataDrivePackage
         /// 
         public int Interval
         {
-            get { return intervalMs; }
+            get => intervalMs;
             set
             {
                 intervalMs = value;
-                intevalTicks = (long)((double)value * (double)clockFrequency / (double)1000);
+                intevalTicks = (long)(value * (double)clockFrequency / 1000);
             }
         }
         private long intevalTicks;

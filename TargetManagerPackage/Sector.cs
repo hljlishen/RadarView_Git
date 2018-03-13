@@ -45,14 +45,10 @@ namespace TargetManagerPackage
         {
             for( int i = tracks.Count - 1; i >= 0; i--) //逆向遍历
             {
-                if(tracks[i].active)    //被选中状态，删除
-                {
-                    tracks[i].Dispose();
-                    tracks.RemoveAt(i);
-                }
+                if (!tracks[i].active) continue;
+                tracks[i].Dispose();
+                tracks.RemoveAt(i);
             }
-
-            return;
         }
 
         public void AddNewDot(TargetDot dot)

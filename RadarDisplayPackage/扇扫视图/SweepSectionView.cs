@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System;
 using TargetManagerPackage;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using SweepDirection = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.SweepDirection;
 
 namespace RadarDisplayPackage
 {
-    class SweepSectionView : IDisposable
+    internal class SweepSectionView : IDisposable
     {
-        AngleArea sweepSection;
-        PathGeometry sweepSectionGraphic;
-        OverViewDisplayer displayer;
-        Brush antennaRangeAreaBrush;
+        private readonly PathGeometry _sweepSectionGraphic;
+        private readonly OverViewDisplayer _displayer;
+        private readonly Brush _antennaRangeAreaBrush;
 
         public SweepSectionView(AngleArea sweepSection, OverViewDisplayer displayer)
         {
-            this.sweepSection = sweepSection;
-            this.displayer = displayer;
+            _displayer = displayer;
 
-            antennaRangeAreaBrush = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 0, 0));
-            antennaRangeAreaBrush.Opacity = 0.25f;
+            _antennaRangeAreaBrush = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 0, 0));
+            _antennaRangeAreaBrush.Opacity = 0.25f;
 
-            sweepSectionGraphic = displayer.Factory.CreatePathGeometry();
-            GeometrySink gs = sweepSectionGraphic.Open();
+            _sweepSectionGraphic = displayer.Factory.CreatePathGeometry();
+            GeometrySink gs = _sweepSectionGraphic.Open();
             gs.BeginFigure(displayer.coordinateSystem.OriginalPoint, FigureBegin.Filled);
 
             Point2F p1 = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.BeginAngle);
@@ -33,7 +27,7 @@ namespace RadarDisplayPackage
 
             Point2F p2 = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.EndAngle);
             //扇形的X轴Y轴半径是矩形框width的一半
-            SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);
+            SizeF size = new SizeF((float)displayer.coordinateSystem.CoordinateArea.Width / 2, (float)displayer.coordinateSystem.CoordinateArea.Height / 2);
 
             //添加弧线
             ArcSegment arc = new ArcSegment(p2, size, 0, SweepDirection.Clockwise, ArcSize.Small);
@@ -47,14 +41,14 @@ namespace RadarDisplayPackage
 
         public void Draw()
         {
-            displayer.Canvas.DrawGeometry(sweepSectionGraphic, antennaRangeAreaBrush,3);
-            displayer.Canvas.FillGeometry(sweepSectionGraphic, antennaRangeAreaBrush);
+            _displayer.Canvas.DrawGeometry(_sweepSectionGraphic, _antennaRangeAreaBrush,3);
+            _displayer.Canvas.FillGeometry(_sweepSectionGraphic, _antennaRangeAreaBrush);
         }
 
         public void Dispose()
         {
-            antennaRangeAreaBrush?.Dispose();
-            sweepSectionGraphic?.Dispose();
+            _antennaRangeAreaBrush?.Dispose();
+            _sweepSectionGraphic?.Dispose();
         }
     }
 }

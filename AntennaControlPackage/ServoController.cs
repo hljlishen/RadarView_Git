@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO.Ports;
 
 namespace AntennaControlPackage
@@ -18,46 +14,48 @@ namespace AntennaControlPackage
         private const string CounterClockWise5Cmd = "v375\r";      //逆时针5
         private const string CounterClockWise10Cmd = "v750\r";     //逆时针10
         private const string CounterClockWise20Cmd = "v1500\r";    //逆时针20
-        private SerialPort sp;
+        private readonly SerialPort _serialPort;
 
         public ServoController()
         {
-            InitializeSerialPort(out sp);       //初始化串口设置
+            InitializeSerialPort(out _serialPort);       //初始化串口设置
         }
 
         public void SetRotationRate(RotateMode mode)
         {
-            if (!sp.IsOpen)
+            if (!_serialPort.IsOpen)
                 return;
             switch(mode)
             {
                 case RotateMode.ClockWise2:
-                    sp.Write(ClockWise2Cmd);
+                    _serialPort.Write(ClockWise2Cmd);
                     break;
                 case RotateMode.ClockWise5:
-                    sp.Write(ClockWise5Cmd);
+                    _serialPort.Write(ClockWise5Cmd);
                     break;
                 case RotateMode.ClockWise10:
-                    sp.Write(ClockWise10Cmd);
+                    _serialPort.Write(ClockWise10Cmd);
                     break;
                 case RotateMode.ClockWise20:
-                    sp.Write(ClockWise20Cmd);
+                    _serialPort.Write(ClockWise20Cmd);
                     break;
                 case RotateMode.CounterClockWise2:
-                    sp.Write(CounterClockWise2Cmd);
+                    _serialPort.Write(CounterClockWise2Cmd);
                     break;
                 case RotateMode.CounterClockWise5:
-                    sp.Write(CounterClockWise5Cmd);
+                    _serialPort.Write(CounterClockWise5Cmd);
                     break;
                 case RotateMode.CounterClockWise10:
-                    sp.Write(CounterClockWise10Cmd);
+                    _serialPort.Write(CounterClockWise10Cmd);
                     break;
                 case RotateMode.CounterClockWise20:
-                    sp.Write(CounterClockWise20Cmd);
+                    _serialPort.Write(CounterClockWise20Cmd);
                     break;
                 case RotateMode.Stop:
-                    sp.Write(StopCmd);
+                    _serialPort.Write(StopCmd);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
             }
         }
 

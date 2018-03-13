@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SweepModeSubject.cs" />
     <Compile Include="天线控制器\AntennaRotateController.cs" />
     <Compile Include="天线控制器\AntennaSectionSweepController.cs" />
     <Compile Include="DataSourceController.cs" />
@@ -53,7 +52,7 @@
     <Compile Include="自由点相关器\DotCorelator_Manual.cs" />
     <Compile Include="自由点相关器\DotCorelator_WaveGate.cs" />
     <Compile Include="凝聚器\IDotCorelateAlgorithm.cs" />
-    <Compile Include="角度区域监听器\AngleAreaSurveillance.cs" />
+    <Compile Include="角度区域监听器\AntennaLeaveAngleAreaSubject.cs" />
     <Compile Include="角度区域监听器\AngleArea.cs" />
     <Compile Include="角度区域监听器\ILeaveAngleAreaObserver.cs" />
     <Compile Include="角度区域监听器\ILeaveAngleAreaSubject.cs" />
@@ -91,7 +90,7 @@
     <Compile Include="目标类\TargetDot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="波门控制器\WaveGate.cs" />
-    <Compile Include="波门控制器\WaveGateManager_Test.cs" />
+    <Compile Include="波门控制器\WaveGateManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AntennaControlPackage\AntennaControlPackage.csproj">

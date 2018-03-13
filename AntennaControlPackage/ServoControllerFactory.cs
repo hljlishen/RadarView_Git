@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AntennaControlPackage
+﻿namespace AntennaControlPackage
 {
     public class ServoControllerFactory
     {
-        private static ServoController servoController = null;
+        private static ServoController _servoController;
 
         public static IServoController CreateServoController()
         {
-            if (servoController == null)
-                servoController = new ServoController();
-            return servoController;
+            return _servoController ?? (_servoController = new ServoController());
         }
     }
 }

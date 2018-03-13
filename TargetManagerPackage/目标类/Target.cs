@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TargetManagerPackage
 {
@@ -22,46 +18,28 @@ namespace TargetManagerPackage
 
         public float AZ
         {
-            get { return CurrentCoordinate.Az; }
-            set { CurrentCoordinate.Az = value; }
+            get => CurrentCoordinate.Az;
+            set => CurrentCoordinate.Az = value;
         }
 
         public float EL
         {
-            get { return CurrentCoordinate.El; }
-            set { CurrentCoordinate.El = value; }
+            get => CurrentCoordinate.El;
+            set => CurrentCoordinate.El = value;
         }
 
         public float Dis
         {
-            get { return CurrentCoordinate.Dis; }
-            set { CurrentCoordinate.Dis = value; }
+            get => CurrentCoordinate.Dis;
+            set => CurrentCoordinate.Dis = value;
         }
 
-        public float Height
-        {
-            get
-            {
-                return (float)(currentCoordinate.Dis * Math.Sin(AngleToRadian(currentCoordinate.El)));
-            }
-        }
+        public float Height => (float)(currentCoordinate.Dis * Math.Sin(AngleToRadian(currentCoordinate.El)));
 
-        public  PolarCoordinate CurrentCoordinate
-        {
-            get
-            {
-                return currentCoordinate;
-            }
-        }
+        public  PolarCoordinate CurrentCoordinate => currentCoordinate;
 
-        public static double AngleToRadian(double angle)
-        {
-            return System.Math.PI * angle / 180;
-        }
+        public static double AngleToRadian(double angle) => Math.PI * angle / 180;
 
-        public float DistanceTo(Target t)
-        {
-            return CurrentCoordinate.DistanceTo(t.CurrentCoordinate);
-        }
+        public float DistanceTo(Target t) => CurrentCoordinate.DistanceTo(t.currentCoordinate);
     }
 }

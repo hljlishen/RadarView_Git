@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TargetManagerPackage
 {
@@ -11,73 +7,50 @@ namespace TargetManagerPackage
         private float az;   //方位
         private float el;   //仰角
         private float dis;  //距离
-        private float projectedDis; //平面投影距离
 
         public float Az
         {
-            get
-            {
-                return az;
-            }
+            get => az;
 
-            set
-            {
-                az = value % 360;
-            }
+            set => az = value % 360;
         }
 
         public float El
         {
-            get
-            {
-                return el;
-            }
+            get => el;
 
             set
             {
                 el = value;
                 if(el > 0 && dis > 0)
                 {
-                    projectedDis = (float)(dis * Math.Cos(AngleToRadian(el)));
+                    ProjectedDis = (float)(dis * Math.Cos(AngleToRadian(el)));
                 }
             }
         }
 
         public float Dis
         {
-            get
-            {
-                return dis;
-            }
+            get => dis;
 
             set
             {
                 dis = value;
                 if (el > 0 && dis > 0)
                 {
-                    projectedDis = (float)(dis * Math.Cos(AngleToRadian((float)el)));
+                    ProjectedDis = (float)(dis * Math.Cos(AngleToRadian((float)el)));
                 }
             }
         }
 
-        public float ProjectedDis
-        {
-            get
-            {
-                return projectedDis;
-            }
-            set
-            {
-                projectedDis = value;
-            }
-        }
+        public float ProjectedDis { get; set; }
 
         public PolarCoordinate()
         {
             Az = -1;
             El = -1;
             Dis = -1;
-            projectedDis = -1;
+            ProjectedDis = -1;
         }
 
         public PolarCoordinate(PolarCoordinate c)
@@ -85,7 +58,7 @@ namespace TargetManagerPackage
             az = c.az;
             el = c.el;
             dis = c.dis;
-            projectedDis = c.projectedDis;
+            ProjectedDis = c.ProjectedDis;
         }
 
         public PolarCoordinate Copy()
@@ -103,29 +76,11 @@ namespace TargetManagerPackage
             return (float)Math.PI * angle / 180;
         }
 
-        public float X
-        {
-            get
-            {
-                return (float)(dis * Math.Cos(AngleToRadian( el)) * Math.Cos(AngleToRadian( az)));
-            }
-        }
+        public float X => (float)(dis * Math.Cos(AngleToRadian( el)) * Math.Cos(AngleToRadian( az)));
 
-        public float Y
-        {
-            get
-            {
-                return (float)(dis * Math.Cos(AngleToRadian(el)) * Math.Sin(AngleToRadian(az)));
-            }
-        }
+        public float Y => (float)(dis * Math.Cos(AngleToRadian(el)) * Math.Sin(AngleToRadian(az)));
 
-        public float Z
-        {
-            get
-            {
-                return (float)(dis * Math.Sin(AngleToRadian(el)));
-            }
-        }
+        public float Z => (float)(dis * Math.Sin(AngleToRadian(el)));
 
         public static float DistanceBetween(PolarCoordinate c1, PolarCoordinate c2)
         {

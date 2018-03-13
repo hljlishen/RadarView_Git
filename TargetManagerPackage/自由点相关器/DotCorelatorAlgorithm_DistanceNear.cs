@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TargetManagerPackage
+﻿namespace TargetManagerPackage
 {
     class DotCorelatorAlgorithm_DistanceNear : IDotCorelateAlgorithm
     {
@@ -13,10 +7,7 @@ namespace TargetManagerPackage
         {
             float dis = dot1.DistanceTo(dot2);
 
-            if (dis < DotNearThreshold)
-                return true;
-            else
-                return false;
+            return dis < DotNearThreshold;
         }
     }
 }

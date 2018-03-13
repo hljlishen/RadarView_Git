@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TargetManagerPackage
 {
     public class TargetDot : Target
     {
         //int am; //回波幅度值
-        bool adopted;
-        bool shouldDisplay = true;
         public TargetDot() : base()
         {
             //CurrentPosition = new PolarCoordinate();
-            adopted = false;
+            Adopted = false;
         }
 
         public TargetDot(float az, float el, float dis)
@@ -25,31 +19,9 @@ namespace TargetManagerPackage
             CurrentCoordinate.ProjectedDis = (float)(dis * Math.Cos(AngleToRadian(el)));
         }
 
-        public bool Adopted
-        {
-            get
-            {
-                return adopted;
-            }
+        public bool Adopted { get; set; }
 
-            set
-            {
-                adopted = value;
-            }
-        }
-
-        public bool ShouldDisplay
-        {
-            get
-            {
-                return shouldDisplay;
-            }
-
-            set
-            {
-                shouldDisplay = value;
-            }
-        }
+        public bool ShouldDisplay { get; set; } = true;
 
         public TargetDot GetMiddleDot(TargetDot dot)
         {

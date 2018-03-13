@@ -9,11 +9,11 @@ namespace TargetManagerPackage
 {
     public class TargetManagerFactory
     {
-        private static WaveGateManager_Test _waveGateManager;
+        private static WaveGateManager _waveGateManager;
         private static TargetManager _targetManager;
         private static AntennaSectionSweepController _sectionSweepController;
         private static DataSourceController _dataSourcController;
-        private static AngleAreaSurveillance _angleAreaSurveillance;
+        private static AntennaLeaveAngleAreaSubject _antennaLeaveAngleAreaSubject;
 
         public static DataSourceController CreateDataSourceController()
         {
@@ -40,9 +40,9 @@ namespace TargetManagerPackage
             return CreateWaveGateManager();
         }
 
-        private static WaveGateManager_Test CreateWaveGateManager()
+        private static WaveGateManager CreateWaveGateManager()
         {
-            return _waveGateManager ?? (_waveGateManager = new WaveGateManager_Test());
+            return _waveGateManager ?? (_waveGateManager = new WaveGateManager());
         }   //返回WaveGateManager_Test类
 
         public static IWaveGateController CreateWaveGateController()
@@ -65,9 +65,9 @@ namespace TargetManagerPackage
             return CreateAntennaManager();
         }
 
-        public static AngleAreaSurveillance CreateAngleAreaSurveillance()
+        public static AntennaLeaveAngleAreaSubject CreateAntennaLeaveAngleAreaSubject()
         {
-            return _angleAreaSurveillance ?? (_angleAreaSurveillance = new AngleAreaSurveillance());
+            return _antennaLeaveAngleAreaSubject ?? (_antennaLeaveAngleAreaSubject = new AntennaLeaveAngleAreaSubject());
         }
 
         public static RotateDirection GetAntennaDirection()

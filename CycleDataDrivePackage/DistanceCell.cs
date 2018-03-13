@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Collections;
-using System.IO;
 
 namespace CycleDataDrivePackage
 {
@@ -99,7 +92,7 @@ namespace CycleDataDrivePackage
             for (int i = 0; i < count; i++, pos++)
             {
                 ret <<= 8;
-                ret += (int)data[pos];
+                ret += data[pos];
             }
 
             return ret;
@@ -109,29 +102,21 @@ namespace CycleDataDrivePackage
         {
             if (value > values[0])
                 return 0;
-            else if (value < values[values.Length - 1])
+            if (value < values[values.Length - 1])
                 return values.Length - 1;
-            else
+            for(int i = 0; i < values.Length; i ++)
             {
-                for(int i = 0; i < values.Length; i ++)
+                if(value <= values[i] && value > values[i+1] )
                 {
-                    if(value <= values[i] && value > values[i+1] )
-                    {
-                        float differI = Math.Abs(values[i] - value);
-                        float differI1 = Math.Abs(values[i + 1] - value);
-                        if (differI < differI1)
-                            return i;
-                        else
-                            return i + 1;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    float differI = Math.Abs(values[i] - value);
+                    float differI1 = Math.Abs(values[i + 1] - value);
+                    if (differI < differI1)
+                        return i;
+                    return i + 1;
                 }
-
-                return -1;
             }
+
+            return -1;
         }
     }
 }

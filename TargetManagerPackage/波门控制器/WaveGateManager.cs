@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TargetManagerPackage
 {
-    public class WaveGateManager_Test : IWaveGateDataProvider, IWaveGateController, ILeaveAngleAreaObserver
+    public class WaveGateManager : IWaveGateDataProvider, IWaveGateController, ILeaveAngleAreaObserver
     {
         protected List<WaveGate> waveGates;
         protected List<IWaveGateObserver> obs;
-        protected AngleAreaSurveillance surveillance;
+        protected AntennaLeaveAngleAreaSubject Subject;
         protected const int SemiAutoWaveGateLife = 3;   //半自动波门的生命长度（天线扫出该波门的次数）
 
-        public WaveGateManager_Test()
+        public WaveGateManager()
         {
             waveGates = new List<WaveGate>();
 
             obs = new List<IWaveGateObserver>();
 
-            surveillance = TargetManagerFactory.CreateAngleAreaSurveillance();
+            Subject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
         }
         public void AddWaveGate(WaveGate gate)
         {
@@ -30,7 +26,7 @@ namespace TargetManagerPackage
 
             if(gate.IsSemiAuto)     //半自动波门注册，监视角度区域，天线扫出该波门获得通知
             {
-                surveillance.RegisterAngleArea(this, gate);
+                Subject.RegisterAngleArea(this, gate);
             }
 
             NotifyAllObservers(gate, WaveGateSubjectNotifyState.Add);
@@ -46,7 +42,7 @@ namespace TargetManagerPackage
 
             if(gate.IsSemiAuto) //手动删除的是半自动波门，反注册监听区域，天线扫出该区域不在获得通知
             {
-                surveillance.UnregisterAngleArea(this, gate);
+                Subject.UnregisterAngleArea(this, gate);
             }
 
             NotifyAllObservers(gate, WaveGateSubjectNotifyState.Delete);
@@ -86,12 +82,11 @@ namespace TargetManagerPackage
             WaveGate gate = (WaveGate)area;
             gate.SweepCount = gate.SweepCount + 1;  //该波门扫过计数加一
 
-            if(gate.SweepCount >= SemiAutoWaveGateLife)     //删除半自动波门
-            {
-                surveillance.UnregisterAngleArea(this, gate);
-                NotifyAllObservers(gate, WaveGateSubjectNotifyState.Delete);
-                waveGates.Remove(gate);
-            }
+            if (gate.SweepCount < SemiAutoWaveGateLife) return;
+
+            Subject.UnregisterAngleArea(this, gate);
+            NotifyAllObservers(gate, WaveGateSubjectNotifyState.Delete);
+            waveGates.Remove(gate);
         }   //获得天线离开波门通知
 
         private void NotifyAllObservers(WaveGate gate, WaveGateSubjectNotifyState type)

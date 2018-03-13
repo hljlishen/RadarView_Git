@@ -30,10 +30,7 @@ namespace RadarDisplayPackage
         public void CalSweepSectionView()
         {
             view?.Dispose();
-            if (sweepModeSubject.IsSectionSweeping())
-                view = new SweepSectionView(sweepModeSubject.GetSweepSection(), displayer);
-            else
-                view = null;
+            view = sweepModeSubject.IsSectionSweeping() ? new SweepSectionView(sweepModeSubject.GetSweepSection(), displayer) : null;
         }
 
         public void Draw()
