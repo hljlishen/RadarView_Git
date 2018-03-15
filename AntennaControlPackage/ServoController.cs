@@ -3,9 +3,9 @@ using System.IO.Ports;
 
 namespace AntennaControlPackage
 {
-    class ServoController : IServoController
+    internal class ServoController : IServoController
     {
-        private const string StopCmd = "v0\r";                      //天线停止
+        private const string StopCmd = "v0\r";                     //天线停止
         private const string ClockWise2Cmd = "v-150\r";            //顺时针2
         private const string ClockWise5Cmd = "v-375\r";            //顺时针5
         private const string ClockWise10Cmd = "v-750\r";           //顺时针10

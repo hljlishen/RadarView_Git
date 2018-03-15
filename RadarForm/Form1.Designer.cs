@@ -176,7 +176,7 @@
             this.groupBox5.Controls.Add(this.tb_height);
             this.groupBox5.Controls.Add(this.label3);
             this.groupBox5.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox5.Location = new System.Drawing.Point(7, 274);
+            this.groupBox5.Location = new System.Drawing.Point(7, 313);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(467, 89);
             this.groupBox5.TabIndex = 20;
@@ -323,7 +323,7 @@
             this.groupBox1.Controls.Add(this.btn_Rpm0);
             this.groupBox1.Controls.Add(this.btn_clockwise);
             this.groupBox1.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox1.Location = new System.Drawing.Point(6, 77);
+            this.groupBox1.Location = new System.Drawing.Point(6, 99);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(467, 191);
             this.groupBox1.TabIndex = 18;
@@ -350,7 +350,7 @@
             this.btn_Rpm20.Name = "btn_Rpm20";
             this.btn_Rpm20.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm20.TabIndex = 17;
-            this.btn_Rpm20.Text = "20";
+            this.btn_Rpm20.Text = "20Rpm";
             this.btn_Rpm20.UseVisualStyleBackColor = false;
             // 
             // btn_Rpm10
@@ -361,7 +361,7 @@
             this.btn_Rpm10.Name = "btn_Rpm10";
             this.btn_Rpm10.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm10.TabIndex = 17;
-            this.btn_Rpm10.Text = "10";
+            this.btn_Rpm10.Text = "10Rpm";
             this.btn_Rpm10.UseVisualStyleBackColor = false;
             this.btn_Rpm10.Click += new System.EventHandler(this.btn_Rpm10_Click);
             // 
@@ -373,7 +373,7 @@
             this.btn_Rpm5.Name = "btn_Rpm5";
             this.btn_Rpm5.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm5.TabIndex = 17;
-            this.btn_Rpm5.Text = "5";
+            this.btn_Rpm5.Text = "5Rpm";
             this.btn_Rpm5.UseVisualStyleBackColor = false;
             this.btn_Rpm5.Click += new System.EventHandler(this.btn_Rpm5_Click);
             // 
@@ -385,7 +385,7 @@
             this.btn_Rpm2.Name = "btn_Rpm2";
             this.btn_Rpm2.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm2.TabIndex = 17;
-            this.btn_Rpm2.Text = "2";
+            this.btn_Rpm2.Text = "2Rpm";
             this.btn_Rpm2.UseVisualStyleBackColor = false;
             this.btn_Rpm2.Click += new System.EventHandler(this.btn_Rpm2_Click);
             // 
@@ -397,7 +397,7 @@
             this.btn_Rpm0.Name = "btn_Rpm0";
             this.btn_Rpm0.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm0.TabIndex = 17;
-            this.btn_Rpm0.Text = "0";
+            this.btn_Rpm0.Text = "停止";
             this.btn_Rpm0.UseVisualStyleBackColor = false;
             this.btn_Rpm0.Click += new System.EventHandler(this.btn_Rpm0_Click);
             // 
@@ -405,9 +405,9 @@
             // 
             this.btn_clockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_clockwise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_clockwise.Location = new System.Drawing.Point(35, 51);
+            this.btn_clockwise.Location = new System.Drawing.Point(28, 51);
             this.btn_clockwise.Name = "btn_clockwise";
-            this.btn_clockwise.Size = new System.Drawing.Size(134, 23);
+            this.btn_clockwise.Size = new System.Drawing.Size(141, 23);
             this.btn_clockwise.TabIndex = 17;
             this.btn_clockwise.Text = "顺时针";
             this.btn_clockwise.UseVisualStyleBackColor = false;

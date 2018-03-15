@@ -8,7 +8,7 @@ namespace TargetManagerPackage
     {
         private AzimuthCell[] _matrix;       //保存周期数据的数组
         private int _currentMatrixIndex;       //新数据存储位置           
-        public const int AzimuthCellCount = 2048;        //数组的长度
+        public const int AzimuthCellCount = 1024;        //数组的长度
 
         public CycleDataMatrix()
         {
