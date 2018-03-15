@@ -1,9 +1,6 @@
-﻿using System;
+﻿using CycleDataDrivePackage;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
 {
@@ -11,24 +8,17 @@ namespace TargetManagerPackage
     {
         public override void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
         {
-            if(center.index == 0)
-            {
-
-            }
             List<TargetDot> dots = new List<TargetDot>();
             MoveNewDotToOldDot(center);  //上周期的新目标点变为本周起的自由点
 
             foreach (AzimuthCell cell in cells)     //将方位单元格中的每个距离单元格生成一个目标点
             {
-                foreach (object o in cell.DisCells.Values)
-                {
-                    DistanceCell dis = (DistanceCell)o;
-                    if (dis.adopted)
-                        continue;
-                    TargetDot dot = new TargetDot(cell.GetAngle(), dis.el, dis.Distance);
-                    //dis.adopted = true;
-                    dots.Add(dot);
-                }
+                dots.AddRange
+                (
+                    from DistanceCell dis in cell.DisCells.Values
+                    where !dis.adopted
+                    select new TargetDot(cell.GetAngle(), dis.el, dis.Distance)
+                );
             }
 
             List<TargetDot> ls = dots;

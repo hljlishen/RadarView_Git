@@ -28,12 +28,6 @@ namespace TargetManagerPackage
                 Observers?.Remove(ob);
         }
 
-        //protected void NotifyAllObservers(Target t, NotifyType type)
-        //{
-        //    foreach (ITargetObserver ob in obs)
-        //        ob.NotifyAntennaDataChange(t, type);
-        //}
-
         protected void NotifyUpdateSectorDot(Sector s)
         {
             foreach (ITargetObserver ob in Observers)

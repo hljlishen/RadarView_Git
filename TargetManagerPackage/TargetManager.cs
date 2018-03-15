@@ -322,7 +322,7 @@ namespace TargetManagerPackage
         {
             AngleArea area = CalCoveredAngleArea(previous, next);
 
-            return Matrix.GetAzimuthCellArray(area);
+            return Matrix.AzimuthCellsInAngleArea(area);
         }
 
         private static AngleArea CalCoveredAngleArea(Sector s1, Sector s2)

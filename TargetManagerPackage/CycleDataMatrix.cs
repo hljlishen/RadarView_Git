@@ -20,12 +20,12 @@ namespace TargetManagerPackage
         {
             if (!ShouldSaveData(data))
                 return;
-            _currentMatrixIndex = GetNextIndex(_currentMatrixIndex);
+            _currentMatrixIndex = NextIndex(_currentMatrixIndex);
             _matrix[_currentMatrixIndex]?.Dispose();
             _matrix[_currentMatrixIndex] = data;           //保存周期数据
         }
 
-        private static int GetNextIndex(int currentIndex)
+        private static int NextIndex(int currentIndex)
         {
             var ret = currentIndex + 1;
 
@@ -53,7 +53,7 @@ namespace TargetManagerPackage
             SaveAzimuthCell(data);
         }
 
-        public AzimuthCell[] GetAzimuthCellArray(AngleArea area) //返回角度在begin和end之间的周期数据集合
+        public AzimuthCell[] AzimuthCellsInAngleArea(AngleArea area) //返回角度在begin和end之间的周期数据集合
         {
             //没有保存过周期数据，返回一个0长度数组
             if (_matrix.Length == 0)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using AntennaControlPackage;
+﻿using System.Collections.Generic;
 
 namespace TargetManagerPackage
 {

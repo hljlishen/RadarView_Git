@@ -80,16 +80,16 @@ namespace TargetManagerPackage
 
         }
 
-        public static RotateDirection ReversedDirection(RotateDirection d)
+        public static RotateDirection ReversedDirection(RotateDirection currentDirection)
         {
-            switch (d)
+            switch (currentDirection)
             {
                 case RotateDirection.ClockWise:
                     return RotateDirection.CounterClockWise;
                 case RotateDirection.CounterClockWise:
                     return RotateDirection.ClockWise;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(d), d, null);
+                    throw new ArgumentOutOfRangeException(nameof(currentDirection), currentDirection, null);
             }
         }
 
