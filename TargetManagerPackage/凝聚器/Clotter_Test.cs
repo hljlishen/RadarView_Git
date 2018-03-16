@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CycleDataDrivePackage;
-using System.IO;
+﻿using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
 {
@@ -21,8 +15,7 @@ namespace TargetManagerPackage
                     if (center.IsAngleInArea(cell.GetAngle()))
                     {
                         DistanceCell dis = (DistanceCell) o;
-                        TargetDot dot = new TargetDot(cell.GetAngle(), dis.el, dis.Distance);
-                        dot.amValue = dis.sumAM;
+                        TargetDot dot = new TargetDot(cell.GetAngle(), dis.el, dis.Distance) {amValue = dis.sumAM};
                         center.AddNewDot(dot);
                     }
                 }

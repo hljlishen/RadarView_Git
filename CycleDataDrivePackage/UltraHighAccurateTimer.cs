@@ -88,10 +88,12 @@ namespace CycleDataDrivePackage
                 }   // wailt an interval
                 nextTriggerTime = currTime + intevalTicks;
                 //Console.WriteLine(DateTime.Now.ToString("ss.ffff"));
-                if (tick != null)
-                {
-                    tick();
-                }
+                tick?.Invoke();
+
+                //if (tick != null)
+                //{
+                //    tick();
+                //}
             }
         }
 

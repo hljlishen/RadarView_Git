@@ -197,5 +197,28 @@ namespace RadarForm
         private void btn_Rpm5_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm5);
 
         private void btn_Rpm10_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm10);
+
+        private void btn_slower_Click(object sender, EventArgs e)
+        {
+            controller.DataSourceSpeedDown();
+        }
+
+        private void btn_faster_Click(object sender, EventArgs e)
+        {
+            controller.DataSourceSpeedUp();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 33) //PageUp
+            {
+                btn_faster_Click(null, null);
+            }
+
+            if (e.KeyValue == 34) //PageDown
+            {
+                btn_slower_Click(null, null);
+            }
+        }
     }
 }

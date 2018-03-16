@@ -11,5 +11,9 @@ namespace CycleDataDrivePackage
         void RebindSource(string source);
 
         void StartReading();
+
+        void SpeedUp();
+
+        void SpeedDown();
     }
 }

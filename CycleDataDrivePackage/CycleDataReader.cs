@@ -5,11 +5,14 @@ namespace CycleDataDrivePackage
 {
     abstract class CycleDataReader : ICycleDataSubject
     {
-        protected List<ICycleDataObserver> obs; //观察者列表
-        protected Thread readDatathread;        //读取周期数据线程
+        protected List<ICycleDataObserver> Obs; //观察者列表
+        protected Thread ReadDatathread;        //读取周期数据线程
         protected int CmdEnd1 = 0x33;           //包位第一位
         protected int CmdEnd2 = 0x55;           //包位第二位
         protected static int DataMaximumLength = 2000;   //每个方位单元的数据长度
+        private const int IntervalMax = 500;
+        private const int IntervalMin = 20;
+        private const int IntervalStep = 30;
 
         public int Interval { get; set; } = 1;
 
@@ -17,19 +20,18 @@ namespace CycleDataDrivePackage
 
         protected CycleDataReader()
         {
-            obs = new List<ICycleDataObserver>();
+            Obs = new List<ICycleDataObserver>();
 
-            readDatathread = new Thread(ReadData);
-            readDatathread.IsBackground = true;
+            ReadDatathread = new Thread(ReadData) {IsBackground = true};
         }
 
         public void RegisterObserver(ICycleDataObserver ob)
         {
             if (ob == null)
                 return;
-            if(!obs.Contains(ob))
+            if(!Obs.Contains(ob))
             {
-                obs.Add(ob);
+                Obs.Add(ob);
             }
         }
 
@@ -37,15 +39,15 @@ namespace CycleDataDrivePackage
         {
             if (ob == null)
                 return;
-            if (obs.Contains(ob))
+            if (Obs.Contains(ob))
             {
-                obs.Remove(ob);
+                Obs.Remove(ob);
             }
         }
 
         protected void NotifyAllObservers(AzimuthCell data)
         {
-            foreach (ICycleDataObserver ob in obs)
+            foreach (ICycleDataObserver ob in Obs)
                 ob.NotifyNewCycleData(data);
         }
 
@@ -54,37 +56,57 @@ namespace CycleDataDrivePackage
         public void StartReading()
         {
             StopReading();
-            readDatathread = new Thread(ReadData) {IsBackground = false};
-            readDatathread.Start();
+            ReadDatathread = new Thread(ReadData) {IsBackground = false};
+            ReadDatathread.Start();
         }
 
         public void StopReading()
         {
-            if (readDatathread?.ThreadState == ThreadState.Running)
-                readDatathread.Abort();
+            if (ReadDatathread?.ThreadState == ThreadState.Running)
+                ReadDatathread.Abort();
         }
 
         public void Pause()
         {
-            if(readDatathread.ThreadState == ThreadState.Running)
-                readDatathread.Suspend();
+            if(ReadDatathread.ThreadState == ThreadState.Running)
+                ReadDatathread.Suspend();
         }
 
         public void Resume()
         {
-            if (readDatathread.ThreadState == ThreadState.Suspended)
-                readDatathread.Resume();
+            if (ReadDatathread.ThreadState == ThreadState.Suspended)
+                ReadDatathread.Resume();
         }
 
         public virtual void Dispose()
         {
             StopReading();
-            readDatathread = null;
+            ReadDatathread = null;
         }
 
         public void RebindSource(string source)
         {
             Source = source;
+        }
+
+        public void SpeedUp()       //不合理设计，SpeedUp和SpeedDown函数只对BinDataSourceReader有意义，有待重构
+        {
+            lock (Source)
+            {
+                Interval -= IntervalStep;
+                if (Interval < IntervalMin)
+                    Interval = IntervalMin;
+            }
+        }
+
+        public void SpeedDown()     //不合理设计，SpeedUp和SpeedDown函数只对BinDataSourceReader有意义
+        {
+            lock (Source)
+            {
+                Interval += IntervalStep;
+                if (Interval > IntervalMax)
+                    Interval = IntervalMax;
+            }
         }
     }
 }

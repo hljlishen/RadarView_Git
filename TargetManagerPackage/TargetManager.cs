@@ -34,7 +34,7 @@ namespace TargetManagerPackage
             _obs = new List<ITargetObserver>();
 
             _clotter = new Clotter_Test();
-            //clotter = new Clotter_3DClot();//凝聚器
+            //_clotter = new Clotter_3DClot();//凝聚器
 
             _trackCorelator = new TrackCorelatorV1();//航迹相关器
 

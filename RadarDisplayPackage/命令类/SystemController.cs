@@ -161,7 +161,7 @@ namespace RadarDisplayPackage
         public void SetCycleDataFilterAmThreshold(int am)
         {
             if(am >= 0)
-                CycleDataFilter.AMThreshold = am;
+                CycleDataFilter.AmThreshold = am;
         }
 
         public void SetCycleDataFilterSpeedMinimum(int speed)
@@ -176,7 +176,7 @@ namespace RadarDisplayPackage
 
         public int GetCycleDataFilterAmThreshold()
         {
-            return CycleDataFilter.AMThreshold;
+            return CycleDataFilter.AmThreshold;
         }
 
         public int GetCycleDataFilterSpeedMinimum()
@@ -192,6 +192,16 @@ namespace RadarDisplayPackage
         public void DeleteActiveWaveGates()
         {
             deleteActiveWaveGatesCmd.Execute();
+        }
+
+        public void DataSourceSpeedUp()
+        {
+            dataSourceController.SpeedUp();
+        }
+
+        public void DataSourceSpeedDown()
+        {
+            dataSourceController.SpeedDown();
         }
     }
 }

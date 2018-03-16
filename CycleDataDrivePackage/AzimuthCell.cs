@@ -24,9 +24,7 @@ namespace CycleDataDrivePackage
 
             int cellCount = DistanceCell.MakeInt(data, HeadLength + AzimuthLength, DistanceCellCountLength);
             if(cellCount == 0)  //没有距离单元
-            {
                 return;
-            }
 
             int pos = 48;
             for(int i = 0; i < cellCount; i++)

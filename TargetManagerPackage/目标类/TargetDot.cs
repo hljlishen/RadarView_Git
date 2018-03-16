@@ -5,15 +5,14 @@ namespace TargetManagerPackage
     public class TargetDot : Target
     {
         //int am; //回波幅度值
-        public TargetDot() : base()
+        public TargetDot()
         {
-            //CurrentPosition = new PolarCoordinate();
             Adopted = false;
         }
 
         public TargetDot(float az, float el, float dis)
         {
-            CurrentCoordinate.Az = az;
+            AZ = az;
             EL = el;
             Dis = dis;
             CurrentCoordinate.ProjectedDis = (float)(dis * Math.Cos(AngleToRadian(el)));
@@ -28,8 +27,9 @@ namespace TargetManagerPackage
             float az = (AZ + dot.AZ) / 2;
             float el = (EL + dot.EL) / 2;
             float dis = (Dis + dot.Dis) / 2;
+            int am = (amValue + dot.amValue) / 2;
 
-            TargetDot dot1 = new TargetDot(az, el, dis);
+            TargetDot dot1 = new TargetDot(az, el, dis){amValue = am};
 
             return dot1;
         }

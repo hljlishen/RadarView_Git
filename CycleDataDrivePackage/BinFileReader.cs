@@ -4,47 +4,41 @@ using System.Windows.Forms;
 
 namespace CycleDataDrivePackage
 {
-    class BinFileReader : CycleDataReader
+    internal class BinFileReader : CycleDataReader
     {
-        BinaryReader reader;
-        FileStream fs;
+        private BinaryReader _reader;
 
-        public BinFileReader(): base()
+        public BinFileReader()
         {
-            //new OpenFileDialog();
             Source = "";
-            LoadFile(Source);
-            Interval = 50;
+            _reader = LoadFile(Source);
+            Interval = 150;
         }
 
-        private void LoadFile(string fileName)
+
+        private BinaryReader LoadFile(string fileName)
         {
-            if (Source != null && File.Exists(fileName))
-            {
-                fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                reader = new BinaryReader(fs);
-            }
+            if (Source == null || !File.Exists(fileName)) return null;
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            BinaryReader reader = new BinaryReader(fs);
+            return reader;
         }
 
         protected override void ReadData()
         {
-            AzimuthCell cell;
-            byte[] data;
-            LoadFile(Source);
-            int count = 0;
+            _reader = LoadFile(Source);
             while (true)
             {
                 lock (this)
                 {
                     try
                     {
-                        data = new byte[DataMaximumLength];
-                        reader.Read(data, 0, DataMaximumLength);
-                        if(data[16] != 0xAA) continue;;
-                        cell = new AzimuthCell(data);
+                        var data = new byte[DataMaximumLength];
+                        _reader.Read(data, 0, DataMaximumLength);
+                        if(data[16] != 0xAA) continue;
+                        var cell = new AzimuthCell(data);
                         NotifyAllObservers(cell);
                         Thread.Sleep(Interval);
-                        count++;
                     }
                     catch
                     {
@@ -55,28 +49,24 @@ namespace CycleDataDrivePackage
             }
         }
 
-        public override string Source
+        public sealed override string Source
         {
             get => base.Source;
 
             set
             {
                 base.Source = value;
-                reader?.Close();
-                fs?.Close();
-                fs?.Dispose();
-                reader?.Dispose();
-                LoadFile(value);
+                _reader?.Close();
+                _reader?.Dispose();
+                _reader = LoadFile(value);
             }
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            reader?.Close();
-            fs?.Close();
-            fs?.Dispose();
-            reader?.Dispose();
+            _reader?.Close();
+            _reader?.Dispose();
         }
     }
 }

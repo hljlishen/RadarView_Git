@@ -23,16 +23,26 @@ namespace TargetManagerPackage
             StartCycleDataSubject();
         }
 
+        public void SpeedUp()
+        {
+            _cycleDataSubject.SpeedUp();
+        }
+
+        public void SpeedDown()
+        {
+            _cycleDataSubject.SpeedDown();
+        }
+
         private static ICycleDataSubject GetCycleDataSubject(string type)
         {
             switch (type)
             {
                 case "BIN":
-                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.BIN);
+                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.Bin);
                 case "UDP":
-                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.UDP);
+                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.Udp);
                 default:
-                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.UDP);    //，默认返回UDP
+                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.Udp);    //，默认返回UDP
             }
         }
 

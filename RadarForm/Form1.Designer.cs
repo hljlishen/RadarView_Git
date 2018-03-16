@@ -550,8 +550,9 @@
             this.btn_slower.Name = "btn_slower";
             this.btn_slower.Size = new System.Drawing.Size(138, 23);
             this.btn_slower.TabIndex = 2;
-            this.btn_slower.Text = "<<";
+            this.btn_slower.Text = "减速(PageDown)";
             this.btn_slower.UseVisualStyleBackColor = true;
+            this.btn_slower.Click += new System.EventHandler(this.btn_slower_Click);
             // 
             // btn_faster
             // 
@@ -560,8 +561,9 @@
             this.btn_faster.Name = "btn_faster";
             this.btn_faster.Size = new System.Drawing.Size(138, 23);
             this.btn_faster.TabIndex = 2;
-            this.btn_faster.Text = ">>";
+            this.btn_faster.Text = "加速(PageUp)";
             this.btn_faster.UseVisualStyleBackColor = true;
+            this.btn_faster.Click += new System.EventHandler(this.btn_faster_Click);
             // 
             // btn_antennaControl
             // 
@@ -723,6 +725,7 @@
             this.Controls.Add(this.btn_zoom);
             this.Controls.Add(this.btn_resetOverView);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -732,6 +735,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.pnl_sideView.ResumeLayout(false);
             this.pnl_sideView.PerformLayout();
             this.pnl_gridView.ResumeLayout(false);
