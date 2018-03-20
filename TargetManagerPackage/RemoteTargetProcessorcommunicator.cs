@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -22,7 +18,7 @@ namespace TargetManagerPackage
         {
 
             (_remoteSocket, _remoteEndPoint) =
-                UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "127.0.0.1", "2010");
+                UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "192.168.1.13", "2010");
 
             targetManager = t;
         }
@@ -32,9 +28,14 @@ namespace TargetManagerPackage
             List<byte> ls = new List<byte>(SendSectorDotTargetsHead);   //命令头
             ls.AddRange(rawData); //添加扇区编号
 
-            Thread t = new Thread(()=>_remoteSocket.SendTo(ls.ToArray(),_remoteEndPoint));
-            t.Start();
-            //_remoteSocket.BeginSendTo(ls.ToArray(), 0, rawData.Length, SocketFlags.Broadcast, _remoteEndPoint,null,null);
+            Thread t = new Thread(SendData);
+            t.Start(ls.ToArray());
+        }
+
+        private void SendData(object data)
+        {
+            byte[] d = (byte[]) data;
+            _remoteSocket.SendTo(d, _remoteEndPoint);
         }
 
         public void StartReceiveData()

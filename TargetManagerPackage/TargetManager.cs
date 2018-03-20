@@ -36,6 +36,7 @@ namespace TargetManagerPackage
             _obs = new List<ITargetObserver>();
 
             communicator = new RemoteTargetProcessorcommunicator(this);
+            communicator.StartReceiveData();
 
             _clotter = new Clotter_Test();
             //_clotter = new Clotter_3DClot();//凝聚器

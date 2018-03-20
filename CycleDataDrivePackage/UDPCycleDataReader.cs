@@ -56,8 +56,8 @@ namespace CycleDataDrivePackage
             //绑定网络地址
             socket.Bind(ip);
 
-            var sender = new IPEndPoint(IPAddress.Any, 0);
-            EndPoint endPoint = sender;
+            //var sender = new IPEndPoint(IPAddress.Any, 0);
+            //EndPoint endPoint = sender;
 
             EndPoint point = new IPEndPoint(IPAddress.Parse(remoteIp), int.Parse(remotePort));
             socket.SendTo(new byte[] { 1, 2, 3 }, point); //发送一帧数据才能收到数据
