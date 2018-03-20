@@ -36,8 +36,8 @@ namespace CycleDataDrivePackage
                         var data = new byte[DataMaximumLength];
                         _reader.Read(data, 0, DataMaximumLength);
                         if(data[16] != 0xAA) continue;
-                        var cell = new AzimuthCell(data);
-                        NotifyAllObservers(cell);
+                        //var cell = new AzimuthCell(data);
+                        NotifyAllObservers(data);
                         Thread.Sleep(Interval);
                     }
                     catch

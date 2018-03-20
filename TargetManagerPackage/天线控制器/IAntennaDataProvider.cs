@@ -80,13 +80,14 @@ namespace TargetManagerPackage
             TargetManagerController = TargetManagerFactory.CreateTargetManagerController();
         }
 
-        public void NotifyNewCycleData(AzimuthCell data)
+        public void NotifyNewCycleData(byte[] rawData)
         {
             try
             {
+                var azCell = new AzimuthCell(rawData);
                 AntennaPreviousAngle = AntennaCurrentAngle;
 
-                AntennaCurrentAngle = data.GetAngle();  //更新天线角度
+                AntennaCurrentAngle = azCell.GetAngle();  //更新天线角度
 
                 var newDirection = GetAntennaDirection();
 

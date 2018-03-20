@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TargetManagerPackage
 {
-    internal class CycleDataMatrix : ICycleDataObserver,IDisposable      //扫描数据管理器，存储天线扫描一周的所有数据
+    internal class CycleDataMatrix : IDisposable      //扫描数据管理器，存储天线扫描一周的所有数据
     {
         private AzimuthCell[] _matrix;       //保存周期数据的数组
         private int _currentMatrixIndex;       //新数据存储位置           
@@ -48,10 +48,11 @@ namespace TargetManagerPackage
             return !isAngleNearPreviousData;
         }
 
-        public void NotifyNewCycleData(AzimuthCell data)
-        {
-            SaveAzimuthCell(data);
-        }
+        //public void NotifyNewCycleData(byte[] rawData)
+        //{
+        //    AzimuthCell cell = new AzimuthCell(rawData);
+        //    SaveAzimuthCell(cell);
+        //}
 
         public AzimuthCell[] AzimuthCellsInAngleArea(AngleArea area) //返回角度在begin和end之间的周期数据集合
         {

@@ -5,16 +5,17 @@ using System.Linq;
 
 namespace TargetManagerPackage
 {
-    internal class TargetManager :ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver/*, ISweepModeObserver*/ //目标管理器
+    internal class TargetManager : ICycleDataObserver, ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
     {
-        private const int SectorCount = 72;     //扇区的个数
-        private Sector[] _sectors;               //扇区数组
+        private const int SectorCount = 32;         //扇区的个数
+        private Sector[] _sectors;                  //扇区数组
         private readonly DotViewDeleter _viewDeleter;     //目标删除器
         private readonly Clotter _clotter;                //凝聚器
         private readonly TrackCorelator _trackCorelator;  //航迹相关器
-        private DotCorelator _dotCorelator;      //自由点相关器
+        private DotCorelator _dotCorelator;               //自由点相关器
         private readonly FreeDotDeleter _freeDotDeleter;  //自由点删除器
         private readonly List<ITargetObserver> _obs;      //目标观察者，目标变化时观察者得到通知
+        private readonly RemoteTargetProcessorcommunicator communicator;
 
         //测试用变量
         private TargetManagerMode _mode;
@@ -23,6 +24,7 @@ namespace TargetManagerPackage
         {
             return SectorCount;
         }
+
         internal CycleDataMatrix Matrix { get; private set; }
 
         public TargetManager()
@@ -32,6 +34,8 @@ namespace TargetManagerPackage
 
             InitializeSectors();
             _obs = new List<ITargetObserver>();
+
+            communicator = new RemoteTargetProcessorcommunicator(this);
 
             _clotter = new Clotter_Test();
             //_clotter = new Clotter_3DClot();//凝聚器
@@ -113,7 +117,8 @@ namespace TargetManagerPackage
         {
             Matrix.Dispose();
             Matrix = new CycleDataMatrix();
-            subject.RegisterObserver(Matrix);
+            //subject.RegisterObserver(Matrix);
+            subject.RegisterObserver(this);
             InitializeSectors();
         }
 
@@ -368,6 +373,13 @@ namespace TargetManagerPackage
             Matrix.Clear();
         }
 
+        public void NotifyNewCycleData(byte[] rawData)
+        {
+            AzimuthCell cell = new AzimuthCell(rawData);
+            communicator.SendRawData(rawData);
+            Matrix.SaveAzimuthCell(cell);
+        }
+
         protected void NotifyDeleteSectorTracks(Sector s)
         {
             foreach (ITargetObserver ob in _obs)
@@ -378,6 +390,30 @@ namespace TargetManagerPackage
         {
             foreach (ITargetObserver ob in _obs)
                 ob.NotifyUpdateSectorDot(null, s.index);   //传递null,表示没有航迹需要显示
+        }
+
+        protected void NotifyDeleteSectorTargets(Sector s)
+        {
+            NotifyDeleteSectorDots(s);
+            NotifyDeleteSectorTracks(s);
+        }
+
+        protected void NotifyShowSectorTargets(Sector s)
+        {
+            foreach (ITargetObserver ob in _obs)
+            {
+                ob.NotifyUpdateSectorDot(s.newDots, s.index);
+                ob.NotifyUpdateSectorTrack(s.tracks, s.index);
+            }
+        }
+
+        public void TargetDataReceived(int sectorIndex, List<TargetDot> dots, List<TargetTrack> tracks)
+        {
+            NotifyDeleteSectorDots(_sectors[sectorIndex]);      //通知删除该扇区的点目标视图
+            NotifyDeleteSectorTracks(_sectors[sectorIndex]);    //通知删除该扇区的航迹视图
+            _sectors[sectorIndex].newDots = dots;
+            _sectors[sectorIndex].tracks = tracks;
+            NotifyShowSectorTargets(_sectors[sectorIndex]);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace CycleDataDrivePackage
 {
-    class UdpCycleDataReader : CycleDataReader
+    public class UdpCycleDataReader : CycleDataReader
     {
         private readonly DataRecorder _recorder;
 
@@ -22,7 +22,7 @@ namespace CycleDataDrivePackage
             try
             {
                 (string ip, string port) = TryParseIpAddressAndPort(Source);
-                _udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", ip, port);
+                (_udpSocket, _remote) = GetUdpConnectionObjects("192.168.1.13", "2013", ip, port);
                 ProcessUdpData();
             }
             catch
@@ -46,22 +46,23 @@ namespace CycleDataDrivePackage
                 throw;
             }
         }
-        private Socket SetupUdpSocketObject(string localIp, string localPort, string remoteIp, string remotePort)
+
+        public static (Socket, EndPoint) GetUdpConnectionObjects(string localIp, string localPort, string remoteIp,
+            string remotePort)
         {
             //得到本机IP，设置TCP端口号         
             var ip = new IPEndPoint(IPAddress.Parse(localIp), int.Parse(localPort));
-            var ret = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
+            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             //绑定网络地址
-            ret.Bind(ip);
+            socket.Bind(ip);
 
             var sender = new IPEndPoint(IPAddress.Any, 0);
-            _remote = sender;
+            EndPoint endPoint = sender;
 
             EndPoint point = new IPEndPoint(IPAddress.Parse(remoteIp), int.Parse(remotePort));
-            ret.SendTo(new byte[] { 1, 2, 3 }, point);      //发送一帧数据才能收到数据
+            socket.SendTo(new byte[] { 1, 2, 3 }, point); //发送一帧数据才能收到数据
 
-            return ret;
+            return (socket, point);
         }
 
         private void ProcessUdpData()
@@ -72,15 +73,15 @@ namespace CycleDataDrivePackage
                 //发送接受信息
                 var recv = _udpSocket.ReceiveFrom(data, ref _remote);
                 _recorder.RecordBytes(data, 0, recv);        //记录数据
-                var cell = new AzimuthCell(data);
-                NotifyAllObservers(cell);   //发送通知
+                //var cell = new AzimuthCell(data);
+                NotifyAllObservers(data);   //发送通知
             }
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            _udpSocket.Dispose();
+            _udpSocket?.Dispose();
         }
     }
 }

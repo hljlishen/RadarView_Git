@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace CycleDataDrivePackage
 {
-    abstract class CycleDataReader : ICycleDataSubject
+    public abstract class CycleDataReader : ICycleDataSubject
     {
         protected List<ICycleDataObserver> Obs; //观察者列表
         protected Thread ReadDatathread;        //读取周期数据线程
@@ -45,10 +45,10 @@ namespace CycleDataDrivePackage
             }
         }
 
-        protected void NotifyAllObservers(AzimuthCell data)
+        protected void NotifyAllObservers(byte[] rawData)
         {
             foreach (ICycleDataObserver ob in Obs)
-                ob.NotifyNewCycleData(data);
+                ob.NotifyNewCycleData(rawData);
         }
 
         protected abstract void ReadData();

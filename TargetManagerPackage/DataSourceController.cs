@@ -48,7 +48,7 @@ namespace TargetManagerPackage
 
         private void DestroyOldCycleDataSubject()   //废除之前的数据源对象
         {
-            _cycleDataSubject?.UnregisterObserver(_targetManager.Matrix);  //注销观察者
+            _cycleDataSubject?.UnregisterObserver(_targetManager);          //注销观察者
             _cycleDataSubject?.UnregisterObserver(_antennaManager);        //注销观察者
             _cycleDataSubject?.Dispose();    //销毁对象
         }
