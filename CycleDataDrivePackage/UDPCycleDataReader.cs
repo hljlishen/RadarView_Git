@@ -19,9 +19,16 @@ namespace CycleDataDrivePackage
 
         protected override void ReadData()
         {
-            (string ip, string port) = TryParseIpAddressAndPort(Source);
-            _udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", ip, port);
-            ProcessUdpData();
+            try
+            {
+                (string ip, string port) = TryParseIpAddressAndPort(Source);
+                _udpSocket = SetupUdpSocketObject("192.168.1.13", "2013", ip, port);
+                ProcessUdpData();
+            }
+            catch
+            {
+                MessageBox.Show("无网络连接");
+            }
         }
 
         private static (string, string) TryParseIpAddressAndPort(string data)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口

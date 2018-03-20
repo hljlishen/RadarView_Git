@@ -1,8 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿
 using TargetManagerPackage;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
@@ -10,28 +6,22 @@ using System.Drawing;
 
 namespace RadarDisplayPackage
 {
-    abstract class  GraphicTargetView : TargetView,IDisposable
+    internal abstract class  GraphicTargetView : TargetView,IDisposable
     {
         protected RenderTarget canvas;
         protected D2DFactory factory;
-        private CoordinateSystem coordinateSystem;
+
         //PathGeometry trackTag;
-        Point2F position;                   //dot的屏幕坐标
-        Rect activeRect;    //激活区域，鼠标点击到这个区域时，激活（选中）该目标
-        int activeRectRadius = 5;   //激活区域半径
+        private readonly Point2F position;                   //dot的屏幕坐标
+        private readonly Rect activeRect;    //激活区域，鼠标点击到这个区域时，激活（选中）该目标
+        private const int activeRectRadius = 5; //激活区域半径
         protected int targetViewRadius = 4;           //目标圆点的半径
         protected Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush targetViewBrush;
         protected ITargetManagerController targetController;    //目标控制器
 
-        public RenderTarget Canvas
-        {
-            get { return canvas; }
-        }
+        public RenderTarget Canvas => canvas;
 
-        public D2DFactory Factory
-        {
-            get { return factory; }
-        }
+        public D2DFactory Factory => factory;
 
         public override void DisplayTarget()
         {
@@ -44,36 +34,26 @@ namespace RadarDisplayPackage
             renderTarget.FillEllipse(e, targetViewBrush);
         }
 
-        public virtual Point2F Position
-        {
-            get
-            {
-                return position;
-            }
-        }
+        public virtual Point2F Position => position;
 
-        public CoordinateSystem CoordinateSystem
-        {
-            get
-            {
-                return coordinateSystem;
-            }
-        }
+        public CoordinateSystem CoordinateSystem { get; }
 
-        public GraphicTargetView(Target target, RenderTarget canvas, D2DFactory factory, CoordinateSystem coordinateSystem)
+        protected GraphicTargetView(Target target, RenderTarget canvas, D2DFactory factory, CoordinateSystem coordinateSystem)
             : base(target)
         {
             this.canvas = canvas;
             this.factory = factory;
-            this.coordinateSystem = coordinateSystem;
+            CoordinateSystem = coordinateSystem;
 
             position = coordinateSystem.CoordinateToPoint(target.CurrentCoordinate);     //计算显示坐标
 
-            activeRect = new Rect();
-            activeRect.Left = (int)position.X - activeRectRadius;
-            activeRect.Top = (int)position.Y - activeRectRadius;
-            activeRect.Right = (int)position.X + activeRectRadius;
-            activeRect.Bottom = (int)position.Y + activeRectRadius;
+            activeRect = new Rect
+            {
+                Left = (int) position.X - activeRectRadius,
+                Top = (int) position.Y - activeRectRadius,
+                Right = (int) position.X + activeRectRadius,
+                Bottom = (int) position.Y + activeRectRadius
+            };
 
             targetController = TargetManagerFactory.CreateTargetManagerController();
             targetViewBrush = canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255, 128, 0)); //橘黄

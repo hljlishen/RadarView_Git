@@ -116,7 +116,6 @@ namespace RadarDisplayPackage
                     sectorDrawer[sectorIndex].BeginDraw();
                     sectorDrawer[sectorIndex].Clear();
 
-
                     //绘制目标点
                     foreach (GraphicTargetView view in dots[sectorIndex])
                     {

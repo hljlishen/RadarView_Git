@@ -41,5 +41,7 @@ namespace TargetManagerPackage
         public static double AngleToRadian(double angle) => Math.PI * angle / 180;
 
         public float DistanceTo(Target t) => CurrentCoordinate.DistanceTo(t.currentCoordinate);
+
+        public virtual byte[] Serialize() => currentCoordinate.Serialize();
     }
 }

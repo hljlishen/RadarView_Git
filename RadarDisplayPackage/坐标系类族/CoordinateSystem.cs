@@ -160,15 +160,9 @@ namespace RadarDisplayPackage
             return ret;
         }
 
-        public static Point2F PointToPoint2F(Point p)
-        {
-            return new Point2F(p.X, p.Y);
-        }
+        public static Point2F PointToPoint2F(Point p) => new Point2F(p.X, p.Y);
 
-        public static Point Point2FToPoint(Point2F p)
-        {
-            return new Point((int)p.X, (int)p.Y);
-        }
+        public static Point Point2FToPoint(Point2F p) => new Point((int)p.X, (int)p.Y);
 
         public static Rectangle D2DRectToGdiRectangle(Rect r)
         {
@@ -199,10 +193,7 @@ namespace RadarDisplayPackage
             return ret;
         }   //极坐标
 
-        public virtual bool PointOutOfRange( Point p)
-        {
-            return false;
-        }
+        public virtual bool PointOutOfRange( Point p) => false;
 
         public abstract PolarCoordinate PointToCoordinate(Point2F p);
 
@@ -229,15 +220,9 @@ namespace RadarDisplayPackage
 
         public abstract Point2F CalIntersectionPoint(float angle);
 
-        public bool IsPointInVisibleRect( Point2F p)
-        {
-            return IsPointInRect(p, VisibleArea);
-        }
+        public bool IsPointInVisibleRect( Point2F p) => IsPointInRect(p, VisibleArea);
 
-        public bool IsPointInRect(Point2F p, Rect r)
-        {
-            return p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
-        }
+        public bool IsPointInRect(Point2F p, Rect r) => p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
 
         public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
         {

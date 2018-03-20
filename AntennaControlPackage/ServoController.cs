@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Windows.Forms;
 
 namespace AntennaControlPackage
 {
@@ -77,7 +78,14 @@ namespace AntennaControlPackage
             port.RtsEnable = true;
             port.StopBits = StopBits.One;
             port.DataBits = 8;
-            port.Open();
+            try
+            {
+                port.Open();
+            }
+            catch
+            {
+                MessageBox.Show("COM口打开失败");
+            }
         }
     }
 }

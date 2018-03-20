@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TargetManagerPackage
 {
@@ -91,6 +92,46 @@ namespace TargetManagerPackage
         public float DistanceTo(PolarCoordinate c)
         {
             return DistanceBetween(this, c);
+        }
+
+        public byte[] Serialize()
+        {
+            List<byte> ls = new List<byte>();
+            ls.AddRange(FloatToBytes(az,1));
+            ls.AddRange(FloatToBytes(el,1));
+            ls.AddRange(FloatToBytes(dis,1));
+
+            return ls.ToArray();
+        }
+
+        public static byte[] FloatToBytes(float value, int validBits)  //浮点数保留精度后转为byte数组，高位在前
+        {
+            List<byte> ls = new List<byte>();
+            int value_int =(int)( value * Math.Pow(10,validBits));
+            int rightShiftCount = 0;
+
+            while (true)
+            {
+                int tmp = value_int >> (rightShiftCount++ * 8);
+                if(tmp == 0)
+                    break;
+
+                ls.Insert(0, (byte)tmp);
+            }
+
+            return ls.ToArray();
+        }
+
+        public static float BytesToFloat(byte[] value, int validBits)
+        {
+            int tmp = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                tmp <<= 8;
+                tmp += value[i];
+            }
+
+            return (float) (tmp / Math.Pow(10, validBits));
         }
     }
 }
