@@ -62,20 +62,11 @@ namespace TargetManagerPackage
             ProjectedDis = c.ProjectedDis;
         }
 
-        public PolarCoordinate Copy()
-        {
-            return new PolarCoordinate(this);
-        }
+        public PolarCoordinate Copy() => new PolarCoordinate(this);
 
-        public bool EqualsTo(PolarCoordinate c)
-        {
-            return false;
-        }
+        public bool EqualsTo(PolarCoordinate c) => false;
 
-        public static float AngleToRadian(float angle)
-        {
-            return (float)Math.PI * angle / 180;
-        }
+        public static float AngleToRadian(float angle) => (float)Math.PI * angle / 180;
 
         public float X => (float)(dis * Math.Cos(AngleToRadian( el)) * Math.Cos(AngleToRadian( az)));
 
@@ -89,10 +80,7 @@ namespace TargetManagerPackage
             return (float)Math.Sqrt(r);
         }
 
-        public float DistanceTo(PolarCoordinate c)
-        {
-            return DistanceBetween(this, c);
-        }
+        public float DistanceTo(PolarCoordinate c) => DistanceBetween(this, c);
 
         public byte[] Serialize()
         {
