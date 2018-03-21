@@ -1,13 +1,36 @@
 ﻿using System;
+using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
 {
     public class TargetDot : Target
     {
+        protected static int AzBytes = 2;
+        protected static int ElBytes = 2;
+        protected static int DisBytes = 4;
+        public static int TotalBytes = AzBytes + ElBytes + DisBytes;
         //int am; //回波幅度值
         public TargetDot()
         {
             Adopted = false;
+        }
+
+        public TargetDot(byte[] data, int p, int sector)
+        {
+            sectorIndex = sector;
+            int pos = p;
+            int az = DistanceCell.MakeInt(data, pos, AzBytes);
+            pos += AzBytes;
+
+            int dis = DistanceCell.MakeInt(data, pos, DisBytes);
+            pos += DisBytes;
+
+            int el = DistanceCell.MakeInt(data, pos, ElBytes);
+            //pos += ElBytes;
+
+            AZ = (float) az / 10;
+            EL = (float) el / 10;
+            Dis = (float) dis / 10;
         }
 
         public TargetDot(float az, float el, float dis)

@@ -8,12 +8,13 @@
         private static DataSourceController _dataSourcController;
         private static AntennaLeaveAngleAreaSubject _antennaLeaveAngleAreaSubject;
 
+
         public static DataSourceController CreateDataSourceController()
         {
             return _dataSourcController ?? (_dataSourcController = new DataSourceController());
         }
 
-        internal static TargetManager CreateTrackManager()
+        public static TargetManager CreateTrackManager()
         {
             return _targetManager ?? (_targetManager = new TargetManager());
         }

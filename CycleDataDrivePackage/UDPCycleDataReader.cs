@@ -10,7 +10,7 @@ namespace CycleDataDrivePackage
         private readonly DataRecorder _recorder;
 
         private Socket _udpSocket;
-        private EndPoint _remote;
+        private EndPoint _remoteEndPoint;
 
         public UdpCycleDataReader()
         {
@@ -22,7 +22,7 @@ namespace CycleDataDrivePackage
             try
             {
                 (string ip, string port) = TryParseIpAddressAndPort(Source);
-                (_udpSocket, _remote) = GetUdpConnectionObjects("192.168.1.13", "2013", ip, port);
+                (_udpSocket, _remoteEndPoint) = GetUdpConnectionObjects("192.168.1.13", "2013", ip, port);
                 ProcessUdpData();
             }
             catch
@@ -56,22 +56,20 @@ namespace CycleDataDrivePackage
             //绑定网络地址
             socket.Bind(ip);
 
-            //var sender = new IPEndPoint(IPAddress.Any, 0);
-            //EndPoint endPoint = sender;
-
             EndPoint point = new IPEndPoint(IPAddress.Parse(remoteIp), int.Parse(remotePort));
-            socket.SendTo(new byte[] { 1, 2, 3 }, point); //发送一帧数据才能收到数据
+            //socket.SendTo(new byte[] { 1, 2, 3 }, point); //发送一帧数据才能收到数据
 
             return (socket, point);
         }
 
         private void ProcessUdpData()
         {
+            _udpSocket.SendTo(new byte[] {1, 2, 3}, _remoteEndPoint);
             while (true)
             {
                 var data = new byte[DataMaximumLength];
                 //发送接受信息
-                var recv = _udpSocket.ReceiveFrom(data, ref _remote);
+                var recv = _udpSocket.ReceiveFrom(data, ref _remoteEndPoint);
                 _recorder.RecordBytes(data, 0, recv);        //记录数据
                 //var cell = new AzimuthCell(data);
                 NotifyAllObservers(data);   //发送通知

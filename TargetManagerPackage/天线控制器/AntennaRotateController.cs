@@ -67,7 +67,7 @@ namespace TargetManagerPackage
                 case RotateRate.Rpm0:
                     return area;
                 case RotateRate.Rpm2:
-                    return new AngleArea(area.BeginAngle - 10, area.EndAngle + 10);
+                    return new AngleArea(area.BeginAngle - 5, area.EndAngle + 5);
                 case RotateRate.Rpm5:
                     return new AngleArea(area.BeginAngle - 5, area.EndAngle + 5);
                 case RotateRate.Rpm10:

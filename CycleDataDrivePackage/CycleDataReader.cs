@@ -9,8 +9,8 @@ namespace CycleDataDrivePackage
         protected Thread ReadDatathread;        //读取周期数据线程
         protected int CmdEnd1 = 0x33;           //包位第一位
         protected int CmdEnd2 = 0x55;           //包位第二位
-        protected static int DataMaximumLength = 2000;   //每个方位单元的数据长度
-        private const int IntervalMax = 500;
+        protected static int DataMaximumLength = 4000;   //每个方位单元的数据长度
+        private const int IntervalMax = 1000;
         private const int IntervalMin = 20;
         private const int IntervalStep = 30;
 

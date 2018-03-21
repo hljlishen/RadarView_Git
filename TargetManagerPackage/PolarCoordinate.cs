@@ -104,7 +104,7 @@ namespace TargetManagerPackage
                 if(tmp == 0)
                     break;
 
-                ls.Insert(0, (byte)tmp);
+                ls.Insert(0, (byte)(tmp & 0xff));
             }
 
             return ls.ToArray();

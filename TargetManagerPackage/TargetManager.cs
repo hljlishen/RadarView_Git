@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TargetManagerPackage
 {
-    internal class TargetManager : ICycleDataObserver, ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
+    public class TargetManager : ICycleDataObserver, ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
     {
         private const int SectorCount = 32;         //扇区的个数
         private Sector[] _sectors;                  //扇区数组
@@ -35,6 +35,7 @@ namespace TargetManagerPackage
             InitializeSectors();
             _obs = new List<ITargetObserver>();
 
+            //communicator = RemoteTargetProcessorcommunicator.CreateCommunicator();
             communicator = new RemoteTargetProcessorcommunicator(this);
             communicator.StartReceiveData();
 
@@ -282,46 +283,46 @@ namespace TargetManagerPackage
 
         private void ProcessSector(object o)        //天线扫过一个扇区时调用该函数，对该扇区的前后扇区进行操作
         {
-            lock (this)
-            {
-                //s的编号为index
-                Sector s = (Sector)o;
-                Sector s1 = NextSector(s);
-                _viewDeleter.DeleteViews(s1, false);
-                //s1 = NextSector(s1);
-                //viewDeleter.DeleteViews(s1, false);
-                //s1 = NextSector(s1);
-                //viewDeleter.DeleteViews(s1, false);
-                //s1 = NextSector(s1);
-                //viewDeleter.DeleteViews(s1, false);
+            //lock (this)
+            //{
+            //    //s的编号为index
+            //    Sector s = (Sector)o;
+            //    Sector s1 = NextSector(s);
+            //    _viewDeleter.DeleteViews(s1, false);
+            //    //s1 = NextSector(s1);
+            //    //viewDeleter.DeleteViews(s1, false);
+            //    //s1 = NextSector(s1);
+            //    //viewDeleter.DeleteViews(s1, false);
+            //    //s1 = NextSector(s1);
+            //    //viewDeleter.DeleteViews(s1, false);
 
-                Sector tmp = PreviousSector(s);
+            //    Sector tmp = PreviousSector(s);
 
-                //index - 1扇区点迹凝聚
-                AzimuthCell[] azCells = GetAzimuthCellsInSectorSpan(PreviousSector(tmp), NextSector(tmp));//获取刚扫过的扇区所包含的方位单元数组
-                Sector pre = PreviousSector(tmp);
-                Sector nex = NextSector(tmp);
-                _clotter.Clot(tmp, nex, pre, azCells);
+            //    //index - 1扇区点迹凝聚
+            //    AzimuthCell[] azCells = GetAzimuthCellsInSectorSpan(PreviousSector(tmp), NextSector(tmp));//获取刚扫过的扇区所包含的方位单元数组
+            //    Sector pre = PreviousSector(tmp);
+            //    Sector nex = NextSector(tmp);
+            //    _clotter.Clot(tmp, nex, pre, azCells);
 
-                //对s.index - 2的扇区进行相关
-                tmp = PreviousSector(tmp);
-                pre = PreviousSector(tmp);
-                nex = NextSector(tmp);
-                _trackCorelator.Corelate(tmp, nex, pre);
+            //    //对s.index - 2的扇区进行相关
+            //    tmp = PreviousSector(tmp);
+            //    pre = PreviousSector(tmp);
+            //    nex = NextSector(tmp);
+            //    _trackCorelator.Corelate(tmp, nex, pre);
 
-                //对s.index-3的扇区进行自由点相关
-                tmp = PreviousSector(tmp);
-                pre = PreviousSector(tmp);
-                nex = NextSector(tmp);
-                _dotCorelator.Corelate(tmp, nex, pre);
+            //    //对s.index-3的扇区进行自由点相关
+            //    tmp = PreviousSector(tmp);
+            //    pre = PreviousSector(tmp);
+            //    nex = NextSector(tmp);
+            //    _dotCorelator.Corelate(tmp, nex, pre);
 
-                //s.index - 4扇区，删除自由点
-                tmp = PreviousSector(tmp);
-                _freeDotDeleter.DeleteFreeDot(tmp);
+            //    //s.index - 4扇区，删除自由点
+            //    tmp = PreviousSector(tmp);
+            //    _freeDotDeleter.DeleteFreeDot(tmp);
 
-                //tmp = PreviousSector(tmp);
-                //viewDeleter.DeleteViews(tmp,false);
-            }
+            //    //tmp = PreviousSector(tmp);
+            //    //viewDeleter.DeleteViews(tmp,false);
+            //}
         }
 
         public AzimuthCell[] GetAzimuthCellsInSectorSpan(Sector previous, Sector next)
@@ -408,13 +409,29 @@ namespace TargetManagerPackage
             }
         }
 
-        public void TargetDataReceived(int sectorIndex, List<TargetDot> dots, List<TargetTrack> tracks)
+        public void TargetDotDataReceived(int sectorIndex, List<TargetDot> dots)
         {
             NotifyDeleteSectorDots(_sectors[sectorIndex]);      //通知删除该扇区的点目标视图
-            NotifyDeleteSectorTracks(_sectors[sectorIndex]);    //通知删除该扇区的航迹视图
             _sectors[sectorIndex].newDots = dots;
-            _sectors[sectorIndex].tracks = tracks;
-            NotifyShowSectorTargets(_sectors[sectorIndex]);
+            foreach (ITargetObserver ob in _obs)
+            {
+                ob.NotifyUpdateSectorDot(_sectors[sectorIndex].newDots, _sectors[sectorIndex].index);
+            }
+        }
+
+        public void TargetTrackDataReceived(int sectorIndex, List<TargetTrack> Tracks)
+        {
+            NotifyDeleteSectorTracks(_sectors[sectorIndex]);    //通知删除该扇区的航迹视图
+            _sectors[sectorIndex].tracks = Tracks;
+            foreach (ITargetObserver ob in _obs)
+            {
+                ob.NotifyUpdateSectorTrack(_sectors[sectorIndex].tracks, _sectors[sectorIndex].index);
+            }
+        }
+
+        public void SendSectionSweepState(bool isSectionSweeping, AngleArea area)
+        {
+            communicator.SendSectionSweepState(isSectionSweeping, area);
         }
     }
 }

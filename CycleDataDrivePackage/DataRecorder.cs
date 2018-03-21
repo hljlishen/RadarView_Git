@@ -9,7 +9,7 @@ namespace CycleDataDrivePackage
 
         public DataRecorder()
         {
-            string path = "d:\\RadarData\\" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+            string path = "c:\\RadarData\\" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
 
             FileStream fs = new FileStream(path, FileMode.Create);
             _writer = new BinaryWriter(fs);
