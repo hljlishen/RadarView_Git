@@ -12,7 +12,7 @@ namespace CycleDataDrivePackage
         {
             Source = "";
             _reader = LoadFile(Source);
-            Interval = 150;
+            Interval = 1;
         }
 
 
@@ -33,10 +33,9 @@ namespace CycleDataDrivePackage
                 {
                     try
                     {
-                        var data = new byte[DataMaximumLength];
-                        _reader.Read(data, 0, DataMaximumLength);
+                        var data = new byte[1472 * 4];
+                        _reader.Read(data, 0, 1472 * 4);
                         if(data[16] != 0xAA) continue;
-                        //var cell = new AzimuthCell(data);
                         NotifyAllObservers(data);
                         Thread.Sleep(Interval);
                     }

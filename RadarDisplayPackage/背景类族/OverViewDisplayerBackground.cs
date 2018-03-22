@@ -9,39 +9,24 @@ namespace RadarDisplayPackage
         protected Brush distanceCircleBrush;    //距离分划线的画刷
         protected Ellipse ellipse1, ellipse2, ellipse3, ellipse4;   //1-4为由外到内的4个距离分化线
         protected Brush angleLineBrush;         //角度分划线的画刷
-        StrokeStyle angleLineStrokeStyle = null;       //线条风格，DashDotDot
-        protected float distanceCircleWidth = 1.5f;    //距离分划线宽度
+        protected float distanceCircleWidth = 2.5f;    //距离分划线宽度
         protected float angleLineWidth = 1;     //角度分划线宽度
-        TextFormat rightTextFromation;
-        TextFormat leftTextFromation;
-        Brush textBrush;
+        private readonly TextFormat rightTextFromation;
+        private readonly TextFormat leftTextFromation;
+        private readonly Brush textBrush;
 
         public override float Distance
         {
-            get
-            {
-                return base.Distance;
-            }
+            get => base.Distance;
 
             set
             {
                 base.Distance = value;
-                distanceNumbers = new float[] {value/4, value/2, value * 3 / 4, value };
+                distanceNumbers = new[] {value/4, value/2, value * 3 / 4, value };
             }
         }
 
-        public StrokeStyle AngleLineStrokeStyle
-        {
-            get
-            {
-                return angleLineStrokeStyle;
-            }
-
-            set
-            {
-                angleLineStrokeStyle = value;
-            }
-        }
+        public StrokeStyle AngleLineStrokeStyle { get; set; } = null;
 
         public OverViewDisplayerBackground(RenderTarget canvas, D2DFactory factory, CoordinateSystem csp) : base(canvas, factory, csp)
         {
@@ -54,7 +39,7 @@ namespace RadarDisplayPackage
             ellipse3 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 4, csp.CoordinateArea.Height / 4);
             ellipse4 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 8, csp.CoordinateArea.Height / 8);
 
-            distanceNumbers = new float[] { Distance * 0.25f, Distance * 0.5f, Distance * 0.75f, Distance };
+            distanceNumbers = new[] { Distance * 0.25f, Distance * 0.5f, Distance * 0.75f, Distance };
 
             DWriteFactory dw = DWriteFactory.CreateFactory();
             rightTextFromation = dw.CreateTextFormat("Berlin Sans FB Demi", 15);
@@ -90,7 +75,7 @@ namespace RadarDisplayPackage
             base.Dispose();
             distanceCircleBrush?.Dispose();
             angleLineBrush?.Dispose();
-            angleLineStrokeStyle?.Dispose();
+            AngleLineStrokeStyle?.Dispose();
         }
 
         protected void DrawAnimation()

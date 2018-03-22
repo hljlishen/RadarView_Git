@@ -109,9 +109,9 @@ namespace TargetManagerPackage
                 s.newDots.Clear();
 
                 NotifyDeleteSectorTracks(s);
-                s.tracks.Clear();
+                s.tracks?.Clear();
 
-                s.oldDots.Clear();
+                s.oldDots?.Clear();
             }
         }
 

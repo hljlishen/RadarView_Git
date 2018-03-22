@@ -6,7 +6,7 @@ namespace RadarDisplayPackage
     {
         OverViewDisplayer displayer;
         ISweepModeSubject sweepModeSubject;
-        SweepSectionView view = null;
+        SweepSectionView view;
 
         public SweepSectionManager(OverViewDisplayer displayer)
         {

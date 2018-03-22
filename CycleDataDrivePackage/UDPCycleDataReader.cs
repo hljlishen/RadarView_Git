@@ -31,7 +31,7 @@ namespace CycleDataDrivePackage
             }
         }
 
-        private static (string, string) TryParseIpAddressAndPort(string data)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口
+        public static (string, string) TryParseIpAddressAndPort(string data)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口
         {
             try
             {

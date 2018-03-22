@@ -10,6 +10,9 @@ namespace RadarDisplayPackage
         private readonly PathGeometry _sweepSectionGraphic;
         private readonly OverViewDisplayer _displayer;
         private readonly Brush _antennaRangeAreaBrush;
+        private readonly Brush _antennaRangeBorlderBrush;
+        private Point2F _beginLinePoint;
+        private Point2F _endLinePoint;
 
         public SweepSectionView(AngleArea sweepSection, OverViewDisplayer displayer)
         {
@@ -17,20 +20,22 @@ namespace RadarDisplayPackage
 
             _antennaRangeAreaBrush = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 0, 0));
             _antennaRangeAreaBrush.Opacity = 0.25f;
+            _antennaRangeBorlderBrush = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 0, 0));
+            _antennaRangeBorlderBrush.Opacity = 1;
 
             _sweepSectionGraphic = displayer.Factory.CreatePathGeometry();
             GeometrySink gs = _sweepSectionGraphic.Open();
             gs.BeginFigure(displayer.coordinateSystem.OriginalPoint, FigureBegin.Filled);
 
-            Point2F p1 = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.BeginAngle);
-            gs.AddLine(p1);
+            _beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.BeginAngle);
+            gs.AddLine(_beginLinePoint);
 
-            Point2F p2 = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.EndAngle);
+            _endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(sweepSection.EndAngle);
             //扇形的X轴Y轴半径是矩形框width的一半
             SizeF size = new SizeF((float)displayer.coordinateSystem.CoordinateArea.Width / 2, (float)displayer.coordinateSystem.CoordinateArea.Height / 2);
 
             //添加弧线
-            ArcSegment arc = new ArcSegment(p2, size, 0, SweepDirection.Clockwise, ArcSize.Small);
+            ArcSegment arc = new ArcSegment(_endLinePoint, size, 0, SweepDirection.Clockwise, ArcSize.Small);
             gs.AddArc(arc);
 
             //添加第二条线
@@ -41,8 +46,11 @@ namespace RadarDisplayPackage
 
         public void Draw()
         {
-            _displayer.Canvas.DrawGeometry(_sweepSectionGraphic, _antennaRangeAreaBrush,3);
+            _displayer.Canvas.DrawGeometry(_sweepSectionGraphic, _antennaRangeAreaBrush, 3);
             _displayer.Canvas.FillGeometry(_sweepSectionGraphic, _antennaRangeAreaBrush);
+            //_antennaRangeAreaBrush.Opacity = 1;
+            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, _beginLinePoint, _antennaRangeBorlderBrush, 3);
+            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, _endLinePoint, _antennaRangeBorlderBrush, 3);
         }
 
         public void Dispose()

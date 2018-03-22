@@ -510,6 +510,7 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
+            this.tb_filePath.Text = "C:\\Users\\Administrator\\Desktop\\2018-03-13 22-04-54(2no_cover_withplus+rcs)";
             // 
             // btn_start
             // 

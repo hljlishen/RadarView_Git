@@ -61,8 +61,6 @@ namespace RadarDisplayPackage
         public  void Draw()
         {
             DrawAntenna();
-            if(antenna.IsSectionSweeping())
-                DrawSweepBorderLine();      //画扫描边界线
         }
 
         abstract protected void DrawAntenna();

@@ -8,7 +8,7 @@ namespace TargetManagerPackage
 {
     internal class RemoteTargetProcessorcommunicator
     {
-        private readonly Socket _remoteSocket;
+        private Socket _remoteSocket;
         private EndPoint _remoteEndPoint;
         private const byte SendSectorDotTargetsHead = 0xA4;
         private const int ReceiveBytesMax = 10000;
@@ -17,7 +17,7 @@ namespace TargetManagerPackage
         public RemoteTargetProcessorcommunicator(TargetManager t)
         {
             (_remoteSocket, _remoteEndPoint) =
-                UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "192.168.1.23", "20010");
+            UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "192.168.1.23", "20010");
 
             _targetManager = t;
         }
@@ -30,8 +30,8 @@ namespace TargetManagerPackage
             ls.Add(isSectionSweep);
             if (isSectionSweep == 1)
             {
-                float angle = antenna.GetSweepBeginAngle() * 10;
-                byte[] d = PolarCoordinate.FloatToBytes(angle,1);
+                //float angle = antenna.GetSweepBeginAngle() * 10;
+                //byte[] d = PolarCoordinate.FloatToBytes(angle,1);
                 ls.AddRange(PolarCoordinate.FloatToBytes(antenna.GetSweepBeginAngle() , 1));
                 ls.AddRange(PolarCoordinate.FloatToBytes(antenna.GetSweepEndAngle(), 1));
             }
@@ -43,6 +43,9 @@ namespace TargetManagerPackage
 
             Thread t = new Thread(SendData);
             t.Start(ls.ToArray());
+
+            //Thread t = new Thread(()=> _remoteSocket.SendTo(ls.ToArray(), _remoteEndPoint));
+            //t.Start();
         }
 
         private void SendData(object data)
@@ -61,25 +64,29 @@ namespace TargetManagerPackage
         {
             while (true)
             {
+                //(_remoteSocket, _remoteEndPoint) =
+                //UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "192.168.1.23", "20010");
                 byte[] data = new byte[ReceiveBytesMax];
                 _remoteSocket.ReceiveFrom(data, ref _remoteEndPoint);
                 byte head = data[1];
 
                 int sectorNum = data[3];
 
-                int targetCount = DistanceCell.MakeInt(data,4,2);
+                int targetCount = DistanceCell.MakeInt(data, 4, 2);
 
                 if (head == 0xb1)
                 {
-                    List<TargetDot> ls = GetTargetDotsFromSerialData(data,targetCount, sectorNum);
+                    List<TargetDot> ls = GetTargetDotsFromSerialData(data, targetCount, sectorNum);
                     _targetManager.TargetDotDataReceived(sectorNum, ls);
                 }
 
                 if (head == 0xb2)
                 {
-                    List<TargetTrack> ls = GetTargetTracksFromSerialData(data,targetCount, sectorNum);
+                    List<TargetTrack> ls = GetTargetTracksFromSerialData(data, targetCount, sectorNum);
                     _targetManager.TargetTrackDataReceived(sectorNum, ls);
                 }
+                //_remoteSocket.Dispose();
+
             }
         }
 

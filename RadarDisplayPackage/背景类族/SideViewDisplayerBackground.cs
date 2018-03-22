@@ -1,8 +1,5 @@
-﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿
+using System.Globalization;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 
@@ -15,7 +12,6 @@ namespace RadarDisplayPackage
 
         private Brush dashLineBrush;    //方位和高度分划线的画刷
         private float dashLineStrokewidth = 1;
-        StrokeStyle dashLineStrokeStyle = null;       //线条风格，DashDotDot
 
         TextFormat xTextFromation;
         TextFormat yTextFromation;
@@ -36,17 +32,14 @@ namespace RadarDisplayPackage
             angleLines = new float[] {  30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330};
             angleNumbers = new float[] { 0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360 };
 
-            distanceNumbers = new float[] { 0, Distance / 6, Distance / 3, Distance / 2, Distance * 2 / 3, Distance * 5 / 6, Distance };
+            distanceNumbers = new[] { 0, Distance / 6, Distance / 3, Distance / 2, Distance * 2 / 3, Distance * 5 / 6, Distance };
 
             dw.Dispose();
         }
 
         public override float Distance
         {
-            get
-            {
-                return base.Distance;
-            }
+            get => base.Distance;
 
             set
             {
@@ -56,18 +49,7 @@ namespace RadarDisplayPackage
             }
         }
 
-        public StrokeStyle DashLineStrokeStyle
-        {
-            get
-            {
-                return dashLineStrokeStyle;
-            }
-
-            set
-            {
-                dashLineStrokeStyle = value;
-            }
-        }
+        public StrokeStyle DashLineStrokeStyle { get; set; } = null;
 
         public override void Draw()
         {
@@ -75,7 +57,7 @@ namespace RadarDisplayPackage
             for (int i = 1; i < Ysteps; i++)
             {
                 int step = coordinateSystem.CoordinateArea.Height / Ysteps;
-                int y = (int)(coordinateSystem.CoordinateArea.Bottom - (step * i));
+                int y = coordinateSystem.CoordinateArea.Bottom - (step * i);
                 canvas.DrawLine(new Point2F(coordinateSystem.CoordinateArea.Left, y), new Point2F(coordinateSystem.CoordinateArea.Right, y),
                     dashLineBrush, dashLineStrokewidth, DashLineStrokeStyle);
             }
@@ -102,7 +84,7 @@ namespace RadarDisplayPackage
             base.Dispose();
             axisBrush?.Dispose();
             dashLineBrush?.Dispose();
-            dashLineStrokeStyle?.Dispose();
+            DashLineStrokeStyle?.Dispose();
         }
 
         protected void DrawAnimation()
@@ -129,7 +111,7 @@ namespace RadarDisplayPackage
             {
                 int x = 44 + j * 76;
                 RectF rect = new RectF(x, 528, x + width, 528 + width);
-                canvas.DrawText(angleNumbers[j].ToString() + "°", xTextFromation, rect, textBrush);
+                canvas.DrawText(angleNumbers[j].ToString(CultureInfo.InvariantCulture) + "°", xTextFromation, rect, textBrush);
             }
 
 
