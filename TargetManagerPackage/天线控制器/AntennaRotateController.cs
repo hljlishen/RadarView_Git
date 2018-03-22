@@ -20,13 +20,15 @@ namespace TargetManagerPackage
         public void SetRotateRate(RotateRate rotateRate)
         {
             SetSweepModeData(Direction, rotateRate);
-            StartSweep();
+            //StartSweep();
+            Sweep();
         }
 
         public void SetRotateDirection(RotateDirection rotateDirection)
         {
             SetSweepModeData(rotateDirection, Rate);
-            StartSweep();
+            //StartSweep();
+            Sweep();
         }
 
         public void SetSweepModeData(RotateDirection direction, RotateRate rate)
@@ -49,7 +51,7 @@ namespace TargetManagerPackage
         protected void Sweep()
         {
             StopSweep();
-            Thread.Sleep(200);
+            //Thread.Sleep(10);
             ServoController.SetRotationRate(Mode);
         }
 

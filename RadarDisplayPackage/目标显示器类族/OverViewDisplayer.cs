@@ -159,9 +159,9 @@ namespace RadarDisplayPackage
             base.Dispose();
             try
             {
-                displayControl.MouseDown -= viewState.MouseDown;
-                displayControl.MouseUp -= viewState.MouseUp;
-                displayControl.MouseMove -= viewState.MouseMove;
+                DisplayControl.MouseDown -= viewState.MouseDown;
+                DisplayControl.MouseUp -= viewState.MouseUp;
+                DisplayControl.MouseMove -= viewState.MouseMove;
             }
             catch
             {

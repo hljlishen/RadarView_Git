@@ -17,7 +17,7 @@ namespace TargetManagerPackage
         public RemoteTargetProcessorcommunicator(TargetManager t)
         {
             (_remoteSocket, _remoteEndPoint) =
-            UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "192.168.1.23", "20010");
+                UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.14", "10001", "192.168.1.23", "20010");
 
             _targetManager = t;
         }
@@ -64,10 +64,9 @@ namespace TargetManagerPackage
         {
             while (true)
             {
-                //(_remoteSocket, _remoteEndPoint) =
-                //UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.13", "10001", "192.168.1.23", "20010");
                 byte[] data = new byte[ReceiveBytesMax];
                 _remoteSocket.ReceiveFrom(data, ref _remoteEndPoint);
+                //_remoteSocket.Receive(data);
                 byte head = data[1];
 
                 int sectorNum = data[3];
@@ -85,16 +84,7 @@ namespace TargetManagerPackage
                     List<TargetTrack> ls = GetTargetTracksFromSerialData(data, targetCount, sectorNum);
                     _targetManager.TargetTrackDataReceived(sectorNum, ls);
                 }
-                //_remoteSocket.Dispose();
-
             }
-        }
-
-        private byte[] RemoveElementAt(byte[] data, int index)
-        {
-            List<byte> ls = new List<byte>(data);
-            ls.RemoveAt(index);
-            return ls.ToArray();
         }
 
         private List<TargetDot> GetTargetDotsFromSerialData(byte[] data, int targetCount, int sectorIndex)
