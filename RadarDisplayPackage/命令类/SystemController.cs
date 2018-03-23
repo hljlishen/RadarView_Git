@@ -46,10 +46,7 @@ namespace RadarDisplayPackage
 
 
         //overviewdisplayer显示器的控制模式切换到天线扇扫控制
-        public void SwitchToAntennaControlState()
-        {
-            antennaControlStateCmd.Execute();
-        }
+        public void SwitchToAntennaControlState() => antennaControlStateCmd.Execute();
 
 
         //overviewdisplayer显示器的控制模式切换到波门模式，需要读取targetmannager当前的模式决定切换到自动波门还是半自动波门
@@ -77,48 +74,26 @@ namespace RadarDisplayPackage
 
 
         //overviewdisplayer显示器的控制模式切换到自动波门
-        protected void SwitchToAutoWaveGateState()
-        {
-            autoWaveGateStateCmd.Execute();
-        }
+        protected void SwitchToAutoWaveGateState() => autoWaveGateStateCmd.Execute();
 
 
         //overviewdisplayer显示器的控制模式切换到半自动波门
-        protected void SwitchToSemiAutoWaveGateSate()
-        {
-            semiAutoWaveGateCmd.Execute();
-        }
+        protected void SwitchToSemiAutoWaveGateSate() => semiAutoWaveGateCmd.Execute();
 
 
         //复位overviewdisplayer显示器
-        public void ResetDisplayer()
-        {
-            ResetDisplayerCmd.Execute();
-        }
+        public void ResetDisplayer() => ResetDisplayerCmd.Execute();
 
 
         //设置天线扇扫模式
-        public void AntennaSetSectionSweepMode(float begin, float end)
-        {
-            AntennaSetSectionSweepModeCommand cmd = new AntennaSetSectionSweepModeCommand(begin, end);
-            cmd.Execute();
-        }
+        public void AntennaSetSectionSweepMode(float begin, float end) => new AntennaSetSectionSweepModeCommand(begin, end).Execute();
 
 
         //设置天线转速
-        public void AntennaSetRotationRate(RotateRate rate)
-        {
-            AntennaSetRotationRateCommand rotationRateCmd = new AntennaSetRotationRateCommand(rate);
-            rotationRateCmd.Execute();
-        }
-
+        public void AntennaSetRotationRate(RotateRate rate) => new AntennaSetRotationRateCommand(rate).Execute();
 
         //设置天线为周扫模式
-        public void AntennaSetRotateDirection(RotateDirection direct)
-        {
-            AntennaSetNormalSweepModeCommand cmd = new AntennaSetNormalSweepModeCommand(direct);
-            cmd.Execute();
-        }
+        public void AntennaSetRotateDirection(RotateDirection direct) => new AntennaSetNormalSweepModeCommand(direct).Execute();
 
 
         //切换起批模式
@@ -148,60 +123,28 @@ namespace RadarDisplayPackage
             cmd.Execute();
         }
 
-        public void TargetManagerDeleteActiveTarget()
-        {
-            delAvtiveTarget.Execute();
-        }
+        public void TargetManagerDeleteActiveTarget() => delAvtiveTarget.Execute();
 
-        public void ConnectDataSource(string readerType, string scr)
-        {
-            dataSourceController.ConnectDataSource(readerType, scr);
-        }
+        public void ConnectDataSource(string readerType, string scr) => dataSourceController.ConnectDataSource(readerType, scr);
 
-        public void SetCycleDataFilterAmThreshold(int am)
-        {
-            if(am >= 0)
-                CycleDataFilter.AmThreshold = am;
-        }
+        public void SetCycleDataFilterAmThreshold(int am) => CycleDataFilter.AmThreshold = am >= 0 ? am : CycleDataFilter.AmThreshold;
 
-        public void SetCycleDataFilterSpeedMinimum(int speed)
-        {
-            CycleDataFilter.SpeedMinimum = speed;
-        }
+        public void SetCycleDataFilterSpeedMinimum(int speed) => CycleDataFilter.SpeedMinimum = speed;
 
-        public void SetCycleDataFilterSpeedMaximum(int speed)
-        {
-            CycleDataFilter.SpeedMaximum = speed;
-        }
+        public void SetCycleDataFilterSpeedMaximum(int speed) => CycleDataFilter.SpeedMaximum = speed;
 
-        public int GetCycleDataFilterAmThreshold()
-        {
-            return CycleDataFilter.AmThreshold;
-        }
+        public int GetCycleDataFilterAmThreshold() => CycleDataFilter.AmThreshold;
 
-        public int GetCycleDataFilterSpeedMinimum()
-        {
-            return CycleDataFilter.SpeedMinimum;
-        }
+        public int GetCycleDataFilterSpeedMinimum() => CycleDataFilter.SpeedMinimum;
 
-        public int GetCycleDataFilterSpeedMaximum()
-        {
-            return CycleDataFilter.SpeedMaximum;
-        }
+        public int GetCycleDataFilterSpeedMaximum() => CycleDataFilter.SpeedMaximum;
 
-        public void DeleteActiveWaveGates()
-        {
-            deleteActiveWaveGatesCmd.Execute();
-        }
+        public void DeleteActiveWaveGates() => deleteActiveWaveGatesCmd.Execute();
 
-        public void DataSourceSpeedUp()
-        {
-            dataSourceController.SpeedUp();
-        }
+        public void DataSourceSpeedUp() => dataSourceController.SpeedUp();
 
-        public void DataSourceSpeedDown()
-        {
-            dataSourceController.SpeedDown();
-        }
+        public void DataSourceSpeedDown() => dataSourceController.SpeedDown();
+
+        public void SwitchDotSource(bool dotSource) => new TargetManagmentSwitchDotSourceCommand(dotSource).Execute();
     }
 }

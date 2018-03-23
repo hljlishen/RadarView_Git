@@ -30,10 +30,8 @@ namespace TargetManagerPackage
             ls.Add(isSectionSweep);
             if (isSectionSweep == 1)
             {
-                //float angle = antenna.GetSweepBeginAngle() * 10;
-                //byte[] d = PolarCoordinate.FloatToBytes(angle,1);
-                ls.AddRange(PolarCoordinate.FloatToBytes(antenna.GetSweepBeginAngle() , 1));
-                ls.AddRange(PolarCoordinate.FloatToBytes(antenna.GetSweepEndAngle(), 1));
+                ls.AddRange(AngleToBytes(antenna.GetSweepBeginAngle() , 1));
+                ls.AddRange(AngleToBytes(antenna.GetSweepEndAngle(), 1));
             }
             else
             {
@@ -48,10 +46,21 @@ namespace TargetManagerPackage
             //t.Start();
         }
 
+        private byte[] AngleToBytes(float angle, int validNum)  //要求长度为2字节，产生的数字只有长度为1，则前面部0
+        {
+            byte[] d = PolarCoordinate.FloatToBytes(angle, 1);
+            if (d.Length == 1)  //长度为1时
+            {
+                d = new byte[] { 0x00, d[0] };
+            }
+
+            return d;
+        }
+
         private void SendData(object data)
         {
             byte[] d = (byte[]) data;
-            _remoteSocket.SendTo(d, _remoteEndPoint);
+            _remoteSocket?.SendTo(d, _remoteEndPoint);
         }
 
         public void StartReceiveData()
@@ -65,7 +74,7 @@ namespace TargetManagerPackage
             while (true)
             {
                 byte[] data = new byte[ReceiveBytesMax];
-                _remoteSocket.ReceiveFrom(data, ref _remoteEndPoint);
+                _remoteSocket?.ReceiveFrom(data, ref _remoteEndPoint);
                 //_remoteSocket.Receive(data);
                 byte head = data[1];
 
@@ -91,9 +100,9 @@ namespace TargetManagerPackage
         {
             List<TargetDot> ls = new List<TargetDot>();
 
-            int pos = 8;
+            int pos = 6;
             if (targetCount == 0)
-                return null;
+                return ls;
 
             for(int i = 0; i < targetCount; i++)
             {

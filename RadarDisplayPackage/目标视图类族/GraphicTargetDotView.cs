@@ -16,13 +16,16 @@ namespace RadarDisplayPackage
         private const float RedColorCoefficient = (ColorValueMax - RedColorConst) / TargetManagerPackage.Target.AmValueMaximum;
         private const float BlueColorConst = ColorValueMax;
         private const float BlueColorCoefficient = -RedColorCoefficient;
+
         public GraphicTargetDotView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs)
-            :base(target, rt, factory, cs)
+            : base(target, rt, factory, cs)
         {
             targetViewRadius = 2;
+
             float redColorValue = CalRedColorValue(target.amValue);
             float blueColorValue = CalBlueColorValue(target.amValue);
             targetViewBrush = canvas.CreateSolidColorBrush(new ColorF(redColorValue, 0.184f, blueColorValue));
+
         }
 
         private float CalRedColorValue(float am)

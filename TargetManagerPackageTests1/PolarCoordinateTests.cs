@@ -23,7 +23,7 @@ namespace TargetManagerPackage.Tests
         [TestMethod()]
         public void FloatToBytesTest()
         {
-            float value = 4804.2f;
+            float value = 24f;
             byte[] data = PolarCoordinate.FloatToBytes(value, 1);
             byte[] expected = {0xbb, 0xaa};
 

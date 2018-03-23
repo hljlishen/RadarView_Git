@@ -119,10 +119,7 @@ namespace RadarDisplayPackage
             AddTarget(t);
         }
 
-        protected virtual TargetView CreateTargetView(Target taget)
-        {
-            return null;
-        }
+        protected abstract TargetView CreateTargetView(Target taget);
 
         protected abstract void LoadTargetViews(List<Target> ls);
 

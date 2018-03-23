@@ -39,6 +39,7 @@ namespace RadarDisplayPackage
             sweepSectionManager = new SweepSectionManager(this);
 
             obs = new List<IControlStateObserver>();
+            //Distance = 3000;
         }
 
         public override float Distance

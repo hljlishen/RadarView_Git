@@ -107,6 +107,8 @@ namespace TargetManagerPackage
                 ls.Insert(0, (byte)(tmp & 0xff));
             }
 
+            //if(ls.Count == 1)       //如果数值小于25.5，输出的长度为1个字节，需要前面补0
+            //    ls.Insert(0x0,0);
             return ls.ToArray();
         }
 

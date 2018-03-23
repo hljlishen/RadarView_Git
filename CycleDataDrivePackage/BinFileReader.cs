@@ -33,8 +33,8 @@ namespace CycleDataDrivePackage
                 {
                     try
                     {
-                        var data = new byte[1472 * 4];
-                        _reader.Read(data, 0, 1472 * 4);
+                        var data = new byte[1472*4];
+                        _reader.Read(data, 0, 1472*4);
                         if(data[16] != 0xAA) continue;
                         NotifyAllObservers(data);
                         Thread.Sleep(Interval);

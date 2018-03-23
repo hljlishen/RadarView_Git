@@ -55,6 +55,7 @@
     <Compile Include="IControlStateObserver.cs" />
     <Compile Include="IControlStateProvider.cs" />
     <Compile Include="IControlStateSubject.cs" />
+    <Compile Include="命令类\TargetManagmentSwitchDotSourceCommand.cs" />
     <Compile Include="扇扫视图\SweepSectionManager.cs" />
     <Compile Include="扇扫视图\SweepSectionView.cs" />
     <Compile Include="命令类\WaveGateDeleteActiveCommand.cs" />

@@ -63,8 +63,15 @@ namespace RadarDisplayPackage
 
         protected override void LoadTargetViews(List<Target> ls)
         {
+            if (ls == null)
+                return;
             foreach (Target t in ls)
                 AddTarget(t);
+        }
+
+        protected override TargetView CreateTargetView(Target taget)
+        {
+            return null;
         }
     }
 }

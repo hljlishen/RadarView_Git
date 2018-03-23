@@ -9,10 +9,10 @@ namespace RadarForm
 
     public partial class Form1 : Form, IControlStateObserver
     {
-        OverViewDisplayer ovd;
-        SideViewDisplayer svd;
+        private OverViewDisplayer ovd;
+        private SideViewDisplayer svd;
         private DataGridViewDisplayer dgvd;
-        SystemController controller;
+        private SystemController controller;
 
         public Form1()
         {
@@ -40,7 +40,7 @@ namespace RadarForm
             dgvd = new DataGridViewDisplayer(pnl_gridView);
             ovd.RegisterObserver(this);
             svd.Distance = 1000;
-            ovd.Distance = 4000;
+            ovd.Distance = 3000;
             btn_WaveGate.Enabled = false;
         }
 
@@ -219,6 +219,18 @@ namespace RadarForm
             {
                 btn_slower_Click(null, null);
             }
+        }
+
+        private void 原始视频ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.SwitchDotSource(true);
+            凝聚点击ToolStripMenuItem.Checked = false;
+        }
+
+        private void 凝聚点击ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.SwitchDotSource(false);
+            原始视频ToolStripMenuItem.Checked = false;
         }
     }
 }

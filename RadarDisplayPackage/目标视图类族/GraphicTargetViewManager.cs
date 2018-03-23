@@ -70,6 +70,8 @@ namespace RadarDisplayPackage
 
         protected override void LoadTargetViews(List<Target> tracks)
         {
+            if (tracks == null)
+                return;
             //获取目标航迹视图
             foreach (Target target in tracks)
             {

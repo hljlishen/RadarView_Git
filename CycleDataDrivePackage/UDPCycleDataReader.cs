@@ -54,10 +54,18 @@ namespace CycleDataDrivePackage
             var ip = new IPEndPoint(IPAddress.Parse(localIp), int.Parse(localPort));
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             //绑定网络地址
-            socket.Bind(ip);
+
+            try
+            {
+                socket.Bind(ip);
+            }
+            catch 
+            {
+                socket = null;
+            }
+            
 
             EndPoint point = new IPEndPoint(IPAddress.Parse(remoteIp), int.Parse(remotePort));
-            //socket.SendTo(new byte[] { 1, 2, 3 }, point); //发送一帧数据才能收到数据
 
             return (socket, point);
         }
