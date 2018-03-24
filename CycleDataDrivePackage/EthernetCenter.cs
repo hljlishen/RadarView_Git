@@ -10,7 +10,8 @@ namespace CycleDataDrivePackage
 {
     public class UdpEthernetCenter
     {
-        public delegate void ReceiveDataHandler(byte[] data, int count);
+        public const int MaximumReadLength = 20480;
+        public delegate void ReceiveDataHandler(byte[] data);
         private static readonly Dictionary<string, Socket> SocketDictionary = new Dictionary<string, Socket>();
 
         public static void BeginSendData(byte[] data, string localIpAndPort, string remoteIpAndPort)
@@ -34,11 +35,19 @@ namespace CycleDataDrivePackage
 
         private static void RecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)
         {
-            byte[] data = new byte[20480];
-            Socket socket = GetSocket(localIpAndPort);
-            EndPoint remotEndPoint = GetIpEndPoint(remoteIpAndPort);
-            int byteCount = socket.ReceiveFrom(data, ref remotEndPoint);
-            handler(data, byteCount);
+            while (true)
+            {
+                byte[] data = new byte[MaximumReadLength];
+                Socket socket = GetSocket(localIpAndPort);
+                if (socket == null) return;
+                EndPoint remotEndPoint = GetIpEndPoint(remoteIpAndPort);
+                int byteCount = socket.ReceiveFrom(data, ref remotEndPoint);
+
+                //移除多余的字节并返回
+                List<byte> ls = new List<byte>(data);
+                ls.RemoveRange(byteCount, MaximumReadLength - byteCount);
+                handler(ls.ToArray());
+            }
         }
 
         public static (string, string) ParseIpAddressAndPort(string ipAndPortString)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口
@@ -74,7 +83,7 @@ namespace CycleDataDrivePackage
             //得到本机IP，设置TCP端口号         
             var ip = GetIpEndPoint(ipAndPort);
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            
+
             //绑定网络地址
             try
             {

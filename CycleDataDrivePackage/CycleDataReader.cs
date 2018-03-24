@@ -48,7 +48,7 @@ namespace CycleDataDrivePackage
             }
         }
 
-        protected void NotifyAllObservers(byte[] rawData)
+        protected virtual void NotifyAllObservers(byte[] rawData)
         {
             foreach (ICycleDataObserver ob in Obs)
                 ob.NotifyNewCycleData(rawData);

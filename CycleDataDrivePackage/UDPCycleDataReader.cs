@@ -9,9 +9,6 @@ namespace CycleDataDrivePackage
     {
         private readonly DataRecorder _recorder;
 
-        private Socket _udpSocket;
-        private EndPoint _remoteEndPoint;
-
         public UdpCycleDataReader()
         {
             _recorder = new DataRecorder();
@@ -21,8 +18,6 @@ namespace CycleDataDrivePackage
         {
             try
             {
-                (string ip, string port) = TryParseIpAddressAndPort(Source);
-                (_udpSocket, _remoteEndPoint) = GetUdpConnectionObjects("192.168.1.13", "2013", ip, port);
                 ProcessUdpData();
             }
             catch
@@ -72,23 +67,24 @@ namespace CycleDataDrivePackage
 
         private void ProcessUdpData()
         {
-            _udpSocket.SendTo(new byte[] {1, 2, 3}, _remoteEndPoint);
-            while (true)
-            {
-                var data = new byte[DataMaximumLength];
-                //发送接受信息
-                var recv = _udpSocket.ReceiveFrom(data, ref _remoteEndPoint);
-                _recorder.RecordBytes(data, 0, recv);        //记录数据
-                //var cell = new AzimuthCell(data);
-                NotifyAllObservers(data);   //发送通知
-            }
+            //_udpSocket.SendTo(new byte[] { 1, 2, 3 }, _remoteEndPoint);
+            //while (true)
+            //{
+            //    var data = new byte[DataMaximumLength];
+            //    //发送接受信息
+            //    var recv = _udpSocket.ReceiveFrom(data, ref _remoteEndPoint);
+            //    _recorder.RecordBytes(data, 0, recv);        //记录数据
+            //    //var cell = new AzimuthCell(data);
+            //    NotifyAllObservers(data);   //发送通知
+            //}
+            UdpEthernetCenter.BeginSendData(new byte[] { 1, 2, 3 }, "192.168.1.13:2013", Source);
+            UdpEthernetCenter.BeginRecvData("192.168.1.13:2013", Source, NotifyAllObservers);
         }
 
-        public override void Dispose()
+        protected override void NotifyAllObservers(byte[] rawData)
         {
-            _udpSocket?.Close();
-            _udpSocket?.Dispose();
-            base.Dispose();
+            base.NotifyAllObservers(rawData);
+            _recorder.RecordBytes(rawData, 0, rawData.Length);
         }
     }
 }
