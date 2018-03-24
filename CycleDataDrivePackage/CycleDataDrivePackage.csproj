@@ -49,6 +49,7 @@
     <Compile Include="BinFileReader.cs" />
     <Compile Include="CycleDataFilter.cs" />
     <Compile Include="DataRecorder.cs" />
+    <Compile Include="EthernetCenter.cs" />
     <Compile Include="UltraHighAccurateTimer.cs" />
     <Compile Include="DistanceCell.cs" />
     <Compile Include="CycleDataDriveFactory.cs" />

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Forms;
 using TargetManagerPackage;
-using System.Windows.Forms;
-using System.Data;
 
 namespace RadarDisplayPackage
 {
@@ -17,14 +11,8 @@ namespace RadarDisplayPackage
 
         public bool Selected
         {
-            get
-            {
-                return dr.Selected;
-            }
-            set
-            {
-                dr.Selected = value;
-            }
+            get => dr.Selected;
+            set => dr.Selected = value;
         }
 
         public DataGridViewTargetView(TargetTrack t, DataGridViewDisplayer displayer, int id) : base(t)
@@ -60,10 +48,7 @@ namespace RadarDisplayPackage
 
         public override Target Target
         {
-            get
-            {
-                return base.Target;
-            }
+            get => base.Target;
 
             set
             {

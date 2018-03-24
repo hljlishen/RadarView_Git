@@ -79,12 +79,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.航机显示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.原始视频ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.凝聚点击ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.原始视频ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.凝聚点击ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -512,7 +512,7 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
-            this.tb_filePath.Text = "C:\\Users\\Administrator\\Desktop\\2018-03-13 22-04-54(2no_cover_withplus+rcs)";
+            this.tb_filePath.Text = "D:\\RadarData\\2018-03-22 23-53-14 123";
             // 
             // btn_start
             // 
@@ -674,15 +674,36 @@
             this.原始视频ToolStripMenuItem,
             this.凝聚点击ToolStripMenuItem});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
+            this.视图ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.视图ToolStripMenuItem.Text = "视图";
             // 
             // 航机显示ToolStripMenuItem
             // 
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
+            // 
+            // 原始视频ToolStripMenuItem
+            // 
+            this.原始视频ToolStripMenuItem.Checked = true;
+            this.原始视频ToolStripMenuItem.CheckOnClick = true;
+            this.原始视频ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.原始视频ToolStripMenuItem.Name = "原始视频ToolStripMenuItem";
+            this.原始视频ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.原始视频ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
+            this.原始视频ToolStripMenuItem.Text = "原始视频";
+            this.原始视频ToolStripMenuItem.Click += new System.EventHandler(this.原始视频ToolStripMenuItem_Click);
+            // 
+            // 凝聚点击ToolStripMenuItem
+            // 
+            this.凝聚点击ToolStripMenuItem.CheckOnClick = true;
+            this.凝聚点击ToolStripMenuItem.Name = "凝聚点击ToolStripMenuItem";
+            this.凝聚点击ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.凝聚点击ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
+            this.凝聚点击ToolStripMenuItem.Text = "凝聚点";
+            this.凝聚点击ToolStripMenuItem.Click += new System.EventHandler(this.凝聚点击ToolStripMenuItem_Click);
             // 
             // 系统ToolStripMenuItem
             // 
@@ -712,24 +733,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // 原始视频ToolStripMenuItem
-            // 
-            this.原始视频ToolStripMenuItem.Checked = true;
-            this.原始视频ToolStripMenuItem.CheckOnClick = true;
-            this.原始视频ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.原始视频ToolStripMenuItem.Name = "原始视频ToolStripMenuItem";
-            this.原始视频ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.原始视频ToolStripMenuItem.Text = "原始视频";
-            this.原始视频ToolStripMenuItem.Click += new System.EventHandler(this.原始视频ToolStripMenuItem_Click);
-            // 
-            // 凝聚点击ToolStripMenuItem
-            // 
-            this.凝聚点击ToolStripMenuItem.CheckOnClick = true;
-            this.凝聚点击ToolStripMenuItem.Name = "凝聚点击ToolStripMenuItem";
-            this.凝聚点击ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.凝聚点击ToolStripMenuItem.Text = "凝聚点击";
-            this.凝聚点击ToolStripMenuItem.Click += new System.EventHandler(this.凝聚点击ToolStripMenuItem_Click);
             // 
             // Form1
             // 

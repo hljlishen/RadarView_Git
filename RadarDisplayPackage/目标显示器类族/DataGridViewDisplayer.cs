@@ -11,16 +11,14 @@ namespace RadarDisplayPackage
 {
     public class DataGridViewDisplayer : TrackDisplayer
     {
-        DataGridView dgv;
-
         public DataGridViewDisplayer(Control c) : base(c)
         {
-            dgv = new DataGridView();
+            Dgv = new DataGridView();
 
-            SetDataGridViewFormat(dgv); //设置格式
+            SetDataGridViewFormat(Dgv); //设置格式
 
             c.Controls.Clear();
-            c.Controls.Add(dgv);
+            c.Controls.Add(Dgv);
 
             timer.Enabled = false;
 
@@ -29,18 +27,7 @@ namespace RadarDisplayPackage
             SetColors();
         }
 
-        public DataGridView Dgv
-        {
-            get
-            {
-                return dgv;
-            }
-
-            set
-            {
-                dgv = value;
-            }
-        }
+        public DataGridView Dgv { get; set; }
 
         private void SetDataGridViewFormat(DataGridView dgv)
         {
@@ -94,14 +81,14 @@ namespace RadarDisplayPackage
 
         private void SetColors()
         {
-            dgv.EnableHeadersVisualStyles = false;
-            dgv.ForeColor = System.Drawing.Color.Chartreuse;
-            foreach (DataGridViewRow dr in dgv.Rows)
+            Dgv.EnableHeadersVisualStyles = false;
+            Dgv.ForeColor = System.Drawing.Color.Chartreuse;
+            foreach (DataGridViewRow dr in Dgv.Rows)
             {
                 dr.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
             }
 
-            foreach(DataGridViewColumn dc in dgv.Columns)
+            foreach(DataGridViewColumn dc in Dgv.Columns)
             {
                 dc.HeaderCell.Style.BackColor = System.Drawing.Color.Black;
                 dc.HeaderCell.Style.ForeColor = System.Drawing.Color.Chartreuse;

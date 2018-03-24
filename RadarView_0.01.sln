@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargetManagerPackageTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargetManagerPackageTests1", "TargetManagerPackageTests1\TargetManagerPackageTests1.csproj", "{4830CDD4-AB3C-4395-A96D-B1DDC3CF8C93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycleDataDrivePackageTests", "CycleDataDrivePackageTests\CycleDataDrivePackageTests.csproj", "{2A60DDE4-952E-4A4B-A212-97D90700628D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycleDataDrivePackageTests1", "CycleDataDrivePackageTests1\CycleDataDrivePackageTests1.csproj", "{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{4830CDD4-AB3C-4395-A96D-B1DDC3CF8C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4830CDD4-AB3C-4395-A96D-B1DDC3CF8C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4830CDD4-AB3C-4395-A96D-B1DDC3CF8C93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A60DDE4-952E-4A4B-A212-97D90700628D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A60DDE4-952E-4A4B-A212-97D90700628D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A60DDE4-952E-4A4B-A212-97D90700628D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A60DDE4-952E-4A4B-A212-97D90700628D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

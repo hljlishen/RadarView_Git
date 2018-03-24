@@ -18,7 +18,6 @@ namespace TargetManagerPackage
         {
             (_remoteSocket, _remoteEndPoint) =
                 UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.14", "10001", "192.168.1.23", "20010");
-
             _targetManager = t;
         }
 
@@ -59,6 +58,13 @@ namespace TargetManagerPackage
 
         private void SendData(object data)
         {
+            if (_remoteSocket == null)
+            {
+                (_remoteSocket, _remoteEndPoint) =
+                    UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.14", "10001", "192.168.1.23", "20010");
+                if (_remoteSocket == null)
+                    return;
+            }
             byte[] d = (byte[]) data;
             _remoteSocket?.SendTo(d, _remoteEndPoint);
         }
@@ -71,11 +77,11 @@ namespace TargetManagerPackage
 
         public void ReadData()
         {
+            if (_remoteSocket == null) return;
             while (true)
             {
                 byte[] data = new byte[ReceiveBytesMax];
                 _remoteSocket?.ReceiveFrom(data, ref _remoteEndPoint);
-                //_remoteSocket.Receive(data);
                 byte head = data[1];
 
                 int sectorNum = data[3];

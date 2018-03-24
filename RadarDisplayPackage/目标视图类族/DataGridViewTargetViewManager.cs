@@ -11,7 +11,7 @@ namespace RadarDisplayPackage
     class DataGridViewTargetViewManager : TargetViewManager
     {
         protected DataGridViewTargetView[] views;
-        protected const int TrackMaximum = 16;
+        protected const int TrackMaximum = 200;
 
         public DataGridViewTargetViewManager(DataGridViewDisplayer displayer) : base(displayer)
         {
@@ -72,6 +72,16 @@ namespace RadarDisplayPackage
         protected override TargetView CreateTargetView(Target taget)
         {
             return null;
+        }
+
+        public override void NotifyUpdateSectorTrack(List<TargetTrack> trackList, int sectorIndex)
+        {
+            base.NotifyUpdateSectorTrack(trackList, sectorIndex);
+
+            foreach (var track in tracks[sectorIndex])
+            {
+                //AddTarget(track.Target);
+            }
         }
     }
 }

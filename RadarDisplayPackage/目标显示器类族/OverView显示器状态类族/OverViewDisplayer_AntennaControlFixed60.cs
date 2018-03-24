@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage
 {
@@ -20,7 +15,7 @@ namespace RadarDisplayPackage
         private float dragAngle;        //鼠标拖动位置与原点连线与正北夹角
         private float endAngle;
         //float sweepAngleMinimum = 5; //扫描方位的最小值
-        private float FixedSweepAngle = 40f;
+        private float FixedSweepAngle = 35f;
 
         public OverViewDisplayer_AntennaControlFixed60(OverViewDisplayer displayer) : base(displayer)
         {
@@ -90,28 +85,26 @@ namespace RadarDisplayPackage
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (!isMouseDown)
-            {
-                shouldExecuteCmd = false;   //鼠标点击但未拖动，此时松开鼠标不执行命令
-                isMouseDown = true;
-                mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
+            if (isMouseDown) return;
+            shouldExecuteCmd = false;   //鼠标点击但未拖动，此时松开鼠标不执行命令
+            isMouseDown = true;
+            mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
 
-                //计算开始角度及开始角度与圆周交点坐标
-                dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
-                dragLinePoint = displayer.coordinateSystem.CalIntersectionPoint(dragAngle);
+            //计算开始角度及开始角度与圆周交点坐标
+            dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
+            dragLinePoint = displayer.coordinateSystem.CalIntersectionPoint(dragAngle);
 
-                //计算开始角度交点
-                beginAngle = dragAngle - FixedSweepAngle / 2;
-                beginAngle = CoordinateSystem.StandardAngle(beginAngle);
-                beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(beginAngle);
+            //计算开始角度交点
+            beginAngle = dragAngle - FixedSweepAngle / 2;
+            beginAngle = CoordinateSystem.StandardAngle(beginAngle);
+            beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(beginAngle);
 
-                //计算结束角度及开始角度与圆周交点坐标
-                endAngle = dragAngle + FixedSweepAngle / 2;
-                endAngle = CoordinateSystem.StandardAngle(endAngle);
-                endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
+            //计算结束角度及开始角度与圆周交点坐标
+            endAngle = dragAngle + FixedSweepAngle / 2;
+            endAngle = CoordinateSystem.StandardAngle(endAngle);
+            endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
 
-                //dragAngle += 30;
-            }
+            //dragAngle += 30;
         }
 
         public override void Dispose()
@@ -120,10 +113,7 @@ namespace RadarDisplayPackage
             antennaRangeAreaBrush?.Dispose();
         }
 
-        public override OverViewState GetState()
-        {
-            return OverViewState.AntennaControl;
-        }
+        public override OverViewState GetState() => OverViewState.AntennaControl;
 
         protected override Command CreateCommand()
         {

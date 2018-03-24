@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
 
 namespace RadarDisplayPackage
@@ -30,6 +25,7 @@ namespace RadarDisplayPackage
 
             canvas.DrawLine(new Point2F((int)x, coordinateArea.Bottom), new Point2F((int)x, coordinateArea.Top)
                 , antennaBrush, antennaWidth);
+            DrawSweepBorderLine();
         }
 
         protected override void DrawGlow(RotateDirection d)
@@ -59,6 +55,9 @@ namespace RadarDisplayPackage
         protected override void DrawSweepBorderLine()
         {
             base.DrawSweepBorderLine();
+
+            if (sweepBeginAngle == 0 && sweepEndAngle == 0)
+                return;
 
             Point2F sweepBorderLinePoints1 = coordinateSystem.CalIntersectionPoint(sweepBeginAngle);
             Point2F sweepBorderLinePoints2 = coordinateSystem.CalIntersectionPoint(sweepEndAngle);

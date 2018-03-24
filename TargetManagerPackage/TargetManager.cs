@@ -305,7 +305,8 @@ namespace TargetManagerPackage
                 //s1 = NextSector(s1);
                 //viewDeleter.DeleteViews(s1, false);
 
-                Sector tmp = PreviousSector(s);
+                //Sector tmp = PreviousSector(s);
+                Sector tmp = s;
 
                 //index - 1扇区点迹凝聚
                 AzimuthCell[] azCells = GetAzimuthCellsInSectorSpan(PreviousSector(tmp), NextSector(tmp));//获取刚扫过的扇区所包含的方位单元数组

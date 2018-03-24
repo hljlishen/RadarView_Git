@@ -63,7 +63,7 @@ namespace CycleDataDrivePackage
             {
                 socket = null;
             }
-            
+
 
             EndPoint point = new IPEndPoint(IPAddress.Parse(remoteIp), int.Parse(remotePort));
 
@@ -86,8 +86,9 @@ namespace CycleDataDrivePackage
 
         public override void Dispose()
         {
-            base.Dispose();
+            _udpSocket?.Close();
             _udpSocket?.Dispose();
+            base.Dispose();
         }
     }
 }

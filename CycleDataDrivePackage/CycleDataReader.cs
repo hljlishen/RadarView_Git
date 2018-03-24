@@ -10,9 +10,10 @@ namespace CycleDataDrivePackage
         protected int CmdEnd1 = 0x33;           //包位第一位
         protected int CmdEnd2 = 0x55;           //包位第二位
         protected static int DataMaximumLength = 4000;   //每个方位单元的数据长度
-        private const int IntervalMax = 100;
+        private const int IntervalMax = 30;
         private const int IntervalMin = 1;
-        private const int IntervalStep = 30;
+        private const int IntervalStep = 5;
+        //private UltraHighAccurateTimer timer;
 
         public int Interval { get; set; } = 1;
 
@@ -22,7 +23,9 @@ namespace CycleDataDrivePackage
         {
             Obs = new List<ICycleDataObserver>();
 
-            ReadDatathread = new Thread(ReadData) {IsBackground = true};
+            ReadDatathread = new Thread(ReadData) { IsBackground = true };
+            //timer = new UltraHighAccurateTimer() {Interval = 5};
+            //timer.tick += ReadData;
         }
 
         public void RegisterObserver(ICycleDataObserver ob)
@@ -56,14 +59,16 @@ namespace CycleDataDrivePackage
         public void StartReading()
         {
             StopReading();
-            ReadDatathread = new Thread(ReadData) {IsBackground = false};
+            ReadDatathread = new Thread(ReadData) { IsBackground = false };
             ReadDatathread.Start();
+            //timer.Start();
         }
 
         public void StopReading()
         {
             if (ReadDatathread?.ThreadState == ThreadState.Running)
                 ReadDatathread.Abort();
+            //timer.Stop();
         }
 
         public void Pause()
@@ -81,13 +86,11 @@ namespace CycleDataDrivePackage
         public virtual void Dispose()
         {
             StopReading();
-            ReadDatathread = null;
+            ReadDatathread.Abort();
+            //ReadDatathread = null;
         }
 
-        public void RebindSource(string source)
-        {
-            Source = source;
-        }
+        public void RebindSource(string source) => Source = source;
 
         public void SpeedUp()       //不合理设计，SpeedUp和SpeedDown函数只对BinDataSourceReader有意义，有待重构
         {

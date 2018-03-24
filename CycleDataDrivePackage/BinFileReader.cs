@@ -7,6 +7,7 @@ namespace CycleDataDrivePackage
     internal class BinFileReader : CycleDataReader
     {
         private BinaryReader _reader;
+        private int _readLength = 1472 * 4;
 
         public BinFileReader()
         {
@@ -27,25 +28,21 @@ namespace CycleDataDrivePackage
         protected override void ReadData()
         {
             _reader = LoadFile(Source);
-            while (true)
+            int bytesRead = 0;
+            while (bytesRead < _reader.BaseStream.Length)
             {
                 lock (this)
                 {
-                    try
-                    {
-                        var data = new byte[1472*4];
-                        _reader.Read(data, 0, 1472*4);
-                        if(data[16] != 0xAA) continue;
-                        NotifyAllObservers(data);
-                        Thread.Sleep(Interval);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("数据读取完毕");
-                        break;
-                    }
+                    var data = new byte[_readLength];
+                    _reader.Read(data, 0, _readLength);
+                    if (data[16] != 0xAA) continue;
+                    NotifyAllObservers(data);
+                    bytesRead += _readLength;
+                    //Thread.Sleep(Interval);
                 }
             }
+
+            MessageBox.Show("读取完毕");
         }
 
         public sealed override string Source

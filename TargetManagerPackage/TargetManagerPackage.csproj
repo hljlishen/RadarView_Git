@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzWiseClotter.cs" />
     <Compile Include="RemoteTargetProcessorcommunicator.cs" />
     <Compile Include="天线控制器\AntennaRotateController.cs" />
     <Compile Include="天线控制器\AntennaSectionSweepController.cs" />
