@@ -14,7 +14,21 @@ namespace CycleDataDrivePackage
         public delegate void ReceiveDataHandler(byte[] data);
         private static readonly Dictionary<string, Socket> SocketDictionary = new Dictionary<string, Socket>();
 
-        public static void BeginSendData(byte[] data, string localIpAndPort, string remoteIpAndPort)
+        //public static void BeginSendData(byte[] data, string localIpAndPort, string remoteIpAndPort)
+        //{
+        //    Socket socket = GetSocket(localIpAndPort);
+        //    if (socket == null)
+        //    {
+        //        MessageBox.Show("Socket无效,UdpEthernetCenter.BeginSendData()调用失败");
+        //        return;
+        //    }
+        //    EndPoint remoteEndPoint = GetIpEndPoint(remoteIpAndPort);
+        //    //Thread t = new Thread(()=>socket.SendTo(data,remoteEndPoint));
+        //    //t.Start();
+        //    socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
+        //}
+
+        public static void SendData(byte[] data, string localIpAndPort, string remoteIpAndPort)
         {
             Socket socket = GetSocket(localIpAndPort);
             if (socket == null)
@@ -23,8 +37,10 @@ namespace CycleDataDrivePackage
                 return;
             }
             EndPoint remoteEndPoint = GetIpEndPoint(remoteIpAndPort);
-            Thread t = new Thread(()=>socket.SendTo(data,remoteEndPoint));
-            t.Start();
+
+            int ret = socket.SendTo(data, remoteEndPoint);
+            //Thread t = new Thread(() => socket.SendTo(data, remoteEndPoint));
+            //t.Start();
         }
 
         public static void BeginRecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)
@@ -33,8 +49,9 @@ namespace CycleDataDrivePackage
             t.Start();
         }
 
-        private static void RecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)
+        public static void RecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)
         {
+            SendData(new byte[] { 1, 2, 3 }, localIpAndPort, remoteIpAndPort);
             while (true)
             {
                 byte[] data = new byte[MaximumReadLength];
@@ -46,7 +63,7 @@ namespace CycleDataDrivePackage
                 //移除多余的字节并返回
                 List<byte> ls = new List<byte>(data);
                 ls.RemoveRange(byteCount, MaximumReadLength - byteCount);
-                handler(ls.ToArray());
+                handler?.Invoke(ls.ToArray());
             }
         }
 
@@ -69,13 +86,18 @@ namespace CycleDataDrivePackage
 
         public static Socket GetSocket(string localIpAndPort)
         {
-            if(SocketDictionary.Keys.Contains(localIpAndPort))
-                return SocketDictionary[localIpAndPort];
+            if (SocketDictionary.Keys.Contains(localIpAndPort))
+                 return SocketDictionary[localIpAndPort];
+            return null;
+        }
 
+        public static void RegisterIpAndPort(string localIpAndPort)
+        {
             Socket socket = CreateUdpSocket(localIpAndPort);
-            if (socket == null) return null;
-            SocketDictionary.Add(localIpAndPort, socket);
-            return socket;
+            if (socket != null)
+            {
+                SocketDictionary.Add(localIpAndPort, socket);
+            }
         }
 
         public static Socket CreateUdpSocket(string ipAndPort)
@@ -91,7 +113,7 @@ namespace CycleDataDrivePackage
             }
             catch
             {
-                socket = null;  //绑定失败返回null
+                socket = null; //绑定失败返回null
             }
 
             return socket;

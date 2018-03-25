@@ -1,23 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
+﻿using CycleDataDrivePackage;
+using System.Collections.Generic;
 using System.Threading;
-using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
 {
     internal class RemoteTargetProcessorcommunicator
     {
-        private Socket _remoteSocket;
-        private EndPoint _remoteEndPoint;
+        private const string RemoteTargetProcessorCommunicatorIpAndPortString = "192.168.1.14:10001";
+        private const string RemoteTargetProcessorIpAndPortString = "192.168.1.23:20010";
         private const byte SendSectorDotTargetsHead = 0xA4;
-        private const int ReceiveBytesMax = 10000;
         private readonly TargetManager _targetManager;
 
         public RemoteTargetProcessorcommunicator(TargetManager t)
         {
-            (_remoteSocket, _remoteEndPoint) =
-                UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.14", "10001", "192.168.1.23", "20010");
+            UdpEthernetCenter.RegisterIpAndPort(RemoteTargetProcessorCommunicatorIpAndPortString);
             _targetManager = t;
         }
 
@@ -29,23 +25,28 @@ namespace TargetManagerPackage
             ls.Add(isSectionSweep);
             if (isSectionSweep == 1)
             {
-                ls.AddRange(AngleToBytes(antenna.GetSweepBeginAngle() , 1));
-                ls.AddRange(AngleToBytes(antenna.GetSweepEndAngle(), 1));
+                ls.AddRange(AngleToBytes(antenna.GetSweepBeginAngle()));
+                ls.AddRange(AngleToBytes(antenna.GetSweepEndAngle()));
             }
             else
             {
                 ls.AddRange(new byte[] { 0, 0, 0, 0 });
             }
             ls.AddRange(rawData); //添加扇区编号
+            //UdpEthernetCenter.SendData(rawData,
+            //    RemoteTargetProcessorCommunicatorIpAndPortString,
+            //    RemoteTargetProcessorIpAndPortString);
 
-            Thread t = new Thread(SendData);
-            t.Start(ls.ToArray());
+            //Thread t = new Thread(SendData);
+            //t.Start(ls.ToArray());
 
-            //Thread t = new Thread(()=> _remoteSocket.SendTo(ls.ToArray(), _remoteEndPoint));
-            //t.Start();
+            Thread t1 = new Thread(()=>UdpEthernetCenter.SendData(rawData,
+                RemoteTargetProcessorCommunicatorIpAndPortString,
+                RemoteTargetProcessorIpAndPortString));
+            t1.Start();
         }
 
-        private byte[] AngleToBytes(float angle, int validNum)  //要求长度为2字节，产生的数字只有长度为1，则前面部0
+        private byte[] AngleToBytes(float angle)  //要求长度为2字节，产生的数字只有长度为1，则前面部0
         {
             byte[] d = PolarCoordinate.FloatToBytes(angle, 1);
             if (d.Length == 1)  //长度为1时
@@ -58,15 +59,10 @@ namespace TargetManagerPackage
 
         private void SendData(object data)
         {
-            if (_remoteSocket == null)
-            {
-                (_remoteSocket, _remoteEndPoint) =
-                    UdpCycleDataReader.GetUdpConnectionObjects("192.168.1.14", "10001", "192.168.1.23", "20010");
-                if (_remoteSocket == null)
-                    return;
-            }
             byte[] d = (byte[]) data;
-            _remoteSocket?.SendTo(d, _remoteEndPoint);
+            UdpEthernetCenter.SendData(d, 
+                RemoteTargetProcessorCommunicatorIpAndPortString, 
+                RemoteTargetProcessorIpAndPortString);
         }
 
         public void StartReceiveData()
@@ -77,28 +73,30 @@ namespace TargetManagerPackage
 
         public void ReadData()
         {
-            if (_remoteSocket == null) return;
-            while (true)
+            UdpEthernetCenter.BeginRecvData(
+                RemoteTargetProcessorCommunicatorIpAndPortString,
+                RemoteTargetProcessorIpAndPortString,
+                ProcessRemoteTargetManagerUdpData);
+        }
+
+        private void ProcessRemoteTargetManagerUdpData(byte[] data)
+        {
+            byte head = data[1];
+
+            int sectorNum = data[3];
+
+            int targetCount = DistanceCell.MakeInt(data, 4, 2);
+
+            if (head == 0xb1)
             {
-                byte[] data = new byte[ReceiveBytesMax];
-                _remoteSocket?.ReceiveFrom(data, ref _remoteEndPoint);
-                byte head = data[1];
+                List<TargetDot> ls = GetTargetDotsFromSerialData(data, targetCount, sectorNum);
+                _targetManager.TargetDotDataReceived(sectorNum, ls);
+            }
 
-                int sectorNum = data[3];
-
-                int targetCount = DistanceCell.MakeInt(data, 4, 2);
-
-                if (head == 0xb1)
-                {
-                    List<TargetDot> ls = GetTargetDotsFromSerialData(data, targetCount, sectorNum);
-                    _targetManager.TargetDotDataReceived(sectorNum, ls);
-                }
-
-                if (head == 0xb2)
-                {
-                    List<TargetTrack> ls = GetTargetTracksFromSerialData(data, targetCount, sectorNum);
-                    _targetManager.TargetTrackDataReceived(sectorNum, ls);
-                }
+            if (head == 0xb2)
+            {
+                List<TargetTrack> ls = GetTargetTracksFromSerialData(data, targetCount, sectorNum);
+                _targetManager.TargetTrackDataReceived(sectorNum, ls);
             }
         }
 

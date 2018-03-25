@@ -13,7 +13,6 @@ namespace CycleDataDrivePackage
         private const int IntervalMax = 30;
         private const int IntervalMin = 1;
         private const int IntervalStep = 5;
-        //private UltraHighAccurateTimer timer;
 
         public int Interval { get; set; } = 1;
 
@@ -32,9 +31,12 @@ namespace CycleDataDrivePackage
         {
             if (ob == null)
                 return;
-            if(!Obs.Contains(ob))
+            lock (Obs)
             {
-                Obs.Add(ob);
+                if (!Obs.Contains(ob))
+                {
+                    Obs.Add(ob);
+                }
             }
         }
 
@@ -46,7 +48,6 @@ namespace CycleDataDrivePackage
             {
                 if (Obs.Contains(ob))
                 {
-
                     Obs.Remove(ob);
                 }
             }
@@ -63,19 +64,17 @@ namespace CycleDataDrivePackage
 
         protected abstract void ReadData();
 
-        public void StartReading()
+        public virtual void StartReading()
         {
             StopReading();
             ReadDatathread = new Thread(ReadData) { IsBackground = false };
             ReadDatathread.Start();
-            //timer.Start();
         }
 
         public void StopReading()
         {
             if (ReadDatathread?.ThreadState == ThreadState.Running)
                 ReadDatathread.Abort();
-            //timer.Stop();
         }
 
         public void Pause()

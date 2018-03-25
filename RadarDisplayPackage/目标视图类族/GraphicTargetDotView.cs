@@ -20,7 +20,7 @@ namespace RadarDisplayPackage
         public GraphicTargetDotView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs)
             : base(target, rt, factory, cs)
         {
-            targetViewRadius = 2;
+            targetViewRadius = 3;
 
             float redColorValue = CalRedColorValue(target.amValue);
             float blueColorValue = CalBlueColorValue(target.amValue);

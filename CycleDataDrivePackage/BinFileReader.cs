@@ -13,7 +13,7 @@ namespace CycleDataDrivePackage
         {
             Source = "";
             _reader = LoadFile(Source);
-            Interval = 5;
+            Interval = 2;
         }
 
         private BinaryReader LoadFile(string fileName)
