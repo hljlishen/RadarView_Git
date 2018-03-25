@@ -15,11 +15,6 @@ namespace CycleDataDrivePackage
             _writer = new BinaryWriter(fs);
         }
 
-        public void RecordByte(byte data)
-        {
-            _writer.Write(data);
-        }
-
         public void RecordBytes(byte[] data, int pos, int count)
         {
             _writer.Write(data, pos, count);

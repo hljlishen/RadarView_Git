@@ -13,9 +13,8 @@ namespace CycleDataDrivePackage
         {
             Source = "";
             _reader = LoadFile(Source);
-            Interval = 1;
+            Interval = 5;
         }
-
 
         private BinaryReader LoadFile(string fileName)
         {
@@ -38,7 +37,7 @@ namespace CycleDataDrivePackage
                     if (data[16] != 0xAA) continue;
                     NotifyAllObservers(data);
                     bytesRead += _readLength;
-                    //Thread.Sleep(Interval);
+                    Thread.Sleep(Interval);
                 }
             }
 

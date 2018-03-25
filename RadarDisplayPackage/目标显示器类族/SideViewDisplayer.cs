@@ -19,10 +19,7 @@ namespace RadarDisplayPackage
 
         public override float Distance
         {
-            get
-            {
-                return base.Distance;
-            }
+            get => base.Distance;
 
             set
             {
@@ -38,8 +35,7 @@ namespace RadarDisplayPackage
             SideViewDisplayerBackground svdb = new SideViewDisplayerBackground(Canvas, Factory, coordinateSystem);
 
             //创建角度分划线虚线风格
-            StrokeStyleProperties ssp = new StrokeStyleProperties();
-            ssp.DashStyle = DashStyle.DashDot;
+            StrokeStyleProperties ssp = new StrokeStyleProperties {DashStyle = DashStyle.DashDot};
             svdb.DashLineStrokeStyle = Factory.CreateStrokeStyle(ssp);
 
             return svdb;

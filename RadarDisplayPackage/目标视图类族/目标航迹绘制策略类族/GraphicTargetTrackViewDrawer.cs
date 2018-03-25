@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using System;
 using TargetManagerPackage;
 
 namespace RadarDisplayPackage
@@ -25,18 +21,12 @@ namespace RadarDisplayPackage
 
         public RectF IdTextRect
         {
-            get
-            {
-                return idTextRect;
-            }
+            get => idTextRect;
 
-            set
-            {
-                idTextRect = value;
-            }
+            set => idTextRect = value;
         }
 
-        public GraphicTargetTrackViewDrawer(GraphicTargetTrackView view)
+        protected GraphicTargetTrackViewDrawer(GraphicTargetTrackView view)
         {
             this.view = view;
 
@@ -63,7 +53,7 @@ namespace RadarDisplayPackage
         {
             //计算ID框和三角形位置
             PathGeometry pg = BuildTriangle();
-            RoundedRectangleGeometry IDTag = BuildIDTag();
+            RoundedRectangleGeometry IDTag = BuildIdTag();
 
             //画ID标签
             renderTarget.FillGeometry(pg, tagBrush);
@@ -83,14 +73,11 @@ namespace RadarDisplayPackage
             pg.Dispose();
             IDTag.Dispose();
         }
-        public virtual void Draw()
-        {
-            Draw(view.Canvas);
-        }
+        public virtual void Draw() => Draw(view.Canvas);
 
         protected abstract PathGeometry BuildTriangle();
 
-        protected abstract RoundedRectangleGeometry BuildIDTag();
+        protected abstract RoundedRectangleGeometry BuildIdTag();
 
         public virtual void Dispose()
         {

@@ -26,7 +26,7 @@ namespace RadarDisplayPackage
             return triangle;
         }
 
-        protected override RoundedRectangleGeometry BuildIDTag()
+        protected override RoundedRectangleGeometry BuildIdTag()
         {
             RectF rect = new RectF();
             rect.Right = projectivePosition.X + 20;

@@ -439,10 +439,5 @@ namespace TargetManagerPackage
                 ob.NotifyUpdateSectorTrack(_sectors[sectorIndex].tracks, _sectors[sectorIndex].index);
             }
         }
-
-        public void SendSectionSweepState(bool isSectionSweeping, AngleArea area)
-        {
-            communicator.SendSectionSweepState(isSectionSweeping, area);
-        }
     }
 }

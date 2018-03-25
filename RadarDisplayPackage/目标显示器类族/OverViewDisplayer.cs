@@ -27,6 +27,7 @@ namespace RadarDisplayPackage
         GraphicWaveGateViewManager waveGateViewManager;   //当前存在的波门视图
         SweepSectionManager sweepSectionManager;            //扫描区域视图管理器
         protected List<IControlStateObserver> obs;
+        private MouseCoordinateDisplayer mouseCoordinateDisplayer;
 
         public OverViewDisplayer(Panel h) : base(h)
         {
@@ -37,6 +38,8 @@ namespace RadarDisplayPackage
             waveGateViewManager = new GraphicWaveGateViewManager(this) ;
 
             sweepSectionManager = new SweepSectionManager(this);
+
+            mouseCoordinateDisplayer = new MouseCoordinateDisplayer(this);
 
             obs = new List<IControlStateObserver>();
             //Distance = 3000;
@@ -193,6 +196,8 @@ namespace RadarDisplayPackage
             waveGateViewManager.Draw();
 
             sweepSectionManager.Draw();
+
+            mouseCoordinateDisplayer.Draw();
 
             viewState.Draw();
         }

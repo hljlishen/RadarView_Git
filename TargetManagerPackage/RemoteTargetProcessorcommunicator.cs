@@ -12,7 +12,7 @@ namespace TargetManagerPackage
         private EndPoint _remoteEndPoint;
         private const byte SendSectorDotTargetsHead = 0xA4;
         private const int ReceiveBytesMax = 10000;
-        private TargetManager _targetManager;
+        private readonly TargetManager _targetManager;
 
         public RemoteTargetProcessorcommunicator(TargetManager t)
         {
@@ -134,28 +134,6 @@ namespace TargetManagerPackage
             }
 
             return ls;
-        }
-
-        public void SendSectionSweepState(bool isSectionSweeping, AngleArea area)
-        {
-            List<byte> ls = new List<byte>(new byte[] { 0x00, 0xA3 });
-            byte state;
-            if (isSectionSweeping)
-            {
-                state = 1;
-                ls.Add(state);
-                ls.AddRange(PolarCoordinate.FloatToBytes(area.BeginAngle, 1));
-                ls.AddRange(PolarCoordinate.FloatToBytes(area.EndAngle, 1));
-            }
-            else
-            {
-                state = 0;
-                ls.Add(state);
-                ls.AddRange(new byte[] { 0, 0, 0, 0 });
-            }
-
-            Thread t = new Thread(() => SendData(ls.ToArray()));
-            t.Start();
         }
     }
 }

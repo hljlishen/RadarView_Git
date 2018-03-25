@@ -18,7 +18,7 @@ namespace RadarDisplayPackage
             return null;
         }
 
-        protected override RoundedRectangleGeometry BuildIDTag()
+        protected override RoundedRectangleGeometry BuildIdTag()
         {
             return null;
         }

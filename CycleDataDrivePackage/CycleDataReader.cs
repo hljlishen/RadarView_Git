@@ -42,16 +42,23 @@ namespace CycleDataDrivePackage
         {
             if (ob == null)
                 return;
-            if (Obs.Contains(ob))
+            lock (Obs)
             {
-                Obs.Remove(ob);
+                if (Obs.Contains(ob))
+                {
+
+                    Obs.Remove(ob);
+                }
             }
         }
 
         protected virtual void NotifyAllObservers(byte[] rawData)
         {
-            foreach (ICycleDataObserver ob in Obs)
-                ob.NotifyNewCycleData(rawData);
+            lock (Obs)
+            {
+                foreach (ICycleDataObserver ob in Obs)
+                    ob.NotifyNewCycleData(rawData);
+            }
         }
 
         protected abstract void ReadData();

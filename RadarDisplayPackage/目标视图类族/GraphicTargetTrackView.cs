@@ -12,27 +12,15 @@ namespace RadarDisplayPackage
     class GraphicTargetTrackView : GraphicTargetView
     {
         GraphicTargetTrackViewDrawer drawer;
-        List<Ellipse> preLocations;
         protected const int preLocationRadius = 2;  //历史位置圆形半径
 
-        public List<Ellipse> PreLocations
-        {
-            get
-            {
-                return preLocations;
-            }
-
-            set
-            {
-                preLocations = value;
-            }
-        }
+        public List<Ellipse> PreLocations { get; set; }
 
         public GraphicTargetTrackView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs) 
             :base(target, rt, factory, cs)
         {
             drawer = CreateDrawer();
-            preLocations = new List<Ellipse>();
+            PreLocations = new List<Ellipse>();
             TargetTrack t = (TargetTrack)target;
 
             foreach(PolarCoordinate c in t.locations)
@@ -40,7 +28,7 @@ namespace RadarDisplayPackage
                 Point2F p;
                 p = CoordinateSystem.CoordinateToPoint(c);
                 Ellipse e = new Ellipse(p, preLocationRadius, preLocationRadius);
-                preLocations.Add(e);
+                PreLocations.Add(e);
             }
             targetViewRadius = 4;
         }
@@ -118,16 +106,13 @@ namespace RadarDisplayPackage
         {
             if (base.IsPointInActiveRect(p))
                 return true;
-            else
+            Rect rect = new Rect((int)drawer.IdTextRect.Left - GraphicTargetTrackViewDrawer.iDtextRectLeftOffset, (int)drawer.IdTextRect.Top, (int)drawer.IdTextRect.Right, (int)drawer.IdTextRect.Bottom);
+            if (CoordinateSystem.IsPointInRect(CoordinateSystem.PointToPoint2F(p), rect))
             {
-                Rect rect = new Rect((int)drawer.IdTextRect.Left - GraphicTargetTrackViewDrawer.iDtextRectLeftOffset, (int)drawer.IdTextRect.Top, (int)drawer.IdTextRect.Right, (int)drawer.IdTextRect.Bottom);
-                if (CoordinateSystem.IsPointInRect(CoordinateSystem.PointToPoint2F(p), rect))
-                {
-                    return true;
-                }
-                else
-                    return false;
+                return true;
             }
+
+            return false;
         }
     }
 }

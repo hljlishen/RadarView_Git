@@ -26,22 +26,6 @@ namespace CycleDataDrivePackage
             }
         }
 
-        public static (string, string) TryParseIpAddressAndPort(string data)   //将格式为192.168.1.1:1234的字符串解析为IP地址和端口
-        {
-            try
-            {
-                var index = data.IndexOf(":", StringComparison.Ordinal);
-                var ip = data.Substring(0, index);
-                var port = data.Substring(index + 1);
-                return (ip, port);
-            }
-            catch
-            {
-                MessageBox.Show(@"输入的Ip或端口不正确");
-                throw;
-            }
-        }
-
         public static (Socket, EndPoint) GetUdpConnectionObjects(string localIp, string localPort, string remoteIp,
             string remotePort)
         {
@@ -59,7 +43,6 @@ namespace CycleDataDrivePackage
                 socket = null;
             }
 
-
             EndPoint point = new IPEndPoint(IPAddress.Parse(remoteIp), int.Parse(remotePort));
 
             return (socket, point);
@@ -67,16 +50,6 @@ namespace CycleDataDrivePackage
 
         private void ProcessUdpData()
         {
-            //_udpSocket.SendTo(new byte[] { 1, 2, 3 }, _remoteEndPoint);
-            //while (true)
-            //{
-            //    var data = new byte[DataMaximumLength];
-            //    //发送接受信息
-            //    var recv = _udpSocket.ReceiveFrom(data, ref _remoteEndPoint);
-            //    _recorder.RecordBytes(data, 0, recv);        //记录数据
-            //    //var cell = new AzimuthCell(data);
-            //    NotifyAllObservers(data);   //发送通知
-            //}
             UdpEthernetCenter.BeginSendData(new byte[] { 1, 2, 3 }, "192.168.1.13:2013", Source);
             UdpEthernetCenter.BeginRecvData("192.168.1.13:2013", Source, NotifyAllObservers);
         }

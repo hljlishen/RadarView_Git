@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using TargetManagerPackage;
 
 namespace RadarDisplayPackage
@@ -11,7 +12,7 @@ namespace RadarDisplayPackage
         public GraphicTargetViewManager(GraphicTrackDisplayer displayer) : base(displayer)
         {
             //鼠标点击事件
-            displayer.DisplayControl.MouseDoubleClick += DisplayControl_MouseClick;
+            displayer.DisplayControl.MouseClick += DisplayControl_MouseClick;
 
             InitializeBitmaps();
 
@@ -35,6 +36,7 @@ namespace RadarDisplayPackage
 
         private void DisplayControl_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left) return;
             lock (this)
             {
                 //鼠标点击事件转发给每个视图对象处理,倒叙遍历，因为遍历过程中会有航迹的删除和添加
