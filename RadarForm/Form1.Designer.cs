@@ -476,7 +476,7 @@
             this.tb_ipAddress.Name = "tb_ipAddress";
             this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
             this.tb_ipAddress.TabIndex = 23;
-            this.tb_ipAddress.Text = "192.168.1.5";
+            this.tb_ipAddress.Text = "192.168.2.5";
             // 
             // btn_startUDP
             // 

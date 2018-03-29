@@ -38,7 +38,8 @@ namespace CycleDataDrivePackage
             }
             EndPoint remoteEndPoint = GetIpEndPoint(remoteIpAndPort);
 
-            int ret = socket.SendTo(data, remoteEndPoint);
+            //int ret = socket.SendTo(data, remoteEndPoint);
+            socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
             //Thread t = new Thread(() => socket.SendTo(data, remoteEndPoint));
             //t.Start();
         }

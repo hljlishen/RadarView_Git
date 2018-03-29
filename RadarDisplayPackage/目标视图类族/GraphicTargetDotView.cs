@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage
 {
@@ -20,12 +15,11 @@ namespace RadarDisplayPackage
         public GraphicTargetDotView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs)
             : base(target, rt, factory, cs)
         {
-            targetViewRadius = 3;
+            targetViewRadius = 2;
 
             float redColorValue = CalRedColorValue(target.amValue);
             float blueColorValue = CalBlueColorValue(target.amValue);
             targetViewBrush = canvas.CreateSolidColorBrush(new ColorF(redColorValue, 0.184f, blueColorValue));
-
         }
 
         private float CalRedColorValue(float am)

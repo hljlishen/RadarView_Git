@@ -63,6 +63,7 @@
     <Compile Include="AntennaSweepModeAngleAreaTests.cs" />
     <Compile Include="PolarCoordinateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemCommunicatorTests.cs" />
     <Compile Include="天线控制器\AntennaManagerAngleAreaTests.cs" />
     <Compile Include="天线控制器\角度区域监听器\AngleAreaAngleAreaTests.cs" />
   </ItemGroup>

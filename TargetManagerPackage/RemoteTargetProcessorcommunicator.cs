@@ -37,13 +37,13 @@ namespace TargetManagerPackage
             //    RemoteTargetProcessorCommunicatorIpAndPortString,
             //    RemoteTargetProcessorIpAndPortString);
 
-            //Thread t = new Thread(SendData);
+            Thread t = new Thread(SendData);
             //t.Start(ls.ToArray());
 
-            Thread t1 = new Thread(()=>UdpEthernetCenter.SendData(rawData,
-                RemoteTargetProcessorCommunicatorIpAndPortString,
-                RemoteTargetProcessorIpAndPortString));
-            t1.Start();
+            //Thread t1 = new Thread(()=>UdpEthernetCenter.SendData(rawData,
+            //    RemoteTargetProcessorCommunicatorIpAndPortString,
+            //    RemoteTargetProcessorIpAndPortString));
+            //t1.Start();
         }
 
         private byte[] AngleToBytes(float angle)  //要求长度为2字节，产生的数字只有长度为1，则前面部0

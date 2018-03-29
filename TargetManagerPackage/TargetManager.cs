@@ -16,6 +16,7 @@ namespace TargetManagerPackage
         private readonly FreeDotDeleter _freeDotDeleter;  //自由点删除器
         private readonly List<ITargetObserver> _obs;      //目标观察者，目标变化时观察者得到通知
         private readonly RemoteTargetProcessorcommunicator communicator;
+        private readonly SystemCommunicator sysCommunicator;
         private bool _dotSource = true;
 
         //测试用变量
@@ -39,6 +40,8 @@ namespace TargetManagerPackage
             //communicator = RemoteTargetProcessorcommunicator.CreateCommunicator();
             communicator = new RemoteTargetProcessorcommunicator(this);
             communicator.StartReceiveData();
+
+            sysCommunicator = new SystemCommunicator();
 
             _clotter = new Clotter_Test();
             //_clotter = new Clotter_3DClot();//凝聚器
@@ -332,6 +335,12 @@ namespace TargetManagerPackage
 
                 //tmp = PreviousSector(tmp);
                 //viewDeleter.DeleteViews(tmp,false);
+                TargetTrack t = new TargetTrack();
+                t.trackID = 155;
+                t.AZ = 256.3f;
+                t.EL = 15.4f;
+                t.Dis = 2500f;
+                sysCommunicator.Send0x80Cmd(t);
             }
         }
 
