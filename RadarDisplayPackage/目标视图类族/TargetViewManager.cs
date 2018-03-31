@@ -47,7 +47,6 @@ namespace RadarDisplayPackage
 
         public virtual void NotifyChange(Target t, NotifyType type)
         {
-
             switch (type)
             {
                 case NotifyType.Delete:
@@ -119,7 +118,7 @@ namespace RadarDisplayPackage
             AddTarget(t);
         }
 
-        protected abstract TargetView CreateTargetView(Target taget);
+        public abstract TargetView CreateTargetView(Target taget);
 
         protected abstract void LoadTargetViews(List<Target> ls);
 

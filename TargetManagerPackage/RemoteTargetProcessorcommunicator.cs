@@ -1,6 +1,5 @@
 ﻿using CycleDataDrivePackage;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace TargetManagerPackage
 {
@@ -19,31 +18,36 @@ namespace TargetManagerPackage
 
         public void SendRawData(byte[] rawData)
         {
+            List<byte> cmdData = GenerateCommandHead();     //命令头
+            cmdData = AddAntennaSectionSweepData(cmdData);  //添加扇扫信息
+            cmdData.AddRange(rawData);                      //添加扇区编号
+
+            UdpEthernetCenter.SendData(cmdData.ToArray(),
+                RemoteTargetProcessorCommunicatorIpAndPortString,
+                RemoteTargetProcessorIpAndPortString);
+        }
+
+        private List<byte> GenerateCommandHead()
+        {
+            return new List<byte>(new byte[] { 0x00, SendSectorDotTargetsHead });
+        }
+
+        private List<byte> AddAntennaSectionSweepData(List<byte> cmdData)
+        {
             IAntennaDataProvider antenna = TargetManagerFactory.CreateAntennaDataProvider();
-            List<byte> ls = new List<byte>(new byte []{0x00, SendSectorDotTargetsHead});   //命令头
             byte isSectionSweep = (byte)(antenna.IsSectionSweeping() ? 1 : 0);
-            ls.Add(isSectionSweep);
+            cmdData.Add(isSectionSweep);
             if (isSectionSweep == 1)
             {
-                ls.AddRange(AngleToBytes(antenna.GetSweepBeginAngle()));
-                ls.AddRange(AngleToBytes(antenna.GetSweepEndAngle()));
+                cmdData.AddRange(AngleToBytes(antenna.GetSweepBeginAngle()));
+                cmdData.AddRange(AngleToBytes(antenna.GetSweepEndAngle()));
             }
             else
             {
-                ls.AddRange(new byte[] { 0, 0, 0, 0 });
+                cmdData.AddRange(new byte[] { 0, 0, 0, 0 });
             }
-            ls.AddRange(rawData); //添加扇区编号
-            //UdpEthernetCenter.SendData(rawData,
-            //    RemoteTargetProcessorCommunicatorIpAndPortString,
-            //    RemoteTargetProcessorIpAndPortString);
 
-            Thread t = new Thread(SendData);
-            //t.Start(ls.ToArray());
-
-            //Thread t1 = new Thread(()=>UdpEthernetCenter.SendData(rawData,
-            //    RemoteTargetProcessorCommunicatorIpAndPortString,
-            //    RemoteTargetProcessorIpAndPortString));
-            //t1.Start();
+            return cmdData;
         }
 
         private byte[] AngleToBytes(float angle)  //要求长度为2字节，产生的数字只有长度为1，则前面部0
@@ -57,21 +61,7 @@ namespace TargetManagerPackage
             return d;
         }
 
-        private void SendData(object data)
-        {
-            byte[] d = (byte[]) data;
-            UdpEthernetCenter.SendData(d, 
-                RemoteTargetProcessorCommunicatorIpAndPortString, 
-                RemoteTargetProcessorIpAndPortString);
-        }
-
         public void StartReceiveData()
-        {
-            Thread t = new Thread(ReadData);
-            t.Start();
-        }
-
-        public void ReadData()
         {
             UdpEthernetCenter.BeginRecvData(
                 RemoteTargetProcessorCommunicatorIpAndPortString,
@@ -90,13 +80,13 @@ namespace TargetManagerPackage
             if (head == 0xb1)
             {
                 List<TargetDot> ls = GetTargetDotsFromSerialData(data, targetCount, sectorNum);
-                _targetManager.TargetDotDataReceived(sectorNum, ls);
+                _targetManager.TargetDotDataReceivedFromRemoteTargetManager(sectorNum, ls);
             }
 
             if (head == 0xb2)
             {
                 List<TargetTrack> ls = GetTargetTracksFromSerialData(data, targetCount, sectorNum);
-                _targetManager.TargetTrackDataReceived(sectorNum, ls);
+                _targetManager.TargetTrackDataReceivedFromRemoteTargetManager(sectorNum, ls);
             }
         }
 
@@ -123,7 +113,7 @@ namespace TargetManagerPackage
 
             int pos = 8;
             if (targetCount == 0)
-                return null;
+                return ls;
 
             for (int i = 0; i < targetCount; i++)
             {

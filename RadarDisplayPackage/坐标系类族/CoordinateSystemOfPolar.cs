@@ -55,7 +55,9 @@ namespace RadarDisplayPackage
             float projectedDistance = (float)(r * Range * 2 / CoordinateArea.Width);
             c.ProjectedDis = projectedDistance;
             c.El = -1;
-            c.Dis = -1;
+            //c.Dis = -1;
+            c.Dis = c.ProjectedDis;
+            c.El = 0;
 
             return c;
         }

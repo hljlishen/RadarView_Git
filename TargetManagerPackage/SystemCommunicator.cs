@@ -17,7 +17,7 @@ namespace TargetManagerPackage
         private Dictionary<int, Thread> _waitingResponedThreads;
         private const string LocalIpAndPortString = "192.168.10.99:10012";
         private const string SystemIpAndPortString = "192.168.10.33:10011";
-        private int SendCommandCount = 0;   //发送命令的序号，每发送一条+1
+        private static int SendCommandCount = 0;   //发送命令的序号，每发送一条+1
         private const int OutterFrameLength = 10;    //包外围长度为8个字节
         private const int x80CmdLength = 29;         //0x80命令29个字节长
 
@@ -32,13 +32,14 @@ namespace TargetManagerPackage
             UdpEthernetCenter.BeginRecvData(LocalIpAndPortString,SystemIpAndPortString, ProcessCommandData);
         }
 
-        public void Send0x80Cmd(TargetTrack t)
+        public static void Send0X80Cmd(TargetTrack t)
         {
-            //byte[] cmdData = new byte[OutterFrameLength + x80CmdLength];
             List<byte> cmdData = new List<byte>();
             cmdData.Add(LocalComponentNumber);
             cmdData.Add(0);
             byte[] sendCmdCountBytes = IntToByteLsb(SendCommandCount++, 2);
+            if (SendCommandCount >= 65536)
+                SendCommandCount = 0;
             cmdData.AddRange(sendCmdCountBytes);
             cmdData.Add(SysteComponentmNumber);
             cmdData.Add(0x80);
@@ -86,7 +87,7 @@ namespace TargetManagerPackage
             return xor == cmdData[cmdData.Length - 1];
         }
 
-        private byte[] AddXorCheckByte(byte[] data)     //为给定数组添加异或和校验字
+        private static byte[] AddXorCheckByte(byte[] data)     //为给定数组添加异或和校验字
         {
             List<byte> ls = new List<byte>(data);
             byte xor = CalBytesXor(data, 0, data.Length);

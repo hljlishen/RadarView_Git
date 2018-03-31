@@ -65,15 +65,16 @@ namespace RadarDisplayPackage
             return CoordinateSystem.IsPointInRect(CoordinateSystem.PointToPoint2F(p), activeRect);
         }
 
-        public override void HandleMouseClick(Object p)
+        public override bool HandleMouseClick(Object p)
         {
-            base.HandleMouseClick(p);
-
             if (IsPointInActiveRect((Point)p))
             {
                 target.active = !target.active;
                 targetController.SelectTarget(target);
+                return true;
             }
+
+            return false;
         }
 
         public override void Dispose()

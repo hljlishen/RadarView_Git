@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TargetManagerPackage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TargetManagerPackage.Tests
 {
@@ -53,16 +47,17 @@ namespace TargetManagerPackage.Tests
         }
 
         [TestMethod()]
-        public void Send0x80CmdTest()
+        public void Send0X80CmdTest()
         {
-            TargetTrack t = new TargetTrack();
-            SystemCommunicator sc = new SystemCommunicator();
-            t.trackID = 155;
-            t.AZ = 256.3f;
-            t.EL = 15.4f;
-            t.Dis = 2500f;
+            TargetTrack t = new TargetTrack
+            {
+                trackID = 155,
+                AZ = 256.3f,
+                EL = 15.4f,
+                Dis = 2500f
+            };
 
-            sc.Send0x80Cmd(t);
+            SystemCommunicator.Send0X80Cmd(t);
         }
     }
 }

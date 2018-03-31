@@ -15,6 +15,11 @@ namespace RadarDisplayPackage
             set => dr.Selected = value;
         }
 
+        public override bool HandleMouseClick(object p)
+        {
+            return false;
+        }
+
         public DataGridViewTargetView(TargetTrack t, DataGridViewDisplayer displayer, int id) : base(t)
         {
             this.displayer = displayer;

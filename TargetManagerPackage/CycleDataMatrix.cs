@@ -41,18 +41,12 @@ namespace TargetManagerPackage
             bool isAngleNearPreviousData ;
 
             if (!isPreviousDataNull)
-                isAngleNearPreviousData = Math.Abs(data.Angle - _matrix[_currentMatrixIndex].Angle) < 0.17578;
+                isAngleNearPreviousData = Math.Abs(data.Angle - _matrix[_currentMatrixIndex].Angle) < 0.175780;
             else
                 isAngleNearPreviousData = false;
 
             return !isAngleNearPreviousData;
         }
-
-        //public void NotifyNewCycleData(byte[] rawData)
-        //{
-        //    AzimuthCell cell = new AzimuthCell(rawData);
-        //    SaveAzimuthCell(cell);
-        //}
 
         public AzimuthCell[] AzimuthCellsInAngleArea(AngleArea area) //返回角度在begin和end之间的周期数据集合
         {
@@ -65,6 +59,7 @@ namespace TargetManagerPackage
         public void Clear()
         {
             _matrix = new AzimuthCell[AzimuthCellCount];
+            _currentMatrixIndex = 0;
         }
         public void Dispose()
         {

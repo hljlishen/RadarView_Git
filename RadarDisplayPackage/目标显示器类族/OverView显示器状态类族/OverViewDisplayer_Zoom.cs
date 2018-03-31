@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
@@ -14,7 +8,7 @@ namespace RadarDisplayPackage
     {
         Rect zoomRect;          //zoomCircle的外切矩形
         Ellipse zoomCircle;     //拖动时，显示待放大区域的圆形
-        Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush zoomCircleBrush;   //圆形区域填充画刷
+        Brush zoomCircleBrush;   //圆形区域填充画刷
         float zoomCircleBrushWidth = 3;
         Point2F mouseDragPosition;
 
@@ -48,34 +42,26 @@ namespace RadarDisplayPackage
 
         public override void MouseMove(object sender, MouseEventArgs e)
         {
-            if(!isMouseDown)
-            {
-                return;
-            }
-            else
-            {
-                //计算绘制的圆形大小
-                Point2F Position = CoordinateSystem.PointToPoint2F(e.Location);
-                mouseDragPosition = Position;
-                float radius = (float)CoordinateSystem.DistanceBetween(Position, mouseDownPosition);
-                zoomCircle = new Ellipse(mouseDownPosition, radius, radius);
+            if (!isMouseDown) return;
+            //计算绘制的圆形大小
+            Point2F position = CoordinateSystem.PointToPoint2F(e.Location);
+            mouseDragPosition = position;
+            float radius = (float)CoordinateSystem.DistanceBetween(position, mouseDownPosition);
+            zoomCircle = new Ellipse(mouseDownPosition, radius, radius);
                 
-                //计算矩形区域位置和大小
-                zoomRect.Left = (int)(mouseDownPosition.X - zoomCircle.RadiusX);
-                zoomRect.Right = (int)(mouseDownPosition.X + zoomCircle.RadiusX);
-                zoomRect.Top = (int)(mouseDownPosition.Y - zoomCircle.RadiusY);
-                zoomRect.Bottom = (int)(mouseDownPosition.Y + zoomCircle.RadiusY);
-            }
+            //计算矩形区域位置和大小
+            zoomRect.Left = (int)(mouseDownPosition.X - zoomCircle.RadiusX);
+            zoomRect.Right = (int)(mouseDownPosition.X + zoomCircle.RadiusX);
+            zoomRect.Top = (int)(mouseDownPosition.Y - zoomCircle.RadiusY);
+            zoomRect.Bottom = (int)(mouseDownPosition.Y + zoomCircle.RadiusY);
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (!isMouseDown)
-            {
-                isMouseDown = true;
-                mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);   //记录鼠标按下的位置
-                mouseDragPosition = mouseDownPosition;
-            }
+            if (isMouseDown || e.Button != MouseButtons.Left) return;
+            isMouseDown = true;
+            mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);   //记录鼠标按下的位置
+            mouseDragPosition = mouseDownPosition;
         }
 
         public override void Dispose()
@@ -83,7 +69,6 @@ namespace RadarDisplayPackage
             base.Dispose();
             displayer.DisplayControl.MouseDoubleClick -= DisplayControl_MouseDoubleClick;
             zoomCircleBrush?.Dispose();
-            //ZoomCircleBrushStrokeStyle?.Dispose();
         }
 
         public override OverViewState GetState()
@@ -95,15 +80,12 @@ namespace RadarDisplayPackage
         {
             if (Math.Abs(mouseDragPosition.X - mouseDownPosition.X) < 8 && Math.Abs(mouseDragPosition.Y - mouseDownPosition.Y) < 8)   //距离太小不放大
                 return new NullCommand();
-            else
-            {
-                //displayer.ZoomArea(zoomRect);
-                Command cmd = new OverViewDisplayerZoomCommand(displayer, zoomRect);
-                zoomCircle = new Ellipse();     //新建一个圆形，半径为0
-                zoomRect = new Rect();
 
-                return cmd;
-            }
+            Command cmd = new OverViewDisplayerZoomCommand(displayer, zoomRect);
+            zoomCircle = new Ellipse();     //新建一个圆形，半径为0
+            zoomRect = new Rect();
+
+            return cmd;
         }
     }
 }

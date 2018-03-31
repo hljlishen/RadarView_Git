@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzWiseClotter.cs" />
+    <Compile Include="MouseTargetTracker.cs" />
     <Compile Include="RemoteTargetProcessorcommunicator.cs" />
     <Compile Include="SystemCommunicator.cs" />
     <Compile Include="天线控制器\AntennaRotateController.cs" />

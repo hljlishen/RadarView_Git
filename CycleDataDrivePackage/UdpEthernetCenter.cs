@@ -14,34 +14,20 @@ namespace CycleDataDrivePackage
         public delegate void ReceiveDataHandler(byte[] data);
         private static readonly Dictionary<string, Socket> SocketDictionary = new Dictionary<string, Socket>();
 
-        //public static void BeginSendData(byte[] data, string localIpAndPort, string remoteIpAndPort)
-        //{
-        //    Socket socket = GetSocket(localIpAndPort);
-        //    if (socket == null)
-        //    {
-        //        MessageBox.Show("Socket无效,UdpEthernetCenter.BeginSendData()调用失败");
-        //        return;
-        //    }
-        //    EndPoint remoteEndPoint = GetIpEndPoint(remoteIpAndPort);
-        //    //Thread t = new Thread(()=>socket.SendTo(data,remoteEndPoint));
-        //    //t.Start();
-        //    socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
-        //}
-
         public static void SendData(byte[] data, string localIpAndPort, string remoteIpAndPort)
         {
             Socket socket = GetSocket(localIpAndPort);
-            if (socket == null)
-            {
-                MessageBox.Show("Socket无效,UdpEthernetCenter.BeginSendData()调用失败");
-                return;
-            }
+
             EndPoint remoteEndPoint = GetIpEndPoint(remoteIpAndPort);
 
-            //int ret = socket.SendTo(data, remoteEndPoint);
-            socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
-            //Thread t = new Thread(() => socket.SendTo(data, remoteEndPoint));
-            //t.Start();
+            try
+            {
+                socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
+            }
+            catch
+            {
+                //ignored
+            }
         }
 
         public static void BeginRecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)

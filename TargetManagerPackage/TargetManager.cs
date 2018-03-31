@@ -8,7 +8,7 @@ namespace TargetManagerPackage
     public class TargetManager : ICycleDataObserver, ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
     {
         private const int SectorCount = 32;         //扇区的个数
-        private Sector[] _sectors;                  //扇区数组
+        public Sector[] Sectors;                  //扇区数组
         private readonly DotViewDeleter _viewDeleter;     //目标删除器
         private readonly Clotter _clotter;                //凝聚器
         private readonly TrackCorelator _trackCorelator;  //航迹相关器
@@ -16,7 +16,7 @@ namespace TargetManagerPackage
         private readonly FreeDotDeleter _freeDotDeleter;  //自由点删除器
         private readonly List<ITargetObserver> _obs;      //目标观察者，目标变化时观察者得到通知
         private readonly RemoteTargetProcessorcommunicator communicator;
-        private readonly SystemCommunicator sysCommunicator;
+        private MouseTargetTracker mouseTargetTracker;
         private bool _dotSource = true;
 
         //测试用变量
@@ -41,8 +41,6 @@ namespace TargetManagerPackage
             communicator = new RemoteTargetProcessorcommunicator(this);
             communicator.StartReceiveData();
 
-            sysCommunicator = new SystemCommunicator();
-
             _clotter = new Clotter_Test();
             //_clotter = new Clotter_3DClot();//凝聚器
 
@@ -54,6 +52,8 @@ namespace TargetManagerPackage
             _freeDotDeleter = new FreeDotDeleter();  //自由点删除器
 
             _viewDeleter = new DotViewDeleter();
+
+            mouseTargetTracker = new MouseTargetTracker(this);
         }
 
         public void SwitchDotSource(bool sourceFlag)
@@ -76,8 +76,8 @@ namespace TargetManagerPackage
         {
             //获得角度区域监听器
             var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
-            if (_sectors == null) return;
-            foreach (Sector s in _sectors)    //注销角度区域
+            if (Sectors == null) return;
+            foreach (Sector s in Sectors)    //注销角度区域
             {
                 antennaLeaveAngleAreaSubject.UnregisterAngleArea(this, s);
             }
@@ -89,11 +89,11 @@ namespace TargetManagerPackage
             var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
 
             //初始化扇区并注册角度区域观察者
-            _sectors = new Sector[SectorCount];
+            Sectors = new Sector[SectorCount];
             for (int i = 0; i < SectorCount; i++)
             {
-                _sectors[i] = CreateSector(i, SectorCount);
-                antennaLeaveAngleAreaSubject.RegisterAngleArea(this, _sectors[i]);
+                Sectors[i] = CreateSector(i, SectorCount);
+                antennaLeaveAngleAreaSubject.RegisterAngleArea(this, Sectors[i]);
             }
         }
 
@@ -111,9 +111,9 @@ namespace TargetManagerPackage
 
         private void DeleteAllTargetViews()
         {
-            if (_sectors == null)
+            if (Sectors == null)
                 return;
-            foreach(Sector s in _sectors)
+            foreach(Sector s in Sectors)
             {
                 NotifyDeleteSectorDots(s);
                 s.newDots.Clear();
@@ -136,19 +136,19 @@ namespace TargetManagerPackage
 
         public List<Target> GetTargetTracks()   //获取所有航迹对象
         {
-            //List<Target> ls = new List<Target>();
-            //foreach (Sector s in _sectors)
-            //{
-            //    ls.AddRange(s.tracks);
-            //}
-            //return ls;
-            return null;
+            List<Target> ls = new List<Target>();
+            foreach (Sector s in Sectors)
+            {
+                ls.AddRange(s.tracks);
+            }
+            return ls;
+            //return null;
         }
 
         public List<Target> GetTargetDots()     //获取所有当前圈目标点，GraphicView只显示当前圈的目标点
         {
             IEnumerable<Target> query = 
-                 from s in _sectors
+                 from s in Sectors
                  from dot in s.newDots
                  where dot.ShouldDisplay
                  select dot;
@@ -175,7 +175,7 @@ namespace TargetManagerPackage
         public void DeleteActiveTarget()    //删除选中的航迹
         {
             List<TargetTrack> ls = new List<TargetTrack>();
-            foreach(Sector s in _sectors)
+            foreach(Sector s in Sectors)
             {
                 ls.AddRange(s.GetActiveTrack());    //数据值删除航迹之前先保存
                 s.DeleteActiveTrack();
@@ -185,7 +185,7 @@ namespace TargetManagerPackage
             {
                 NotifyAllObservers(t, NotifyType.Delete);
             }
-
+            mouseTargetTracker.DeleteActiveTarget();    //如果mouseTargetTracker航迹被选中，则置为空
             ls.Clear();
         }
 
@@ -199,15 +199,19 @@ namespace TargetManagerPackage
             }
             else
             {
-                if (_mode != TargetManagerMode.Manual)   //非手动模式不作处理
-                    return;
+                ////此段代码正常处理手动起批，如果使用MouseTargetTracker用鼠标的点击跟踪航迹，应注释此段代码
+                //if (_mode != TargetManagerMode.Manual)   //非手动模式不作处理
+                //    return;
 
-                TargetTrack track = TargetTrack.CreateTargetTrack(t.CurrentCoordinate, t.CurrentCoordinate);
-                if (track != null)
-                {
-                    _sectors[t.sectorIndex].AddTrack(track);
-                    NotifyAllObservers(track, NotifyType.Add);
-                }
+                //TargetTrack track = TargetTrack.CreateTargetTrack(t.CurrentCoordinate, t.CurrentCoordinate);
+                //if (track != null)
+                //{
+                //    _sectors[t.sectorIndex].AddTrack(track);
+                //    NotifyAllObservers(track, NotifyType.Add);
+                //}
+
+                ////使用MouseTargetTracker用鼠标的点击跟踪航迹,如果需要手动起批，应注释此行代码
+                mouseTargetTracker.UpdateTrack((TargetDot) t);
             }
         }
 
@@ -258,7 +262,7 @@ namespace TargetManagerPackage
             _viewDeleter.UnregisterObserver(ob);
         }
 
-        protected void NotifyAllObservers(Target t, NotifyType type)    //通知观察者有目标发生了变化
+        public void NotifyAllObservers(Target t, NotifyType type)    //通知观察者有目标发生了变化
         {
             foreach (ITargetObserver ob in _obs)
                 ob.NotifyChange(t, type);
@@ -270,9 +274,9 @@ namespace TargetManagerPackage
             switch (direction)
             {
                 case RotateDirection.ClockWise:
-                    return s.index == 0 ? _sectors[SectorCount - 1] : _sectors[s.index - 1];
+                    return s.index == 0 ? Sectors[SectorCount - 1] : Sectors[s.index - 1];
                 case RotateDirection.CounterClockWise:
-                    return s.index == SectorCount - 1 ? _sectors[0] : _sectors[s.index + 1];
+                    return s.index == SectorCount - 1 ? Sectors[0] : Sectors[s.index + 1];
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -284,9 +288,9 @@ namespace TargetManagerPackage
             switch (direction)
             {
                 case RotateDirection.ClockWise:
-                    return s.index == SectorCount - 1 ? _sectors[0] : _sectors[s.index + 1];
+                    return s.index == SectorCount - 1 ? Sectors[0] : Sectors[s.index + 1];
                 case RotateDirection.CounterClockWise:
-                    return s.index == 0 ? _sectors[SectorCount - 1] : _sectors[s.index - 1];
+                    return s.index == 0 ? Sectors[SectorCount - 1] : Sectors[s.index - 1];
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -335,12 +339,16 @@ namespace TargetManagerPackage
 
                 //tmp = PreviousSector(tmp);
                 //viewDeleter.DeleteViews(tmp,false);
-                TargetTrack t = new TargetTrack();
-                t.trackID = 155;
-                t.AZ = 256.3f;
-                t.EL = 15.4f;
-                t.Dis = 2500f;
-                sysCommunicator.Send0x80Cmd(t);
+
+                //发送数据测试
+                //TargetTrack t = new TargetTrack
+                //{
+                //    trackID = 155,
+                //    AZ = 256.3f,
+                //    EL = 15.4f,
+                //    Dis = 2500f
+                //};
+                //SystemCommunicator.Send0X80Cmd(t);
             }
         }
 
@@ -381,11 +389,11 @@ namespace TargetManagerPackage
 
         public void DeleteOutRangedTargets(AngleArea area)    //删除角度范围外的所有目标
         {
-            foreach (Sector s in _sectors)
+            foreach (Sector s in Sectors)
             {
                 if (area.IsAngleInArea(s.BeginAngle) || area.IsAngleInArea(s.EndAngle)) continue;
-                _viewDeleter.DeleteViews(s, true); //删除所有目标视图，包括目标航迹
-                s.ClearAllTargets(); //清空无关扇区的所有数据
+                _viewDeleter.DeleteViews(s, true);  //删除所有目标视图，包括目标航迹
+                s.ClearAllTargets();                //清空无关扇区的所有数据
             }
         }
 
@@ -428,24 +436,24 @@ namespace TargetManagerPackage
             }
         }
 
-        public void TargetDotDataReceived(int sectorIndex, List<TargetDot> dots)
+        public void TargetDotDataReceivedFromRemoteTargetManager(int sectorIndex, List<TargetDot> dots)
         {
             if (_dotSource) return;     //true表示显示原始视频数据
-            NotifyDeleteSectorDots(_sectors[sectorIndex]);      //通知删除该扇区的点目标视图
-            _sectors[sectorIndex].newDots = dots;
+            NotifyDeleteSectorDots(Sectors[sectorIndex]);      //通知删除该扇区的点目标视图
+            Sectors[sectorIndex].newDots = dots;
             foreach (ITargetObserver ob in _obs)
             {
-                ob.NotifyUpdateSectorDot(_sectors[sectorIndex].newDots, _sectors[sectorIndex].index);
+                ob.NotifyUpdateSectorDot(Sectors[sectorIndex].newDots, Sectors[sectorIndex].index);
             }
         }
 
-        public void TargetTrackDataReceived(int sectorIndex, List<TargetTrack> Tracks)
+        public void TargetTrackDataReceivedFromRemoteTargetManager(int sectorIndex, List<TargetTrack> Tracks)
         {
-            NotifyDeleteSectorTracks(_sectors[sectorIndex]);    //通知删除该扇区的航迹视图
-            _sectors[sectorIndex].tracks = Tracks;
+            NotifyDeleteSectorTracks(Sectors[sectorIndex]);    //通知删除该扇区的航迹视图
+            Sectors[sectorIndex].tracks = Tracks;
             foreach (ITargetObserver ob in _obs)
             {
-                ob.NotifyUpdateSectorTrack(_sectors[sectorIndex].tracks, _sectors[sectorIndex].index);
+                ob.NotifyUpdateSectorTrack(Sectors[sectorIndex].tracks, Sectors[sectorIndex].index);
             }
         }
     }

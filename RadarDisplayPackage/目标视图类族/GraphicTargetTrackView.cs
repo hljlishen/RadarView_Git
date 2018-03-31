@@ -1,11 +1,7 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TargetManagerPackage;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Drawing;
+using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
@@ -40,53 +36,47 @@ namespace RadarDisplayPackage
             {
                 if (target.Height > CoordinateSystem.Range) //目标在雷达扫描范围外，返回什么也不做的对象
                     return new GraphicTargetTrackViewDrawer_Null(this);
-                else
-                    return new GraphicTargetTrackViewDrawer_Visible(this);
+                return new GraphicTargetTrackViewDrawer_Visible(this);
             }
-            else
-            {
-                if (target.CurrentCoordinate.ProjectedDis > CoordinateSystem.Range) //目标在雷达扫描范围外，返回什么也不做的对象
-                    return new GraphicTargetTrackViewDrawer_Null(this);
 
-                if (CoordinateSystem.IsPointInVisibleRect(Position)) //目标在可视区域内
-                    return new GraphicTargetTrackViewDrawer_Visible(this);
-                else  //目标在可视区域外
-                {
-                    Rect r = CoordinateSystem.VisibleArea;
-                    Point2F p = Position;
-                    if (p.Y <= r.Top && p.X > r.Left && p.X < r.Right)    //北向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleN(this);
-                    }
-                    else if (p.Y <= r.Top && p.X >= r.Right)  //东北方向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleNE(this);
-                    }
-                    else if (p.X > r.Right && p.Y > r.Top && p.Y < r.Bottom)    //东向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleE(this);
-                    }
-                    else if (p.X >= r.Right && p.Y >= r.Bottom)    //东南向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleSE(this);
-                    }
-                    else if (p.Y > r.Bottom && p.X > r.Left && p.X < r.Right)    //南向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleS(this);
-                    }
-                    else if (p.X <= r.Left && p.Y >= r.Bottom)    //西南向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleSW(this);
-                    }
-                    else if (p.X < r.Left && p.Y > r.Top && p.Y < r.Bottom)    //西向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleW(this);
-                    }
-                    else   //西北向超出
-                    {
-                        return new GraphicTargetTrackViewDrawer_InvisibleNW(this);
-                    }
-                }
+            if (target.CurrentCoordinate.ProjectedDis > CoordinateSystem.Range) //目标在雷达扫描范围外，返回什么也不做的对象
+                return new GraphicTargetTrackViewDrawer_Null(this);
+
+            if (CoordinateSystem.IsPointInVisibleRect(Position)) //目标在可视区域内
+                return new GraphicTargetTrackViewDrawer_Visible(this);
+            Rect r = CoordinateSystem.VisibleArea;
+            Point2F p = Position;
+            if (p.Y <= r.Top && p.X > r.Left && p.X < r.Right)    //北向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleN(this);
+            }
+            else if (p.Y <= r.Top && p.X >= r.Right)  //东北方向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleNE(this);
+            }
+            else if (p.X > r.Right && p.Y > r.Top && p.Y < r.Bottom)    //东向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleE(this);
+            }
+            else if (p.X >= r.Right && p.Y >= r.Bottom)    //东南向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleSE(this);
+            }
+            else if (p.Y > r.Bottom && p.X > r.Left && p.X < r.Right)    //南向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleS(this);
+            }
+            else if (p.X <= r.Left && p.Y >= r.Bottom)    //西南向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleSW(this);
+            }
+            else if (p.X < r.Left && p.Y > r.Top && p.Y < r.Bottom)    //西向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleW(this);
+            }
+            else   //西北向超出
+            {
+                return new GraphicTargetTrackViewDrawer_InvisibleNW(this);
             }
         }
 

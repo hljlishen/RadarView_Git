@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using TargetManagerPackage;
 
@@ -7,7 +8,7 @@ namespace RadarDisplayPackage
 {
     class GraphicTargetViewManager :TargetViewManager
     {
-        BitmapRenderTarget[] sectorDrawer;
+        private BitmapRenderTarget[] _sectorDrawer;
 
         public GraphicTargetViewManager(GraphicTrackDisplayer displayer) : base(displayer)
         {
@@ -27,14 +28,14 @@ namespace RadarDisplayPackage
         {
             //创建内存位图
             int count = targetProvider.GetSectorCount();
-            sectorDrawer = new BitmapRenderTarget[count];
+            _sectorDrawer = new BitmapRenderTarget[count];
             for (int i = 0; i < count; i++)
             {
-                sectorDrawer[i] = ((GraphicTrackDisplayer)displayer).Canvas.CreateCompatibleRenderTarget();
+                _sectorDrawer[i] = ((GraphicTrackDisplayer)displayer).Canvas.CreateCompatibleRenderTarget();
             }
         }
 
-        private void DisplayControl_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void DisplayControl_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left) return;
             lock (this)
@@ -44,7 +45,8 @@ namespace RadarDisplayPackage
                 {
                     for (int j = dots[i].Count - 1; j >= 0; j--)
                     {
-                        dots[i][j].HandleMouseClick(e.Location);
+                        if (dots[i][j].HandleMouseClick(e.Location))    //点击位置附近有多个目标时，只选取一个目标
+                            break;
                     }
                 }
 
@@ -52,25 +54,40 @@ namespace RadarDisplayPackage
                 {
                     for (int j = tracks[i].Count - 1; j >= 0; j--)
                     {
-                        tracks[i][j].HandleMouseClick(e.Location);
+                        if(tracks[i][j].HandleMouseClick(e.Location))
+                            return;
                     }
                 }
+
+                //运行到此处说明没有点击位置没有任何目标,为MouseTargetTracker生成一个目标点
+                GraphicTargetDotView view = GenerateGraphicTargetDotViewFromMouseLocation(e.Location);
+                view.HandleMouseClick(e.Location);
             }
         }
 
-        protected override TargetView CreateTargetView(Target taget)
+        private GraphicTargetDotView GenerateGraphicTargetDotViewFromMouseLocation(Point mouseLocation)
+        {
+            PolarCoordinate coordinate =
+                ((GraphicTrackDisplayer)displayer).coordinateSystem.PointToCoordinate(CoordinateSystem.PointToPoint2F(mouseLocation));
+            TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { sectorIndex = 0 };
+            TargetView view = ((GraphicTrackDisplayer)displayer).targetsManager.CreateTargetView(dot);
+
+            return (GraphicTargetDotView)view;
+        }
+
+        public override TargetView CreateTargetView(Target taget)
         {
             GraphicTargetView view;
             if (taget == null)
                 return null;
             if (taget.GetType() == typeof(TargetDot))
-                view = new GraphicTargetDotView(taget, sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                view = new GraphicTargetDotView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
             else
-                view = new GraphicTargetTrackView(taget, sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                view = new GraphicTargetTrackView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
             return view;
         }
 
-        protected override void LoadTargetViews(List<Target> tracks)
+        protected sealed override void LoadTargetViews(List<Target> tracks)
         {
             if (tracks == null)
                 return;
@@ -91,7 +108,7 @@ namespace RadarDisplayPackage
         public override void DisplayTargetViews()
         {
             base.DisplayTargetViews();
-            foreach(BitmapRenderTarget brt in sectorDrawer)     //绘制位图
+            foreach(BitmapRenderTarget brt in _sectorDrawer)     //绘制位图
             {
                 ((GraphicTrackDisplayer)displayer).Canvas.DrawBitmap(brt.Bitmap);
             }
@@ -117,8 +134,8 @@ namespace RadarDisplayPackage
             {
                 try
                 {
-                    sectorDrawer[sectorIndex].BeginDraw();
-                    sectorDrawer[sectorIndex].Clear();
+                    _sectorDrawer[sectorIndex].BeginDraw();
+                    _sectorDrawer[sectorIndex].Clear();
 
                     //绘制目标点
                     foreach (GraphicTargetView view in dots[sectorIndex])
@@ -132,7 +149,7 @@ namespace RadarDisplayPackage
                         view.DisplayTarget();
                     }
 
-                    sectorDrawer[sectorIndex].EndDraw();
+                    _sectorDrawer[sectorIndex].EndDraw();
                 }
                 catch
                 {
@@ -143,7 +160,7 @@ namespace RadarDisplayPackage
 
         private void DrawSectors()
         {
-            for(int i =0; i < sectorDrawer.Length ; i++)
+            for(int i =0; i < _sectorDrawer.Length ; i++)
             {
                 DrawSector(i);
             }
@@ -167,7 +184,7 @@ namespace RadarDisplayPackage
             base.Dispose();
             foreach (List<TargetView> ls in dots)
             {
-                foreach (GraphicTargetDotView view in ls)
+                foreach (var view in ls)
                 {
                     view.Dispose();
                 }
@@ -175,8 +192,9 @@ namespace RadarDisplayPackage
 
             foreach (List<TargetView> ls in tracks)
             {
-                foreach (GraphicTargetTrackView view in ls)
+                foreach (var targetView in ls)
                 {
+                    var view = (GraphicTargetTrackView) targetView;
                     view.Dispose();
                 }
             }

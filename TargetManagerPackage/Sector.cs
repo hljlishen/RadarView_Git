@@ -20,9 +20,9 @@ namespace TargetManagerPackage
 
         public void ClearAllTargets()
         {
-            newDots.Clear();
-            tracks.Clear();
-            oldDots.Clear();
+            newDots?.Clear();
+            tracks?.Clear();
+            oldDots?.Clear();
         }
 
         public List<TargetTrack> GetActiveTrack()

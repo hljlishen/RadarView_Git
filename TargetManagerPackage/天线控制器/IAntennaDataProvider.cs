@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
@@ -19,7 +20,7 @@ namespace TargetManagerPackage
 
     public abstract class AntennaDataManager : IAntennaDataProvider, ICycleDataObserver
     {
-        protected readonly List<IAntennaObserver> _antennaObservers;
+        protected readonly List<IAntennaObserver> AntennaObservers;
         public float AntennaCurrentAngle;      //天线当前角度
         public float AntennaPreviousAngle;     //天线的前一个角度
         protected const float FloatValueEqualMinmumInterval = 0.001f;    //判断天线停止的最小角度
@@ -27,23 +28,23 @@ namespace TargetManagerPackage
         protected bool _isSectionSweeping;
         private RotateDirection _preRotateDirection = RotateDirection.ClockWise;     //前一个角度计算出的天线方向
 
-        protected AntennaDataManager() => _antennaObservers = new List<IAntennaObserver>();
+        protected AntennaDataManager() => AntennaObservers = new List<IAntennaObserver>();
 
         public void RegisterObserver(IAntennaObserver ob)
         {
-            if (ob != null && !_antennaObservers.Contains(ob))
-                _antennaObservers.Add(ob);
+            if (ob != null && !AntennaObservers.Contains(ob))
+                AntennaObservers.Add(ob);
         }
 
         public void UnregisterObserver(IAntennaObserver ob)
         {
-            if (ob != null && _antennaObservers.Contains(ob))
-                _antennaObservers.Remove(ob);
+            if (ob != null && AntennaObservers.Contains(ob))
+                AntennaObservers.Remove(ob);
         }
 
         public void NotifyAntennaDataChange()
         {
-            foreach (IAntennaObserver ob in _antennaObservers)
+            foreach (IAntennaObserver ob in AntennaObservers)
                 ob.AntennaNotifyChange();
         }
 
@@ -82,12 +83,9 @@ namespace TargetManagerPackage
 
         public void NotifyNewCycleData(byte[] rawData)
         {
-            try
-            {
-                var azCell = new AzimuthCell(rawData);
-                AntennaPreviousAngle = AntennaCurrentAngle;
-
-                AntennaCurrentAngle = azCell.GetAngle();  //更新天线角度
+            //try
+            //{
+                UpdateAntennaAngle(rawData);
 
                 var newDirection = GetAntennaDirection();
 
@@ -98,11 +96,20 @@ namespace TargetManagerPackage
                 }
 
                 NotifyAntennaDataChange();     //通知观察者，天线角度已改变
-            }
-            catch
-            {
-                // ignored
-            }
+            //}
+            //catch
+            //{
+            //    // ignored
+            //    MessageBox.Show("NotifyNewCycleData错误");
+            //}
+        }
+
+        private void UpdateAntennaAngle(byte[] rawData)
+        {
+            var azCell = new AzimuthCell(rawData);
+            AntennaPreviousAngle = AntennaCurrentAngle;
+
+            AntennaCurrentAngle = azCell.GetAngle();  //更新天线角度
         }
     }
 }

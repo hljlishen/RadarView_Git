@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
@@ -87,33 +83,27 @@ namespace RadarDisplayPackage
         {
             if (!isMouseDown)
                 return;
-            else
-            {
-                ////计算拖拽位置和坐标原点连线的正北夹角
-                dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
+            ////计算拖拽位置和坐标原点连线的正北夹角
+            dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
 
-                //计算拖动位置
-                dragLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F(e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
-            }
+            //计算拖动位置
+            dragLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F(e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (isMouseDown)
+            if (isMouseDown || e.Button != MouseButtons.Left)
                 return;
-            else
-            {
-                isMouseDown = true;
-                mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
+            isMouseDown = true;
+            mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
 
-                ////计算点击位置和坐标原点连线的正北夹角
-                beginAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
-                dragAngle = beginAngle;
+            ////计算点击位置和坐标原点连线的正北夹角
+            beginAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
+            dragAngle = beginAngle;
 
-                //计算第一条线与圆周的夹角
-                beginLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F( e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
-                dragLinePoint = beginLinePoint;
-            }
+            //计算第一条线与圆周的夹角
+            beginLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F( e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
+            dragLinePoint = beginLinePoint;
         }
 
         public override void Dispose()

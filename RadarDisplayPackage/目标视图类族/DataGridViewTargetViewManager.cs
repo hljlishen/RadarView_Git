@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TargetManagerPackage;
-using System.Windows.Forms;
 
 namespace RadarDisplayPackage
 {
@@ -19,8 +14,8 @@ namespace RadarDisplayPackage
 
             for (int i = 0; i < TrackMaximum; i++)
             {
-                views[i] = new DataGridViewTargetView(null, displayer, i + 1);
-                views[i].Target = null;         //赋值null,可以隐藏该行
+                views[i] = new DataGridViewTargetView(null, displayer, i + 1) {Target = null};
+                //赋值null,可以隐藏该行
                 views[i].DisplayTarget();       //向displayer.dgv添加行
                 views[i].Selected = false;      //默认未被选中
             }
@@ -69,7 +64,7 @@ namespace RadarDisplayPackage
                 AddTarget(t);
         }
 
-        protected override TargetView CreateTargetView(Target taget)
+        public override TargetView CreateTargetView(Target taget)
         {
             return null;
         }

@@ -1,5 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage
 {
@@ -10,7 +10,7 @@ namespace RadarDisplayPackage
         private Point2F beginLinePoint;
         private Point2F dragLinePoint;
         private Point2F endLinePoint;
-        private PathGeometry Pie = null;
+        private PathGeometry Pie;
         private float beginAngle;       //鼠标点击位置与原点连线与正北夹角
         private float dragAngle;        //鼠标拖动位置与原点连线与正北夹角
         private float endAngle;
@@ -85,7 +85,7 @@ namespace RadarDisplayPackage
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (isMouseDown) return;
+            if (isMouseDown || e.Button != MouseButtons.Left) return;
             shouldExecuteCmd = false;   //鼠标点击但未拖动，此时松开鼠标不执行命令
             isMouseDown = true;
             mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
