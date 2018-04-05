@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.IO;
 
 namespace CycleDataDrivePackage
@@ -11,13 +12,20 @@ namespace CycleDataDrivePackage
         {
             string path = @"d:\RadarData\" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
 
-            FileStream fs = new FileStream(path, FileMode.Create);
-            _writer = new BinaryWriter(fs);
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Create);
+                _writer = new BinaryWriter(fs);
+            }
+            catch
+            {
+                MessageBox.Show(path + " 创建失败");
+            }
         }
 
         public void RecordBytes(byte[] data, int pos, int count)
         {
-            _writer.Write(data, pos, count);
+            _writer?.Write(data, pos, count);
         }
     }
 }

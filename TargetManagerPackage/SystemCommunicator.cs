@@ -1,11 +1,7 @@
-﻿using System;
+﻿using CycleDataDrivePackage;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
 {
@@ -24,12 +20,23 @@ namespace TargetManagerPackage
         public SystemCommunicator()
         {
             _waitingResponedThreads = new Dictionary<int, Thread>();
-            UdpEthernetCenter.RegisterIpAndPort(LocalIpAndPortString);
+            //UdpEthernetCenter.RegisterIpAndPort(LocalIpAndPortString);
         }
 
         public void BeginRecvData()
         {
             UdpEthernetCenter.BeginRecvData(LocalIpAndPortString,SystemIpAndPortString, ProcessCommandData);
+        }
+
+        public static void UpdateTrack(TargetTrack track)
+        {
+            Send0X80Cmd(track);
+        }
+
+        public static void DeleteTrack(TargetTrack track)
+        {
+            track.Dis = 0;
+            Send0X80Cmd(track);
         }
 
         public static void Send0X80Cmd(TargetTrack t)

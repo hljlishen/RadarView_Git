@@ -83,8 +83,6 @@ namespace TargetManagerPackage
 
         public void NotifyNewCycleData(byte[] rawData)
         {
-            //try
-            //{
                 UpdateAntennaAngle(rawData);
 
                 var newDirection = GetAntennaDirection();
@@ -96,20 +94,26 @@ namespace TargetManagerPackage
                 }
 
                 NotifyAntennaDataChange();     //通知观察者，天线角度已改变
-            //}
-            //catch
-            //{
-            //    // ignored
-            //    MessageBox.Show("NotifyNewCycleData错误");
-            //}
         }
 
         private void UpdateAntennaAngle(byte[] rawData)
         {
             var azCell = new AzimuthCell(rawData);
+            azCell.Angle = ReverAngleDirection(azCell.Angle);
             AntennaPreviousAngle = AntennaCurrentAngle;
 
             AntennaCurrentAngle = azCell.GetAngle();  //更新天线角度
+        }
+
+        public static float ReverAngleDirection(float angle)
+        {
+            float rAngle = 360f - angle;
+
+            if (rAngle < 0)
+                rAngle += 360;
+            rAngle %= 360;
+
+            return rAngle;
         }
     }
 }

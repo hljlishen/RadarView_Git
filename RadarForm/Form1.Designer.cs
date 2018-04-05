@@ -85,6 +85,7 @@
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -476,7 +477,8 @@
             this.tb_ipAddress.Name = "tb_ipAddress";
             this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
             this.tb_ipAddress.TabIndex = 23;
-            this.tb_ipAddress.Text = "192.168.2.5";
+            this.tb_ipAddress.Text = "192.168.10.5";
+            this.tb_ipAddress.TextChanged += new System.EventHandler(this.tb_ipAddress_TextChanged);
             // 
             // btn_startUDP
             // 
@@ -671,6 +673,7 @@
             // 
             this.视图ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.航机显示ToolStripMenuItem,
+            this.toolStripSeparator1,
             this.原始视频ToolStripMenuItem,
             this.凝聚点击ToolStripMenuItem});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
@@ -680,6 +683,9 @@
             // 
             // 航机显示ToolStripMenuItem
             // 
+            this.航机显示ToolStripMenuItem.Checked = true;
+            this.航机显示ToolStripMenuItem.CheckOnClick = true;
+            this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
             this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
@@ -733,6 +739,11 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
             // 
             // Form1
             // 
@@ -844,6 +855,7 @@
         private System.Windows.Forms.TextBox tb_ipAddress;
         private System.Windows.Forms.ToolStripMenuItem 原始视频ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 凝聚点击ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

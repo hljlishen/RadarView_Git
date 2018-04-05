@@ -7,7 +7,7 @@ namespace RadarDisplayPackage
 {
     class GraphicTargetTrackView : GraphicTargetView
     {
-        GraphicTargetTrackViewDrawer drawer;
+        private GraphicTargetTrackViewDrawer drawer;
         protected const int preLocationRadius = 2;  //历史位置圆形半径
 
         public List<Ellipse> PreLocations { get; set; }

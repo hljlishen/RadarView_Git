@@ -12,19 +12,29 @@ namespace TargetManagerPackage
 
         public RemoteTargetProcessorcommunicator(TargetManager t)
         {
-            UdpEthernetCenter.RegisterIpAndPort(RemoteTargetProcessorCommunicatorIpAndPortString);
             _targetManager = t;
         }
 
         public void SendRawData(byte[] rawData)
         {
+            if (!IsSectionSweeping()) return;               //费扇扫状态不发送数据，否则对方应用会报错
             List<byte> cmdData = GenerateCommandHead();     //命令头
             cmdData = AddAntennaSectionSweepData(cmdData);  //添加扇扫信息
             cmdData.AddRange(rawData);                      //添加扇区编号
 
-            UdpEthernetCenter.SendData(cmdData.ToArray(),
+            SendDataToRemoteTargetProcessor(cmdData);
+        }
+
+        private static void SendDataToRemoteTargetProcessor(List<byte> data)
+        {
+            UdpEthernetCenter.SendData(data.ToArray(),
                 RemoteTargetProcessorCommunicatorIpAndPortString,
                 RemoteTargetProcessorIpAndPortString);
+        }
+
+        private static bool IsSectionSweeping()
+        {
+            return TargetManagerFactory.CreateAntennaDataProvider().IsSectionSweeping();
         }
 
         private List<byte> GenerateCommandHead()

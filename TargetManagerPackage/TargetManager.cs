@@ -405,6 +405,7 @@ namespace TargetManagerPackage
         public void NotifyNewCycleData(byte[] rawData)
         {
             AzimuthCell cell = new AzimuthCell(rawData);
+            cell.Angle = AntennaDataManager.ReverAngleDirection(cell.Angle);
             communicator.SendRawData(rawData);
             Matrix.SaveAzimuthCell(cell);
         }

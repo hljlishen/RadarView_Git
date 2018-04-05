@@ -15,7 +15,7 @@ namespace RadarDisplayPackage
         private float dragAngle;        //鼠标拖动位置与原点连线与正北夹角
         private float endAngle;
         //float sweepAngleMinimum = 5; //扫描方位的最小值
-        private float FixedSweepAngle = 35f;
+        private float FixedSweepAngle = 30f;
 
         public OverViewDisplayer_AntennaControlFixed60(OverViewDisplayer displayer) : base(displayer)
         {

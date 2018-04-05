@@ -42,6 +42,8 @@ namespace RadarForm
             svd.Distance = 1000;
             ovd.Distance = 3000;
             btn_WaveGate.Enabled = false;
+
+            //Process p = Process.Start("..\\feida.exe");
         }
 
         private string MakeIpAddressAndPortString() => tb_ipAddress.Text + ":" + tb_port.Text;
@@ -129,7 +131,7 @@ namespace RadarForm
 
         private void 航机显示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            controller.SetDisplayTrackCourseStatus(航机显示ToolStripMenuItem.Checked);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -231,6 +233,11 @@ namespace RadarForm
         {
             controller.SwitchDotSource(false);
             原始视频ToolStripMenuItem.Checked = false;
+        }
+
+        private void tb_ipAddress_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -14,9 +14,12 @@ namespace TargetManagerPackage
 
         public void DeleteActiveTarget()
         {
+            if (track == null || !track.active) return;
+
             targetManager.NotifyAllObservers(track, NotifyType.Delete);
-            if (track.active)
-                track = null;
+            SystemCommunicator.DeleteTrack(track);  //消批
+            track = null;
+
         }
 
         public void UpdateTrack(TargetDot dot)
@@ -38,10 +41,10 @@ namespace TargetManagerPackage
                 if (dot.sectorIndex != track.sectorIndex)
                 {
                     //targetManager.Sectors[track.sectorIndex].tracks.Remove(track);
-                    targetManager.NotifyAllObservers(track, NotifyType.Delete);
-                    track.sectorIndex = dot.sectorIndex;
+                    //targetManager.NotifyAllObservers(track, NotifyType.Delete);
+                    //track.sectorIndex = dot.sectorIndex;
                     //targetManager.Sectors[dot.sectorIndex].tracks.Add(track);
-                    targetManager.NotifyAllObservers(track, NotifyType.Add);
+                    targetManager.NotifyAllObservers(track, NotifyType.Update);
                 }
                 else
                 {
@@ -49,9 +52,8 @@ namespace TargetManagerPackage
                     //    targetManager.Sectors[dot.sectorIndex].tracks.Add(track);
                     targetManager.NotifyAllObservers(track, NotifyType.Update);
                 }
-                
             }
-            SystemCommunicator.Send0X80Cmd(track);  //发送给系统
+            SystemCommunicator.UpdateTrack(track);  //发送给系统
         }
     }
 }

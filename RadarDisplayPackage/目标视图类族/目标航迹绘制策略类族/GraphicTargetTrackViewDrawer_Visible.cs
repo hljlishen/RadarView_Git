@@ -12,6 +12,7 @@ namespace RadarDisplayPackage
             base.Draw();
 
             view.Canvas.FillEllipse(new Ellipse(view.Position, 4,4), targetViewBrush);
+
         }
         protected override PathGeometry BuildTriangle()
         {

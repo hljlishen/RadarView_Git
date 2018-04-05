@@ -3,12 +3,12 @@
     public class UdpCycleDataReader : CycleDataReader
     {
         private readonly DataRecorder _recorder;
-        private const string UdpCycleDataReadIpAndPortString = "192.168.2.33:2013";
+        private const string UdpCycleDataReadIpAndPortString = "192.168.10.99:2013";
 
         public UdpCycleDataReader()
         {
             _recorder = new DataRecorder();
-            UdpEthernetCenter.RegisterIpAndPort(UdpCycleDataReadIpAndPortString);
+            //UdpEthernetCenter.RegisterIpAndPort(UdpCycleDataReadIpAndPortString);
         }
 
         protected override void ReadData()

@@ -145,6 +145,9 @@ namespace RadarDisplayPackage
 
         public void DataSourceSpeedDown() => dataSourceController.SpeedDown();
 
+        public void SetDisplayTrackCourseStatus(bool state) => GraphicTargetTrackViewDrawer.ShouldDrawCourse = state;
+
+        //public void RefreshOverViewDisplayer
         public void SwitchDotSource(bool dotSource) => new TargetManagmentSwitchDotSourceCommand(dotSource).Execute();
     }
 }

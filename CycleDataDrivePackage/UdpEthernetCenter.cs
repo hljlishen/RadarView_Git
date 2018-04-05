@@ -22,7 +22,8 @@ namespace CycleDataDrivePackage
 
             try
             {
-                socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
+                //socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
+                socket.SendTo(data, remoteEndPoint);
             }
             catch
             {
@@ -75,7 +76,13 @@ namespace CycleDataDrivePackage
         {
             if (SocketDictionary.Keys.Contains(localIpAndPort))
                  return SocketDictionary[localIpAndPort];
-            return null;
+            lock (SocketDictionary)
+            {
+                Socket socket = CreateUdpSocket(localIpAndPort);
+                if(socket != null)  //socket创建成功则添加到dictionary
+                    SocketDictionary.Add(localIpAndPort, socket);
+                return socket;
+            }
         }
 
         public static void RegisterIpAndPort(string localIpAndPort)
