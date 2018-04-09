@@ -17,12 +17,12 @@ namespace TargetManagerPackage
 
         public void SendRawData(byte[] rawData)
         {
-            if (!IsSectionSweeping()) return;               //费扇扫状态不发送数据，否则对方应用会报错
-            List<byte> cmdData = GenerateCommandHead();     //命令头
-            cmdData = AddAntennaSectionSweepData(cmdData);  //添加扇扫信息
-            cmdData.AddRange(rawData);                      //添加扇区编号
+            //if (!IsSectionSweeping()) return;               //费扇扫状态不发送数据，否则对方应用会报错
+            //List<byte> cmdData = GenerateCommandHead();     //命令头
+            //cmdData = AddAntennaSectionSweepData(cmdData);  //添加扇扫信息
+            //cmdData.AddRange(rawData);                      //添加扇区编号
 
-            SendDataToRemoteTargetProcessor(cmdData);
+            //SendDataToRemoteTargetProcessor(cmdData);
         }
 
         private static void SendDataToRemoteTargetProcessor(List<byte> data)

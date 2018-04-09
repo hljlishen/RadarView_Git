@@ -52,6 +52,7 @@ namespace CycleDataDrivePackage
                 List<byte> ls = new List<byte>(data);
                 ls.RemoveRange(byteCount, MaximumReadLength - byteCount);
                 handler?.Invoke(ls.ToArray());
+                Thread.Sleep(1);
             }
         }
 
