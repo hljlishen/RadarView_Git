@@ -239,5 +239,10 @@ namespace RadarForm
         {
 
         }
+
+        private void btn_largeSectionSweep_Click(object sender, EventArgs e)
+        {
+            controller.AntennaSetSectionSweepMode(100f, 260f);
+        }
     }
 }

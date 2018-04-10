@@ -77,7 +77,7 @@ namespace TargetManagerPackage
         private void AntennaLeaveSectionSweepAngleArea()
         {
             _rotateController.ReverseSweepDirection();
-            TargetManagerController.DeleteOutRangedTargets(_sweepSection);
+            //TargetManagerController.DeleteOutRangedTargets(_sweepSection);
         }
 
         public void RegisterSweepModeObserver(ISweepModeObserver ob)

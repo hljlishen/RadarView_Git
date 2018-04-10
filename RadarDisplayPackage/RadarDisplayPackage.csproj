@@ -56,6 +56,7 @@
     <Compile Include="IControlStateProvider.cs" />
     <Compile Include="IControlStateSubject.cs" />
     <Compile Include="MouseCoordinateDisplayer.cs" />
+    <Compile Include="命令类\TargetManagerAddTrackGeneratorCommand.cs" />
     <Compile Include="命令类\TargetManagmentSwitchDotSourceCommand.cs" />
     <Compile Include="扇扫视图\SweepSectionManager.cs" />
     <Compile Include="扇扫视图\SweepSectionView.cs" />

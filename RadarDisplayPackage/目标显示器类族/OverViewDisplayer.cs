@@ -43,6 +43,18 @@ namespace RadarDisplayPackage
 
             obs = new List<IControlStateObserver>();
             //Distance = 3000;
+            h.MouseClick += HOnMouseClick;
+        }
+
+        private void HOnMouseClick(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (Control.ModifierKeys == Keys.Control)   //ctrl键按下,添加一个TrackGenerator
+            {
+                PolarCoordinate coordinate =
+                    coordinateSystem.PointToCoordinate(CoordinateSystem.PointToPoint2F(mouseEventArgs.Location));
+                TargetManagerAddTrackGeneratorCommand generator = new TargetManagerAddTrackGeneratorCommand(coordinate);
+                generator.Execute();
+            }
         }
 
         public override float Distance

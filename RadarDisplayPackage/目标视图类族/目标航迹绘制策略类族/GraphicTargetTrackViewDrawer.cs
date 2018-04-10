@@ -7,7 +7,7 @@ namespace RadarDisplayPackage
 {
     abstract class GraphicTargetTrackViewDrawer : IDisposable
     {
-        public static bool ShouldDrawCourse { get; set; } = false;
+        public static bool ShouldDrawCourse { get; set; } = true;
         protected GraphicTargetTrackView view;
         protected Brush idBrush; //标签文本画刷
         protected Brush tagBrush; //标签框画刷
@@ -50,6 +50,9 @@ namespace RadarDisplayPackage
             PathGeometry pg = BuildTriangle();
             RoundedRectangleGeometry idTag = BuildIdTag();
 
+            if (ShouldDrawCourse)
+                DrawTrackCourse(renderTarget);
+
             //画ID标签
             renderTarget.FillGeometry(pg, tagBrush);
             renderTarget.FillGeometry(idTag, tagBrush);
@@ -58,8 +61,6 @@ namespace RadarDisplayPackage
                 idTextRect.Left += smallIDOffset;
             renderTarget.DrawText(t.trackID.ToString(), idFormation, idTextRect, idBrush);
 
-            if(ShouldDrawCourse)
-                DrawTrackCourse(renderTarget);
 
             //释放资源
             pg.Dispose();

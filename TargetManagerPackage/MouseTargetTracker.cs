@@ -4,7 +4,7 @@ namespace TargetManagerPackage
 {
     class MouseTargetTracker
     {
-        private TargetTrack track;
+        public TargetTrack track { get; set; }
         private TargetManager targetManager;
 
         public MouseTargetTracker(TargetManager targetManager)
@@ -26,12 +26,8 @@ namespace TargetManagerPackage
         {
             if (track == null)
             {
-                track = new TargetTrack(dot.CurrentCoordinate)
-                {
-                    sectorIndex = dot.sectorIndex,
-                    trackID = 1
-                };
-                //targetManager.Sectors[dot.sectorIndex].tracks.Add(track);
+                track = TargetTrack.CreateTargetTrack(dot.CurrentCoordinate, null);
+                track.sectorIndex = dot.sectorIndex;
                 targetManager.NotifyAllObservers(track, NotifyType.Add);
             }
             else
@@ -40,16 +36,10 @@ namespace TargetManagerPackage
                 track.Update(dot.CurrentCoordinate);
                 if (dot.sectorIndex != track.sectorIndex)
                 {
-                    //targetManager.Sectors[track.sectorIndex].tracks.Remove(track);
-                    //targetManager.NotifyAllObservers(track, NotifyType.Delete);
-                    //track.sectorIndex = dot.sectorIndex;
-                    //targetManager.Sectors[dot.sectorIndex].tracks.Add(track);
                     targetManager.NotifyAllObservers(track, NotifyType.Update);
                 }
                 else
                 {
-                    //if(!targetManager.Sectors[track.sectorIndex].tracks.Contains(track))
-                    //    targetManager.Sectors[dot.sectorIndex].tracks.Add(track);
                     targetManager.NotifyAllObservers(track, NotifyType.Update);
                 }
             }

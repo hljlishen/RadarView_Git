@@ -6,7 +6,8 @@ namespace TargetManagerPackage
 {
     public class TargetTrack : Target,IDisposable
     {
-        private static readonly int[] id = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+        private const int TrackMaximumCount = 200;
+        private static readonly int[] id = new int[TrackMaximumCount];
         public int trackID = 10;         //批号
         internal PolarCoordinate predictLocation; //预测坐标
         public List<PolarCoordinate> locations; //历史坐标，最新的在最后
@@ -70,7 +71,7 @@ namespace TargetManagerPackage
         public static TargetTrack CreateTargetTrack(PolarCoordinate current, PolarCoordinate pre)
         {
             int trackid = -1;
-            for(int i = 0; i < 16; i++)
+            for(int i = 0; i < TrackMaximumCount; i++)
             {
                 if(id[i] != 1)  
                 {
@@ -86,7 +87,8 @@ namespace TargetManagerPackage
             }
 
             TargetTrack t = new TargetTrack(current);
-            t.locations.Add(pre);   //上周期自由点的位置添加为历史位置
+            if(pre != null)
+                t.locations.Add(pre);   //上周期自由点的位置添加为历史位置
             t.trackID = trackid + 1;
             return t;
         }

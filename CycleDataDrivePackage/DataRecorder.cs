@@ -10,7 +10,7 @@ namespace CycleDataDrivePackage
 
         public DataRecorder()
         {
-            string path = @"d:\RadarData\" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+            string path = @"c:\RadarData\" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
 
             try
             {

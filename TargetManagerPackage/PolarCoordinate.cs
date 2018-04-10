@@ -123,5 +123,21 @@ namespace TargetManagerPackage
 
             return (float) (tmp / Math.Pow(10, validBits));
         }
+
+        public static double RadianToAngle(double radian)
+        {
+            var a = 180 * radian;
+            var b = a / 3.14159265358979323846264338;
+            return b;
+        }
+
+        public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
+        {
+            if (angle < 0)
+                angle += 360;
+            angle %= 360;
+
+            return angle;
+        }
     }
 }

@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace TargetManagerPackage
 {
@@ -17,7 +20,12 @@ namespace TargetManagerPackage
         private readonly List<ITargetObserver> _obs;      //目标观察者，目标变化时观察者得到通知
         private readonly RemoteTargetProcessorcommunicator communicator;
         private MouseTargetTracker mouseTargetTracker;
+        private List<TrackGenerator> trackGenerators;
         private bool _dotSource = true;
+
+        //测试TrackGenerator用的timer和其他变量
+        private System.Windows.Forms.Timer timer;
+        private int simulateSectorIndex = 0;
 
         //测试用变量
         private TargetManagerMode _mode;
@@ -54,12 +62,36 @@ namespace TargetManagerPackage
             _viewDeleter = new DotViewDeleter();
 
             mouseTargetTracker = new MouseTargetTracker(this);
+
+            trackGenerators = new List<TrackGenerator>();
+            timer = new Timer();
+            timer.Interval = 2000;
+            timer.Tick += TimerOnTick;
+            //timer.Start();
+        }
+
+        private void TimerOnTick(object sender, EventArgs eventArgs)
+        {
+            foreach (var generator in trackGenerators)  //更新产生的航迹
+            {
+                foreach (var s in Sectors)
+                {
+                    generator.UpdateTrack(s);
+                }
+                //generator.UpdateTrack(Sectors[simulateSectorIndex++]);
+                //simulateSectorIndex = simulateSectorIndex % SectorCount;
+            }
         }
 
         public void SwitchDotSource(bool sourceFlag)
         {
             DeleteAllTargetViews();
             _dotSource = sourceFlag;
+        }
+
+        public void AddTrackGenerator(PolarCoordinate coordinate)
+        {
+            trackGenerators.Add(new TrackGenerator(this, coordinate));
         }
 
         private void InitializeSectors()
@@ -141,6 +173,17 @@ namespace TargetManagerPackage
             {
                 ls.AddRange(s.tracks);
             }
+
+            //添加航迹生成器的航迹
+            foreach (var generator in trackGenerators)
+            {
+                ls.Add(generator.track);
+            }
+
+            //添加鼠标追踪器的航迹
+            if(mouseTargetTracker.track != null)
+                ls.Add(mouseTargetTracker.track);
+
             return ls;
             //return null;
         }
@@ -185,7 +228,16 @@ namespace TargetManagerPackage
             {
                 NotifyAllObservers(t, NotifyType.Delete);
             }
+
             mouseTargetTracker.DeleteActiveTarget();    //如果mouseTargetTracker航迹被选中，则置为空
+
+            //删除TrackGenerator产生的航迹
+            for (int index = trackGenerators.Count - 1; index >= 0; index --)
+            {
+                if(trackGenerators[index].DeleteTrackIfActive())
+                    trackGenerators.RemoveAt(index);
+            }
+
             ls.Clear();
         }
 
@@ -349,6 +401,11 @@ namespace TargetManagerPackage
                 //    Dis = 2500f
                 //};
                 //SystemCommunicator.Send0X80Cmd(t);
+
+                foreach (var generator in trackGenerators)  //更新产生的航迹
+                {
+                    generator.UpdateTrack(s);
+                }
             }
         }
 

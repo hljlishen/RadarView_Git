@@ -109,9 +109,12 @@ namespace TargetManagerPackage
         {
             float rAngle = 360f - angle;
 
-            if (rAngle < 0)
-                rAngle += 360;
-            rAngle %= 360;
+            rAngle -= 252f;     //矫正0方位
+
+            //if (rAngle < 0)
+            //    rAngle += 360;
+            //rAngle %= 360;
+            rAngle = PolarCoordinate.StandardAngle(rAngle);
 
             return rAngle;
         }

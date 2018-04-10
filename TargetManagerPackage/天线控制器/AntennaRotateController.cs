@@ -14,7 +14,7 @@ namespace TargetManagerPackage
         public AntennaRotateController()
         {
             ServoController = ServoControllerFactory.CreateServoController();
-            SetSweepModeData(RotateDirection.ClockWise, RotateRate.Rpm5);  //默认设置为顺时针5转每分钟
+            SetSweepModeData(RotateDirection.ClockWise, RotateRate.Rpm2);  //默认设置为顺时针5转每分钟
         }
 
         public void SetRotateRate(RotateRate rotateRate)
@@ -39,8 +39,9 @@ namespace TargetManagerPackage
         }
         public void StartSweep()
         {
-            var startSweepThread = new Thread(Sweep);
-            startSweepThread.Start();
+            //var startSweepThread = new Thread(Sweep);
+            //startSweepThread.Start();
+            Sweep();
         }
 
         public void StopSweep()
@@ -69,9 +70,9 @@ namespace TargetManagerPackage
                 case RotateRate.Rpm0:
                     return area;
                 case RotateRate.Rpm2:
-                    return new AngleArea(area.BeginAngle - 5, area.EndAngle + 5);
+                    return new AngleArea(area.BeginAngle + 2 , area.EndAngle - 2 );
                 case RotateRate.Rpm5:
-                    return new AngleArea(area.BeginAngle - 5, area.EndAngle + 5);
+                    return new AngleArea(area.BeginAngle - 2, area.EndAngle + 2);
                 case RotateRate.Rpm10:
                     return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
                 case RotateRate.Rpm20:

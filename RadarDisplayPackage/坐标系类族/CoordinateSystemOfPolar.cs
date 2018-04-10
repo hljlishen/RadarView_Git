@@ -27,12 +27,12 @@ namespace RadarDisplayPackage
         public override Point2F CoordinateToPoint(PolarCoordinate coordinate)
         {
             double projectedDistance;
-            if (coordinate.ProjectedDis != -1)      //有待优化，取projectedDis的方式不合理
-                projectedDistance = coordinate.ProjectedDis;
-            else
-                projectedDistance = coordinate.Dis * Math.Cos(AngleToRadian(coordinate.El));  //水平面的投影距离
+            //if (coordinate.ProjectedDis != -1)      //有待优化，取projectedDis的方式不合理
+            //    projectedDistance = coordinate.ProjectedDis;
+            //else
+            //    projectedDistance = coordinate.Dis * Math.Cos(AngleToRadian(coordinate.El));  //水平面的投影距离
 
-            //projectedDistance = coordinate.Dis;     //会导致波门绘制失效
+            projectedDistance = coordinate.Dis;     //会导致波门绘制失效
 
             double r = (((double)CoordinateArea.Width / 2) / (Range)) * (projectedDistance);
             double sin = Math.Sin(AngleToRadian(coordinate.Az));

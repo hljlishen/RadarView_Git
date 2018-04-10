@@ -79,13 +79,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.航机显示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.原始视频ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.凝聚点击ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_largeSectionSweep = new System.Windows.Forms.Button();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -323,6 +324,7 @@
             this.groupBox1.Controls.Add(this.btn_Rpm10);
             this.groupBox1.Controls.Add(this.btn_Rpm5);
             this.groupBox1.Controls.Add(this.btn_Rpm2);
+            this.groupBox1.Controls.Add(this.btn_largeSectionSweep);
             this.groupBox1.Controls.Add(this.btn_Rpm0);
             this.groupBox1.Controls.Add(this.btn_clockwise);
             this.groupBox1.ForeColor = System.Drawing.Color.Chartreuse;
@@ -341,7 +343,7 @@
             this.btn_counterclockwise.Name = "btn_counterclockwise";
             this.btn_counterclockwise.Size = new System.Drawing.Size(137, 23);
             this.btn_counterclockwise.TabIndex = 17;
-            this.btn_counterclockwise.Text = "逆时针";
+            this.btn_counterclockwise.Text = "顺时针";
             this.btn_counterclockwise.UseVisualStyleBackColor = false;
             this.btn_counterclockwise.Click += new System.EventHandler(this.btn_counterclockwise_Click);
             // 
@@ -349,7 +351,7 @@
             // 
             this.btn_Rpm20.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_Rpm20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm20.Location = new System.Drawing.Point(371, 120);
+            this.btn_Rpm20.Location = new System.Drawing.Point(371, 113);
             this.btn_Rpm20.Name = "btn_Rpm20";
             this.btn_Rpm20.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm20.TabIndex = 17;
@@ -360,7 +362,7 @@
             // 
             this.btn_Rpm10.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_Rpm10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm10.Location = new System.Drawing.Point(290, 120);
+            this.btn_Rpm10.Location = new System.Drawing.Point(290, 113);
             this.btn_Rpm10.Name = "btn_Rpm10";
             this.btn_Rpm10.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm10.TabIndex = 17;
@@ -372,7 +374,7 @@
             // 
             this.btn_Rpm5.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_Rpm5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm5.Location = new System.Drawing.Point(201, 120);
+            this.btn_Rpm5.Location = new System.Drawing.Point(201, 113);
             this.btn_Rpm5.Name = "btn_Rpm5";
             this.btn_Rpm5.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm5.TabIndex = 17;
@@ -384,7 +386,7 @@
             // 
             this.btn_Rpm2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_Rpm2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm2.Location = new System.Drawing.Point(113, 120);
+            this.btn_Rpm2.Location = new System.Drawing.Point(113, 113);
             this.btn_Rpm2.Name = "btn_Rpm2";
             this.btn_Rpm2.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm2.TabIndex = 17;
@@ -396,7 +398,7 @@
             // 
             this.btn_Rpm0.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_Rpm0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Rpm0.Location = new System.Drawing.Point(31, 120);
+            this.btn_Rpm0.Location = new System.Drawing.Point(31, 113);
             this.btn_Rpm0.Name = "btn_Rpm0";
             this.btn_Rpm0.Size = new System.Drawing.Size(56, 23);
             this.btn_Rpm0.TabIndex = 17;
@@ -412,7 +414,7 @@
             this.btn_clockwise.Name = "btn_clockwise";
             this.btn_clockwise.Size = new System.Drawing.Size(141, 23);
             this.btn_clockwise.TabIndex = 17;
-            this.btn_clockwise.Text = "顺时针";
+            this.btn_clockwise.Text = "逆时针";
             this.btn_clockwise.UseVisualStyleBackColor = false;
             this.btn_clockwise.Click += new System.EventHandler(this.btn_clockwise_Click);
             // 
@@ -691,6 +693,11 @@
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+            // 
             // 原始视频ToolStripMenuItem
             // 
             this.原始视频ToolStripMenuItem.Checked = true;
@@ -740,10 +747,17 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
-            // toolStripSeparator1
+            // btn_largeSectionSweep
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+            this.btn_largeSectionSweep.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_largeSectionSweep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_largeSectionSweep.Location = new System.Drawing.Point(31, 142);
+            this.btn_largeSectionSweep.Name = "btn_largeSectionSweep";
+            this.btn_largeSectionSweep.Size = new System.Drawing.Size(56, 23);
+            this.btn_largeSectionSweep.TabIndex = 17;
+            this.btn_largeSectionSweep.Text = "半周扫";
+            this.btn_largeSectionSweep.UseVisualStyleBackColor = false;
+            this.btn_largeSectionSweep.Click += new System.EventHandler(this.btn_largeSectionSweep_Click);
             // 
             // Form1
             // 
@@ -856,6 +870,7 @@
         private System.Windows.Forms.ToolStripMenuItem 原始视频ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 凝聚点击ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Button btn_largeSectionSweep;
     }
 }
 

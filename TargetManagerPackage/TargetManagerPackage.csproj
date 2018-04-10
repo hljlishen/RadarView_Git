@@ -48,6 +48,7 @@
     <Compile Include="MouseTargetTracker.cs" />
     <Compile Include="RemoteTargetProcessorcommunicator.cs" />
     <Compile Include="SystemCommunicator.cs" />
+    <Compile Include="TrackGenerator.cs" />
     <Compile Include="天线控制器\AntennaRotateController.cs" />
     <Compile Include="天线控制器\AntennaSectionSweepController.cs" />
     <Compile Include="DataSourceController.cs" />
