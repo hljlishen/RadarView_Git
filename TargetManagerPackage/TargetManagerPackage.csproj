@@ -45,10 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzWiseClotter.cs" />
+    <Compile Include="EthernetData.cs" />
     <Compile Include="MouseTargetTracker.cs" />
-    <Compile Include="OpticalDeviceCommunicator.cs" />
-    <Compile Include="RemoteTargetProcessorcommunicator.cs" />
-    <Compile Include="SystemCommunicator.cs" />
+    <Compile Include="UplinkData.cs" />
+    <Compile Include="X80Data.cs" />
+    <Compile Include="通信类\OpticalDeviceCommunicator.cs" />
+    <Compile Include="通信类\RemoteTargetProcessorcommunicator.cs" />
+    <Compile Include="通信类\SystemCommunicator.cs" />
     <Compile Include="TrackGenerator.cs" />
     <Compile Include="天线控制器\AntennaRotateController.cs" />
     <Compile Include="天线控制器\AntennaSectionSweepController.cs" />
