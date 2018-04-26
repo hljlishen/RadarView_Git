@@ -19,12 +19,12 @@ namespace TargetManagerPackage
         private readonly FreeDotDeleter _freeDotDeleter;  //自由点删除器
         private readonly List<ITargetObserver> _obs;      //目标观察者，目标变化时观察者得到通知
         private readonly RemoteTargetProcessorcommunicator communicator;
+        private readonly OpticalDeviceCommunicator opticalDeviceCommunicator;
         private MouseTargetTracker mouseTargetTracker;
         private List<TrackGenerator> trackGenerators;
         private bool _dotSource = true;
 
         //测试TrackGenerator用的timer和其他变量
-        private System.Windows.Forms.Timer timer;
         private int simulateSectorIndex = 0;
 
         //测试用变量
@@ -45,9 +45,10 @@ namespace TargetManagerPackage
             InitializeSectors();
             _obs = new List<ITargetObserver>();
 
-            //communicator = RemoteTargetProcessorcommunicator.CreateCommunicator();
             communicator = new RemoteTargetProcessorcommunicator(this);
             communicator.StartReceiveData();
+
+            opticalDeviceCommunicator = OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator();
 
             _clotter = new Clotter_Test();
             //_clotter = new Clotter_3DClot();//凝聚器
@@ -64,23 +65,6 @@ namespace TargetManagerPackage
             mouseTargetTracker = new MouseTargetTracker(this);
 
             trackGenerators = new List<TrackGenerator>();
-            timer = new Timer();
-            timer.Interval = 2000;
-            timer.Tick += TimerOnTick;
-            //timer.Start();
-        }
-
-        private void TimerOnTick(object sender, EventArgs eventArgs)
-        {
-            foreach (var generator in trackGenerators)  //更新产生的航迹
-            {
-                foreach (var s in Sectors)
-                {
-                    generator.UpdateTrack(s);
-                }
-                //generator.UpdateTrack(Sectors[simulateSectorIndex++]);
-                //simulateSectorIndex = simulateSectorIndex % SectorCount;
-            }
         }
 
         public void SwitchDotSource(bool sourceFlag)
@@ -197,17 +181,6 @@ namespace TargetManagerPackage
                  select dot;
 
             return query.ToList();
-
-            //使用foreach的代码
-            //foreach (Sector s in sectors)
-            //{
-            //    foreach (TargetDot dot in s.newDots)
-            //    {
-            //        if (dot.ShouldDisplay)
-            //            ls.Add(dot);
-            //    }
-            //}
-            //return ls;
         }
 
         public TargetManagerMode GetMode()

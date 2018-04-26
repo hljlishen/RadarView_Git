@@ -44,6 +44,7 @@ namespace TargetManagerPackage
                 }
             }
             SystemCommunicator.UpdateTrack(track);  //发送给系统
+            OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendTrack(track);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace TargetManagerPackage
 
             targetManager.NotifyAllObservers(track, NotifyType.Update);
             SystemCommunicator.UpdateTrack(track);
+            OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendTrack(track);
         }
 
         public bool DeleteTrackIfActive()

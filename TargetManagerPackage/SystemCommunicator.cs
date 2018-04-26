@@ -20,7 +20,6 @@ namespace TargetManagerPackage
         public SystemCommunicator()
         {
             _waitingResponedThreads = new Dictionary<int, Thread>();
-            //UdpEthernetCenter.RegisterIpAndPort(LocalIpAndPortString);
         }
 
         public void BeginRecvData()
@@ -30,7 +29,7 @@ namespace TargetManagerPackage
 
         public static void UpdateTrack(TargetTrack track)
         {
-            Send0X80Cmd(track);
+            Send0X80Cmd(track); 
         }
 
         public static void DeleteTrack(TargetTrack track)
@@ -72,6 +71,7 @@ namespace TargetManagerPackage
             byte[] cmdBytes = AddXorCheckByte(cmdData.ToArray());
 
             UdpEthernetCenter.SendData(cmdBytes, LocalIpAndPortString, SystemIpAndPortString);
+            //OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendData(cmdBytes);
         }
 
         private void ProcessCommandData(byte[] cmdData)     //处理接收的数据

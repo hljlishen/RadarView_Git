@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AzWiseClotter.cs" />
     <Compile Include="MouseTargetTracker.cs" />
+    <Compile Include="OpticalDeviceCommunicator.cs" />
     <Compile Include="RemoteTargetProcessorcommunicator.cs" />
     <Compile Include="SystemCommunicator.cs" />
     <Compile Include="TrackGenerator.cs" />
