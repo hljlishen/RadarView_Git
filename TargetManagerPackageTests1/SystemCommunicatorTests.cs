@@ -6,18 +6,6 @@ namespace TargetManagerPackage.Tests
     public class SystemCommunicatorTests
     {
         [TestMethod()]
-        public void CalBytesXorTest()
-        {
-            byte[] data = { 0x02, 0x00, 0x04, 0xc1, 0x24, 0, 0 };
-            byte expected = 0xe3;
-            Assert.AreEqual(expected, SystemCommunicator.CalBytesXor(data, 0, 7));
-
-            data = new byte[] { 0x02, 0x00, 0x8, 0xc1, 0x26, 0xff, 0, 0xb0, 0, 0, 0x10 };
-            expected = 0xb2;
-            Assert.AreEqual(expected, SystemCommunicator.CalBytesXor(data, 0, 11));
-        }
-
-        [TestMethod()]
         public void IntToByteLsbTest()
         {
             int data = 0xaabb;

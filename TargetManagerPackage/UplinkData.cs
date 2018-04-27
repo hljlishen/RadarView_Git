@@ -15,7 +15,7 @@ namespace TargetManagerPackage
 
         public virtual byte[] Serialize()
         {
-            return new[] {DataType, SourceDeviceCode, DestinationDeviceCode};
+            return new[] {CommandType, SourceDeviceCode, DestinationDeviceCode};
         }
     }
 }
