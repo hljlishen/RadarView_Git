@@ -79,11 +79,11 @@ namespace TargetManagerPackage
         {
             socketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             //服务端发送信息 需要1个IP地址和端口号
-            IPAddress ipaddress = IPAddress.Parse(LocalIpAddress); 
-            IPEndPoint endpoint = new IPEndPoint(ipaddress, int.Parse(LocalPort)); 
+            IPAddress ipaddress = IPAddress.Parse(LocalIpAddress);
+            IPEndPoint endpoint = new IPEndPoint(ipaddress, int.Parse(LocalPort));
             socketWatch.Bind(endpoint);
             socketWatch.Listen(1);
-            Thread threadWatch = new Thread(WatchConnecting) {IsBackground = true};
+            Thread threadWatch = new Thread(WatchConnecting) { IsBackground = true };
             threadWatch.Start();
         }
 
@@ -99,8 +99,8 @@ namespace TargetManagerPackage
         {
             List<byte> cmdBytes = new List<byte> {0x68, 0x2, 0x1, 0x1, (byte) t.trackID};
             cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.Dis, 4));
-            cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.AZ,2));
-            cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.EL, 2));
+            cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)(t.AZ * 100),2));
+            cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)(t.EL * 100), 2));
             cmdBytes.AddRange(CRC16(cmdBytes.ToArray()));
 
             SendData(cmdBytes.ToArray());

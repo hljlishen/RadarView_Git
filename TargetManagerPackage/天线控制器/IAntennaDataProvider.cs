@@ -109,7 +109,7 @@ namespace TargetManagerPackage
         {
             float rAngle = 360f - angle;
 
-            rAngle -= 252f;     //矫正0方位
+            //rAngle -= 252f;     //矫正0方位
 
             //if (rAngle < 0)
             //    rAngle += 360;

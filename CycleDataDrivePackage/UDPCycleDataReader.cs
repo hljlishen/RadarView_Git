@@ -18,7 +18,7 @@
         protected override void NotifyAllObservers(byte[] rawData)
         {
             base.NotifyAllObservers(rawData);
-            //_recorder.RecordBytes(rawData, 0, rawData.Length);
+            _recorder.RecordBytes(rawData, 0, rawData.Length);
         }
     }
 }
