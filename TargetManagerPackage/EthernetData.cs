@@ -8,13 +8,13 @@ namespace TargetManagerPackage
 {
     public abstract class EthernetData
     {
-        protected byte CommandType { get; set; } //标识
+        protected byte CommandTypeCode { get; set; } //标识
         protected byte SourceDeviceCode { get; set; }         //源设备代号
         protected byte DestinationDeviceCode { get; set; }    //目标设备代号
 
-        protected EthernetData(byte type, byte srcCode, byte desCode)
+        protected EthernetData(byte typeCode, byte srcCode, byte desCode)
         {
-            CommandType = type;
+            CommandTypeCode = typeCode;
             SourceDeviceCode = srcCode;
             DestinationDeviceCode = desCode;
         }
@@ -54,6 +54,38 @@ namespace TargetManagerPackage
                 ls.Add(0);
 
             return ls.ToArray();
+        }
+
+        public static byte[] Crc16(byte[] data)
+        {
+            byte[] returnVal = new byte[2];
+            int i, flag;
+            byte crc16Lo = 0xFF;
+            byte crc16Hi = 0xFF;
+            const byte cl = 0x86;
+            const byte ch = 0x68;
+            for (i = 0; i < data.Length; i++)
+            {
+                crc16Lo = (byte)(crc16Lo ^ data[i]);//每一个数据与CRC寄存器进行异或
+                for (flag = 0; flag <= 7; flag++)
+                {
+                    var saveHi = crc16Hi;
+                    var saveLo = crc16Lo;
+                    crc16Hi = (byte)(crc16Hi >> 1);//高位右移一位
+                    crc16Lo = (byte)(crc16Lo >> 1);//低位右移一位
+                    if ((saveHi & 0x01) == 0x01)//如果高位字节最后一位为
+                    {
+                        crc16Lo = (byte)(crc16Lo | 0x80);//则低位字节右移后前面补 否则自动补0
+                    }
+
+                    if ((saveLo & 0x01) != 0x01) continue;
+                    crc16Hi = (byte)(crc16Hi ^ ch);
+                    crc16Lo = (byte)(crc16Lo ^ cl);
+                }
+            }
+            returnVal[0] = crc16Hi;//CRC高位
+            returnVal[1] = crc16Lo;//CRC低位
+            return returnVal;
         }
     }
 }

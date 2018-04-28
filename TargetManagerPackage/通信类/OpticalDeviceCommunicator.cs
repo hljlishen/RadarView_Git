@@ -87,23 +87,19 @@ namespace TargetManagerPackage
             threadWatch.Start();
         }
 
-        public void SendData(byte[] data)
-        {
-            //Thread sendThread = new Thread(() => opticalDeviceSocket?.Send(data));
-            //sendThread.IsBackground = true;
-            //sendThread.Start();
-            _opticalDeviceSocket?.Send(data);
-        }
+        public void SendData(byte[] data) => _opticalDeviceSocket?.Send(data);
 
-        public void SendTrack(TargetTrack t)
+        public void SendTrack(TargetTrack t) => SendData(GetCmdBytes(t));
+
+        public static byte[] GetCmdBytes(TargetTrack t)
         {
-            List<byte> cmdBytes = new List<byte> {0x68, 0x2, 0x1, 0x1, (byte) t.trackID};
+            List<byte> cmdBytes = new List<byte> { 0x68, 0x2, 0x1, 0x1, (byte)t.trackID };
             cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.Dis, 4));
-            cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.AZ,2));
+            cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.AZ, 2));
             cmdBytes.AddRange(SystemCommunicator.IntToByteLsb((int)t.EL, 2));
             cmdBytes.AddRange(CRC16(cmdBytes.ToArray()));
 
-            SendData(cmdBytes.ToArray());
+            return cmdBytes.ToArray();
         }
 
         private void WatchConnecting()

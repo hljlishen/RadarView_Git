@@ -37,7 +37,7 @@ namespace TargetManagerPackage
             List<byte> cmdBytes = new List<byte> {LocalDeviceCode, RespondCode};
             cmdBytes.AddRange(IntToByteLsb(NextSendCount(),2));     //发送计数
             cmdBytes.Add(SystmDeviceCode);
-            cmdBytes.Add(CommandType); //0x80
+            cmdBytes.Add(CommandTypeCode); //0x80
             cmdBytes.Add(_resendCount);
             cmdBytes.AddRange(IntToByteLsb(CommandLength,2));
             cmdBytes.AddRange(IntToByteLsb(_trackId,2));

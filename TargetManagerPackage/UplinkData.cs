@@ -8,14 +8,14 @@ namespace TargetManagerPackage
 {
     class UplinkData : EthernetData
     {
-        protected UplinkData(byte type, byte srcCode, byte desCode) : base(type, srcCode, desCode)
+        protected UplinkData(byte typeCode, byte srcCode, byte desCode) : base(typeCode, srcCode, desCode)
         {
 
         }
 
         public virtual byte[] Serialize()
         {
-            return new[] {CommandType, SourceDeviceCode, DestinationDeviceCode};
+            return new[] {CommandTypeCode, SourceDeviceCode, DestinationDeviceCode};
         }
     }
 }
