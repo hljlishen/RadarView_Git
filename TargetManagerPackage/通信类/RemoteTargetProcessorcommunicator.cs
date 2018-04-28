@@ -32,15 +32,9 @@ namespace TargetManagerPackage
                 RemoteTargetProcessorIpAndPortString);
         }
 
-        private static bool IsSectionSweeping()
-        {
-            return TargetManagerFactory.CreateAntennaDataProvider().IsSectionSweeping();
-        }
+        private static bool IsSectionSweeping() => TargetManagerFactory.CreateAntennaDataProvider().IsSectionSweeping();
 
-        private List<byte> GenerateCommandHead()
-        {
-            return new List<byte>(new byte[] { 0x00, SendSectorDotTargetsHead });
-        }
+        private List<byte> GenerateCommandHead() => new List<byte>(new byte[] { 0x00, SendSectorDotTargetsHead });
 
         private List<byte> AddAntennaSectionSweepData(List<byte> cmdData)
         {
@@ -60,7 +54,7 @@ namespace TargetManagerPackage
             return cmdData;
         }
 
-        private byte[] AngleToBytes(float angle)  //要求长度为2字节，产生的数字只有长度为1，则前面部0
+        private static byte[] AngleToBytes(float angle)  //要求长度为2字节，产生的数字只有长度为1，则前面部0
         {
             byte[] d = PolarCoordinate.FloatToBytes(angle, 1);
             if (d.Length == 1)  //长度为1时

@@ -44,12 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzWiseClotter.cs" />
-    <Compile Include="EthernetData.cs" />
+    <Compile Include="通信类\EthernetData.cs" />
     <Compile Include="MouseTargetTracker.cs" />
-    <Compile Include="UplinkData.cs" />
-    <Compile Include="X68Command.cs" />
-    <Compile Include="X80Data.cs" />
+    <Compile Include="通信类\X68Command.cs" />
+    <Compile Include="通信类\X80Command.cs" />
     <Compile Include="通信类\OpticalDeviceCommunicator.cs" />
     <Compile Include="通信类\RemoteTargetProcessorcommunicator.cs" />
     <Compile Include="通信类\SystemCommunicator.cs" />

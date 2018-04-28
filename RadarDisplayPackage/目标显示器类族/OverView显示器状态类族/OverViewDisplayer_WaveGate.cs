@@ -99,9 +99,11 @@ namespace RadarDisplayPackage
             //发送波门位置信息
             Point2F dragPosition = mouseDragPosition;
             PolarCoordinate c = displayer.coordinateSystem.PointToCoordinate(mouseDownPosition);
-            float dis1 = c.ProjectedDis;
+            //float dis1 = c.ProjectedDis;
+            float dis1 = c.Dis;
             c = displayer.coordinateSystem.PointToCoordinate(dragPosition);
-            float dis2 = c.ProjectedDis;
+            //float dis2 = c.ProjectedDis;
+            float dis2 = c.Dis;
 
             float begin = CoordinateSystem.FindSmallArcBeginAngle(beginAngle, dragAngle);
             float end = CoordinateSystem.FindSmallArcEndAngle(beginAngle, dragAngle);

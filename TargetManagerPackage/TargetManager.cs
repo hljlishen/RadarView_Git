@@ -30,10 +30,7 @@ namespace TargetManagerPackage
         //测试用变量
         private TargetManagerMode _mode;
 
-        public int GetSectorCount()
-        {
-            return SectorCount;
-        }
+        int ITargetDataProvider.GetSectorCount() => SectorCount;
 
         internal CycleDataMatrix Matrix { get; private set; }
 
@@ -365,16 +362,6 @@ namespace TargetManagerPackage
                 //tmp = PreviousSector(tmp);
                 //viewDeleter.DeleteViews(tmp,false);
 
-                //发送数据测试
-                //TargetTrack t = new TargetTrack
-                //{
-                //    trackID = 155,
-                //    AZ = 256.3f,
-                //    EL = 15.4f,
-                //    Dis = 2500f
-                //};
-                //SystemCommunicator.Send0X80Cmd(t);
-
                 foreach (var generator in trackGenerators)  //更新产生的航迹
                 {
                     generator.UpdateTrack(s);
@@ -409,13 +396,7 @@ namespace TargetManagerPackage
         }
 
         public void NotifyLeaveAngleArea(AngleArea sector)   //获得角度区域监听器的通知，天线刚刚扫过一个扇区sector
-        {
-            //Thread processThread = new Thread(new ParameterizedThreadStart(ProcessSector));
-            //processThread.Priority = ThreadPriority.BelowNormal;
-            //processThread.Start(sector);
-
-            ProcessSector(sector);
-        }
+            => ProcessSector(sector);
 
         public void DeleteOutRangedTargets(AngleArea area)    //删除角度范围外的所有目标
         {
@@ -427,10 +408,7 @@ namespace TargetManagerPackage
             }
         }
 
-        public void ClearRawData()
-        {
-            Matrix.Clear();
-        }
+        public void ClearRawData() => Matrix.Clear();
 
         public void NotifyNewCycleData(byte[] rawData)
         {
