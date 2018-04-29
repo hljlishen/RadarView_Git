@@ -30,15 +30,9 @@ namespace CycleDataDrivePackage
             for(int i = 0; i < cellCount; i++)
             {
                 var cell = new DistanceCell(data, pos);
-                try
-                {
-                    if (CycleDataFilter.Pass(cell))     //滤波
-                        DisCells.Add(cell.index, cell);
-                }
-                catch
-                {
-                    // ignored
-                }
+
+                if (CycleDataFilter.Pass(cell) && !DisCells.Contains(cell.index))     //滤波
+                    DisCells.Add(cell.index, cell);
 
                 pos += DistanceCell.CellLength();
             }
