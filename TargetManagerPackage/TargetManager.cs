@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Windows.Forms;
-using Timer = System.Windows.Forms.Timer;
 
 namespace TargetManagerPackage
 {
-    public class TargetManager : ICycleDataObserver, ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
+    public class TargetManager :ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
     {
         private const int SectorCount = 32;         //扇区的个数
         public Sector[] Sectors;                  //扇区数组
@@ -32,18 +29,10 @@ namespace TargetManagerPackage
 
         int ITargetDataProvider.GetSectorCount() => SectorCount;
 
-        internal CycleDataMatrix Matrix { get; private set; }
-
         public TargetManager()
         {
-            //初始化周期数据管理器
-            Matrix = new CycleDataMatrix();
-
             InitializeSectors();
             _obs = new List<ITargetObserver>();
-
-            communicator = new RemoteTargetProcessorcommunicator(this);
-            communicator.StartReceiveData();
 
             opticalDeviceCommunicator = OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator();
 
@@ -75,7 +64,7 @@ namespace TargetManagerPackage
             trackGenerators.Add(new TrackGenerator(this, coordinate));
         }
 
-        private void InitializeSectors()
+        internal void InitializeSectors()
         {
             //删除所有目标视图
             DeleteAllTargetViews();
@@ -129,22 +118,13 @@ namespace TargetManagerPackage
             foreach(Sector s in Sectors)
             {
                 NotifyDeleteSectorDots(s);
-                s.newDots.Clear();
+                s.newDots?.Clear();
 
                 NotifyDeleteSectorTracks(s);
                 s.tracks?.Clear();
 
                 s.oldDots?.Clear();
             }
-        }
-
-        public void ConnectDataSource(ICycleDataSubject subject)
-        {
-            Matrix.Dispose();
-            Matrix = new CycleDataMatrix();
-            //subject.RegisterObserver(Matrix);
-            subject.RegisterObserver(this);
-            InitializeSectors();
         }
 
         public List<Target> GetTargetTracks()   //获取所有航迹对象
@@ -338,7 +318,7 @@ namespace TargetManagerPackage
                 Sector tmp = s;
 
                 //index - 1扇区点迹凝聚
-                AzimuthCell[] azCells = GetAzimuthCellsInSectorSpan(PreviousSector(tmp), NextSector(tmp));//获取刚扫过的扇区所包含的方位单元数组
+                AzimuthCell[] azCells = CycleDataMatrix.CreaCycleDataMatrix().GetAzimuthCellsInSectorSpan(PreviousSector(tmp), NextSector(tmp));//获取刚扫过的扇区所包含的方位单元数组
                 Sector pre = PreviousSector(tmp);
                 Sector nex = NextSector(tmp);
                 _clotter.Clot(tmp, nex, pre, azCells);
@@ -369,32 +349,6 @@ namespace TargetManagerPackage
             }
         }
 
-        public AzimuthCell[] GetAzimuthCellsInSectorSpan(Sector previous, Sector next)
-        {
-            AngleArea area = CalCoveredAngleArea(previous, next);
-
-            return Matrix.AzimuthCellsInAngleArea(area);
-        }
-
-        private static AngleArea CalCoveredAngleArea(Sector s1, Sector s2)
-        {
-            float begin;
-            float end;
-
-            if (Math.Abs(s2.index - s1.index) > 2)   //大于2说明三个扇区跨越360度
-            {
-                begin = (s1.index > s2.index) ? s1.BeginAngle : s2.BeginAngle;
-                end = (s1.index < s2.index) ? s1.EndAngle : s2.EndAngle;
-            }
-            else
-            {
-                begin = (s1.index < s2.index) ? s1.BeginAngle : s2.BeginAngle;
-                end = (s1.index > s2.index) ? s1.EndAngle : s2.EndAngle;
-            }
-
-            return new AngleArea(begin, end);
-        }
-
         public void NotifyLeaveAngleArea(AngleArea sector)   //获得角度区域监听器的通知，天线刚刚扫过一个扇区sector
             => ProcessSector(sector);
 
@@ -406,16 +360,6 @@ namespace TargetManagerPackage
                 _viewDeleter.DeleteViews(s, true);  //删除所有目标视图，包括目标航迹
                 s.ClearAllTargets();                //清空无关扇区的所有数据
             }
-        }
-
-        public void ClearRawData() => Matrix.Clear();
-
-        public void NotifyNewCycleData(byte[] rawData)
-        {
-            AzimuthCell cell = new AzimuthCell(rawData);
-            cell.Angle = AntennaDataManager.ReverAngleDirection(cell.Angle);
-            communicator.SendRawData(rawData);
-            Matrix.SaveAzimuthCell(cell);
         }
 
         protected void NotifyDeleteSectorTracks(Sector s)

@@ -1,4 +1,6 @@
-﻿namespace CycleDataDrivePackage
+﻿using System;
+
+namespace CycleDataDrivePackage
 {
     public class UdpCycleDataReader : CycleDataReader
     {
@@ -18,7 +20,8 @@
         protected override void NotifyAllObservers(byte[] rawData)
         {
             base.NotifyAllObservers(rawData);
-            _recorder.RecordBytes(rawData, 0, rawData.Length);
+            //_recorder.RecordBytes(rawData, 0, rawData.Length);
+            Console.WriteLine(123);
         }
     }
 }

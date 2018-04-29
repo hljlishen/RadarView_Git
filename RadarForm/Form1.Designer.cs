@@ -53,6 +53,7 @@
             this.btn_Rpm10 = new System.Windows.Forms.Button();
             this.btn_Rpm5 = new System.Windows.Forms.Button();
             this.btn_Rpm2 = new System.Windows.Forms.Button();
+            this.btn_largeSectionSweep = new System.Windows.Forms.Button();
             this.btn_Rpm0 = new System.Windows.Forms.Button();
             this.btn_clockwise = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -86,7 +87,6 @@
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_largeSectionSweep = new System.Windows.Forms.Button();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -394,6 +394,18 @@
             this.btn_Rpm2.UseVisualStyleBackColor = false;
             this.btn_Rpm2.Click += new System.EventHandler(this.btn_Rpm2_Click);
             // 
+            // btn_largeSectionSweep
+            // 
+            this.btn_largeSectionSweep.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_largeSectionSweep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_largeSectionSweep.Location = new System.Drawing.Point(31, 142);
+            this.btn_largeSectionSweep.Name = "btn_largeSectionSweep";
+            this.btn_largeSectionSweep.Size = new System.Drawing.Size(56, 23);
+            this.btn_largeSectionSweep.TabIndex = 17;
+            this.btn_largeSectionSweep.Text = "半周扫";
+            this.btn_largeSectionSweep.UseVisualStyleBackColor = false;
+            this.btn_largeSectionSweep.Click += new System.EventHandler(this.btn_largeSectionSweep_Click);
+            // 
             // btn_Rpm0
             // 
             this.btn_Rpm0.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -516,7 +528,7 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
-            this.tb_filePath.Text = "D:\\RadarData\\2018-03-22 23-53-14 123";
+            this.tb_filePath.Text = "C:\\RadarData\\2018-04-26 20-04-01!";
             // 
             // btn_start
             // 
@@ -746,18 +758,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // btn_largeSectionSweep
-            // 
-            this.btn_largeSectionSweep.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_largeSectionSweep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_largeSectionSweep.Location = new System.Drawing.Point(31, 142);
-            this.btn_largeSectionSweep.Name = "btn_largeSectionSweep";
-            this.btn_largeSectionSweep.Size = new System.Drawing.Size(56, 23);
-            this.btn_largeSectionSweep.TabIndex = 17;
-            this.btn_largeSectionSweep.Text = "半周扫";
-            this.btn_largeSectionSweep.UseVisualStyleBackColor = false;
-            this.btn_largeSectionSweep.Click += new System.EventHandler(this.btn_largeSectionSweep_Click);
             // 
             // Form1
             // 

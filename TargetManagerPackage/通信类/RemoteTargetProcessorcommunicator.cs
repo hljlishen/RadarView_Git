@@ -3,40 +3,36 @@ using System.Collections.Generic;
 
 namespace TargetManagerPackage
 {
-    internal class RemoteTargetProcessorcommunicator
+    internal class RemoteTargetProcessorcommunicator : ICycleDataObserver
     {
-        private const string RemoteTargetProcessorCommunicatorIpAndPortString = "192.168.1.14:10001";
+        //private const string LocalIpAndPort = "192.168.1.14:10001";
+        private const string LocalIpAndPort = "127.0.0.1:10001";
         private const string RemoteTargetProcessorIpAndPortString = "192.168.1.23:20010";
         private const byte SendSectorDotTargetsHead = 0xA4;
-        private readonly TargetManager _targetManager;
+        private static RemoteTargetProcessorcommunicator _communicator;
 
-        public RemoteTargetProcessorcommunicator(TargetManager t)
+        private RemoteTargetProcessorcommunicator()
         {
-            _targetManager = t;
         }
 
-        public void SendRawData(byte[] rawData)
-        {
-            //if (!IsSectionSweeping()) return;               //费扇扫状态不发送数据，否则对方应用会报错
-            //List<byte> cmdData = GenerateCommandHead();     //命令头
-            //cmdData = AddAntennaSectionSweepData(cmdData);  //添加扇扫信息
-            //cmdData.AddRange(rawData);                      //添加扇区编号
+        public static RemoteTargetProcessorcommunicator CreateCommunicator() =>
+            _communicator ?? (_communicator = new RemoteTargetProcessorcommunicator());
 
-            //SendDataToRemoteTargetProcessor(cmdData);
-        }
-
-        private static void SendDataToRemoteTargetProcessor(List<byte> data)
+        public static void SendRawData(byte[] rawData)
         {
-            UdpEthernetCenter.SendData(data.ToArray(),
-                RemoteTargetProcessorCommunicatorIpAndPortString,
-                RemoteTargetProcessorIpAndPortString);
+            if (!IsSectionSweeping()) return;               //费扇扫状态不发送数据，否则对方应用会报错
+            List<byte> cmdData = GenerateCommandHead();     //命令头
+            cmdData = AddAntennaSectionSweepData(cmdData);  //添加扇扫信息
+            cmdData.AddRange(rawData);                      //添加扇区编号
+
+            //UdpEthernetCenter.SendData(cmdData.ToArray(), LocalIpAndPort, RemoteTargetProcessorIpAndPortString);
         }
 
         private static bool IsSectionSweeping() => TargetManagerFactory.CreateAntennaDataProvider().IsSectionSweeping();
 
-        private List<byte> GenerateCommandHead() => new List<byte>(new byte[] { 0x00, SendSectorDotTargetsHead });
+        private static List<byte> GenerateCommandHead() => new List<byte>(new byte[] { 0x00, SendSectorDotTargetsHead });
 
-        private List<byte> AddAntennaSectionSweepData(List<byte> cmdData)
+        private static List<byte> AddAntennaSectionSweepData(List<byte> cmdData)
         {
             IAntennaDataProvider antenna = TargetManagerFactory.CreateAntennaDataProvider();
             byte isSectionSweep = (byte)(antenna.IsSectionSweeping() ? 1 : 0);
@@ -65,15 +61,12 @@ namespace TargetManagerPackage
             return d;
         }
 
-        public void StartReceiveData()
-        {
-            UdpEthernetCenter.BeginRecvData(
-                RemoteTargetProcessorCommunicatorIpAndPortString,
-                RemoteTargetProcessorIpAndPortString,
-                ProcessRemoteTargetManagerUdpData);
-        }
+        public static void StartReceiveData() => UdpEthernetCenter.BeginRecvData(
+            LocalIpAndPort,
+            RemoteTargetProcessorIpAndPortString,
+            ProcessRemoteTargetManagerUdpData);
 
-        private void ProcessRemoteTargetManagerUdpData(byte[] data)
+        private static void ProcessRemoteTargetManagerUdpData(byte[] data)
         {
             byte head = data[1];
 
@@ -84,17 +77,17 @@ namespace TargetManagerPackage
             if (head == 0xb1)
             {
                 List<TargetDot> ls = GetTargetDotsFromSerialData(data, targetCount, sectorNum);
-                _targetManager.TargetDotDataReceivedFromRemoteTargetManager(sectorNum, ls);
+                TargetManagerFactory.CreateTrackManager().TargetDotDataReceivedFromRemoteTargetManager(sectorNum, ls);
             }
 
             if (head == 0xb2)
             {
                 List<TargetTrack> ls = GetTargetTracksFromSerialData(data, targetCount, sectorNum);
-                _targetManager.TargetTrackDataReceivedFromRemoteTargetManager(sectorNum, ls);
+                TargetManagerFactory.CreateTrackManager().TargetTrackDataReceivedFromRemoteTargetManager(sectorNum, ls);
             }
         }
 
-        private List<TargetDot> GetTargetDotsFromSerialData(byte[] data, int targetCount, int sectorIndex)
+        private static List<TargetDot> GetTargetDotsFromSerialData(byte[] data, int targetCount, int sectorIndex)
         {
             List<TargetDot> ls = new List<TargetDot>();
 
@@ -111,7 +104,7 @@ namespace TargetManagerPackage
             return ls;
         }
 
-        private List<TargetTrack> GetTargetTracksFromSerialData(byte[] data, int targetCount, int sectorIndex)
+        private static List<TargetTrack> GetTargetTracksFromSerialData(byte[] data, int targetCount, int sectorIndex)
         {
             List<TargetTrack> ls = new List<TargetTrack>();
 
@@ -126,6 +119,11 @@ namespace TargetManagerPackage
             }
 
             return ls;
+        }
+
+        public void NotifyNewCycleData(byte[] rawData)
+        {
+            SendRawData(rawData);
         }
     }
 }

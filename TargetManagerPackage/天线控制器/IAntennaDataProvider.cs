@@ -24,7 +24,7 @@ namespace TargetManagerPackage
         public float AntennaCurrentAngle;      //天线当前角度
         public float AntennaPreviousAngle;     //天线的前一个角度
         protected const float FloatValueEqualMinmumInterval = 0.001f;    //判断天线停止的最小角度
-        protected ITargetManagerController TargetManagerController;
+        //protected ITargetManagerController TargetManagerController;
         protected bool _isSectionSweeping;
         private RotateDirection _preRotateDirection = RotateDirection.ClockWise;     //前一个角度计算出的天线方向
 
@@ -75,12 +75,6 @@ namespace TargetManagerPackage
                 : RotateDirection.CounterClockWise;
         }
 
-        public void ConnectDataSource(ICycleDataSubject subject)
-        {
-            subject.RegisterObserver(this);
-            TargetManagerController = TargetManagerFactory.CreateTargetManagerController();
-        }
-
         public void NotifyNewCycleData(byte[] rawData)
         {
                 UpdateAntennaAngle(rawData);
@@ -90,7 +84,7 @@ namespace TargetManagerPackage
                 if (newDirection != _preRotateDirection)
                 {
                     _preRotateDirection = newDirection;
-                    TargetManagerController.ClearRawData();
+                    CycleDataMatrix.CreaCycleDataMatrix().Clear();
                 }
 
                 NotifyAntennaDataChange();     //通知观察者，天线角度已改变

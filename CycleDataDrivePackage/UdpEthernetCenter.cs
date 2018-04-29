@@ -22,18 +22,18 @@ namespace CycleDataDrivePackage
 
             try
             {
-                //socket.BeginSendTo(data, 0, data.Length, 0, remoteEndPoint, null, socket);
                 socket.SendTo(data, remoteEndPoint);
             }
             catch
             {
                 //ignored
+                MessageBox.Show("");
             }
         }
 
         public static void BeginRecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)
         {
-            Thread t = new Thread(()=> RecvData(localIpAndPort,remoteIpAndPort,handler));
+            Thread t = new Thread(() => RecvData(localIpAndPort, remoteIpAndPort, handler));
             t.Start();
         }
 
@@ -75,23 +75,18 @@ namespace CycleDataDrivePackage
 
         public static Socket GetSocket(string localIpAndPort)
         {
-            if (SocketDictionary.Keys.Contains(localIpAndPort))
-                 return SocketDictionary[localIpAndPort];
+            lock (SocketDictionary)
+            {
+                if (SocketDictionary.Keys.Contains(localIpAndPort))
+                    return SocketDictionary[localIpAndPort];
+            }
+
             lock (SocketDictionary)
             {
                 Socket socket = CreateUdpSocket(localIpAndPort);
                 if(socket != null)  //socket创建成功则添加到dictionary
                     SocketDictionary.Add(localIpAndPort, socket);
                 return socket;
-            }
-        }
-
-        public static void RegisterIpAndPort(string localIpAndPort)
-        {
-            Socket socket = CreateUdpSocket(localIpAndPort);
-            if (socket != null)
-            {
-                SocketDictionary.Add(localIpAndPort, socket);
             }
         }
 

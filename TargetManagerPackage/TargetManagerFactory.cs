@@ -8,70 +8,32 @@
         private static DataSourceController _dataSourcController;
         private static AntennaLeaveAngleAreaSubject _antennaLeaveAngleAreaSubject;
 
+        public static DataSourceController CreateDataSourceController() => _dataSourcController ?? (_dataSourcController = new DataSourceController());
 
-        public static DataSourceController CreateDataSourceController()
-        {
-            return _dataSourcController ?? (_dataSourcController = new DataSourceController());
-        }
+        public static TargetManager CreateTrackManager() => _targetManager ?? (_targetManager = new TargetManager());
 
-        public static TargetManager CreateTrackManager()
-        {
-            return _targetManager ?? (_targetManager = new TargetManager());
-        }
-
-        public static ITargetDataProvider CreateTargetDataProvider()
-        {
-            return CreateTrackManager();
-        }
+        public static ITargetDataProvider CreateTargetDataProvider() => CreateTrackManager();
 
         public static ITargetManagerController CreateTargetManagerController()  //目标管理器控制器
-        {
-            return CreateTrackManager();
-        }
+            => CreateTrackManager();
 
         public  static IWaveGateDataProvider CreateWaveGateDataProvider()       //目标管理器数据源
-        {
-            return CreateWaveGateManager();
-        }
+            => CreateWaveGateManager();
 
-        private static WaveGateManager CreateWaveGateManager()
-        {
-            return _waveGateManager ?? (_waveGateManager = new WaveGateManager());
-        }   //返回WaveGateManager_Test类
+        private static WaveGateManager CreateWaveGateManager() => _waveGateManager ?? (_waveGateManager = new WaveGateManager());
 
-        public static IWaveGateController CreateWaveGateController()
-        {
-            return CreateWaveGateManager();
-        }   //波门操作借口，添加、删除
+        public static IWaveGateController CreateWaveGateController() => CreateWaveGateManager();
 
-        private static AntennaSectionSweepController CreateAntennaManager()
-        {
-            return _sectionSweepController ?? (_sectionSweepController = new AntennaSectionSweepController());
-        }
+        private static AntennaSectionSweepController CreateAntennaManager() => _sectionSweepController ?? (_sectionSweepController = new AntennaSectionSweepController());
 
-        public static IAntennaController CreateAntennaContoller()
-        {
-            return CreateAntennaManager();
-        }
+        public static IAntennaController CreateAntennaContoller() => CreateAntennaManager();
 
-        public static IAntennaDataProvider CreateAntennaDataProvider()
-        {
-            return CreateAntennaManager();
-        }
+        public static IAntennaDataProvider CreateAntennaDataProvider() => CreateAntennaManager();
 
-        public static AntennaLeaveAngleAreaSubject CreateAntennaLeaveAngleAreaSubject()
-        {
-            return _antennaLeaveAngleAreaSubject ?? (_antennaLeaveAngleAreaSubject = new AntennaLeaveAngleAreaSubject());
-        }
+        public static AntennaLeaveAngleAreaSubject CreateAntennaLeaveAngleAreaSubject() => _antennaLeaveAngleAreaSubject ?? (_antennaLeaveAngleAreaSubject = new AntennaLeaveAngleAreaSubject());
 
-        public static RotateDirection GetAntennaDirection()
-        {
-            return (CreateAntennaManager() as IAntennaDataProvider).GetAntennaDirection();
-        }
+        public static RotateDirection GetAntennaDirection() => (CreateAntennaManager() as IAntennaDataProvider).GetAntennaDirection();
 
-        public static ISweepModeSubject CreateSweepModeSubject()
-        {
-            return CreateAntennaManager();
-        }
+        public static ISweepModeSubject CreateSweepModeSubject() => CreateAntennaManager();
     }
 }

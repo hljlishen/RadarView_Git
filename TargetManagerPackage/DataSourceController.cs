@@ -1,17 +1,21 @@
-﻿using CycleDataDrivePackage;
+﻿using System;
+using CycleDataDrivePackage;
 
 namespace TargetManagerPackage
 {
     public class DataSourceController
     {
+        public const string DefaultRadarIpAndPort = "192.168.10.5:2005";
         private readonly AntennaSectionSweepController _antennaManager;
-        private readonly TargetManager _targetManager;
+        private readonly CycleDataMatrix _cycleDataMatrix;
+        private readonly RemoteTargetProcessorcommunicator _communicator;
         private ICycleDataSubject _cycleDataSubject;
 
         public DataSourceController()
         {
             _antennaManager = (AntennaSectionSweepController)TargetManagerFactory.CreateAntennaContoller();
-            _targetManager = (TargetManager)TargetManagerFactory.CreateTargetDataProvider();
+            _cycleDataMatrix = CycleDataMatrix.CreaCycleDataMatrix();
+            _communicator = RemoteTargetProcessorcommunicator.CreateCommunicator();
         }
 
         public void ConnectDataSource(string type, string source)
@@ -42,14 +46,15 @@ namespace TargetManagerPackage
                 case "UDP":
                     return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.Udp);
                 default:
-                    return CycleDataDriveFactory.CreateCycleDataSubject(ReaderType.Udp);    //，默认返回UDP
+                    throw new Exception("请求的数据源类型错误");    //错误
             }
         }
 
         private void DestroyOldCycleDataSubject()   //废除之前的数据源对象
         {
-            _cycleDataSubject?.UnregisterObserver(_targetManager);          //注销观察者
+            _cycleDataSubject?.UnregisterObserver(_cycleDataMatrix);          //注销观察者
             _cycleDataSubject?.UnregisterObserver(_antennaManager);        //注销观察者
+            _cycleDataSubject?.UnregisterObserver(_communicator);
             _cycleDataSubject?.Dispose();    //销毁对象
         }
 
@@ -57,9 +62,13 @@ namespace TargetManagerPackage
         {
             _cycleDataSubject = GetCycleDataSubject(type);       //获取新的周期数据对象
 
-            _targetManager.ConnectDataSource(_cycleDataSubject);      //注册观察者
-            _antennaManager.ConnectDataSource(_cycleDataSubject);     //注册观察者
+            _cycleDataMatrix.Clear();
+            _cycleDataSubject.RegisterObserver(_cycleDataMatrix);
+            TargetManagerFactory.CreateTrackManager().InitializeSectors();  //删除所有目标
+            _cycleDataSubject.RegisterObserver(_antennaManager);
             _cycleDataSubject.RebindSource(source);                  //绑定数据源
+            _cycleDataSubject.RegisterObserver(RemoteTargetProcessorcommunicator.CreateCommunicator());
+            RemoteTargetProcessorcommunicator.StartReceiveData();
         }
 
         private void StartCycleDataSubject()    //数据源开始读取数据

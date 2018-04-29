@@ -23,10 +23,17 @@ namespace TargetManagerPackage
             //服务端发送信息 需要1个IP地址和端口号
             IPAddress ipaddress = IPAddress.Parse(LocalIpAddress);
             IPEndPoint endpoint = new IPEndPoint(ipaddress, int.Parse(LocalPort));
-            socketWatch.Bind(endpoint);
-            socketWatch.Listen(1);
-            Thread threadWatch = new Thread(WatchConnecting) { IsBackground = true };
-            threadWatch.Start();
+            try
+            {
+                socketWatch.Bind(endpoint);
+                socketWatch.Listen(1);
+                Thread threadWatch = new Thread(WatchConnecting) {IsBackground = true};
+                threadWatch.Start();
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         public void SendData(byte[] data) => _opticalDeviceSocket?.Send(data);
