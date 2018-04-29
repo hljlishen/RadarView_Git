@@ -186,6 +186,23 @@ namespace RadarForm
             }
         }
 
+        public static bool ParseFloat(TextBox tb, out float result)
+        {
+            tb.Focus();
+            tb.SelectAll();
+            try
+            {
+                result = float.Parse(tb.Text);
+                return true;
+            }
+            catch
+            {
+                result = float.MaxValue;
+                MessageBox.Show(@"输入的不是数字");
+                return false;
+            }
+        }
+
         private void btn_startUDP_Click_1(object sender, EventArgs e) => controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());
 
         private void btn_clockwise_Click(object sender, EventArgs e) => controller.AntennaSetRotateDirection(RotateDirection.ClockWise);
@@ -243,6 +260,12 @@ namespace RadarForm
         private void btn_largeSectionSweep_Click(object sender, EventArgs e)
         {
             controller.AntennaSetSectionSweepMode(100f, 260f);
+        }
+
+        private void 方位角调整ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            方位角调整 form = new 方位角调整();
+            form.ShowDialog();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace CycleDataDrivePackage
         private const int IntervalMax = 30;
         private const int IntervalMin = 1;
         private const int IntervalStep = 5;
+        public static float AzAdjustment { get; set; } = 30; //方位角度调整值
 
         public int Interval { get; set; } = 1;
 
@@ -58,8 +59,33 @@ namespace CycleDataDrivePackage
             lock (Obs)
             {
                 foreach (ICycleDataObserver ob in Obs)
-                    ob.NotifyNewCycleData(rawData);
+                    ob.NotifyNewCycleData(AdjustCycleDataAngle( rawData));
             }
+        }
+
+        private byte[] AdjustCycleDataAngle(byte[] cycleData)
+        {
+            float antennaAngle = AzimuthCell.GetAngleFromCycleData(cycleData);
+            antennaAngle = AzimuthCell.ReverAngleDirection(antennaAngle);
+            antennaAngle = AzimuthCell.StandardAngle(antennaAngle - AzAdjustment);
+            int angleI = (int)(antennaAngle * 65535 / 360);
+            byte azHigh = (byte)((angleI >> 8) & 0xff);
+            byte azLow = (byte)angleI;
+            List<byte> newData = new List<byte>(cycleData)
+            {
+                [28] = azHigh,
+                [29] = azLow,
+                [44] = azHigh,
+                [45] = azLow
+            };
+
+            return newData.ToArray();
+
+            cycleData[28] = azHigh;
+            cycleData[29] = azLow;
+            cycleData[44] = azHigh;
+            cycleData[45] = azLow;
+            return cycleData;
         }
 
         protected abstract void ReadData();
@@ -93,7 +119,6 @@ namespace CycleDataDrivePackage
         {
             StopReading();
             ReadDatathread.Abort();
-            //ReadDatathread = null;
         }
 
         public void RebindSource(string source) => Source = source;

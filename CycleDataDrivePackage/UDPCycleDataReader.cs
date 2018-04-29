@@ -21,7 +21,12 @@ namespace CycleDataDrivePackage
         {
             base.NotifyAllObservers(rawData);
             //_recorder.RecordBytes(rawData, 0, rawData.Length);
-            Console.WriteLine(123);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            _recorder.Dispose();
         }
     }
 }

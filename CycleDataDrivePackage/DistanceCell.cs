@@ -61,12 +61,7 @@ namespace CycleDataDrivePackage
         private static readonly int differAmLength = 4;      //幅度长度4字节
         private static readonly int speedLength = 2;         //速度长度1字节
         private static readonly int elSignLength = 2;        //俯仰角符号2字节
-        private static readonly int TotalLength = DistanceLength + sumAmLength + differAmLength + speedLength  + HeadLength + elSignLength; //距离单元总长度
-
-        public static int CellLength()
-        {
-            return TotalLength;
-        }
+        public static readonly int Length = DistanceLength + sumAmLength + differAmLength + speedLength  + HeadLength + elSignLength; //距离单元总长度
 
         public DistanceCell(byte[] data, int pos)
         {
@@ -101,7 +96,6 @@ namespace CycleDataDrivePackage
             }
 
             el += 15;
-            //System.Console.WriteLine(el.ToString(CultureInfo.InvariantCulture));
         }
 
         public int Distance => (int)( Resolution * index);

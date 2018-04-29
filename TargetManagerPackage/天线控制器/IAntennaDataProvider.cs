@@ -93,7 +93,7 @@ namespace TargetManagerPackage
         private void UpdateAntennaAngle(byte[] rawData)
         {
             var azCell = new AzimuthCell(rawData);
-            azCell.Angle = ReverAngleDirection(azCell.Angle);
+            //azCell.Angle = ReverAngleDirection(azCell.Angle);
             AntennaPreviousAngle = AntennaCurrentAngle;
 
             AntennaCurrentAngle = azCell.GetAngle();  //更新天线角度
@@ -102,12 +102,6 @@ namespace TargetManagerPackage
         public static float ReverAngleDirection(float angle)
         {
             float rAngle = 360f - angle;
-
-            //rAngle -= 252f;     //矫正0方位
-
-            //if (rAngle < 0)
-            //    rAngle += 360;
-            //rAngle %= 360;
             rAngle = PolarCoordinate.StandardAngle(rAngle);
 
             return rAngle;

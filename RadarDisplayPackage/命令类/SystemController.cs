@@ -149,5 +149,9 @@ namespace RadarDisplayPackage
 
         //public void RefreshOverViewDisplayer
         public void SwitchDotSource(bool dotSource) => new TargetManagmentSwitchDotSourceCommand(dotSource).Execute();
+
+        public float GetAngleAdjustment() => CycleDataReader.AzAdjustment;
+
+        public float SetAngleAdjustment(float angleAdjust) => CycleDataReader.AzAdjustment = angleAdjust;
     }
 }

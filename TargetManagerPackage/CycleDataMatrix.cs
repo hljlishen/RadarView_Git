@@ -40,13 +40,12 @@ namespace TargetManagerPackage
 
         private bool ShouldSaveData(AzimuthCell data)
         {
-            bool isPreviousDataNull = _matrix[_currentMatrixIndex] == null;
-            bool isAngleNearPreviousData ;
+            if (data.DisCells.Count == 0)   //没有距离单元格，直接返回false
+                return false;
 
-            if (!isPreviousDataNull)
-                isAngleNearPreviousData = Math.Abs(data.Angle - _matrix[_currentMatrixIndex].Angle) < 0.175780;
-            else
-                isAngleNearPreviousData = false;
+            bool isPreviousDataNull = _matrix[_currentMatrixIndex] == null;
+
+            var isAngleNearPreviousData = !isPreviousDataNull && Math.Abs(data.Angle - _matrix[_currentMatrixIndex].Angle) < 0.175780;
 
             return !isAngleNearPreviousData;
         }
@@ -54,9 +53,7 @@ namespace TargetManagerPackage
         public AzimuthCell[] AzimuthCellsInAngleArea(AngleArea area) //返回角度在begin和end之间的周期数据集合
         {
             //没有保存过周期数据，返回一个0长度数组
-            if (_matrix.Length == 0)
-                return new AzimuthCell[0];
-            return _matrix.Where(cell => cell != null).Where(cell => area.IsAngleInArea(cell.Angle)).ToArray();
+            return _matrix.Length == 0 ? new AzimuthCell[0] : _matrix.Where(cell => cell != null).Where(cell => area.IsAngleInArea(cell.Angle)).ToArray();
         }
 
         public AzimuthCell[] GetAzimuthCellsInSectorSpan(Sector previous, Sector next)
@@ -98,7 +95,7 @@ namespace TargetManagerPackage
         public void NotifyNewCycleData(byte[] rawData)
         {
             AzimuthCell cell = new AzimuthCell(rawData);
-            cell.Angle = AntennaDataManager.ReverAngleDirection(cell.Angle);
+            //cell.Angle = AntennaDataManager.ReverAngleDirection(cell.Angle);
             SaveAzimuthCell(cell);
         }
     }

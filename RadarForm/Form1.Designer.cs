@@ -86,6 +86,7 @@
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
@@ -734,7 +735,8 @@
             // 
             this.系统ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.检波门限ToolStripMenuItem,
-            this.警戒区寿命ToolStripMenuItem});
+            this.警戒区寿命ToolStripMenuItem,
+            this.方位角调整ToolStripMenuItem});
             this.系统ToolStripMenuItem.Name = "系统ToolStripMenuItem";
             this.系统ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.系统ToolStripMenuItem.Text = "系统";
@@ -752,6 +754,13 @@
             this.警戒区寿命ToolStripMenuItem.Name = "警戒区寿命ToolStripMenuItem";
             this.警戒区寿命ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.警戒区寿命ToolStripMenuItem.Text = "警戒区寿命";
+            // 
+            // 方位角调整ToolStripMenuItem
+            // 
+            this.方位角调整ToolStripMenuItem.Name = "方位角调整ToolStripMenuItem";
+            this.方位角调整ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.方位角调整ToolStripMenuItem.Text = "方位角调整";
+            this.方位角调整ToolStripMenuItem.Click += new System.EventHandler(this.方位角调整ToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
             // 
@@ -871,6 +880,7 @@
         private System.Windows.Forms.ToolStripMenuItem 凝聚点击ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btn_largeSectionSweep;
+        private System.Windows.Forms.ToolStripMenuItem 方位角调整ToolStripMenuItem;
     }
 }
 
