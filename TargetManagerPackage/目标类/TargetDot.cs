@@ -10,6 +10,8 @@ namespace TargetManagerPackage
         protected static int DisBytes = 2;
         public static int TotalBytes = AzBytes + ElBytes + DisBytes;
 
+        public bool IsClotDot { get; set; } = false;
+
         //int am; //回波幅度值
         public TargetDot()
         {

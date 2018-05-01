@@ -45,5 +45,10 @@ namespace TargetManagerPackage
 
             NotifyUpdateSectorDot(center);  //通知更新该扇区的目标点视图
         }
+
+        protected override List<TargetDot> ClotAzCells(List<AzimuthCell> azCells)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace RadarDisplayPackage
         protected TrackDisplayer displayer;
         protected List<TargetView>[] dots;
         protected List<TargetView>[] tracks;
+        protected static object _locker =  new object();
 
         protected TargetViewManager(TrackDisplayer displayer)
         {

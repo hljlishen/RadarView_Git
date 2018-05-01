@@ -67,6 +67,7 @@
             this.tb_filePath = new System.Windows.Forms.TextBox();
             this.btn_start = new System.Windows.Forms.Button();
             this.btn_browse = new System.Windows.Forms.Button();
+            this.btn_resume = new System.Windows.Forms.Button();
             this.btn_pause = new System.Windows.Forms.Button();
             this.btn_slower = new System.Windows.Forms.Button();
             this.btn_faster = new System.Windows.Forms.Button();
@@ -88,6 +89,8 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.原始视频ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -511,6 +514,7 @@
             this.groupBox6.Controls.Add(this.tb_filePath);
             this.groupBox6.Controls.Add(this.btn_start);
             this.groupBox6.Controls.Add(this.btn_browse);
+            this.groupBox6.Controls.Add(this.btn_resume);
             this.groupBox6.Controls.Add(this.btn_pause);
             this.groupBox6.Controls.Add(this.btn_slower);
             this.groupBox6.Controls.Add(this.btn_faster);
@@ -529,12 +533,12 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
-            this.tb_filePath.Text = "C:\\RadarData\\2018-04-26 20-04-01!";
+            this.tb_filePath.Text = "D:\\软件项目开发\\2018-04-28 13-37-02扇扫";
             // 
             // btn_start
             // 
             this.btn_start.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_start.Location = new System.Drawing.Point(224, 147);
+            this.btn_start.Location = new System.Drawing.Point(224, 164);
             this.btn_start.Name = "btn_start";
             this.btn_start.Size = new System.Drawing.Size(138, 23);
             this.btn_start.TabIndex = 3;
@@ -553,15 +557,27 @@
             this.btn_browse.UseVisualStyleBackColor = true;
             this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
             // 
+            // btn_resume
+            // 
+            this.btn_resume.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_resume.Location = new System.Drawing.Point(224, 126);
+            this.btn_resume.Name = "btn_resume";
+            this.btn_resume.Size = new System.Drawing.Size(138, 23);
+            this.btn_resume.TabIndex = 3;
+            this.btn_resume.Text = "恢复";
+            this.btn_resume.UseVisualStyleBackColor = true;
+            this.btn_resume.Click += new System.EventHandler(this.btn_resume_Click);
+            // 
             // btn_pause
             // 
             this.btn_pause.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_pause.Location = new System.Drawing.Point(46, 147);
+            this.btn_pause.Location = new System.Drawing.Point(46, 126);
             this.btn_pause.Name = "btn_pause";
             this.btn_pause.Size = new System.Drawing.Size(138, 23);
             this.btn_pause.TabIndex = 3;
             this.btn_pause.Text = "暂停";
             this.btn_pause.UseVisualStyleBackColor = true;
+            this.btn_pause.Click += new System.EventHandler(this.btn_pause_Click);
             // 
             // btn_slower
             // 
@@ -690,7 +706,9 @@
             this.航机显示ToolStripMenuItem,
             this.toolStripSeparator1,
             this.原始视频ToolStripMenuItem,
-            this.凝聚点击ToolStripMenuItem});
+            this.凝聚点击ToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.原始视频ToolStripMenuItem1});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
             this.视图ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
@@ -767,6 +785,21 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            // 
+            // 原始视频ToolStripMenuItem1
+            // 
+            this.原始视频ToolStripMenuItem1.Checked = true;
+            this.原始视频ToolStripMenuItem1.CheckOnClick = true;
+            this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(202, 26);
+            this.原始视频ToolStripMenuItem1.Text = "原始视频";
+            this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -881,6 +914,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btn_largeSectionSweep;
         private System.Windows.Forms.ToolStripMenuItem 方位角调整ToolStripMenuItem;
+        private System.Windows.Forms.Button btn_resume;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem 原始视频ToolStripMenuItem1;
     }
 }
 

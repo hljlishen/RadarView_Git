@@ -14,7 +14,7 @@ namespace RadarDisplayPackage
         //PathGeometry trackTag;
         private readonly Point2F position;                   //dot的屏幕坐标
         private readonly Rect activeRect;    //激活区域，鼠标点击到这个区域时，激活（选中）该目标
-        private const int activeRectRadius = 5; //激活区域半径
+        private const int activeRectRadius = 3; //激活区域半径
         protected int targetViewRadius = 4;           //目标圆点的半径
         protected Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush targetViewBrush;
         protected ITargetManagerController targetController;    //目标控制器

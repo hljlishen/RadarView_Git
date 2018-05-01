@@ -27,25 +27,35 @@ namespace TargetManagerPackage
         //protected ITargetManagerController TargetManagerController;
         protected bool _isSectionSweeping;
         private RotateDirection _preRotateDirection = RotateDirection.ClockWise;     //前一个角度计算出的天线方向
+        private static object locker = new object();
 
         protected AntennaDataManager() => AntennaObservers = new List<IAntennaObserver>();
 
         public void RegisterObserver(IAntennaObserver ob)
         {
-            if (ob != null && !AntennaObservers.Contains(ob))
-                AntennaObservers.Add(ob);
+            lock (locker)
+            {
+                if (ob != null && !AntennaObservers.Contains(ob))
+                    AntennaObservers.Add(ob);
+            }
         }
 
         public void UnregisterObserver(IAntennaObserver ob)
         {
-            if (ob != null && AntennaObservers.Contains(ob))
-                AntennaObservers.Remove(ob);
+            lock (locker)
+            {
+                if (ob != null && AntennaObservers.Contains(ob))
+                    AntennaObservers.Remove(ob);
+            }
         }
 
         public void NotifyAntennaDataChange()
         {
-            foreach (IAntennaObserver ob in AntennaObservers)
-                ob.AntennaNotifyChange();
+            lock (locker)
+            {
+                foreach (IAntennaObserver ob in AntennaObservers)
+                    ob.AntennaNotifyChange();
+            }
         }
 
         public abstract float GetSweepBeginAngle();
@@ -93,7 +103,6 @@ namespace TargetManagerPackage
         private void UpdateAntennaAngle(byte[] rawData)
         {
             var azCell = new AzimuthCell(rawData);
-            //azCell.Angle = ReverAngleDirection(azCell.Angle);
             AntennaPreviousAngle = AntennaCurrentAngle;
 
             AntennaCurrentAngle = azCell.GetAngle();  //更新天线角度

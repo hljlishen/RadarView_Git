@@ -7,7 +7,7 @@ namespace CycleDataDrivePackage
     internal class BinFileReader : CycleDataReader
     {
         private BinaryReader _reader;
-        private int _readLength = 1472 * 4;
+        private int _readLength = 1472;
 
         public BinFileReader()
         {

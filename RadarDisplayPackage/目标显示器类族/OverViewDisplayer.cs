@@ -23,7 +23,7 @@ namespace RadarDisplayPackage
     {
         protected float beginAngle;    //视图正上方对应的角度
         internal OverViewDisplayerState viewState;  //视图状态：放大、天线控制、自动、半自动
-        const int MaximumZoom = 20;  //放大倍数的最大值，超过这个值不处理放大操作
+        const int MaximumZoom = 40;  //放大倍数的最大值，超过这个值不处理放大操作
         GraphicWaveGateViewManager waveGateViewManager;   //当前存在的波门视图
         SweepSectionManager sweepSectionManager;            //扫描区域视图管理器
         protected List<IControlStateObserver> obs;

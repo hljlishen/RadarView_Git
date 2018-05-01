@@ -15,11 +15,18 @@ namespace RadarDisplayPackage
         public GraphicTargetDotView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs)
             : base(target, rt, factory, cs)
         {
-            targetViewRadius = 2;
-
-            float redColorValue = CalRedColorValue(target.amValue);
-            float blueColorValue = CalBlueColorValue(target.amValue);
-            targetViewBrush = canvas.CreateSolidColorBrush(new ColorF(redColorValue, 0.184f, blueColorValue));
+            if (!((TargetDot) target).IsClotDot)
+            {
+                targetViewRadius = 2;
+                float redColorValue = CalRedColorValue(target.amValue);
+                float blueColorValue = CalBlueColorValue(target.amValue);
+                targetViewBrush = canvas.CreateSolidColorBrush(new ColorF(redColorValue, 0.184f, blueColorValue));
+            }
+           else
+            {
+                targetViewBrush = canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(0, 0, 255)); //绿色
+                targetViewRadius = 4;
+            }
         }
 
         private float CalRedColorValue(float am)

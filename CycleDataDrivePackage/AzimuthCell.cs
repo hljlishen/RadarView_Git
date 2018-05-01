@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace CycleDataDrivePackage
 {
-    public class AzimuthCell : IDisposable
+    public class AzimuthCell : IDisposable, IComparable
     {
-        public Hashtable DisCells;
+        public Dictionary<int, DistanceCell> DisCells;
         public const int HeadLength = 28; //包头28字节
         public const int TailLength = 2; //包尾2字节
         public const int DistanceCellCountLength = 2; //距离单元个数2字节
@@ -18,22 +19,28 @@ namespace CycleDataDrivePackage
         private const int DistanceCellsDataStartPosition = 48;
         public AzimuthCell(byte[] data)
         {
-            DisCells = Hashtable.Synchronized(new Hashtable());
+            DisCells = new Dictionary<int, DistanceCell>();
 
-            Angle = GetAngleFromCycleData(data);
+            int angleI;
+            (Angle, angleI) = GetAngleFromCycleData(data);
 
             int cellCount = DistanceCell.MakeInt(data, HeadLength + AzimuthLength, DistanceCellCountLength);
 
             int pos = DistanceCellsDataStartPosition;
             for(int i = 0; i < cellCount; i++)
             {
-                var cell = new DistanceCell(data, pos);
+                var cell = new DistanceCell(data, pos){az = Angle, azInt = angleI};
 
-                if (CycleDataFilter.Pass(cell) && !DisCells.Contains(cell.index))     //滤波
+                if (CycleDataFilter.Pass(cell) && !DisCells.ContainsKey(cell.index))     //滤波
                     DisCells.Add(cell.index, cell);
 
                 pos += DistanceCell.Length;
             }
+        }
+
+        public AzimuthCell()
+        {
+            DisCells = new Dictionary<int, DistanceCell>();
         }
 
         private static float CalAngle(int angleIntFromCycleData)
@@ -46,17 +53,18 @@ namespace CycleDataDrivePackage
 
         public void Dispose() => DisCells.Clear();
 
-        public static float GetAngleFromCycleData(byte[] data)
+        public static (float, int) GetAngleFromCycleData(byte[] data)
         {
             int angleI = DistanceCell.MakeInt(data, HeadLength, AzimuthLength);
-            return CalAngle(angleI);
+            return (CalAngle(angleI), angleI);
         }
 
         public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
         {
-            if (angle < 0)
+            while (angle < 0)
                 angle += 360;
-            angle %= 360;
+            if (angle > 360) 
+                angle %= 360;
 
             return angle;
         }
@@ -67,6 +75,19 @@ namespace CycleDataDrivePackage
             rAngle = StandardAngle(rAngle);
 
             return rAngle;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            AzimuthCell otherCell = (AzimuthCell) obj;
+            if (Angle - otherCell.Angle < 0.000001f)
+                return 0;
+            if (Angle > otherCell.Angle)
+                return 1;
+            else
+                return -1;
         }
     }
 }

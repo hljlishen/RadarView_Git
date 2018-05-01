@@ -2,8 +2,9 @@
 
 namespace TargetManagerPackage
 {
-    abstract class SectorProcessor : ITargetSubject
+    public class SectorProcessor : ITargetSubject
     {
+        private static object _locker = new object();
         protected SectorProcessor()
         {
             Observers = new List<ITargetObserver>();
@@ -30,25 +31,31 @@ namespace TargetManagerPackage
 
         protected void NotifyUpdateSectorDot(Sector s)
         {
-            foreach (ITargetObserver ob in Observers)
-                ob.NotifyUpdateSectorDot(s.newDots, s.index);
+            lock (_locker)
+            {
+                foreach (ITargetObserver ob in Observers)
+                    ob.NotifyUpdateSectorDot(s.newDots, s.index);
+            }
         }
 
         protected void NotifyUpdateSectorTrack(Sector s)
         {
+            lock(_locker)
             foreach (ITargetObserver ob in Observers)
                 ob.NotifyUpdateSectorTrack(s.tracks, s.index);
         }
 
         protected void NotifyDeleteSectorTrack(Sector s)
         {
-            foreach (ITargetObserver ob in Observers)
+            lock (_locker)
+                foreach (ITargetObserver ob in Observers)
                 ob.NotifyUpdateSectorTrack(null, s.index);   //传递null,表示没有航迹需要显示
         }
 
         protected void NotifyDeleteSectorDot(Sector s)
         {
-            foreach (ITargetObserver ob in Observers)
+            lock (_locker)
+                foreach (ITargetObserver ob in Observers)
                 ob.NotifyUpdateSectorDot(null, s.index);   //传递null,表示没有航迹需要显示
         }
     }

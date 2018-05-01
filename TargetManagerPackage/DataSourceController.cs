@@ -27,15 +27,13 @@ namespace TargetManagerPackage
             StartCycleDataSubject();
         }
 
-        public void SpeedUp()
-        {
-            _cycleDataSubject.SpeedUp();
-        }
+        public void SpeedUp() => _cycleDataSubject.SpeedUp();
 
-        public void SpeedDown()
-        {
-            _cycleDataSubject.SpeedDown();
-        }
+        public void SpeedDown() => _cycleDataSubject.SpeedDown();
+
+        public void Pause() => _cycleDataSubject.Pause();
+
+        public void Resume() => _cycleDataSubject.Resume();
 
         private static ICycleDataSubject GetCycleDataSubject(string type)
         {

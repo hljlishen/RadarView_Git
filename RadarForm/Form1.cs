@@ -217,15 +217,9 @@ namespace RadarForm
 
         private void btn_Rpm10_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm10);
 
-        private void btn_slower_Click(object sender, EventArgs e)
-        {
-            controller.DataSourceSpeedDown();
-        }
+        private void btn_slower_Click(object sender, EventArgs e) => controller.DataSourceSpeedDown();
 
-        private void btn_faster_Click(object sender, EventArgs e)
-        {
-            controller.DataSourceSpeedUp();
-        }
+        private void btn_faster_Click(object sender, EventArgs e) => controller.DataSourceSpeedUp();
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -257,15 +251,18 @@ namespace RadarForm
 
         }
 
-        private void btn_largeSectionSweep_Click(object sender, EventArgs e)
-        {
-            controller.AntennaSetSectionSweepMode(100f, 260f);
-        }
+        private void btn_largeSectionSweep_Click(object sender, EventArgs e) => controller.AntennaSetSectionSweepMode(100f, 260f);
 
         private void 方位角调整ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             方位角调整 form = new 方位角调整();
             form.ShowDialog();
         }
+
+        private void btn_pause_Click(object sender, EventArgs e) => controller.DataSourcePause();
+
+        private void btn_resume_Click(object sender, EventArgs e) => controller.DataSourceResume();
+
+        private void 原始视频ToolStripMenuItem1_Click(object sender, EventArgs e) => Clotter.ShouldShowOriginalVideo = 原始视频ToolStripMenuItem1.Checked;
     }
 }

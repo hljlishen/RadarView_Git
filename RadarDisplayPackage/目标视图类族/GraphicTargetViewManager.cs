@@ -38,16 +38,23 @@ namespace RadarDisplayPackage
         private void DisplayControl_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left) return;
-            lock (this)
+            bool stopFindingDot = false;
+            lock (_locker)
             {
                 //鼠标点击事件转发给每个视图对象处理,倒叙遍历，因为遍历过程中会有航迹的删除和添加
                 for (int i = dots.Length - 1; i >= 0; i--)
                 {
                     for (int j = dots[i].Count - 1; j >= 0; j--)
                     {
-                        if (dots[i][j].HandleMouseClick(e.Location))    //点击位置附近有多个目标时，只选取一个目标
+                        if (dots[i][j].HandleMouseClick(e.Location)) //点击位置附近有多个目标时，只选取一个目标
+                        {
+                            stopFindingDot = true;
                             break;
+                        }  
                     }
+
+                    if (stopFindingDot)
+                        break;
                 }
 
                 for (int i = tracks.Length - 1; i >= 0; i--)
@@ -130,7 +137,7 @@ namespace RadarDisplayPackage
 
         private void DrawSector(int sectorIndex)
         {
-            lock (this)
+            lock (_locker)
             {
                 try
                 {
@@ -138,22 +145,19 @@ namespace RadarDisplayPackage
                     _sectorDrawer[sectorIndex].Clear();
 
                     //绘制目标点
-                    foreach (GraphicTargetView view in dots[sectorIndex])
-                    {
+                    foreach (var view in dots[sectorIndex])
                         view.DisplayTarget();
-                    }
 
                     //绘制目标航迹
-                    foreach (GraphicTargetView view in tracks[sectorIndex])
-                    {
+                    foreach (var view in tracks[sectorIndex])
                         view.DisplayTarget();
-                    }
 
                     _sectorDrawer[sectorIndex].EndDraw();
                 }
                 catch
                 {
                     //ignore
+                    MessageBox.Show(@"GraphicTargetViewManager.DrawSector错误");
                 }
             }
         }

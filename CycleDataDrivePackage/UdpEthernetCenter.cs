@@ -27,7 +27,7 @@ namespace CycleDataDrivePackage
             catch
             {
                 //ignored
-                MessageBox.Show("");
+                //MessageBox.Show("");
             }
         }
 

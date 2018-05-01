@@ -11,6 +11,7 @@ namespace TargetManagerPackage
         public Sector[] Sectors;                  //扇区数组
         private readonly DotViewDeleter _viewDeleter;     //目标删除器
         private readonly Clotter _clotter;                //凝聚器
+        private readonly Clotter _clotter47;
         private readonly TrackCorelator _trackCorelator;  //航迹相关器
         private DotCorelator _dotCorelator;               //自由点相关器
         private readonly FreeDotDeleter _freeDotDeleter;  //自由点删除器
@@ -37,7 +38,7 @@ namespace TargetManagerPackage
             opticalDeviceCommunicator = OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator();
 
             _clotter = new Clotter_Test();
-            //_clotter = new Clotter_3DClot();//凝聚器
+            _clotter47 = new FourSevenClotter();
 
             _trackCorelator = new TrackCorelatorV1();//航迹相关器
 
@@ -250,6 +251,7 @@ namespace TargetManagerPackage
             _dotCorelator.RegisterObserver(ob);
             _freeDotDeleter.RegisterObserver(ob);
             _viewDeleter.RegisterObserver(ob);
+            _clotter47.RegisterObserver(ob);
         }
 
         public void UnregisterObserver(ITargetObserver ob)
@@ -262,6 +264,7 @@ namespace TargetManagerPackage
             _dotCorelator.UnregisterObserver(ob);
             _freeDotDeleter.UnregisterObserver(ob);
             _viewDeleter.UnregisterObserver(ob);
+            _clotter47.UnregisterObserver(ob);
         }
 
         public void NotifyAllObservers(Target t, NotifyType type)    //通知观察者有目标发生了变化
@@ -305,47 +308,21 @@ namespace TargetManagerPackage
             {
                 //s的编号为index
                 Sector s = (Sector)o;
+
                 Sector s1 = NextSector(s);
                 _viewDeleter.DeleteViews(s1, false);
-                //s1 = NextSector(s1);
-                //viewDeleter.DeleteViews(s1, false);
-                //s1 = NextSector(s1);
-                //viewDeleter.DeleteViews(s1, false);
-                //s1 = NextSector(s1);
-                //viewDeleter.DeleteViews(s1, false);
 
                 //Sector tmp = PreviousSector(s);
                 Sector tmp = s;
 
                 //index - 1扇区点迹凝聚
-                AzimuthCell[] azCells = CycleDataMatrix.CreaCycleDataMatrix().GetAzimuthCellsInSectorSpan(PreviousSector(tmp), NextSector(tmp));//获取刚扫过的扇区所包含的方位单元数组
+                AzimuthCell[] azCells = CycleDataMatrix.CreaCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
                 Sector pre = PreviousSector(tmp);
                 Sector nex = NextSector(tmp);
-                _clotter.Clot(tmp, nex, pre, azCells);
-
-                //对s.index - 2的扇区进行相关
-                //tmp = PreviousSector(tmp);
-                //pre = PreviousSector(tmp);
-                //nex = NextSector(tmp);
-                //_trackCorelator.Corelate(tmp, nex, pre);
-
-                ////对s.index-3的扇区进行自由点相关
-                //tmp = PreviousSector(tmp);
-                //pre = PreviousSector(tmp);
-                //nex = NextSector(tmp);
-                //_dotCorelator.Corelate(tmp, nex, pre);
-
-                ////s.index - 4扇区，删除自由点
-                //tmp = PreviousSector(tmp);
-                //_freeDotDeleter.DeleteFreeDot(tmp);
-
-                //tmp = PreviousSector(tmp);
-                //viewDeleter.DeleteViews(tmp,false);
+                _clotter47.Clot(tmp, nex, pre, azCells);
 
                 foreach (var generator in trackGenerators)  //更新产生的航迹
-                {
                     generator.UpdateTrack(s);
-                }
             }
         }
 

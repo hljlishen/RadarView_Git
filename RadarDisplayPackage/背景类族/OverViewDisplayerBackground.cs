@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
@@ -14,6 +17,7 @@ namespace RadarDisplayPackage
         private readonly TextFormat rightTextFromation;
         private readonly TextFormat leftTextFromation;
         private readonly Brush textBrush;
+        private readonly int sectorCount;
 
         public override float Distance
         {
@@ -32,7 +36,8 @@ namespace RadarDisplayPackage
         {
             distanceCircleBrush = canvas.CreateSolidColorBrush(new ColorF(0, 255, 0));  //绿色
             angleLineBrush = canvas.CreateSolidColorBrush(new ColorF(128, 138, 135));   //冷灰
-
+            sectorCount = TargetManagerFactory.CreateTargetDataProvider().GetSectorCount();
+            //angleLines = CalSectorBordAngles(sectorCount);
             //初始化四个距离分划线
             ellipse1 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 2, csp.CoordinateArea.Height / 2);
             ellipse2 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width * 3 / 8, csp.CoordinateArea.Height * 3 / 8);
@@ -46,6 +51,18 @@ namespace RadarDisplayPackage
             leftTextFromation = dw.CreateTextFormat("Berlin Sans FB Demi", 15);
             leftTextFromation.TextAlignment = TextAlignment.Trailing;
             textBrush = canvas.CreateSolidColorBrush(new ColorF(new ColorI(128, 138, 135)));
+        }
+
+        private float[] CalSectorBordAngles(int sectorCount)
+        {
+            float step = ((float)360) / sectorCount;
+            List<float> ret = new List<float>();
+            for (int i = 0; i < sectorCount; i++)
+            {
+                ret.Add(step * i);
+            }
+
+            return ret.ToArray();
         }
 
         public override void Draw( )

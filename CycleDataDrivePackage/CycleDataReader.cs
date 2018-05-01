@@ -65,7 +65,7 @@ namespace CycleDataDrivePackage
 
         private byte[] AdjustCycleDataAngle(byte[] cycleData)
         {
-            float antennaAngle = AzimuthCell.GetAngleFromCycleData(cycleData);
+            (float antennaAngle, int angleInt) = AzimuthCell.GetAngleFromCycleData(cycleData);
             antennaAngle = AzimuthCell.ReverAngleDirection(antennaAngle);
             antennaAngle = AzimuthCell.StandardAngle(antennaAngle - AzAdjustment);
             int angleI = (int)(antennaAngle * 65535 / 360);
@@ -80,12 +80,6 @@ namespace CycleDataDrivePackage
             };
 
             return newData.ToArray();
-
-            cycleData[28] = azHigh;
-            cycleData[29] = azLow;
-            cycleData[44] = azHigh;
-            cycleData[45] = azLow;
-            return cycleData;
         }
 
         protected abstract void ReadData();
@@ -105,7 +99,7 @@ namespace CycleDataDrivePackage
 
         public void Pause()
         {
-            if(ReadDatathread.ThreadState == ThreadState.Running)
+            //if(ReadDatathread.ThreadState == ThreadState.Running)
                 ReadDatathread.Suspend();
         }
 

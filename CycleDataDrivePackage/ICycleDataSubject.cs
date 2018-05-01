@@ -15,5 +15,9 @@ namespace CycleDataDrivePackage
         void SpeedUp();
 
         void SpeedDown();
+
+        void Pause();
+
+        void Resume();
     }
 }

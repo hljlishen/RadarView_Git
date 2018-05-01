@@ -14,55 +14,60 @@ namespace TargetManagerPackage
         }
         public override void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
         {
-            List<int> keys = new List<int>();
+            //List<int> keys = new List<int>();
 
-            MoveNewDotToOldDot(center);
+            //MoveNewDotToOldDot(center);
 
-            foreach (AzimuthCell azCell in cells)
-            {
-                keys.Clear();
-                foreach (object index in ranges.Keys)
-                {
-                    keys.Add((int)index);
-                }
-                foreach (int index in keys)   //先判断已有的区域是否延伸
-                {
-                    List<DistanceCell> tmp = (List<DistanceCell>)ranges[index];
-                    if (azCell.DisCells.Contains(index))
-                    {
-                        tmp.Add((DistanceCell)azCell.DisCells[index]);;
-                    }
-                    else
-                    {
-                        tmp.Add(null);
-                        if (IsRangeEnd(tmp))
-                        {
-                            //用均值生成点迹
-                            TargetDot dot = GetDot(tmp);
+            //foreach (AzimuthCell azCell in cells)
+            //{
+            //    keys.Clear();
+            //    foreach (object index in ranges.Keys)
+            //    {
+            //        keys.Add((int)index);
+            //    }
+            //    foreach (int index in keys)   //先判断已有的区域是否延伸
+            //    {
+            //        List<DistanceCell> tmp = (List<DistanceCell>)ranges[index];
+            //        if (azCell.DisCells.Contains(index))
+            //        {
+            //            tmp.Add((DistanceCell)azCell.DisCells[index]);;
+            //        }
+            //        else
+            //        {
+            //            tmp.Add(null);
+            //            if (IsRangeEnd(tmp))
+            //            {
+            //                //用均值生成点迹
+            //                TargetDot dot = GetDot(tmp);
 
-                            ranges.Remove(index);
-                            center.AddNewDot(dot);
-                        }
-                        else
-                        {
-                            //区域未达到最小长度
-                            //ranges.Remove(index);
-                        }
-                    }
-                }
-                foreach (DistanceCell disCell in azCell.DisCells.Values)
-                {
-                    List<DistanceCell> dis = new List<DistanceCell>();
-                    dis.Add(disCell);
-                    try
-                    {
-                        ranges.Add(disCell.index, dis);
-                    }
-                    catch { }
-                }
-            }
+            //                ranges.Remove(index);
+            //                center.AddNewDot(dot);
+            //            }
+            //            else
+            //            {
+            //                //区域未达到最小长度
+            //                //ranges.Remove(index);
+            //            }
+            //        }
+            //    }
+            //    foreach (DistanceCell disCell in azCell.DisCells.Values)
+            //    {
+            //        List<DistanceCell> dis = new List<DistanceCell>();
+            //        dis.Add(disCell);
+            //        try
+            //        {
+            //            ranges.Add(disCell.index, dis);
+            //        }
+            //        catch { }
+            //    }
+            //}
 
-            NotifyUpdateSectorDot(center);
+            //NotifyUpdateSectorDot(center);
+        }
+
+        protected override List<TargetDot> ClotAzCells(List<AzimuthCell> azCells)
+        {
+            throw new System.NotImplementedException();
         }
 
         protected bool IsRangeEnd(List<DistanceCell> ls)
@@ -97,7 +102,7 @@ namespace TargetManagerPackage
             {
                 if (dis != null)
                 {
-                    azSum += dis.azIndex;
+                    //azSum += dis.azIndex;
                     disSum += dis.Distance;
                     elSum += dis.el;
                     speedSum += dis.speed;

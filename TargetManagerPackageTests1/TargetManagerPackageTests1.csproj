@@ -65,6 +65,8 @@
     <Compile Include="PolarCoordinateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemCommunicatorTests.cs" />
+    <Compile Include="TargetAreaEdgeTests.cs" />
+    <Compile Include="TargetAreaTests.cs" />
     <Compile Include="X68CommandTests.cs" />
     <Compile Include="X80DataTests.cs" />
     <Compile Include="天线控制器\AntennaManagerAngleAreaTests.cs" />
@@ -77,6 +79,10 @@
     <ProjectReference Include="..\AntennaControlPackage\AntennaControlPackage.csproj">
       <Project>{90918255-2F33-4088-B99D-A6E83FDB72C3}</Project>
       <Name>AntennaControlPackage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CycleDataDrivePackage\CycleDataDrivePackage.csproj">
+      <Project>{5D92BFAB-EAE5-4488-A72B-6F1AFA31E36C}</Project>
+      <Name>CycleDataDrivePackage</Name>
     </ProjectReference>
     <ProjectReference Include="..\TargetManagerPackage\TargetManagerPackage.csproj">
       <Project>{D47A42CB-9152-4CCC-A39E-38EBFE4F1BB0}</Project>
