@@ -68,15 +68,15 @@ namespace TargetManagerPackage
             float begin;
             float end;
 
-            if (Math.Abs(s2.index - s1.index) > 2)   //大于2说明三个扇区跨越360度
+            if (Math.Abs(s2.Index - s1.Index) > 2)   //大于2说明三个扇区跨越360度
             {
-                begin = (s1.index > s2.index) ? s1.BeginAngle : s2.BeginAngle;
-                end = (s1.index < s2.index) ? s1.EndAngle : s2.EndAngle;
+                begin = (s1.Index > s2.Index) ? s1.BeginAngle : s2.BeginAngle;
+                end = (s1.Index < s2.Index) ? s1.EndAngle : s2.EndAngle;
             }
             else
             {
-                begin = (s1.index < s2.index) ? s1.BeginAngle : s2.BeginAngle;
-                end = (s1.index > s2.index) ? s1.EndAngle : s2.EndAngle;
+                begin = (s1.Index < s2.Index) ? s1.BeginAngle : s2.BeginAngle;
+                end = (s1.Index > s2.Index) ? s1.EndAngle : s2.EndAngle;
             }
 
             return new AngleArea(begin, end);

@@ -1,13 +1,8 @@
-﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
+﻿
+using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using TargetManagerPackage;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
-using System.Drawing;
-using System.Collections.Generic;
-using Microsoft.WindowsAPICodePack.DirectX.WindowsImagingComponent;
 
 namespace RadarDisplayPackage
 {
@@ -28,10 +23,10 @@ namespace RadarDisplayPackage
         private readonly SweepSectionManager _sweepSectionManager;            //扫描区域视图管理器
         protected List<IControlStateObserver> Obs;
         private readonly MouseCoordinateDisplayer _mouseCoordinateDisplayer;
-        private UpScroller _upScroller;
-        private RightScroller _rightScroller;
-        private DownScroller _downScroller;
-        private LeftScroller _leftScroller;
+        private readonly UpScroller _upScroller;
+        private readonly RightScroller _rightScroller;
+        private readonly DownScroller _downScroller;
+        private readonly LeftScroller _leftScroller;
 
         public OverViewDisplayer(Panel displayerContain) : base(displayerContain)
         {
@@ -99,10 +94,10 @@ namespace RadarDisplayPackage
 
         public void OffsetDisplayerToPoint(Point2F position)  //偏心显示
         {
-            float x = position.X - coordinateSystem.OriginalPoint.X;
-            float y = position.Y - coordinateSystem.OriginalPoint.Y;
-            Rect r = CoordinateSystem.MoveRect(coordinateSystem.CoordinateArea, new Point2F(x, y));
-            SetCoordinateArea(r);
+            //float x = position.X - coordinateSystem.OriginalPoint.X;
+            //float y = position.Y - coordinateSystem.OriginalPoint.Y;
+            //Rect r = CoordinateSystem.MoveRect(coordinateSystem.CoordinateArea, new Point2F(x, y));
+            //SetCoordinateArea(r);
         }
 
         public void SetCoordinateArea(Rect area)   //重新设置坐标系的位置，并根据新位置生成新的背景，天线，目标图层
@@ -127,9 +122,8 @@ namespace RadarDisplayPackage
             ovdb.Distance = distance;   //设置距离量程
 
             //创建角度分划线虚线风格
-            StrokeStyleProperties ssp = new StrokeStyleProperties();
-            ssp.DashStyle = DashStyle.DashDot;
-            
+            StrokeStyleProperties ssp = new StrokeStyleProperties {DashStyle = DashStyle.DashDot};
+
             ovdb.AngleLineStrokeStyle = Factory.CreateStrokeStyle(ssp);
             
             return ovdb;
@@ -203,10 +197,7 @@ namespace RadarDisplayPackage
             NotifyAllControlStateObservers();   //通知观察者
         }
 
-        public void ResetView()
-        {
-            SetCoordinateArea(coordinateSystem.OriginalRect);    //OriginalRect为窗口初始化是，视图的原始大小
-        }
+        public void ResetView() => SetCoordinateArea(coordinateSystem.OriginalRect);
 
         protected override void OtherDrawing()
         {

@@ -19,7 +19,7 @@ namespace TargetManagerPackage
 
         public virtual void Corelate(Sector center, Sector left, Sector right)
         {
-            foreach (TargetDot oldDot in center.oldDots)    
+            foreach (TargetDot oldDot in center.OldDots)    
             {
                 if (!CorelateDotToSector(oldDot, center))   //和本扇区中的点相关
                 {
@@ -36,7 +36,7 @@ namespace TargetManagerPackage
         protected virtual bool CorelateDotToSector(TargetDot oldDot, Sector sector)   //自由点和一个扇区的新点相关，返回true表示相关成功
         {
             bool ret = false;
-            foreach (TargetDot newDot in sector.newDots)
+            foreach (TargetDot newDot in sector.NewDots)
             {
                 if (newDot.Adopted) //已经被航迹相关上的点不作处理
                     continue;

@@ -11,7 +11,15 @@ namespace RadarDisplayPackage
     {
         public LeftScroller(OverViewDisplayer displayer) : base(displayer)
         {
-            DisplayArea = new Rect(0, 0, ScrollerWidth, displayer.DisplayControl.Bottom);
+            DisplayArea = new Rect(0, 0, ScrollerWidth, displayer.DisplayControl.Size.Height);
+        }
+
+        protected override (Point2F, Point2F, Point2F) CalTriangleVertexs()
+        {
+            Point2F p1 = new Point2F(TriangleMargin , DisplayArea.Height / 2);
+            Point2F p2 = new Point2F(ScrollerWidth - TriangleMargin, DisplayArea.Height / 4);
+            Point2F p3 = new Point2F(ScrollerWidth - TriangleMargin, DisplayArea.Height * 3 / 4);
+            return (p1, p2, p3); 
         }
 
         public override void Scroll()

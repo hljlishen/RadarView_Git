@@ -4,7 +4,7 @@
     {
         public void DeleteFreeDot(Sector s)
         {
-            s.oldDots.Clear();
+            s.OldDots.Clear();
         }
     }
 }

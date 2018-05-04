@@ -5,17 +5,17 @@
         public const int threshold = 50;
         public override void Corelate(Sector center, Sector next, Sector previous)
         {
-            for(int i = center.tracks.Count - 1; i >=0; i--)
+            for(int i = center.Tracks.Count - 1; i >=0; i--)
             {
-                if(!CorelateTrack(center.tracks[i], center,true))  //本扇区未有相关点
+                if(!CorelateTrack(center.Tracks[i], center,true))  //本扇区未有相关点
                 {
-                    if(!CorelateTrack(center.tracks[i], next, false))  //下个扇区未有相关点
+                    if(!CorelateTrack(center.Tracks[i], next, false))  //下个扇区未有相关点
                     {
-                        if(CorelateTrack(center.tracks[i], previous, true))   //上个扇区有相关点
+                        if(CorelateTrack(center.Tracks[i], previous, true))   //上个扇区有相关点
                         {
                             //与上个扇区的点相关上
-                            previous.AddTrack(center.tracks[i]);
-                            center.RemoveTrack(center.tracks[i]);
+                            previous.AddTrack(center.Tracks[i]);
+                            center.RemoveTrack(center.Tracks[i]);
                         }
                         else
                         {
@@ -26,8 +26,8 @@
                     else
                     {
                         //与下个扇区的点相关上
-                        next.AddTrack(center.tracks[i]);
-                        center.RemoveTrack(center.tracks[i]);
+                        next.AddTrack(center.Tracks[i]);
+                        center.RemoveTrack(center.Tracks[i]);
                     }
                 }
                 else
@@ -42,7 +42,7 @@
         private bool CorelateTrack(TargetTrack track, Sector center, bool shouldAdoptDot)
         {
             bool ret = false;
-            foreach (TargetDot newDot in center.newDots)
+            foreach (TargetDot newDot in center.NewDots)
             {
                 if (newDot.Adopted) //被之前的航迹相关上了
                     continue;

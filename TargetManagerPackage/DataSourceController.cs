@@ -8,14 +8,12 @@ namespace TargetManagerPackage
         public const string DefaultRadarIpAndPort = "192.168.10.5:2005";
         private readonly AntennaSectionSweepController _antennaManager;
         private readonly CycleDataMatrix _cycleDataMatrix;
-        private readonly RemoteTargetProcessorcommunicator _communicator;
         private ICycleDataSubject _cycleDataSubject;
 
         public DataSourceController()
         {
             _antennaManager = (AntennaSectionSweepController)TargetManagerFactory.CreateAntennaContoller();
             _cycleDataMatrix = CycleDataMatrix.CreaCycleDataMatrix();
-            _communicator = RemoteTargetProcessorcommunicator.CreateCommunicator();
         }
 
         public void ConnectDataSource(string type, string source)
@@ -52,7 +50,6 @@ namespace TargetManagerPackage
         {
             _cycleDataSubject?.UnregisterObserver(_cycleDataMatrix);          //注销观察者
             _cycleDataSubject?.UnregisterObserver(_antennaManager);        //注销观察者
-            _cycleDataSubject?.UnregisterObserver(_communicator);
             _cycleDataSubject?.Dispose();    //销毁对象
         }
 
@@ -65,8 +62,6 @@ namespace TargetManagerPackage
             TargetManagerFactory.CreateTrackManager().InitializeSectors();  //删除所有目标
             _cycleDataSubject.RegisterObserver(_antennaManager);
             _cycleDataSubject.RebindSource(source);                  //绑定数据源
-            _cycleDataSubject.RegisterObserver(RemoteTargetProcessorcommunicator.CreateCommunicator());
-            RemoteTargetProcessorcommunicator.StartReceiveData();
         }
 
         private void StartCycleDataSubject()    //数据源开始读取数据

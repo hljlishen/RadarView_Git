@@ -8,7 +8,8 @@ namespace TargetManagerPackage
         public static bool ShouldShowOriginalVideo { get; set; } = true;
         public virtual void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
         {
-            MoveNewDotToOldDot(center);
+            //MoveNewDotToOldDot(center);
+            center.BeginProcessSector();
 
             if(ShouldShowOriginalVideo)
                 ShowOriginalVideo(center, right, left, cells);
@@ -18,14 +19,14 @@ namespace TargetManagerPackage
 
         public static void MoveNewDotToOldDot(Sector s)
         {
-            s.oldDots.Clear();
+            s.OldDots.Clear();
 
-            foreach (TargetDot dot in s.newDots)
+            foreach (TargetDot dot in s.NewDots)
             {
-                s.oldDots.Add(dot);
+                s.OldDots.Add(dot);
             }
 
-            s.newDots.Clear();
+            s.NewDots.Clear();
         }
 
         protected void ShowOriginalVideo(Sector center, Sector right, Sector left, AzimuthCell[] cells)

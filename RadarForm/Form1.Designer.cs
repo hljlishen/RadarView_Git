@@ -676,7 +676,7 @@
             this.btn_resetOverView.Name = "btn_resetOverView";
             this.btn_resetOverView.Size = new System.Drawing.Size(284, 74);
             this.btn_resetOverView.TabIndex = 12;
-            this.btn_resetOverView.Text = "取消放大";
+            this.btn_resetOverView.Text = "复位视图";
             this.btn_resetOverView.UseVisualStyleBackColor = false;
             this.btn_resetOverView.Click += new System.EventHandler(this.button1_Click);
             // 

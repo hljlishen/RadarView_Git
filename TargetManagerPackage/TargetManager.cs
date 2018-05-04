@@ -15,15 +15,11 @@ namespace TargetManagerPackage
         private DotCorelator _dotCorelator;               //自由点相关器
         private readonly FreeDotDeleter _freeDotDeleter;  //自由点删除器
         private readonly List<ITargetObserver> _obs;      //目标观察者，目标变化时观察者得到通知
-        private readonly RemoteTargetProcessorcommunicator communicator;
-        private readonly OpticalDeviceCommunicator opticalDeviceCommunicator;
         private MouseTargetTracker mouseTargetTracker;
         private List<TrackGenerator> trackGenerators;
         private bool _dotSource = true;
         private static object _locker = new object();
 
-        //测试TrackGenerator用的timer和其他变量
-        private int simulateSectorIndex = 0;
 
         //测试用变量
         private TargetManagerMode _mode;
@@ -34,8 +30,6 @@ namespace TargetManagerPackage
         {
             InitializeSectors();
             _obs = new List<ITargetObserver>();
-
-            opticalDeviceCommunicator = OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator();
 
             _clotter = new Clotter_Test();
             _clotter47 = new FourSevenClotter();
@@ -77,24 +71,30 @@ namespace TargetManagerPackage
 
         private void DestroySectors()
         {
-            //获得角度区域监听器
-            var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
-            if (Sectors == null) return;
-            foreach (Sector s in Sectors)    //注销角度区域
-                antennaLeaveAngleAreaSubject.UnregisterAngleArea(this, s);
+            lock (_locker)
+            {
+                //获得角度区域监听器
+                var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
+                if (Sectors == null) return;
+                foreach (Sector s in Sectors) //注销角度区域
+                    antennaLeaveAngleAreaSubject.UnregisterAngleArea(this, s);
+            }
         }
 
         private void CreateSectors()
         {
-            //获得角度区域监听器
-            var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
-
-            //初始化扇区并注册角度区域观察者
-            Sectors = new Sector[Sector.SectorCount];
-            for (int i = 0; i < Sector.SectorCount; i++)
+            lock (_locker)
             {
-                Sectors[i] = CreateSector(i, Sector.SectorCount);
-                antennaLeaveAngleAreaSubject.RegisterAngleArea(this, Sectors[i]);
+                //获得角度区域监听器
+                var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
+
+                //初始化扇区并注册角度区域观察者
+                Sectors = new Sector[Sector.SectorCount];
+                for (int i = 0; i < Sector.SectorCount; i++)
+                {
+                    Sectors[i] = CreateSector(i, Sector.SectorCount);
+                    antennaLeaveAngleAreaSubject.RegisterAngleArea(this, Sectors[i]);
+                }
             }
         }
 
@@ -114,18 +114,10 @@ namespace TargetManagerPackage
         {
             if (Sectors == null)
                 return;
-            lock (_locker)
+            foreach (Sector s in Sectors)
             {
-                foreach (Sector s in Sectors)
-                {
-                    NotifyDeleteSectorDots(s);
-                    s.newDots?.Clear();
-
-                    NotifyDeleteSectorTracks(s);
-                    s.tracks?.Clear();
-
-                    s.oldDots?.Clear();
-                }
+                NotifyDeleteSectorDots(s);
+                s.ClearAllTargets();
             }
         }
 
@@ -136,7 +128,7 @@ namespace TargetManagerPackage
             {
                 foreach (Sector s in Sectors)
                 {
-                    ls.AddRange(s.tracks);
+                    ls.AddRange(s.Tracks);
                 }
 
                 //添加航迹生成器的航迹
@@ -157,23 +149,9 @@ namespace TargetManagerPackage
         {
             lock (_locker)
             {
-                //IEnumerable<Target> query =
-                //    from s in Sectors
-                //    from dot in s.newDots
-                //    where dot.ShouldDisplay
-                //    select dot;
-
-                //return query.ToList();
-
                 List<Target> ret = new List<Target>();
                 foreach (Sector sector in Sectors)
-                {
-                    foreach (TargetDot newDot in sector.newDots)
-                    {
-                        if(newDot.ShouldDisplay)
-                            ret.Add(newDot);
-                    }
-                }
+                    ret.AddRange(sector.GetVisibleTargetDots());
 
                 return ret;
             }
@@ -297,9 +275,9 @@ namespace TargetManagerPackage
             switch (direction)
             {
                 case RotateDirection.ClockWise:
-                    return s.index == 0 ? Sectors[Sector.SectorCount - 1] : Sectors[s.index - 1];
+                    return s.Index == 0 ? Sectors[Sector.SectorCount - 1] : Sectors[s.Index - 1];
                 case RotateDirection.CounterClockWise:
-                    return s.index == Sector.SectorCount - 1 ? Sectors[0] : Sectors[s.index + 1];
+                    return s.Index == Sector.SectorCount - 1 ? Sectors[0] : Sectors[s.Index + 1];
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -311,9 +289,9 @@ namespace TargetManagerPackage
             switch (direction)
             {
                 case RotateDirection.ClockWise:
-                    return s.index == Sector.SectorCount - 1 ? Sectors[0] : Sectors[s.index + 1];
+                    return s.Index == Sector.SectorCount - 1 ? Sectors[0] : Sectors[s.Index + 1];
                 case RotateDirection.CounterClockWise:
-                    return s.index == 0 ? Sectors[Sector.SectorCount - 1] : Sectors[s.index - 1];
+                    return s.Index == 0 ? Sectors[Sector.SectorCount - 1] : Sectors[s.Index - 1];
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -353,20 +331,20 @@ namespace TargetManagerPackage
             {
                 if (area.IsAngleInArea(s.BeginAngle) || area.IsAngleInArea(s.EndAngle)) continue;
                 _viewDeleter.DeleteViews(s, true);  //删除所有目标视图，包括目标航迹
-                //s.ClearAllTargets();                //清空无关扇区的所有数据
+                s.ClearAllTargets();                //清空无关扇区的所有数据
             }
         }
 
         protected void NotifyDeleteSectorTracks(Sector s)
         {
             foreach (ITargetObserver ob in _obs)
-                ob.NotifyUpdateSectorTrack(null, s.index);   //传递null,表示没有航迹需要显示
+                ob.NotifyUpdateSectorTrack(null, s.Index);   //传递null,表示没有航迹需要显示
         }
 
         protected void NotifyDeleteSectorDots(Sector s)
         {
             foreach (ITargetObserver ob in _obs)
-                ob.NotifyUpdateSectorDot(null, s.index);   //传递null,表示没有航迹需要显示
+                ob.NotifyUpdateSectorDot(null, s.Index);   //传递null,表示没有航迹需要显示
         }
 
         protected void NotifyDeleteSectorTargets(Sector s)
@@ -379,8 +357,8 @@ namespace TargetManagerPackage
         {
             foreach (ITargetObserver ob in _obs)
             {
-                ob.NotifyUpdateSectorDot(s.newDots, s.index);
-                ob.NotifyUpdateSectorTrack(s.tracks, s.index);
+                ob.NotifyUpdateSectorDot(s.NewDots, s.Index);
+                ob.NotifyUpdateSectorTrack(s.Tracks, s.Index);
             }
         }
 
@@ -388,20 +366,20 @@ namespace TargetManagerPackage
         {
             if (_dotSource) return;     //true表示显示原始视频数据
             NotifyDeleteSectorDots(Sectors[sectorIndex]);      //通知删除该扇区的点目标视图
-            Sectors[sectorIndex].newDots = dots;
+            Sectors[sectorIndex].NewDots = dots;
             foreach (ITargetObserver ob in _obs)
             {
-                ob.NotifyUpdateSectorDot(Sectors[sectorIndex].newDots, Sectors[sectorIndex].index);
+                ob.NotifyUpdateSectorDot(Sectors[sectorIndex].NewDots, Sectors[sectorIndex].Index);
             }
         }
 
         public void TargetTrackDataReceivedFromRemoteTargetManager(int sectorIndex, List<TargetTrack> Tracks)
         {
             NotifyDeleteSectorTracks(Sectors[sectorIndex]);    //通知删除该扇区的航迹视图
-            Sectors[sectorIndex].tracks = Tracks;
+            Sectors[sectorIndex].Tracks = Tracks;
             foreach (ITargetObserver ob in _obs)
             {
-                ob.NotifyUpdateSectorTrack(Sectors[sectorIndex].tracks, Sectors[sectorIndex].index);
+                ob.NotifyUpdateSectorTrack(Sectors[sectorIndex].Tracks, Sectors[sectorIndex].Index);
             }
         }
     }

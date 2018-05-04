@@ -25,7 +25,7 @@ namespace TargetManagerPackage
 
         public void UpdateTrack(Sector s)
         {
-            if (track.sectorIndex != s.index) return;
+            if (track.sectorIndex != s.Index) return;
             MoveTrack();
 
             targetManager.NotifyAllObservers(track, NotifyType.Update);
@@ -48,7 +48,7 @@ namespace TargetManagerPackage
             {
                 if (s.IsAngleInArea(t.AZ))
                 {
-                    return s.index;
+                    return s.Index;
                 }
             }
 

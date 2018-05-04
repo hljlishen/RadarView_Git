@@ -40,7 +40,7 @@ namespace TargetManagerPackage
             lock (_locker)
             {
                 foreach (ITargetObserver ob in Observers)
-                    ob.NotifyUpdateSectorDot(s.newDots, s.index);
+                    ob.NotifyUpdateSectorDot(s.NewDots, s.Index);
             }
         }
 
@@ -48,21 +48,21 @@ namespace TargetManagerPackage
         {
             lock(_locker)
             foreach (ITargetObserver ob in Observers)
-                ob.NotifyUpdateSectorTrack(s.tracks, s.index);
+                ob.NotifyUpdateSectorTrack(s.Tracks, s.Index);
         }
 
         protected void NotifyDeleteSectorTrack(Sector s)
         {
             lock (_locker)
                 foreach (ITargetObserver ob in Observers)
-                ob.NotifyUpdateSectorTrack(null, s.index);   //传递null,表示没有航迹需要显示
+                    ob.NotifyUpdateSectorTrack(null, s.Index);   //传递null,表示没有航迹需要显示
         }
 
         protected void NotifyDeleteSectorDot(Sector s)
         {
             lock (_locker)
                 foreach (ITargetObserver ob in Observers)
-                    ob.NotifyUpdateSectorDot(null, s.index);   //传递null,表示没有航迹需要显示
+                    ob.NotifyUpdateSectorDot(null, s.Index);   //传递null,表示没有航迹需要显示
         }
     }
 }

@@ -5,7 +5,7 @@
         public const int threshold = 500;
         public override void Corelate(Sector center, Sector left, Sector right)
         {
-            foreach(TargetDot oldDot in center.oldDots)
+            foreach(TargetDot oldDot in center.OldDots)
             {
                 if(!CorelateDot(oldDot, center))
                 {
@@ -20,7 +20,7 @@
         private bool CorelateDot(TargetDot oldDot, Sector center)
         {
             bool ret = false;
-            foreach (TargetDot newDot in center.newDots)
+            foreach (TargetDot newDot in center.NewDots)
             {
                 if (newDot.Adopted) //已经被航迹相关
                     continue;

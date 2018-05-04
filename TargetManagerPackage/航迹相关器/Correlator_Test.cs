@@ -9,7 +9,7 @@
             //    NotifyAllObservers(dot, NotifyType.Delete);
             //}
             NotifyDeleteSectorDot(center);
-            center.newDots.Clear();
+            center.NewDots.Clear();
         }
     }
 }
