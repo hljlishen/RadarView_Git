@@ -27,13 +27,16 @@ namespace RadarDisplayPackage
         {
             int count = targetProvider.GetSectorCount();    //扇区计数
 
-            dots = new List<TargetView>[count];
-            tracks = new List<TargetView>[count];
-
-            for( int i = 0; i < count; i++)     //初始化链表
+            lock (_locker)
             {
-                dots[i] = new List<TargetView>();
-                tracks[i] = new List<TargetView>();
+                dots = new List<TargetView>[count];
+                tracks = new List<TargetView>[count];
+
+                for (int i = 0; i < count; i++)     //初始化链表
+                {
+                    dots[i] = new List<TargetView>();
+                    tracks[i] = new List<TargetView>();
+                }
             }
         }
 
@@ -67,32 +70,25 @@ namespace RadarDisplayPackage
             if (t == null)
                 return;
 
-            if (t is TargetTrack)
+            lock (_locker)
             {
-                foreach (TargetView view in tracks[t.sectorIndex])
+                if (t is TargetTrack)
                 {
-                    if (t == view.Target)
+                    foreach (TargetView view in tracks[t.sectorIndex])
                     {
-                        lock (tracks)
-                        {
-                            tracks[t.sectorIndex].Remove(view);
-                            view.Dispose();
-                        }
+                        if (t != view.Target) continue;
+                        tracks[t.sectorIndex].Remove(view);
+                        view.Dispose();
                         break;      //跳出循环，否则会导致遍历失败
                     }
                 }
-            }
-            else
-            {
-                foreach (TargetView view in dots[t.sectorIndex])
+                else
                 {
-                    if (t == view.Target)
+                    foreach (TargetView view in dots[t.sectorIndex])
                     {
-                        lock (dots)
-                        {
-                            dots[t.sectorIndex].Remove(view);
-                            view.Dispose();
-                        }
+                        if (t != view.Target) continue;
+                        dots[t.sectorIndex].Remove(view);
+                        view.Dispose();
                         break;      //跳出循环，否则会导致遍历失败
                     }
                 }
@@ -106,10 +102,13 @@ namespace RadarDisplayPackage
 
             TargetView view = CreateTargetView(t);
 
-            if(t is TargetTrack)
-                tracks[t.sectorIndex].Add(view);
-            else
-                dots[t.sectorIndex].Add(view);
+            lock (_locker)
+            {
+                if (t is TargetTrack)
+                    tracks[t.sectorIndex].Add(view);
+                else
+                    dots[t.sectorIndex].Add(view);
+            }
         }
 
         protected virtual void UpDateTarget(Target t)
@@ -123,18 +122,21 @@ namespace RadarDisplayPackage
 
         protected abstract void LoadTargetViews(List<Target> ls);
 
-        public virtual void NotifyUpdateSectorDot(List<TargetDot> dots, int sectorIndex)
+        public virtual void NotifyUpdateSectorDot(List<TargetDot> newDots, int sectorIndex)
         {
-            this.dots[sectorIndex].Clear();
-
-            if (dots == null)   //空对象表示删除该区域所有点
-                return;
-
-            //添加目标视图
-            foreach(TargetDot dot in dots)
+            lock (_locker)
             {
-                var view = CreateTargetView(dot);
-                this.dots[sectorIndex].Add(view);
+                dots[sectorIndex].Clear();
+
+                if (newDots == null) //空对象表示删除该区域所有点
+                    return;
+
+                //添加目标视图
+                foreach (TargetDot dot in newDots)
+                {
+                    var view = CreateTargetView(dot);
+                    dots[sectorIndex].Add(view);
+                }
             }
         }
 

@@ -24,7 +24,7 @@ namespace RadarDisplayPackage
             }
            else
             {
-                targetViewBrush = canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(0, 0, 255)); //绿色
+                targetViewBrush = canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(0, 255, 255)); //绿色
                 targetViewRadius = 4;
             }
         }

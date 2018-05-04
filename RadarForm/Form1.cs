@@ -3,6 +3,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using TargetManagerPackage;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace RadarForm
 {
@@ -42,8 +44,6 @@ namespace RadarForm
             svd.Distance = 1000;
             ovd.Distance = 3000;
             btn_WaveGate.Enabled = false;
-
-            //Process p = Process.Start("..\\feida.exe");
         }
 
         private string MakeIpAddressAndPortString() => tb_ipAddress.Text + ":" + tb_port.Text;
@@ -224,14 +224,10 @@ namespace RadarForm
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 33) //PageUp
-            {
                 btn_faster_Click(null, null);
-            }
 
             if (e.KeyValue == 34) //PageDown
-            {
                 btn_slower_Click(null, null);
-            }
         }
 
         private void 原始视频ToolStripMenuItem_Click(object sender, EventArgs e)

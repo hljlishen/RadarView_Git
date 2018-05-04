@@ -4,7 +4,6 @@
 //using System.Text;
 //using System.Drawing;
 using System.Windows.Forms;
-using TargetManagerPackage;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage

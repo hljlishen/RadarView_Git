@@ -84,7 +84,7 @@ namespace AntennaControlPackage
             }
             catch
             {
-                //MessageBox.Show("COM口打开失败");
+                MessageBox.Show("COM口打开失败");
             }
         }
     }

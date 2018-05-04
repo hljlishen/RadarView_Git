@@ -84,13 +84,13 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.原始视频ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.凝聚点击ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.原始视频ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检波门限ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.原始视频ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -749,6 +749,21 @@
             this.凝聚点击ToolStripMenuItem.Text = "凝聚点";
             this.凝聚点击ToolStripMenuItem.Click += new System.EventHandler(this.凝聚点击ToolStripMenuItem_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            // 
+            // 原始视频ToolStripMenuItem1
+            // 
+            this.原始视频ToolStripMenuItem1.Checked = true;
+            this.原始视频ToolStripMenuItem1.CheckOnClick = true;
+            this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(202, 26);
+            this.原始视频ToolStripMenuItem1.Text = "原始视频";
+            this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
+            // 
             // 系统ToolStripMenuItem
             // 
             this.系统ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -785,21 +800,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
-            // 
-            // 原始视频ToolStripMenuItem1
-            // 
-            this.原始视频ToolStripMenuItem1.Checked = true;
-            this.原始视频ToolStripMenuItem1.CheckOnClick = true;
-            this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(202, 26);
-            this.原始视频ToolStripMenuItem1.Text = "原始视频";
-            this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
             // Form1
             // 

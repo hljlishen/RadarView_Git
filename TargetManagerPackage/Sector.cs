@@ -8,6 +8,7 @@ namespace TargetManagerPackage
         public List<TargetDot> newDots; //本圈凝聚出来的新点
         public List<TargetDot> oldDots; //上圈凝聚出来的旧点（自由点）
         public List<TargetTrack> tracks;//在本扇区中的航迹
+        public const int SectorCount = 32;
 
 
         public Sector(int index, float beginAngle, float endAngle) : base(beginAngle, endAngle)
@@ -64,5 +65,6 @@ namespace TargetManagerPackage
             if (track != null)
                 tracks.Remove(track);
         }
+
     }
 }

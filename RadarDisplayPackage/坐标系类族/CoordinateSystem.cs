@@ -11,6 +11,7 @@ namespace RadarDisplayPackage
         private Rect _coordinateArea;   //坐标系中用于绘制目标点和目标航迹的区域。在极坐标系中该区域即为最外层绿圈对应的矩形；直角坐标系中该区域即为两个坐标轴围起来的矩形
         protected D2DFactory Factory;     //用于计算pathGeometry
 
+
         protected CoordinateSystem(Rect drawArea, double range, D2DFactory factory)     //drawArea为的目标区域和坐标刻度区域的和
         {
             // ReSharper disable once VirtualMemberCallInConstructor
@@ -222,7 +223,7 @@ namespace RadarDisplayPackage
 
         public bool IsPointInVisibleRect( Point2F p) => IsPointInRect(p, VisibleArea);
 
-        public bool IsPointInRect(Point2F p, Rect r) => p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
+        public static bool IsPointInRect(Point2F p, Rect r) => p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
 
         public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
         {

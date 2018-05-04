@@ -19,14 +19,20 @@ namespace TargetManagerPackage
 
         public void RegisterObserver(ITargetObserver ob)
         {
-            if (!Observers.Contains(ob) && ob != null)
-                Observers?.Add(ob);
+            lock (_locker)
+            {
+                if (!Observers.Contains(ob) && ob != null)
+                    Observers?.Add(ob);
+            }
         }
 
         public void UnregisterObserver(ITargetObserver ob)
         {
-            if (Observers.Contains(ob))
-                Observers?.Remove(ob);
+            lock (_locker)
+            {
+                if (Observers.Contains(ob))
+                    Observers?.Remove(ob);
+            }
         }
 
         protected void NotifyUpdateSectorDot(Sector s)
@@ -56,7 +62,7 @@ namespace TargetManagerPackage
         {
             lock (_locker)
                 foreach (ITargetObserver ob in Observers)
-                ob.NotifyUpdateSectorDot(null, s.index);   //传递null,表示没有航迹需要显示
+                    ob.NotifyUpdateSectorDot(null, s.index);   //传递null,表示没有航迹需要显示
         }
     }
 }

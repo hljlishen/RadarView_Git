@@ -10,12 +10,12 @@ namespace TargetManagerPackage
         public List<TargetAreaEdge> TotalAreaEdge { get; }
         private List<TargetAreaEdge> _rigthMostEdges;
         public bool ExtentionEnd = false;
-        private const int ExtentionEndTotalCount = 20;
-        private const int ExtentionEndThreshold = 5;
+        private const int ExtentionEndTotalCount = 80;
+        private const int ExtentionEndThreshold = 10;
         private readonly int[] _extentionStateRecord;
         private int _recordArrayIndex = -1;
         private bool _firstRound = true;
-        private static int AreaWidthMinimum = 10;
+        private static int AreaWidthMinimum = 20;
         private static int AreaWidthMaximum = 150;
         public int Width { get; private set; } = 0;
 
@@ -118,7 +118,6 @@ namespace TargetManagerPackage
             List<TargetDot> dots = new List<TargetDot>();
             foreach (TargetArea area in areas)
             {
-                Console.WriteLine(area.Width);
                 if(area.Width < AreaWidthMinimum || area.Width > AreaWidthMaximum)
                     continue;
                 List<DistanceCell> disCells = area.GetDistanceCells();

@@ -1,5 +1,6 @@
 ﻿using CycleDataDrivePackage;
 using System.Collections.Generic;
+using System;
 
 namespace TargetManagerPackage
 {
@@ -35,7 +36,7 @@ namespace TargetManagerPackage
             {
                 for (int j = i - 1; j >= 0; j--)
                 {
-                    if (ls[i].DistanceTo(ls[j]) < 80)
+                    if (ls[i].DistanceTo(ls[j]) < 80 && Math.Abs( ls[i].Dis - ls[j].Dis) < 4)
                     {
                         //TargetDot dot = new TargetDot();
                         //dot.AZ = ls[i].amValue > ls[j].amValue ? ls[i].AZ : ls[j].AZ;

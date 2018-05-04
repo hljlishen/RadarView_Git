@@ -10,6 +10,8 @@ namespace RadarDisplayPackage
         protected float distance;                           //距离量程,或者高度
         protected ITargetDataProvider dataProvider;         //目标航迹和目标点迹数据的提供者
         internal TargetViewManager targetsManager;          //目标管理器
+        protected object _locker = new object();
+
 
         protected TrackDisplayer(Control Holder)
         {
@@ -26,7 +28,10 @@ namespace RadarDisplayPackage
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            UpdateInfomation();
+            lock (_locker)
+            {
+                UpdateInfomation();
+            }
         }
 
         public int UpdateInterval

@@ -98,17 +98,17 @@ namespace RadarDisplayPackage
         {
             if (tracks == null)
                 return;
-            //获取目标航迹视图
-            foreach (Target target in tracks)
+            lock (_locker)
             {
-                var view = CreateTargetView(target);
-                if (target is TargetDot)
-                    dots[target.sectorIndex].Add(view);
-                else
-                    lock (this)
-                    {
+                foreach (Target target in tracks)
+                {
+                    //获取目标航迹视图
+                    var view = CreateTargetView(target);
+                    if (target is TargetDot)
+                        dots[target.sectorIndex].Add(view);
+                    else
                         this.tracks[target.sectorIndex].Add(view);
-                    }
+                }
             }
         }
 
@@ -157,7 +157,7 @@ namespace RadarDisplayPackage
                 catch
                 {
                     //ignore
-                    MessageBox.Show(@"GraphicTargetViewManager.DrawSector错误");
+                    //MessageBox.Show(@"GraphicTargetViewManager.DrawSector错误");
                 }
             }
         }
@@ -185,24 +185,27 @@ namespace RadarDisplayPackage
 
         public override void Dispose()
         {
-            base.Dispose();
-            foreach (List<TargetView> ls in dots)
+            lock (_locker)
             {
-                foreach (var view in ls)
+                base.Dispose();
+                foreach (List<TargetView> ls in dots)
                 {
-                    view.Dispose();
+                    foreach (var view in ls)
+                    {
+                        view.Dispose();
+                    }
                 }
-            }
 
-            foreach (List<TargetView> ls in tracks)
-            {
-                foreach (var targetView in ls)
+                foreach (List<TargetView> ls in tracks)
                 {
-                    var view = (GraphicTargetTrackView) targetView;
-                    view.Dispose();
+                    foreach (var targetView in ls)
+                    {
+                        var view = (GraphicTargetTrackView)targetView;
+                        view.Dispose();
+                    }
                 }
+                displayer.DisplayControl.MouseClick -= DisplayControl_MouseClick;
             }
-            displayer.DisplayControl.MouseClick -= DisplayControl_MouseClick;
         }
     }
 }

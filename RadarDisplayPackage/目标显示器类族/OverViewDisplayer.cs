@@ -22,28 +22,36 @@ namespace RadarDisplayPackage
     public class OverViewDisplayer : GraphicTrackDisplayer,IControlStateSubject
     {
         protected float beginAngle;    //视图正上方对应的角度
-        internal OverViewDisplayerState viewState;  //视图状态：放大、天线控制、自动、半自动
-        const int MaximumZoom = 40;  //放大倍数的最大值，超过这个值不处理放大操作
-        GraphicWaveGateViewManager waveGateViewManager;   //当前存在的波门视图
-        SweepSectionManager sweepSectionManager;            //扫描区域视图管理器
-        protected List<IControlStateObserver> obs;
-        private MouseCoordinateDisplayer mouseCoordinateDisplayer;
+        internal OverViewDisplayerState ViewState;  //视图状态：放大、天线控制、自动、半自动
+        private const int MaximumZoom = 40;  //放大倍数的最大值，超过这个值不处理放大操作
+        GraphicWaveGateViewManager _waveGateViewManager;   //当前存在的波门视图
+        private readonly SweepSectionManager _sweepSectionManager;            //扫描区域视图管理器
+        protected List<IControlStateObserver> Obs;
+        private readonly MouseCoordinateDisplayer _mouseCoordinateDisplayer;
+        private UpScroller _upScroller;
+        private RightScroller _rightScroller;
+        private DownScroller _downScroller;
+        private LeftScroller _leftScroller;
 
-        public OverViewDisplayer(Panel h) : base(h)
+        public OverViewDisplayer(Panel displayerContain) : base(displayerContain)
         {
             beginAngle = 0.0f;
 
-            viewState = CreateState(OverViewState.Zoom);
+            ViewState = CreateState(OverViewState.Zoom);
 
-            waveGateViewManager = new GraphicWaveGateViewManager(this) ;
+            _waveGateViewManager = new GraphicWaveGateViewManager(this) ;
 
-            sweepSectionManager = new SweepSectionManager(this);
+            _sweepSectionManager = new SweepSectionManager(this);
 
-            mouseCoordinateDisplayer = new MouseCoordinateDisplayer(this);
+            _mouseCoordinateDisplayer = new MouseCoordinateDisplayer(this);
 
-            obs = new List<IControlStateObserver>();
-            //Distance = 3000;
-            h.MouseClick += HOnMouseClick;
+            _upScroller = new UpScroller(this);
+            _rightScroller = new RightScroller(this);
+            _downScroller = new DownScroller(this);
+            _leftScroller = new LeftScroller(this);
+
+            Obs = new List<IControlStateObserver>();
+            displayerContain.MouseClick += HOnMouseClick;
         }
 
         private void HOnMouseClick(object sender, MouseEventArgs mouseEventArgs)
@@ -55,6 +63,7 @@ namespace RadarDisplayPackage
                 TargetManagerAddTrackGeneratorCommand generator = new TargetManagerAddTrackGeneratorCommand(coordinate);
                 generator.Execute();
             }
+            DisplayControl.Focus();
         }
 
         public override float Distance
@@ -82,36 +91,34 @@ namespace RadarDisplayPackage
                 Height = (int) (coordinateArea.Height * mul)
             }; //放大后的coordinateArea
 
-            //计算放大后左上角坐标
-
-            //计算放大后的宽度和高度
-
             if (zoomedCoordinateArea.Width / drawArea.Width > MaximumZoom)  //放大超过极限
-            {
                 return;
-            }
+
             SetCoordinateArea(zoomedCoordinateArea);
         }
 
         public void OffsetDisplayerToPoint(Point2F position)  //偏心显示
         {
-            //float x = position.X - coordinateSystem.OriginalPoint.X;
-            //float y = position.Y - coordinateSystem.OriginalPoint.Y;
-            //Rect r = CoordinateSystem.MoveRect(coordinateSystem.CoordinateArea, new Point2F(x, y));
-            //SetCoordinateArea(r);
+            float x = position.X - coordinateSystem.OriginalPoint.X;
+            float y = position.Y - coordinateSystem.OriginalPoint.Y;
+            Rect r = CoordinateSystem.MoveRect(coordinateSystem.CoordinateArea, new Point2F(x, y));
+            SetCoordinateArea(r);
         }
 
-        private void SetCoordinateArea(Rect area)   //重新设置坐标系的位置，并根据新位置生成新的背景，天线，目标图层
+        public void SetCoordinateArea(Rect area)   //重新设置坐标系的位置，并根据新位置生成新的背景，天线，目标图层
         {
-            Dispose();  //释放当前资源
-            coordinateSystem.CoordinateArea = area;  //最先重算坐标系位置和大小，坐标系是其他部件的基础
-            background = CreateBackground();        //根据坐标系重算背景位置大小
-            antenna = CreateAntenna();              //根据坐标系重算天线位置大小
-            waveGateViewManager = CreateWaveGateViewManager();  //根据坐标系重算波门位置大小
-            viewState = CreateState(viewState.GetState());  //根据坐标系重算状态数据
-            sweepSectionManager.CalSweepSectionView();      //重新计算区域大小
-            targetsManager.Dispose();
-            targetsManager = new GraphicTargetViewManager(this);
+            lock (_locker)
+            {
+                Dispose();  //释放当前资源
+                coordinateSystem.CoordinateArea = area;  //最先重算坐标系位置和大小，坐标系是其他部件的基础
+                background = CreateBackground();        //根据坐标系重算背景位置大小
+                antenna = CreateAntenna();              //根据坐标系重算天线位置大小
+                _waveGateViewManager = CreateWaveGateViewManager();  //根据坐标系重算波门位置大小
+                ViewState = CreateState(ViewState.GetState());  //根据坐标系重算状态数据
+                _sweepSectionManager.CalSweepSectionView();      //重新计算区域大小
+                targetsManager.Dispose();
+                targetsManager = new GraphicTargetViewManager(this);
+            }
         }
 
         internal override GraphicTrackDisplayerBackground CreateBackground()
@@ -136,7 +143,7 @@ namespace RadarDisplayPackage
 
         internal OverViewDisplayerState CreateState(OverViewState state)
         {
-            viewState?.Dispose();
+            ViewState?.Dispose();
             OverViewDisplayerState ret = null;
             switch (state)
             {
@@ -161,7 +168,7 @@ namespace RadarDisplayPackage
 
         internal GraphicWaveGateViewManager CreateWaveGateViewManager()
         {
-            waveGateViewManager?.Dispose();
+            _waveGateViewManager?.Dispose();
             return new GraphicWaveGateViewManager(this);
         }
 
@@ -175,23 +182,23 @@ namespace RadarDisplayPackage
             base.Dispose();
             try
             {
-                DisplayControl.MouseDown -= viewState.MouseDown;
-                DisplayControl.MouseUp -= viewState.MouseUp;
-                DisplayControl.MouseMove -= viewState.MouseMove;
+                DisplayControl.MouseDown -= ViewState.MouseDown;
+                DisplayControl.MouseUp -= ViewState.MouseUp;
+                DisplayControl.MouseMove -= ViewState.MouseMove;
             }
             catch
             {
                 // ignored
             }
 
-            viewState?.Dispose();
+            ViewState?.Dispose();
         }
 
         public void SwitchState(OverViewState state)
         {
-            if (state == viewState.GetState())
+            if (state == ViewState.GetState())
                 return;
-            viewState = CreateState(state);
+            ViewState = CreateState(state);
 
             NotifyAllControlStateObservers();   //通知观察者
         }
@@ -205,36 +212,40 @@ namespace RadarDisplayPackage
         {
             base.OtherDrawing();
 
-            waveGateViewManager.Draw();
+            _waveGateViewManager.Draw();
 
-            sweepSectionManager.Draw();
+            _sweepSectionManager.Draw();
 
-            mouseCoordinateDisplayer.Draw();
+            _mouseCoordinateDisplayer.Draw();
+            _upScroller.Draw();
+            _rightScroller.Draw();
+            _downScroller.Draw();
+            _leftScroller.Draw();
 
-            viewState.Draw();
+            ViewState.Draw();
         }
 
         public void RegisterObserver(IControlStateObserver ob)
         {
             if (ob == null)
                 return;
-            if (!obs.Contains(ob))
-                obs.Add(ob);
+            if (!Obs.Contains(ob))
+                Obs.Add(ob);
         }
 
         public void UnregisterObserver(IControlStateObserver ob)
         {
             if (ob == null)
                 return;
-            if (obs.Contains(ob))
-                obs.Remove(ob);
+            if (Obs.Contains(ob))
+                Obs.Remove(ob);
         }
 
         protected void NotifyAllControlStateObservers()
         {
-            foreach(IControlStateObserver ob in obs)
+            foreach(IControlStateObserver ob in Obs)
             {
-                ob.NotifyChange(viewState.GetState());
+                ob.NotifyChange(ViewState.GetState());
             }
         }
     }
