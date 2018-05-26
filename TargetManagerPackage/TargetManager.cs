@@ -308,11 +308,15 @@ namespace TargetManagerPackage
                 Sector s1 = NextSector(s);
                 _viewDeleter.DeleteViews(s1, false);
 
-                //Sector tmp = PreviousSector(s);
-                Sector tmp = s;
+                Sector tmp = PreviousSector(s);
+                if (tmp.Index == 5)
+                {
+
+                }
+                //Sector tmp = s;
 
                 //index - 1扇区点迹凝聚
-                AzimuthCell[] azCells = CycleDataMatrix.CreaCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
+                AzimuthCell[] azCells = CycleDataMatrix.CreateCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
                 Sector pre = PreviousSector(tmp);
                 Sector nex = NextSector(tmp);
                 _clotter47.Clot(tmp, nex, pre, azCells);
@@ -322,8 +326,7 @@ namespace TargetManagerPackage
             }
         }
 
-        public void NotifyLeaveAngleArea(AngleArea sector)   //获得角度区域监听器的通知，天线刚刚扫过一个扇区sector
-            => ProcessSector(sector);
+        public void NotifyLeaveAngleArea(AngleArea sector) => ProcessSector(sector);  //获得角度区域监听器的通知，天线刚刚扫过一个扇区sector
 
         public void DeleteOutRangedTargets(AngleArea area)    //删除角度范围外的所有目标
         {

@@ -9,7 +9,6 @@ namespace RadarDisplayPackage
     class GraphicTargetViewManager :TargetViewManager
     {
         private BitmapRenderTarget[] _sectorDrawer;
-
         public GraphicTargetViewManager(GraphicTrackDisplayer displayer) : base(displayer)
         {
             //鼠标点击事件
@@ -26,12 +25,15 @@ namespace RadarDisplayPackage
 
         private void InitializeBitmaps()
         {
-            //创建内存位图
-            int count = targetProvider.GetSectorCount();
-            _sectorDrawer = new BitmapRenderTarget[count];
-            for (int i = 0; i < count; i++)
+            lock (_locker)      //不设置lock会出现同步冲突
             {
-                _sectorDrawer[i] = ((GraphicTrackDisplayer)displayer).Canvas.CreateCompatibleRenderTarget();
+                //创建内存位图
+                int count = targetProvider.GetSectorCount();
+                _sectorDrawer = new BitmapRenderTarget[count];
+                for (int i = 0; i < count; i++)
+                {
+                    _sectorDrawer[i] = ((GraphicTrackDisplayer)displayer).Canvas.CreateCompatibleRenderTarget();
+                }
             }
         }
 
@@ -84,14 +86,17 @@ namespace RadarDisplayPackage
 
         public override TargetView CreateTargetView(Target taget)
         {
-            GraphicTargetView view;
-            if (taget == null)
-                return null;
-            if (taget.GetType() == typeof(TargetDot))
-                view = new GraphicTargetDotView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
-            else
-                view = new GraphicTargetTrackView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
-            return view;
+            lock (_locker)
+            {
+                GraphicTargetView view;
+                if (taget == null)
+                    return null;
+                if (taget.GetType() == typeof(TargetDot))
+                    view = new GraphicTargetDotView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                else
+                    view = new GraphicTargetTrackView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                return view;
+            }
         }
 
         protected sealed override void LoadTargetViews(List<Target> tracks)
@@ -139,26 +144,18 @@ namespace RadarDisplayPackage
         {
             lock (_locker)
             {
-                try
-                {
-                    _sectorDrawer[sectorIndex].BeginDraw();
-                    _sectorDrawer[sectorIndex].Clear();
+                _sectorDrawer[sectorIndex].BeginDraw();
+                _sectorDrawer[sectorIndex].Clear();
 
-                    //绘制目标点
-                    foreach (var view in dots[sectorIndex])
-                        view.DisplayTarget();
+                //绘制目标点
+                foreach (var view in dots[sectorIndex])
+                    view.DisplayTarget();
 
-                    //绘制目标航迹
-                    foreach (var view in tracks[sectorIndex])
-                        view.DisplayTarget();
+                //绘制目标航迹
+                foreach (var view in tracks[sectorIndex])
+                    view.DisplayTarget();
 
-                    _sectorDrawer[sectorIndex].EndDraw();
-                }
-                catch
-                {
-                    //ignore
-                    //MessageBox.Show(@"GraphicTargetViewManager.DrawSector错误");
-                }
+                _sectorDrawer[sectorIndex].EndDraw();
             }
         }
 

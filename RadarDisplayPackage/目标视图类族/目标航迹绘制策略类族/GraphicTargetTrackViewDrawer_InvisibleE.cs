@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage
 {
@@ -28,9 +23,11 @@ namespace RadarDisplayPackage
 
         protected override RoundedRectangleGeometry BuildIdTag()
         {
-            RectF rect = new RectF();
-            rect.Right = projectivePosition.X - 10;
-            rect.Top = projectivePosition.Y - 10;
+            RectF rect = new RectF
+            {
+                Right = projectivePosition.X - 10,
+                Top = projectivePosition.Y - 10
+            };
             rect.Left = rect.Right - idTagWidth;
             rect.Bottom = rect.Top + idTagHeigth;
 

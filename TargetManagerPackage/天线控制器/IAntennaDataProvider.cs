@@ -94,7 +94,7 @@ namespace TargetManagerPackage
                 if (newDirection != _preRotateDirection)
                 {
                     _preRotateDirection = newDirection;
-                    CycleDataMatrix.CreaCycleDataMatrix().Clear();
+                    CycleDataMatrix.CreateCycleDataMatrix().Clear();
                 }
 
                 NotifyAntennaDataChange();     //通知观察者，天线角度已改变

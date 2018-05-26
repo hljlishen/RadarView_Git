@@ -54,6 +54,13 @@ namespace TargetManagerPackage
             ProjectedDis = -1;
         }
 
+        public PolarCoordinate(float az, float el, float dis)
+        {
+            this.az = az;
+            this.el = el;
+            this.dis = dis;
+        }
+
         public PolarCoordinate(PolarCoordinate c)
         {
             az = c.az;

@@ -37,7 +37,9 @@ namespace RadarDisplayPackage
             distanceCircleBrush = canvas.CreateSolidColorBrush(new ColorF(0, 255, 0));  //绿色
             angleLineBrush = canvas.CreateSolidColorBrush(new ColorF(128, 138, 135));   //冷灰
             sectorCount = TargetManagerFactory.CreateTargetDataProvider().GetSectorCount();
-            //angleLines = CalSectorBordAngles(sectorCount);
+
+            angleLines = CalSectorBordAngles(sectorCount);//绘制扇区边界线，应注释改行
+           
             //初始化四个距离分划线
             ellipse1 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 2, csp.CoordinateArea.Height / 2);
             ellipse2 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width * 3 / 8, csp.CoordinateArea.Height * 3 / 8);

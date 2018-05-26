@@ -6,6 +6,10 @@ namespace TargetManagerPackage
 {
     class FourSevenClotter : Clotter
     {
+        private static int AreaWidthMinimum = 20;
+        private static int AreaWidthMaximum = 150;
+        private const int ExtentionEndTotalCount = 80;
+        private const int ExtentionEndThreshold = 10;
         private int count = 0;
         public override void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
         {
@@ -17,8 +21,12 @@ namespace TargetManagerPackage
             {
                 if (center.IsAngleInArea(targetDot.AZ))
                     center.AddNewDot(targetDot);
+                if(right.IsAngleInArea(targetDot.AZ))
+                    right.AddPrepareDot(targetDot);
+                if (left.IsAngleInArea(targetDot.AZ))
+                    left.AddPrepareDot(targetDot);
             }
-
+            center.LoadPrepareDot();
             NotifyUpdateSectorDot(center);  //通知更新该扇区的目标点视图
         }
 
@@ -38,10 +46,6 @@ namespace TargetManagerPackage
                 {
                     if (ls[i].DistanceTo(ls[j]) < 80 && Math.Abs( ls[i].Dis - ls[j].Dis) < 4)
                     {
-                        //TargetDot dot = new TargetDot();
-                        //dot.AZ = ls[i].amValue > ls[j].amValue ? ls[i].AZ : ls[j].AZ;
-                        //dot.Dis = ls[i].amValue > ls[j].amValue ? ls[i].Dis : ls[j].Dis;
-                        //ls[j] = dot;
                         ls[j] = ls[i].GetMiddleDot(ls[j]);
                         ls[j].IsClotDot = true;
                         ls.RemoveAt(i);

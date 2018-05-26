@@ -26,5 +26,20 @@ namespace TargetManagerPackage
 
             return cmdBytes.ToArray();
         }
+
+        public static (int, PolarCoordinate) GetSerialDataCoordinate(byte[] data)
+        {
+            if (data[3] != 0x04)
+                return (-1, null);
+
+            int trackId = data[4];
+            float az = (float) (data[5] + data[6] << 8) / 100;
+            float el = (float) (data[7] + data[8] << 8) / 100;
+            float dis = 0f;
+
+            PolarCoordinate coordinate =  new PolarCoordinate(az, el, dis);
+
+            return (trackId, coordinate);
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace CycleDataDrivePackage
         private const int IntervalMax = 30;
         private const int IntervalMin = 1;
         private const int IntervalStep = 5;
-        public static float AzAdjustment { get; set; } = 30; //方位角度调整值
+        public static float AzAdjustment { get; set; } = 0; //方位角度调整值
 
         public int Interval { get; set; } = 1;
 

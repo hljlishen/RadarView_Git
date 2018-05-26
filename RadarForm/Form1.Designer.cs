@@ -533,7 +533,7 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
-            this.tb_filePath.Text = "D:\\软件项目开发\\2018-04-28 13-37-02扇扫";
+            this.tb_filePath.Text = "D:\\2018-04-28 13-53-29周扫";
             // 
             // btn_start
             // 

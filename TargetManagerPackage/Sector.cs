@@ -5,6 +5,8 @@ namespace TargetManagerPackage
     public class Sector : AngleArea   //扇区，目标管理器是按扇区管理和处理目标的
     {
         public int Index;        //编号
+
+        public List<TargetDot> PrepareDots { get; }
         public List<TargetDot> NewDots { get; set; }
         public List<TargetDot> OldDots { get; }
         public List<TargetTrack> Tracks { get; set; }
@@ -15,6 +17,7 @@ namespace TargetManagerPackage
         public Sector(int index, float beginAngle, float endAngle) : base(beginAngle, endAngle)
         {
             Index = index;
+            PrepareDots = new List<TargetDot>();
             NewDots = new List<TargetDot>();
             OldDots = new List<TargetDot>();
             Tracks = new List<TargetTrack>();
@@ -55,6 +58,24 @@ namespace TargetManagerPackage
                     Tracks[i].Dispose();
                     Tracks.RemoveAt(i);
                 }
+            }
+        }
+
+        public void AddPrepareDot(TargetDot dot)
+        {
+            lock (_locker)
+            {
+                dot.sectorIndex = Index;
+                PrepareDots.Add(dot);
+            }
+        }
+
+        public void LoadPrepareDot()
+        {
+            lock (_locker)
+            {
+                NewDots.AddRange(PrepareDots);
+                PrepareDots.Clear();
             }
         }
 

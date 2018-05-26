@@ -74,6 +74,7 @@ namespace TargetManagerPackage
             Socket sokClient = sokConnectionparn as Socket;
             byte[] arrMsgRec = new byte[1024];
             int length = sokClient.Receive(arrMsgRec);
+            (int id, PolarCoordinate coordinate) = X68Command.GetSerialDataCoordinate(arrMsgRec);
         }
     }
 }

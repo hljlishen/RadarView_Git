@@ -10,13 +10,13 @@ namespace TargetManagerPackage
         public List<TargetAreaEdge> TotalAreaEdge { get; }
         private List<TargetAreaEdge> _rigthMostEdges;
         public bool ExtentionEnd = false;
-        private const int ExtentionEndTotalCount = 80;
-        private const int ExtentionEndThreshold = 10;
+        private const int ExtentionEndTotalCount = 28;
+        private const int ExtentionEndThreshold = 4;
         private readonly int[] _extentionStateRecord;
         private int _recordArrayIndex = -1;
         private bool _firstRound = true;
-        private static int AreaWidthMinimum = 20;
-        private static int AreaWidthMaximum = 150;
+        private static int AreaWidthMinimum = 15;
+        private static int AreaWidthMaximum = 100;
         public int Width { get; private set; } = 0;
 
         private int NextIndex()
@@ -42,7 +42,7 @@ namespace TargetManagerPackage
         {
             List<TargetAreaEdge> newRightMostEdge = new List<TargetAreaEdge>();
 
-            if (ExtentionEnd) //已经满足4/7的截止条件
+            if (ExtentionEnd) //已经满足截止条件
                 return;
 
             foreach (var targetAreaEdge in _rigthMostEdges)
@@ -55,9 +55,7 @@ namespace TargetManagerPackage
                     newRightMostEdge.Add(edge);
                 }
             }
-
             
-
             if (newRightMostEdge.Count == 0) //没有找到相邻的TargetAreaEdge
             {
                 _extentionStateRecord[NextIndex()] = 0;
@@ -74,7 +72,7 @@ namespace TargetManagerPackage
                 ExtentionEnd = true;
         }
 
-        private List<DistanceCell> GetDistanceCells()
+        public  List<DistanceCell> GetDistanceCells()
         {
             List<DistanceCell> dots = new List<DistanceCell>();
             foreach (TargetAreaEdge edge in TotalAreaEdge)
@@ -85,11 +83,37 @@ namespace TargetManagerPackage
             return dots;
         }
 
-        public static List<TargetDot> ClotAzCells(List<AzimuthCell> azCells) => CloTargetDots(GetTargetAreas(azCells));
+        public static List<TargetDot> ClotAzCells(List<AzimuthCell> azCells) => ClotTargetDots(GetTargetAreas(azCells));
 
         public static List<TargetArea> GetTargetAreas(List<AzimuthCell> azCells)
         {
             azCells.Sort();     //按方位排序
+            List<AzimuthCell> moreAzimuthCells = new List<AzimuthCell>();
+
+            //获取下个扇区的数据，准备将本扇区的TargetArea向下个扇区扩展
+            if (TargetManagerFactory.CreateAntennaDataProvider().GetAntennaDirection() == RotateDirection.ClockWise)
+            {
+                if (azCells.Count > 0)
+                {
+                    AngleArea angleArea = new AngleArea(azCells[azCells.Count - 1].Angle,
+                        azCells[azCells.Count - 1].Angle + 20.25f);
+                    moreAzimuthCells = new List<AzimuthCell>(CycleDataMatrix.CreateCycleDataMatrix().AzimuthCellsInAngleArea(angleArea));
+                    moreAzimuthCells.Sort();
+                }
+            }
+            else
+            {
+                azCells.Reverse(); //沿着天线转动方向凝聚
+                if (azCells.Count > 0)
+                {
+                    AngleArea angleArea = new AngleArea(azCells[azCells.Count - 1].Angle - 20.25f,
+                        azCells[azCells.Count - 1].Angle);
+                    moreAzimuthCells = new List<AzimuthCell>(CycleDataMatrix.CreateCycleDataMatrix().AzimuthCellsInAngleArea(angleArea));
+                    moreAzimuthCells.Sort();
+                    moreAzimuthCells.Reverse();
+                }
+            }
+
             List<TargetArea> areas = new List<TargetArea>();
             foreach (AzimuthCell azimuthCell in azCells)
             {
@@ -109,15 +133,49 @@ namespace TargetManagerPackage
                     edge.IsInArea = true;
                 }
             }
-            CycleDataMatrix m = CycleDataMatrix.CreaCycleDataMatrix();
+
+            int extendingCount = 0;
+            for (int i = areas.Count - 1; i >=0; i--)
+            {
+                if (!areas[i].ExtentionEnd) //尚未结束的区域
+                    extendingCount++;
+            }
+
+            if (extendingCount == 0)
+                return areas;  //所有区域都已经结束扩展
+
+            //未完成扩展的区域继续向下个扇区扩展
+            foreach (TargetArea extendingArea in areas)
+            {
+                if (extendingArea.ExtentionEnd) continue;
+                foreach (TargetAreaEdge edge in extendingArea._rigthMostEdges)
+                {
+                    foreach (AzimuthCell azimuthCell in moreAzimuthCells)
+                    {
+                        List<TargetAreaEdge> edges = new List<TargetAreaEdge>();
+                        foreach (DistanceCell disCell in azimuthCell.DisCells.Values)
+                        {
+                            if (!edge.IsDistanceCellAdjacentDistanceWise(disCell) || disCell.IsInAreaEdge)
+                                continue;
+                            disCell.IsInAreaEdge = true;
+                            List<DistanceCell> distanceCells = new List<DistanceCell>() {disCell};
+                            TargetAreaEdge tae = new TargetAreaEdge(distanceCells);
+                            edges.Add(tae);
+                        }
+                        extendingArea.Extend(ref edges);
+                    }
+                }
+            }
+
             return areas;
         }
 
-        public static List<TargetDot> CloTargetDots(List<TargetArea> areas)
+        public static List<TargetDot> ClotTargetDots(List<TargetArea> areas)
         {
             List<TargetDot> dots = new List<TargetDot>();
             foreach (TargetArea area in areas)
             {
+                Console.WriteLine(area.Width);
                 if(area.Width < AreaWidthMinimum || area.Width > AreaWidthMaximum)
                     continue;
                 List<DistanceCell> disCells = area.GetDistanceCells();
@@ -146,7 +204,7 @@ namespace TargetManagerPackage
             }
 
             double az = azPowerSum / powerSum;
-            az = AdjustAz((float)az);
+            //az = AdjustAz((float)az);       //修正回差
             return new TargetDot(){AZ = (float)az, EL = 0, Dis = dis, IsClotDot = true};
         }
 
@@ -206,12 +264,24 @@ namespace TargetManagerPackage
             return mergedEdge;
         }
 
+        public bool IsDistanceCellAdjacentDistanceWise(DistanceCell cell)
+        {
+            foreach (DistanceCell distanceCell in Cells)
+            {
+                if (Math.Abs(distanceCell.Distance - cell.Distance) < 4)
+                    return true;
+            }
+
+            return false;
+        }
+
         public static List<TargetAreaEdge> GetTargetAreaEdges(AzimuthCell azCell)
         {
             List<TargetAreaEdge> ret = new List<TargetAreaEdge>();
 
             foreach (var disCellIndex in azCell.DisCells.Keys)
             {
+                if(azCell.DisCells[disCellIndex].IsInAreaEdge) continue;
                 TargetAreaEdge edge = GetCellTargetAreaEdge(azCell.DisCells[disCellIndex].index, azCell);
                 if(edge != null)
                     ret.Add(edge);
@@ -227,7 +297,7 @@ namespace TargetManagerPackage
                 return null;    //返回空，表示没有区域
 
             //当前单元格未被其他区域占用
-            ( azimuthCell.DisCells[distanceCellIndex]).IsInAreaEdge = true;       //标记单元格被占用
+            azimuthCell.DisCells[distanceCellIndex].IsInAreaEdge = true;       //标记单元格被占用
             List<DistanceCell> disCells = new List<DistanceCell>() { azimuthCell.DisCells[distanceCellIndex] };
             TargetAreaEdge ret = new TargetAreaEdge(disCells);
 

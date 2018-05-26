@@ -13,7 +13,7 @@ namespace TargetManagerPackage
         public DataSourceController()
         {
             _antennaManager = (AntennaSectionSweepController)TargetManagerFactory.CreateAntennaContoller();
-            _cycleDataMatrix = CycleDataMatrix.CreaCycleDataMatrix();
+            _cycleDataMatrix = CycleDataMatrix.CreateCycleDataMatrix();
         }
 
         public void ConnectDataSource(string type, string source)

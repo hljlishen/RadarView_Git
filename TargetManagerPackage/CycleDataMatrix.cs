@@ -1,5 +1,6 @@
 ﻿using CycleDataDrivePackage;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TargetManagerPackage
@@ -17,15 +18,53 @@ namespace TargetManagerPackage
             Matrix = new AzimuthCell[AzimuthCellCount];
         }
 
-        public static CycleDataMatrix CreaCycleDataMatrix() => _cycleDataMatrix ?? (_cycleDataMatrix = new CycleDataMatrix());
+        //public List<TargetDot> ClotRawDataInAngleArea(AngleArea area)
+        //{
+        //    List<AzimuthCell> cells = new List<AzimuthCell>(AzimuthCellsInAngleArea(area));
+        //    return TargetArea.ClotAzCells(cells);
+        //}
+
+        public static CycleDataMatrix CreateCycleDataMatrix() => _cycleDataMatrix ?? (_cycleDataMatrix = new CycleDataMatrix());
 
         public void SaveAzimuthCell(AzimuthCell data)   //添加周期数据
         {
             //if (!ShouldSaveData(data))
             //    return;
+            //data = ChangeRealDataToTestData(data);      //测试用，应注释掉此行
+            //data = RemoveDistanceBelow(data, 900);
             _currentMatrixIndex = NextIndex(_currentMatrixIndex);
             Matrix[_currentMatrixIndex]?.Dispose();
             Matrix[_currentMatrixIndex] = data;           //保存周期数据
+        }
+
+        private AzimuthCell RemoveDistanceBelow(AzimuthCell cell, int dis)
+        {
+            Dictionary<int, DistanceCell> newCells = new Dictionary<int, DistanceCell>();
+            foreach (int key in cell.DisCells.Keys)
+            {
+                if (key > dis)
+                {
+                    newCells.Add(key, cell.DisCells[key]);
+                }
+            }
+
+            cell.DisCells = newCells;
+            return cell;
+        }
+
+        private AzimuthCell ChangeRealDataToTestData(AzimuthCell realData)
+        {
+            realData.DisCells.Clear();
+            AngleArea testAngleArea = new AngleArea(0f, 33.75f);
+            //AngleArea testAngleArea1 = new AngleArea(101.25f, 133.57f);
+            //if (testAngleArea.IsAngleInArea(realData.Angle) /*|| testAngleArea1.IsAngleInArea(realData.Angle)*/)
+            {
+                DistanceCell distanceCell = new DistanceCell(){index = 300, sumAM = 100000, az = realData.Angle};
+                realData.DisCells.Add(300,distanceCell);
+                return realData;
+            }
+
+            return null;
         }
 
         private static int NextIndex(int currentIndex)
