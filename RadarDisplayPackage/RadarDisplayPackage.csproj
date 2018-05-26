@@ -52,15 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DownScroller.cs" />
+    <Compile Include="目标显示器类族\滚动按钮\DownScroller.cs" />
     <Compile Include="IControlStateObserver.cs" />
     <Compile Include="IControlStateProvider.cs" />
     <Compile Include="IControlStateSubject.cs" />
-    <Compile Include="LeftScroller.cs" />
+    <Compile Include="目标显示器类族\滚动按钮\LeftScroller.cs" />
     <Compile Include="MouseCoordinateDisplayer.cs" />
-    <Compile Include="OverViewDispalerScroll.cs" />
-    <Compile Include="RightScroller.cs" />
-    <Compile Include="UpScroller.cs" />
+    <Compile Include="目标显示器类族\滚动按钮\OverViewDispalerScroll.cs" />
+    <Compile Include="目标显示器类族\滚动按钮\RightScroller.cs" />
+    <Compile Include="目标显示器类族\滚动按钮\UpScroller.cs" />
     <Compile Include="命令类\TargetManagerAddTrackGeneratorCommand.cs" />
     <Compile Include="命令类\TargetManagmentSwitchDotSourceCommand.cs" />
     <Compile Include="扇扫视图\SweepSectionManager.cs" />

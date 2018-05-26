@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage
 {
@@ -24,9 +22,9 @@ namespace RadarDisplayPackage
             Rect r = new Rect
             {
                 Top = Displayer.coordinateSystem.CoordinateArea.Top,
-                Right = Displayer.coordinateSystem.CoordinateArea.Right + HorizontalStep,
-                Left = Displayer.coordinateSystem.CoordinateArea.Left + HorizontalStep,
-                Bottom = Displayer.coordinateSystem.CoordinateArea.Bottom 
+                Right = Displayer.coordinateSystem.CoordinateArea.Right - HorizontalStep,
+                Left = Displayer.coordinateSystem.CoordinateArea.Left - HorizontalStep,
+                Bottom = Displayer.coordinateSystem.CoordinateArea.Bottom
             };
 
             Displayer.SetCoordinateArea(r);

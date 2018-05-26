@@ -27,8 +27,8 @@ namespace RadarDisplayPackage
             Rect r = new Rect
             {
                 Top = Displayer.coordinateSystem.CoordinateArea.Top,
-                Right = Displayer.coordinateSystem.CoordinateArea.Right - HorizontalStep,
-                Left = Displayer.coordinateSystem.CoordinateArea.Left - HorizontalStep,
+                Right = Displayer.coordinateSystem.CoordinateArea.Right + HorizontalStep,
+                Left = Displayer.coordinateSystem.CoordinateArea.Left + HorizontalStep,
                 Bottom = Displayer.coordinateSystem.CoordinateArea.Bottom
             };
 

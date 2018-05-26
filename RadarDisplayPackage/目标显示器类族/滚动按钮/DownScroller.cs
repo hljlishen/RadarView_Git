@@ -24,10 +24,10 @@ namespace RadarDisplayPackage
         {
             Rect r = new Rect
             {
-                Top = Displayer.coordinateSystem.CoordinateArea.Top + VerticalStep,
+                Top = Displayer.coordinateSystem.CoordinateArea.Top - VerticalStep,
                 Right = Displayer.coordinateSystem.CoordinateArea.Right,
                 Left = Displayer.coordinateSystem.CoordinateArea.Left,
-                Bottom = Displayer.coordinateSystem.CoordinateArea.Bottom + VerticalStep
+                Bottom = Displayer.coordinateSystem.CoordinateArea.Bottom - VerticalStep
             };
 
             Displayer.SetCoordinateArea(r);
