@@ -35,14 +35,17 @@ namespace RadarDisplayPackage
             dataSourceController = TargetManagerFactory.CreateDataSourceController();
 
             deleteActiveWaveGatesCmd = new WaveGateDeleteActiveCommand();
+            ovd.NewSweepSection += OnNewSweepSection;
+            ovd.NewWaveGate += Ovd_NewWaveGate;
         }
+
+        private void Ovd_NewWaveGate(WaveGate waveGate) => new WaveGateAddCommand(waveGate).Execute();
+
+        private void OnNewSweepSection(AngleArea area) => new AntennaSetSectionSweepModeCommand(area).Execute();
 
 
         //overviewdisplayer显示器的控制模式切换到放缩模式
-        public void SwitchToZoomState()
-        {
-            zoomStateCmd.Execute();
-        }
+        public void SwitchToZoomState() => zoomStateCmd.Execute();
 
 
         //overviewdisplayer显示器的控制模式切换到天线扇扫控制

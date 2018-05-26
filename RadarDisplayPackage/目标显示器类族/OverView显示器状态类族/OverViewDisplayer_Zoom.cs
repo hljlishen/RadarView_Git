@@ -72,21 +72,15 @@ namespace RadarDisplayPackage
             zoomCircleBrush?.Dispose();
         }
 
-        public override OverViewState GetState()
+        public override void MouseUp(object sender, MouseEventArgs e)
         {
-            return OverViewState.Zoom;
-        }
-
-        protected override ICommand CreateCommand()
-        {
+            base.MouseUp(sender, e);
             if (Math.Abs(mouseDragPosition.X - mouseDownPosition.X) < 8 && Math.Abs(mouseDragPosition.Y - mouseDownPosition.Y) < 8)   //距离太小不放大
-                return new NullCommand();
+                return ;
 
-            ICommand cmd = new OverViewDisplayerZoomCommand(displayer, zoomRect);
-            zoomCircle = new Ellipse();     //新建一个圆形，半径为0
-            zoomRect = new Rect();
-
-            return cmd;
+            displayer.ZoomArea(zoomRect);
         }
+
+        public override OverViewState GetState() => OverViewState.Zoom;
     }
 }

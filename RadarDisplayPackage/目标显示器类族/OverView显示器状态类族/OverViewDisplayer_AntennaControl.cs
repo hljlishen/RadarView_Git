@@ -103,34 +103,9 @@ namespace RadarDisplayPackage
         public override void Dispose()
         {
             base.Dispose();
-            //antennaRangeAreaPen?.Dispose();
             antennaRangeAreaBrush?.Dispose();
         }
 
-        public override OverViewState GetState()
-        {
-            return OverViewState.AntennaControl;
-        }
-
-        protected override ICommand CreateCommand()
-        {
-            if (Math.Abs(beginAngle - dragAngle) < sweepAngleMinimum)
-                return new NullCommand();
-
-            //控制天线扫描范围的开始和结束角度
-            float begin = Tools.FindSmallArcBeginAngle(beginAngle, dragAngle);
-            float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
-
-            //创建天线控制命令
-            ICommand cmd = new AntennaSetSectionSweepModeCommand(begin, end); //传入-1表示按原始扫描速度进行扇扫
-
-            //复位变量
-            beginLinePoint = displayer.coordinateSystem.OriginalPoint;
-            dragLinePoint = displayer.coordinateSystem.OriginalPoint;
-            beginAngle = 0f;
-            dragAngle = 0f;
-
-            return cmd;
-        }
+        public override OverViewState GetState() => OverViewState.AntennaControl;
     }
 }

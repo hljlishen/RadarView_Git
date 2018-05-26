@@ -89,14 +89,22 @@ namespace RadarDisplayPackage
             }
         }
 
-        protected override ICommand CreateCommand()
+        public override void MouseUp(object sender, MouseEventArgs e)
+        {
+            base.MouseUp(sender, e);
+            WaveGate waveGate = CalWaveGate();
+            if (waveGate != null)
+                displayer.SendNewWaveGate(waveGate);
+        }
+
+        private WaveGate CalWaveGate()
         {
             float r1 = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
             float r2 = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDragPosition);
 
             //拖动距离太小不处理，这个判断主要是排除鼠标点击操作
             if (Math.Abs(r1 - r2) < 5 || Math.Abs(beginAngle - dragAngle) < 1)
-                return new NullCommand();
+                return null;
             //发送波门位置信息
             Point2F dragPosition = mouseDragPosition;
             PolarCoordinate c = displayer.coordinateSystem.PointToCoordinate(mouseDownPosition);
@@ -108,11 +116,8 @@ namespace RadarDisplayPackage
 
             float begin = Tools.FindSmallArcBeginAngle(beginAngle, dragAngle);
             float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
-            WaveGate wg = new WaveGate(begin, end, dis1, dis2, isSemiAutoWaveGate);
+            return new WaveGate(begin, end, dis1, dis2, isSemiAutoWaveGate);
 
-            ICommand cmd = new WaveGateAddCommand(wg);
-
-            return cmd;
         }
     }
 }

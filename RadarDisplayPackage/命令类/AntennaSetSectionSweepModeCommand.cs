@@ -4,15 +4,18 @@ namespace RadarDisplayPackage
 {
     class AntennaSetSectionSweepModeCommand : AntennaCommand
     {
-        float beginAngle;
-        float endAngle;
+        private readonly AngleArea _angleArea;
 
-        public AntennaSetSectionSweepModeCommand(float beginAngle, float endAngle) :base()
+        public AntennaSetSectionSweepModeCommand(float beginAngle, float endAngle)
         {
-            this.beginAngle = beginAngle;
-            this.endAngle = endAngle;
+            _angleArea = new AngleArea(beginAngle,endAngle);
         }
 
-        public override void Execute() => antenna.SetSectionSweepMode(new AngleArea(beginAngle, endAngle));
+        public AntennaSetSectionSweepModeCommand(AngleArea area)
+        {
+            _angleArea = area;
+        }
+
+        public override void Execute() => antenna.SetSectionSweepMode(_angleArea);
     }
 }

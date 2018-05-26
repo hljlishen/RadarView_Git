@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using TargetManagerPackage;
 using Utilities;
 
 namespace RadarDisplayPackage
@@ -112,19 +113,21 @@ namespace RadarDisplayPackage
 
         public override OverViewState GetState() => OverViewState.AntennaControl;
 
-        protected override ICommand CreateCommand()
+        public override void MouseUp(object sender, MouseEventArgs e)
         {
-            //创建天线控制命令
-            ICommand cmd = new AntennaSetSectionSweepModeCommand(beginAngle, endAngle); //传入-1表示按原始扫描速度进行扇扫
+            base.MouseUp(sender, e);
+            displayer.SendNewSweepSection(new AngleArea( beginAngle, endAngle));
+            SetDefualtValue();
+        }
 
-            //复位变量
+        void SetDefualtValue()
+        {
             beginLinePoint = displayer.coordinateSystem.OriginalPoint;
             dragLinePoint = displayer.coordinateSystem.OriginalPoint;
             beginAngle = 0f;
             dragAngle = 0f;
-
-            return cmd;
         }
+
 
         public void DrawSweepSection()
         {

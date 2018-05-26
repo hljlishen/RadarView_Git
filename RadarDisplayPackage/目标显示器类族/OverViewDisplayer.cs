@@ -247,8 +247,8 @@ namespace RadarDisplayPackage
             }
         }
 
-        protected virtual void SendNewWaveGate(WaveGate wavegate) => NewWaveGate?.Invoke(wavegate);
+        public virtual void SendNewWaveGate(WaveGate wavegate) => NewWaveGate?.Invoke(wavegate);
 
-        protected virtual void SendNewSweepSection(AngleArea area) => NewSweepSection?.Invoke(area);
+        public virtual void SendNewSweepSection(AngleArea area) => NewSweepSection?.Invoke(area);
     }
 }

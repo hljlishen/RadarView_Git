@@ -24,15 +24,7 @@ namespace RadarDisplayPackage
             displayer.DisplayControl.MouseMove += MouseMove;
         }
 
-        public virtual void MouseUp(object sender, MouseEventArgs e)
-        {
-            if (isMouseDown && shouldExecuteCmd)
-            {
-                ICommand cmd = CreateCommand();
-                cmd.Execute();
-            }
-            isMouseDown = false;
-        }
+        public virtual void MouseUp(object sender, MouseEventArgs e) => isMouseDown = false;
 
         public abstract void MouseMove(object sender, MouseEventArgs e);
 
@@ -41,11 +33,6 @@ namespace RadarDisplayPackage
         public abstract OverViewState GetState();
 
         public abstract void Draw();
-
-        protected virtual ICommand CreateCommand()
-        {
-            return new NullCommand();
-        }
 
         public virtual void Dispose()
         {
