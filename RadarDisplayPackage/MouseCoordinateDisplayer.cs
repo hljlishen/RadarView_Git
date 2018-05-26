@@ -2,6 +2,7 @@
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 using System.Windows.Forms;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -29,7 +30,7 @@ namespace RadarDisplayPackage
 
         public void MoveMoveHandler(object sender, MouseEventArgs e)
         {
-            Point2F location = CoordinateSystem.PointToPoint2F(e.Location);
+            Point2F location = Tools.PointToPoint2F(e.Location);
             PolarCoordinate coordinate = displayer.coordinateSystem.PointToCoordinate(location);
             azString = "方位：" + coordinate.Az.ToString("0.0") + "°";
             disString = "距离：" + coordinate.ProjectedDis.ToString("0.0") + "m";

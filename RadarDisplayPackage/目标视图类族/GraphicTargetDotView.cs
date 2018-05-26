@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -24,7 +25,7 @@ namespace RadarDisplayPackage
             }
            else
             {
-                targetViewBrush = canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(0, 255, 255)); //绿色
+                targetViewBrush = canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(0, 255, 255)); //绿色
                 targetViewRadius = 4;
             }
         }
@@ -43,7 +44,7 @@ namespace RadarDisplayPackage
 
         public override void Draw(RenderTarget renderTarget)
         {
-            if (!CoordinateSystem.PointOutOfRange(CoordinateSystem.Point2FToPoint(Position)))
+            if (!CoordinateSystem.PointOutOfRange(Tools.Point2FToPoint(Position)))
             {
                 base.Draw(renderTarget);
             }

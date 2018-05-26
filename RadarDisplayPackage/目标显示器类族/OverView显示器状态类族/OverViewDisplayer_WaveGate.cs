@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -35,7 +36,7 @@ namespace RadarDisplayPackage
             if(isMouseDown)
             {
                 //根据鼠标点击坐标和鼠标拖动坐标生成波门几何图形
-                float dis = (float)CoordinateSystem.DistanceBetween(mouseDownPosition, mouseDragPosition);
+                float dis = (float)Tools.DistanceBetween(mouseDownPosition, mouseDragPosition);
                 if (dis < MinimumDragDistance)    //拖动距离太小，不画
                     return;
                 PathGeometry waveGate = displayer.coordinateSystem.BuildWaveGateGeometry(mouseDragPosition, mouseDownPosition);
@@ -51,23 +52,23 @@ namespace RadarDisplayPackage
             if (displayer.coordinateSystem.PointOutOfRange(e.Location)) //拖动超出极坐标范围，直接返回
                 return;
 
-            if (CoordinateSystem.DistanceBetween(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location)) < 5)
+            if (Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location)) < 5)
                 return;
 
             //记录师表拖动位置
-            mouseDragPosition = CoordinateSystem.PointToPoint2F( e.Location);
+            mouseDragPosition = Tools.PointToPoint2F( e.Location);
 
             //计算鼠标拖动点的径向距离
-            mouseDragPositionRadius = (float)CoordinateSystem.DistanceBetween(displayer.coordinateSystem.OriginalPoint,CoordinateSystem.PointToPoint2F(e.Location));
+            mouseDragPositionRadius = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
 
             //计算鼠标点击点在mouseDragPositionRadius长度上对应的坐标
-            displayer.coordinateSystem.RadiusWiseZoomPosition(mouseDownPosition, mouseDragPositionRadius);
+            displayer.CoordinateSystem.RadiusWiseZoomPosition(mouseDownPosition, mouseDragPositionRadius);
 
             //计算鼠标拖动点在mouseDownPositionRadius长度上对应的坐标
-            displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F(e.Location), mouseDownPositionRadius);
+            displayer.CoordinateSystem.RadiusWiseZoomPosition(Tools.PointToPoint2F(e.Location), mouseDownPositionRadius);
 
             //计算拖拽位置和坐标原点连线的正北夹角
-            dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
+            dragAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)
@@ -77,21 +78,21 @@ namespace RadarDisplayPackage
                 isMouseDown = true;
 
                 //记录鼠标按下的位置
-                mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
+                mouseDownPosition = Tools.PointToPoint2F(e.Location);
                 mouseDragPosition = mouseDownPosition;
 
                 //计算第一个径向距离
-                mouseDownPositionRadius = (float)CoordinateSystem.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
+                mouseDownPositionRadius = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
 
                 //计算点击位置和坐标原点连线的正北夹角
-                beginAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
+                beginAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
             }
         }
 
         protected override Command CreateCommand()
         {
-            float r1 = (float)CoordinateSystem.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
-            float r2 = (float)CoordinateSystem.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDragPosition);
+            float r1 = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
+            float r2 = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDragPosition);
 
             //拖动距离太小不处理，这个判断主要是排除鼠标点击操作
             if (Math.Abs(r1 - r2) < 5 || Math.Abs(beginAngle - dragAngle) < 1)
@@ -105,8 +106,8 @@ namespace RadarDisplayPackage
             //float dis2 = c.ProjectedDis;
             float dis2 = c.Dis;
 
-            float begin = CoordinateSystem.FindSmallArcBeginAngle(beginAngle, dragAngle);
-            float end = CoordinateSystem.FindSmallArcEndAngle(beginAngle, dragAngle);
+            float begin = Tools.FindSmallArcBeginAngle(beginAngle, dragAngle);
+            float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
             WaveGate wg = new WaveGate(begin, end, dis1, dis2, isSemiAutoWaveGate);
 
             Command cmd = new WaveGateAddCommand(wg);

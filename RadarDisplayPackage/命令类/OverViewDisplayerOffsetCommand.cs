@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Drawing;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -13,7 +14,7 @@ namespace RadarDisplayPackage
         readonly Point2F mouseDoubleClickPos;
         public OverViewDisplayerOffsetCommand(OverViewDisplayer ovd, Point p) : base(ovd)
         {
-            mouseDoubleClickPos = CoordinateSystem.PointToPoint2F(p);
+            mouseDoubleClickPos = Tools.PointToPoint2F(p);
         }
 
         public override void Execute()

@@ -3,10 +3,11 @@ using TargetManagerPackage;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
 using System.Drawing;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
-    internal abstract class  GraphicTargetView : TargetView,IDisposable
+    public abstract class  GraphicTargetView : TargetView,IDisposable
     {
         protected RenderTarget canvas;
         protected D2DFactory factory;
@@ -56,13 +57,13 @@ namespace RadarDisplayPackage
             };
 
             targetController = TargetManagerFactory.CreateTargetManagerController();
-            targetViewBrush = canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255, 128, 0)); //橘黄
+            targetViewBrush = canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255, 128, 0)); //橘黄
         }
 
 
         public virtual bool IsPointInActiveRect(Point p)
         {
-            return CoordinateSystem.IsPointInRect(CoordinateSystem.PointToPoint2F(p), activeRect);
+            return Tools.IsPointInRect(Tools.PointToPoint2F(p), activeRect);
         }
 
         public override bool HandleMouseClick(Object p)

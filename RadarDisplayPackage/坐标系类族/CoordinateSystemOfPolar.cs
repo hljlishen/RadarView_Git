@@ -7,11 +7,12 @@ using System;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
 using System.Drawing;
+using Utilities;
 using SweepDirection = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.SweepDirection;
 
 namespace RadarDisplayPackage
 {
-    internal class CoordinateSystemOfPolar : CoordinateSystem
+    public class CoordinateSystemOfPolar : CoordinateSystem
     {
         public CoordinateSystemOfPolar(Rect drawArea, double Range, D2DFactory factory) :base(drawArea, Range, factory)
         {
@@ -21,7 +22,7 @@ namespace RadarDisplayPackage
 
         protected override Point2F FindOriginalPoint(Rect coordniteArea)
         {
-            return FindCenterPosition(coordniteArea);   //极坐标系的坐标原点即为区域中心点
+            return Tools.FindCenterPosition(coordniteArea);   //极坐标系的坐标原点即为区域中心点
         }
 
         public override Point2F CoordinateToPoint(PolarCoordinate coordinate)
@@ -35,8 +36,8 @@ namespace RadarDisplayPackage
             projectedDistance = coordinate.Dis;     //会导致波门绘制失效
 
             double r = (((double)CoordinateArea.Width / 2) / (Range)) * (projectedDistance);
-            double sin = Math.Sin(AngleToRadian(coordinate.Az));
-            double cos = Math.Cos(AngleToRadian(coordinate.Az));
+            double sin = Math.Sin(Tools.AngleToRadian(coordinate.Az));
+            double cos = Math.Cos(Tools.AngleToRadian(coordinate.Az));
             double x1 = r * sin;
             double y1 = r * cos;
             x1 = OriginalPoint.X + x1;
@@ -50,8 +51,8 @@ namespace RadarDisplayPackage
         public override PolarCoordinate PointToCoordinate(Point2F p)
         {
             PolarCoordinate c = new PolarCoordinate();
-            c.Az = AngleToNorth(OriginalPoint, p);
-            float r = (float)DistanceBetween(OriginalPoint, p);
+            c.Az = Tools.AngleToNorth(OriginalPoint, p);
+            float r = (float)Tools.DistanceBetween(OriginalPoint, p);
             float projectedDistance = (float)(r * Range * 2 / CoordinateArea.Width);
             c.ProjectedDis = projectedDistance;
             c.El = -1;
@@ -64,7 +65,7 @@ namespace RadarDisplayPackage
 
         public override bool PointOutOfRange(Point p)
         {
-            float distance = (float)DistanceBetween(OriginalPoint, PointToPoint2F(p));
+            float distance = (float)Tools.DistanceBetween(OriginalPoint, Tools.PointToPoint2F(p));
 
             if (distance > CoordinateArea.Width / 2)
                 return true;
@@ -77,14 +78,14 @@ namespace RadarDisplayPackage
             Point2F innerLeft, outterLeft, outterRight, innerRight;
             PathGeometry waveGate = Factory.CreatePathGeometry();
 
-            float mouseBeginAngle = CoordinateSystem.AngleToNorth(OriginalPoint, position1);
-            float mouseEndAngle = CoordinateSystem.AngleToNorth(OriginalPoint, position2);
+            float mouseBeginAngle = Tools.AngleToNorth(OriginalPoint, position1);
+            float mouseEndAngle = Tools.AngleToNorth(OriginalPoint, position2);
 
-            float begin = FindSmallArcBeginAngle(mouseBeginAngle, mouseEndAngle);
-            float end = FindSmallArcEndAngle(mouseBeginAngle, mouseEndAngle);
+            float begin = Tools.FindSmallArcBeginAngle(mouseBeginAngle, mouseEndAngle);
+            float end = Tools.FindSmallArcEndAngle(mouseBeginAngle, mouseEndAngle);
 
-            float mouseBeginDis = (float)DistanceBetween(OriginalPoint, position1);
-            float mouseEndDis = (float)DistanceBetween(OriginalPoint, position2);
+            float mouseBeginDis = (float)Tools.DistanceBetween(OriginalPoint, position1);
+            float mouseEndDis = (float)Tools.DistanceBetween(OriginalPoint, position2);
             Point2F mouseBeginZoomed = RadiusWiseZoomPosition(position1, mouseEndDis);
             Point2F mouseDragZoomed = RadiusWiseZoomPosition(position2, mouseBeginDis);
 
@@ -147,18 +148,33 @@ namespace RadarDisplayPackage
 
         public override Point2F CalIntersectionPoint(float angle)
         {
-            double x = CoordinateArea.Width * Math.Sin(AngleToRadian(angle)) / 2 + OriginalPoint.X;
-            double y = OriginalPoint.Y - CoordinateArea.Width * Math.Cos(AngleToRadian(angle)) / 2;
+            double x = CoordinateArea.Width * Math.Sin(Tools.AngleToRadian(angle)) / 2 + OriginalPoint.X;
+            double y = OriginalPoint.Y - CoordinateArea.Width * Math.Cos(Tools.AngleToRadian(angle)) / 2;
 
             return new Point2F((float)x, (float)y);
         }
 
         public Point2F CalIntersectionPoint(float angle, float radius)
         {
-            double x = radius * Math.Sin(AngleToRadian(angle)) + OriginalPoint.X;
-            double y = OriginalPoint.Y - radius * Math.Cos(AngleToRadian(angle));
+            double x = radius * Math.Sin(Tools.AngleToRadian(angle)) + OriginalPoint.X;
+            double y = OriginalPoint.Y - radius * Math.Cos(Tools.AngleToRadian(angle));
 
             return new Point2F((float)x, (float)y);
         }
+
+        public Point2F RadiusWiseZoomPosition(Point2F p, double r)
+        {
+            var ret = new Point2F();
+
+            //计算拖拽位置和坐标原点连线的正北夹角
+            var angle = Tools.AngleToNorth(OriginalPoint, p);
+            angle = (float)Tools.AngleToRadian(angle);
+
+            //计算起始角度对应直线与坐标系外圈圆周的交点坐标
+            ret.X = (int)(OriginalPoint.X + r * Math.Sin(angle));
+            ret.Y = (int)(OriginalPoint.Y - r * Math.Cos(angle));
+
+            return ret;
+        }   //极坐标
     }
 }

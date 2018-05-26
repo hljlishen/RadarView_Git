@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -77,7 +78,7 @@ namespace RadarDisplayPackage
         private GraphicTargetDotView GenerateGraphicTargetDotViewFromMouseLocation(Point mouseLocation)
         {
             PolarCoordinate coordinate =
-                ((GraphicTrackDisplayer)displayer).coordinateSystem.PointToCoordinate(CoordinateSystem.PointToPoint2F(mouseLocation));
+                ((GraphicTrackDisplayer)displayer).coordinateSystem.PointToCoordinate(Tools.PointToPoint2F(mouseLocation));
             TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { sectorIndex = 0 };
             TargetView view = ((GraphicTrackDisplayer)displayer).targetsManager.CreateTargetView(dot);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -42,20 +43,13 @@ namespace RadarDisplayPackage
                 gs.AddLine(beginLinePoint);   //原始代码
 
                 //判断起始角度和结束角度
-                float begin = CoordinateSystem.FindSmallArcBeginAngle(beginAngle, dragAngle);
-                float end = CoordinateSystem.FindSmallArcEndAngle(beginAngle, dragAngle);
+                float begin = Tools.FindSmallArcBeginAngle(beginAngle, dragAngle);
+                float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
 
                 //判断上行扫过的方向，如果起始角度是鼠标点击的位置则扇形是顺时针扫过
                 //如果起始角度是鼠标拖动位置，则扇形是逆时针扫过
                 SweepDirection sd ;
-                if (begin == beginAngle)
-                {
-                    sd = SweepDirection.Clockwise;
-                }
-                else
-                {
-                    sd = SweepDirection.Counterclockwise;
-                }
+                sd = Math.Abs(begin - beginAngle) < 0.0001f ? SweepDirection.Clockwise : SweepDirection.Counterclockwise;
 
                 //扇形的X轴Y轴半径是矩形框width的一半
                 SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);
@@ -84,10 +78,10 @@ namespace RadarDisplayPackage
             if (!isMouseDown)
                 return;
             ////计算拖拽位置和坐标原点连线的正北夹角
-            dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
+            dragAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
 
             //计算拖动位置
-            dragLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F(e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
+            dragLinePoint = displayer.CoordinateSystem.RadiusWiseZoomPosition(Tools.PointToPoint2F(e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)
@@ -95,14 +89,14 @@ namespace RadarDisplayPackage
             if (isMouseDown || e.Button != MouseButtons.Left)
                 return;
             isMouseDown = true;
-            mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
+            mouseDownPosition = Tools.PointToPoint2F(e.Location);
 
             ////计算点击位置和坐标原点连线的正北夹角
-            beginAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
+            beginAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
             dragAngle = beginAngle;
 
             //计算第一条线与圆周的夹角
-            beginLinePoint = displayer.coordinateSystem.RadiusWiseZoomPosition(CoordinateSystem.PointToPoint2F( e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
+            beginLinePoint = displayer.CoordinateSystem.RadiusWiseZoomPosition(Tools.PointToPoint2F( e.Location), displayer.coordinateSystem.CoordinateArea.Width / 2);
             dragLinePoint = beginLinePoint;
         }
 
@@ -124,8 +118,8 @@ namespace RadarDisplayPackage
                 return new NullCommand();
 
             //控制天线扫描范围的开始和结束角度
-            float begin = CoordinateSystem.FindSmallArcBeginAngle(beginAngle, dragAngle);
-            float end = CoordinateSystem.FindSmallArcEndAngle(beginAngle, dragAngle);
+            float begin = Tools.FindSmallArcBeginAngle(beginAngle, dragAngle);
+            float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
 
             //创建天线控制命令
             Command cmd = new AntennaSetSectionSweepModeCommand(begin, end); //传入-1表示按原始扫描速度进行扇扫

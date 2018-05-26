@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -25,7 +26,7 @@ namespace TargetManagerPackage
                 el = value;
                 if(el > 0 && dis > 0)
                 {
-                    ProjectedDis = (float)(dis * Math.Cos(AngleToRadian(el)));
+                    ProjectedDis = (float)(dis * Math.Cos(Tools.AngleToRadian(el)));
                 }
             }
         }
@@ -39,7 +40,7 @@ namespace TargetManagerPackage
                 dis = value;
                 if (el > 0 && dis > 0)
                 {
-                    ProjectedDis = (float)(dis * Math.Cos(AngleToRadian((float)el)));
+                    ProjectedDis = (float)(dis * Math.Cos(Tools.AngleToRadian((float)el)));
                 }
             }
         }
@@ -73,13 +74,13 @@ namespace TargetManagerPackage
 
         public bool EqualsTo(PolarCoordinate c) => false;
 
-        public static float AngleToRadian(float angle) => (float)Math.PI * angle / 180;
+        //public static float AngleToRadian(float angle) => (float)Math.PI * angle / 180;
 
-        public float X => (float)(dis * Math.Cos(AngleToRadian( el)) * Math.Cos(AngleToRadian( az)));
+        public float X => (float)(dis * Math.Cos(Tools.AngleToRadian( el)) * Math.Cos(Tools.AngleToRadian( az)));
 
-        public float Y => (float)(dis * Math.Cos(AngleToRadian(el)) * Math.Sin(AngleToRadian(az)));
+        public float Y => (float)(dis * Math.Cos(Tools.AngleToRadian(el)) * Math.Sin(Tools.AngleToRadian(az)));
 
-        public float Z => (float)(dis * Math.Sin(AngleToRadian(el)));
+        public float Z => (float)(dis * Math.Sin(Tools.AngleToRadian(el)));
 
         public static float DistanceBetween(PolarCoordinate c1, PolarCoordinate c2)
         {
@@ -92,59 +93,11 @@ namespace TargetManagerPackage
         public byte[] Serialize()
         {
             List<byte> ls = new List<byte>();
-            ls.AddRange(FloatToBytes(az,1));
-            ls.AddRange(FloatToBytes(el,1));
-            ls.AddRange(FloatToBytes(dis,1));
+            ls.AddRange(Tools.FloatToBytes(az,1));
+            ls.AddRange(Tools.FloatToBytes(el,1));
+            ls.AddRange(Tools.FloatToBytes(dis,1));
 
             return ls.ToArray();
-        }
-
-        public static byte[] FloatToBytes(float value, int validBits)  //浮点数保留精度后转为byte数组，高位在前
-        {
-            List<byte> ls = new List<byte>();
-            int value_int =(int)( value * Math.Pow(10,validBits));
-            int rightShiftCount = 0;
-
-            while (true)
-            {
-                int tmp = value_int >> (rightShiftCount++ * 8);
-                if(tmp == 0)
-                    break;
-
-                ls.Insert(0, (byte)(tmp & 0xff));
-            }
-
-            //if(ls.Count == 1)       //如果数值小于25.5，输出的长度为1个字节，需要前面补0
-            //    ls.Insert(0x0,0);
-            return ls.ToArray();
-        }
-
-        public static float BytesToFloat(byte[] value, int validBits)
-        {
-            int tmp = 0;
-            for (int i = 0; i < value.Length; i++)
-            {
-                tmp <<= 8;
-                tmp += value[i];
-            }
-
-            return (float) (tmp / Math.Pow(10, validBits));
-        }
-
-        public static double RadianToAngle(double radian)
-        {
-            var a = 180 * radian;
-            var b = a / 3.14159265358979323846264338;
-            return b;
-        }
-
-        public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
-        {
-            if (angle < 0)
-                angle += 360;
-            angle %= 360;
-
-            return angle;
         }
     }
 }

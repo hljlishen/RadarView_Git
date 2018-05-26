@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -71,12 +72,12 @@ namespace TargetManagerPackage
             Random random = new Random(DateTime.Now.Millisecond);
             int distanceRandomValue = random.Next(10, 50);
             int azRandomValue = random.Next(0, 10);
-            double x = center.Dis * Math.Cos(PolarCoordinate.AngleToRadian(90 - center.Az));
-            double y = center.Dis * Math.Sin(PolarCoordinate.AngleToRadian(90 - center.Az));
-            double x1 = x + 100 * Math.Cos(PolarCoordinate.AngleToRadian(90 - angle));
-            double y1 = y + 100 * Math.Sin(PolarCoordinate.AngleToRadian(90 - angle));
-            double alpha = 90 - PolarCoordinate.RadianToAngle(Math.Atan2(y1, x1));
-            alpha = PolarCoordinate.StandardAngle((float) alpha);
+            double x = center.Dis * Math.Cos(Tools.AngleToRadian(90 - center.Az));
+            double y = center.Dis * Math.Sin(Tools.AngleToRadian(90 - center.Az));
+            double x1 = x + 100 * Math.Cos(Tools.AngleToRadian(90 - angle));
+            double y1 = y + 100 * Math.Sin(Tools.AngleToRadian(90 - angle));
+            double alpha = 90 - Tools.RadianToAngle(Math.Atan2(y1, x1));
+            alpha = Tools.StandardAngle((float) alpha);
             double r = Math.Sqrt(Math.Pow(x1, 2) + Math.Pow(y1, 2));
             coordinate.Az = (float)alpha ;
             coordinate.Dis = (float)r + distanceRandomValue;

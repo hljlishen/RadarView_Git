@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -33,7 +34,7 @@ namespace RadarDisplayPackage
         public override Point2F CoordinateToPoint(PolarCoordinate coordinate)
         {
             double r = (coordinate.Az / 360) * CoordinateArea.Width; //
-            double height = coordinate.Dis * Math.Sin(AngleToRadian(coordinate.El));
+            double height = coordinate.Dis * Math.Sin(Tools.AngleToRadian(coordinate.El));
 
             //if (height > Range)     //是否超出范围
             //{

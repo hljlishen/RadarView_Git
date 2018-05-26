@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -67,18 +68,18 @@ namespace RadarDisplayPackage
             if (isMouseDown)
             {
                 //计算拖拽位置和坐标原点连线的正北夹角
-                dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
+                dragAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
                 dragLinePoint = displayer.coordinateSystem.CalIntersectionPoint(dragAngle);
 
                 shouldExecuteCmd = true;
                 //计算开始角度及开始角度与圆周交点坐标
                 beginAngle = dragAngle - FixedSweepAngle / 2;
-                beginAngle = CoordinateSystem.StandardAngle(beginAngle);
+                beginAngle = Tools.StandardAngle(beginAngle);
                 beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(beginAngle);
 
                 //计算结束角度及开始角度与圆周交点坐标
                 endAngle = dragAngle + FixedSweepAngle / 2;
-                endAngle = CoordinateSystem.StandardAngle(endAngle);
+                endAngle = Tools.StandardAngle(endAngle);
                 endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
             }
         }
@@ -88,20 +89,20 @@ namespace RadarDisplayPackage
             if (isMouseDown || e.Button != MouseButtons.Left) return;
             shouldExecuteCmd = false;   //鼠标点击但未拖动，此时松开鼠标不执行命令
             isMouseDown = true;
-            mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);
+            mouseDownPosition = Tools.PointToPoint2F(e.Location);
 
             //计算开始角度及开始角度与圆周交点坐标
-            dragAngle = CoordinateSystem.AngleToNorth(displayer.coordinateSystem.OriginalPoint, CoordinateSystem.PointToPoint2F(e.Location));
+            dragAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
             dragLinePoint = displayer.coordinateSystem.CalIntersectionPoint(dragAngle);
 
             //计算开始角度交点
             beginAngle = dragAngle - FixedSweepAngle / 2;
-            beginAngle = CoordinateSystem.StandardAngle(beginAngle);
+            beginAngle = Tools.StandardAngle(beginAngle);
             beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(beginAngle);
 
             //计算结束角度及开始角度与圆周交点坐标
             endAngle = dragAngle + FixedSweepAngle / 2;
-            endAngle = CoordinateSystem.StandardAngle(endAngle);
+            endAngle = Tools.StandardAngle(endAngle);
             endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
 
             //dragAngle += 30;

@@ -11,17 +11,17 @@ namespace RadarDisplayPackage
         {
             base.Draw();
 
-            view.Canvas.FillEllipse(new Ellipse(view.Position, 4,4), targetViewBrush);
+            View.Canvas.FillEllipse(new Ellipse(View.Position, 4,4), targetViewBrush);
 
         }
         protected override PathGeometry BuildTriangle()
         {
-            PathGeometry triangle = view.Factory.CreatePathGeometry();
+            PathGeometry triangle = View.Factory.CreatePathGeometry();
             GeometrySink gs = triangle.Open();
-            gs.BeginFigure(new Point2F(view.Position.X, view.Position.Y - 5), FigureBegin.Filled);
-            gs.AddLine(new Point2F(view.Position.X - 5, view.Position.Y - 15));
-            gs.AddLine(new Point2F(view.Position.X + 5, view.Position.Y - 15));
-            gs.AddLine(new Point2F(view.Position.X, view.Position.Y - 5));
+            gs.BeginFigure(new Point2F(View.Position.X, View.Position.Y - 5), FigureBegin.Filled);
+            gs.AddLine(new Point2F(View.Position.X - 5, View.Position.Y - 15));
+            gs.AddLine(new Point2F(View.Position.X + 5, View.Position.Y - 15));
+            gs.AddLine(new Point2F(View.Position.X, View.Position.Y - 5));
             gs.EndFigure(FigureEnd.Closed);
             gs.Close();
             gs.Dispose();
@@ -33,15 +33,15 @@ namespace RadarDisplayPackage
         {
             RectF rect = new RectF
             {
-                Left = view.Position.X - 20,
-                Top = view.Position.Y - 35
+                Left = View.Position.X - 20,
+                Top = View.Position.Y - 35
             };
             rect.Right = rect.Left + idTagWidth;
             rect.Bottom = rect.Top + idTagHeigth;
 
             idTextRect = rect;
             idTextRect.Left += 12;
-            RoundedRectangleGeometry idTag = view.Factory.CreateRoundedRectangleGeometry(new RoundedRect(rect,3,3));
+            RoundedRectangleGeometry idTag = View.Factory.CreateRoundedRectangleGeometry(new RoundedRect(rect,3,3));
             return idTag;
         }
     }

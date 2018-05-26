@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Utilities;
 
 namespace CycleDataDrivePackage
 {
@@ -66,8 +67,8 @@ namespace CycleDataDrivePackage
         private byte[] AdjustCycleDataAngle(byte[] cycleData)
         {
             (float antennaAngle, int angleInt) = AzimuthCell.GetAngleFromCycleData(cycleData);
-            antennaAngle = AzimuthCell.ReverAngleDirection(antennaAngle);
-            antennaAngle = AzimuthCell.StandardAngle(antennaAngle - AzAdjustment);
+            antennaAngle = Tools.ReverAngleDirection(antennaAngle);
+            antennaAngle = Tools.StandardAngle(antennaAngle - AzAdjustment);
             int angleI = (int)(antennaAngle * 65535 / 360);
             byte azHigh = (byte)((angleI >> 8) & 0xff);
             byte azLow = (byte)angleI;

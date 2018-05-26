@@ -82,10 +82,5 @@ namespace RadarDisplayPackage
         }
 
         protected virtual void OtherDrawing(){ }
-
-        public static ColorF GetColorFFromRgb(int r, int g, int b)
-        {
-            return new ColorF(new ColorI(r, g, b));
-        }
     }
 }

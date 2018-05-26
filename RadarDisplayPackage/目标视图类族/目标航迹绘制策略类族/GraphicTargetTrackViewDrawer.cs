@@ -2,13 +2,14 @@
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 using System;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
-    abstract class GraphicTargetTrackViewDrawer : IDisposable
+    public abstract class GraphicTargetTrackViewDrawer : IDisposable
     {
         public static bool ShouldDrawCourse { get; set; } = true;
-        protected GraphicTargetTrackView view;
+        protected GraphicTargetTrackView View;
         protected Brush idBrush; //标签文本画刷
         protected Brush tagBrush; //标签框画刷
         //PathGeometry pg;
@@ -29,17 +30,17 @@ namespace RadarDisplayPackage
 
         protected GraphicTargetTrackViewDrawer(GraphicTargetTrackView view)
         {
-            this.view = view;
+            this.View = view;
 
             DWriteFactory dw = DWriteFactory.CreateFactory();
             idFormation = dw.CreateTextFormat("Berlin Sans FB Demi", 15);
-            targetViewBrush = view.Canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255 ,128 ,0)); //橘黄
-            idBrush = view.Canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255 ,192 ,203)); //粉色
+            targetViewBrush = view.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255 ,128 ,0)); //橘黄
+            idBrush = view.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255 ,192 ,203)); //粉色
             idBrush.Opacity = 1;
-            tagBrush = view.Canvas.CreateSolidColorBrush(!view.Target.active ? GraphicTrackDisplayer.GetColorFFromRgb(65, 105, 225) : GraphicTrackDisplayer.GetColorFFromRgb(255, 0, 0));
+            tagBrush = view.Canvas.CreateSolidColorBrush(!view.Target.active ? Tools.GetColorFFromRgb(65, 105, 225) : Tools.GetColorFFromRgb(255, 0, 0));
             tagBrush.Opacity = 0.6f;
 
-            preLocationsBrush = view.Canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255, 255, 255));   //white
+            preLocationsBrush = view.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255, 255, 255));   //white
             preLocationsBrush.Opacity = 0.7f;
             dw.Dispose();
         }
@@ -56,7 +57,7 @@ namespace RadarDisplayPackage
             //画ID标签
             renderTarget.FillGeometry(pg, tagBrush);
             renderTarget.FillGeometry(idTag, tagBrush);
-            TargetTrack t = (TargetTrack)view.Target;
+            TargetTrack t = (TargetTrack)View.Target;
             if (t.trackID < 10)     //标签是一位数还是两位数
                 idTextRect.Left += smallIDOffset;
             renderTarget.DrawText(t.trackID.ToString(), idFormation, idTextRect, idBrush);
@@ -66,7 +67,7 @@ namespace RadarDisplayPackage
             pg.Dispose();
             idTag.Dispose();
         }
-        public virtual void Draw() => Draw(view.Canvas);
+        public virtual void Draw() => Draw(View.Canvas);
 
         protected abstract PathGeometry BuildTriangle();
 
@@ -75,18 +76,18 @@ namespace RadarDisplayPackage
         protected void DrawTrackCourse(RenderTarget renderTarget)
         {
             //画历史航迹
-            foreach (Ellipse e in view.PreLocations)
+            foreach (Ellipse e in View.PreLocations)
             {
                 renderTarget.FillEllipse(e, preLocationsBrush);
             }
-            for (int i = 0; i < view.PreLocations.Count; i++)
+            for (int i = 0; i < View.PreLocations.Count; i++)
             {
-                if (i == view.PreLocations.Count - 1)
+                if (i == View.PreLocations.Count - 1)
                     break;
-                view.Canvas.DrawLine(view.PreLocations[i].Point, view.PreLocations[i + 1].Point, preLocationsBrush, 1);
+                View.Canvas.DrawLine(View.PreLocations[i].Point, View.PreLocations[i + 1].Point, preLocationsBrush, 1);
             }
-            if (view.PreLocations.Count != 0)
-                view.Canvas.DrawLine(view.PreLocations[view.PreLocations.Count - 1].Point, view.Position, preLocationsBrush, 1);
+            if (View.PreLocations.Count != 0)
+                View.Canvas.DrawLine(View.PreLocations[View.PreLocations.Count - 1].Point, View.Position, preLocationsBrush, 1);
         }
 
         public virtual void Dispose()

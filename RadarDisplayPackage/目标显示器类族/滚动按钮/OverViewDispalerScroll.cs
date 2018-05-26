@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -25,10 +26,10 @@ namespace RadarDisplayPackage
             Displayer = displayer;
             HorizontalStep = displayer.coordinateSystem.CoordinateArea.Width / StepCoff;
             VerticalStep = displayer.coordinateSystem.CoordinateArea.Height / StepCoff;
-            BorderBrush = displayer.Canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255, 255, 0));
-            FillBrush = displayer.Canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255, 255, 0));
+            BorderBrush = displayer.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255, 255, 0));
+            FillBrush = displayer.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255, 255, 0));
             FillBrush.Opacity = 0.3f;
-            TriangleBrush = displayer.Canvas.CreateSolidColorBrush(GraphicTrackDisplayer.GetColorFFromRgb(255, 255, 255));
+            TriangleBrush = displayer.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255, 255, 255));
             TriangleBrush.Opacity = 0.5f;
             BorderWidth = 2;
             Displayer.DisplayControl.MouseMove += DisplayControl_MouseMove;
@@ -43,7 +44,7 @@ namespace RadarDisplayPackage
 
         private void DisplayControl_MouseLeave(object sender, EventArgs e) => MouseInArea = false;
 
-        private void DisplayControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e) => MouseInArea = CoordinateSystem.IsPointInRect(CoordinateSystem.PointToPoint2F(e.Location), DisplayArea);
+        private void DisplayControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e) => MouseInArea = Tools.IsPointInRect(Tools.PointToPoint2F(e.Location), DisplayArea);
 
         public void Draw()
         {

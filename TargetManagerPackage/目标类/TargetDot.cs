@@ -1,5 +1,6 @@
 ﻿using System;
 using CycleDataDrivePackage;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -22,13 +23,13 @@ namespace TargetManagerPackage
         {
             sectorIndex = sector;
             int pos = p;
-            int az = DistanceCell.MakeInt(data, pos, AzBytes);
+            int az = Tools.MakeInt(data, pos, AzBytes);
             pos += AzBytes;
 
-            int dis = DistanceCell.MakeInt(data, pos, DisBytes);
+            int dis = Tools.MakeInt(data, pos, DisBytes);
             pos += DisBytes;
 
-            int el = DistanceCell.MakeInt(data, pos, ElBytes);
+            int el = Tools.MakeInt(data, pos, ElBytes);
             //pos += ElBytes;
 
             AZ = (float) az / 10;
@@ -41,7 +42,7 @@ namespace TargetManagerPackage
             AZ = az;
             EL = el;
             Dis = dis;
-            CurrentCoordinate.ProjectedDis = (float)(dis * Math.Cos(AngleToRadian(el)));
+            CurrentCoordinate.ProjectedDis = (float)(dis * Math.Cos(Tools.AngleToRadian(el)));
         }
 
         public bool Adopted { get; set; }

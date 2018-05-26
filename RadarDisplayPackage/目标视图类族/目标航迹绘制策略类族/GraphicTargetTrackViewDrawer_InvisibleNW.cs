@@ -13,7 +13,7 @@ namespace RadarDisplayPackage
 
         protected override PathGeometry BuildTriangle()
         {
-            PathGeometry triangle = view.Factory.CreatePathGeometry();
+            PathGeometry triangle = View.Factory.CreatePathGeometry();
             GeometrySink gs = triangle.Open();
             gs.BeginFigure(new Point2F(projectivePosition.X, projectivePosition.Y), FigureBegin.Filled);
             gs.AddLine(new Point2F(projectivePosition.X + 20, projectivePosition.Y + 10));
@@ -36,7 +36,7 @@ namespace RadarDisplayPackage
 
             idTextRect = rect;
             idTextRect.Left += 12;
-            RoundedRectangleGeometry idTag = view.Factory.CreateRoundedRectangleGeometry(new RoundedRect(rect, 3, 3));
+            RoundedRectangleGeometry idTag = View.Factory.CreateRoundedRectangleGeometry(new RoundedRect(rect, 3, 3));
             return idTag;
         }
 
@@ -44,8 +44,8 @@ namespace RadarDisplayPackage
         {
             Point2F p = new Point2F();
 
-            p.Y = Math.Max(view.CoordinateSystem.VisibleArea.Top, view.Position.Y);
-            p.X = Math.Max(view.CoordinateSystem.VisibleArea.Left, view.Position.X);
+            p.Y = Math.Max(View.CoordinateSystem.VisibleArea.Top, View.Position.Y);
+            p.X = Math.Max(View.CoordinateSystem.VisibleArea.Left, View.Position.X);
 
             return p;
         }

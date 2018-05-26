@@ -3,7 +3,7 @@ using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
-    internal abstract class TargetView : IDisposable
+    public abstract class TargetView : IDisposable
     {
         protected Target target;        //目标点数据
 

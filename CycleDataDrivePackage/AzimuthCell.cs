@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Utilities;
 
 namespace CycleDataDrivePackage
 {
@@ -24,7 +25,7 @@ namespace CycleDataDrivePackage
             int angleI;
             (Angle, angleI) = GetAngleFromCycleData(data);
 
-            int cellCount = DistanceCell.MakeInt(data, HeadLength + AzimuthLength, DistanceCellCountLength);
+            int cellCount = Tools.MakeInt(data, HeadLength + AzimuthLength, DistanceCellCountLength);
 
             int pos = DistanceCellsDataStartPosition;
             for(int i = 0; i < cellCount; i++)
@@ -55,26 +56,8 @@ namespace CycleDataDrivePackage
 
         public static (float, int) GetAngleFromCycleData(byte[] data)
         {
-            int angleI = DistanceCell.MakeInt(data, HeadLength, AzimuthLength);
+            int angleI = Tools.MakeInt(data, HeadLength, AzimuthLength);
             return (CalAngle(angleI), angleI);
-        }
-
-        public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
-        {
-            while (angle < 0)
-                angle += 360;
-            if (angle > 360) 
-                angle %= 360;
-
-            return angle;
-        }
-
-        public static float ReverAngleDirection(float angle)
-        {
-            float rAngle = 360f - angle;
-            rAngle = StandardAngle(rAngle);
-
-            return rAngle;
         }
 
         public int CompareTo(object obj)

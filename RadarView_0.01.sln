@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycleDataDrivePackageTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycleDataDrivePackageTests1", "CycleDataDrivePackageTests1\CycleDataDrivePackageTests1.csproj", "{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{BCE36124-179E-45A2-8B0A-D4DB9597277B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FCFDFB9-3F82-44EE-B52E-94B1679520CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE36124-179E-45A2-8B0A-D4DB9597277B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE36124-179E-45A2-8B0A-D4DB9597277B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE36124-179E-45A2-8B0A-D4DB9597277B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE36124-179E-45A2-8B0A-D4DB9597277B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

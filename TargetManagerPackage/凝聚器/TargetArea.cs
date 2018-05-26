@@ -175,7 +175,6 @@ namespace TargetManagerPackage
             List<TargetDot> dots = new List<TargetDot>();
             foreach (TargetArea area in areas)
             {
-                Console.WriteLine(area.Width);
                 if(area.Width < AreaWidthMinimum || area.Width > AreaWidthMaximum)
                     continue;
                 List<DistanceCell> disCells = area.GetDistanceCells();

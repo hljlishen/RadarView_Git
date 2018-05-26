@@ -3,6 +3,7 @@ using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -27,6 +28,8 @@ namespace RadarDisplayPackage
         private readonly RightScroller _rightScroller;
         private readonly DownScroller _downScroller;
         private readonly LeftScroller _leftScroller;
+
+        public CoordinateSystemOfPolar CoordinateSystem => (CoordinateSystemOfPolar) coordinateSystem;
 
         public OverViewDisplayer(Panel displayerContain) : base(displayerContain)
         {
@@ -54,7 +57,7 @@ namespace RadarDisplayPackage
             if (Control.ModifierKeys == Keys.Control)   //ctrl键按下,添加一个TrackGenerator
             {
                 PolarCoordinate coordinate =
-                    coordinateSystem.PointToCoordinate(CoordinateSystem.PointToPoint2F(mouseEventArgs.Location));
+                    coordinateSystem.PointToCoordinate(Tools.PointToPoint2F(mouseEventArgs.Location));
                 TargetManagerAddTrackGeneratorCommand generator = new TargetManagerAddTrackGeneratorCommand(coordinate);
                 generator.Execute();
             }

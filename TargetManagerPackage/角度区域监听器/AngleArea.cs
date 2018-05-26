@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -11,16 +12,15 @@ namespace TargetManagerPackage
 
         public AngleArea(float begin, float end)
         {
-            BeginAngle = MakeAngle0To360(begin);
-            EndAngle = MakeAngle0To360(end);
+            BeginAngle = Tools.StandardAngle(begin);
+            EndAngle = Tools.StandardAngle(end);
+            if (EndAngle - 0 < 0.000001)    //区域的终止角度应为360，不能是0
+                EndAngle = 360;
 
             AcrossZeroDegree = IsZeroDegreeAcrossingAngleArea(this);
         }
 
-        public static bool IsZeroDegreeAcrossingAngleArea(AngleArea area)
-        {
-            return area.BeginAngle > area.EndAngle;
-        }
+        public static bool IsZeroDegreeAcrossingAngleArea(AngleArea area) => area.BeginAngle > area.EndAngle;
 
         public static List<AngleArea> SpliteNorthAcrossingAngleArea(AngleArea area)
         {
@@ -54,23 +54,6 @@ namespace TargetManagerPackage
                 break;
             }
             return ret;
-        }
-
-        public static float MakeAngle0To360(float angle)
-        {
-            if (angle < 0)  //负角度，反复假360，直到角度在[0,360)
-            {
-                while (angle < 0)
-                    angle += 360;
-                return angle;
-            }
-
-            if (angle > 360)   //超过360的角度，直接取余
-            {
-                return angle % 360;
-            }
-
-            return angle;       //正常角度，直接返回
         }
     }
 }

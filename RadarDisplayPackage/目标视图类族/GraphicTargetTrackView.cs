@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
-    class GraphicTargetTrackView : GraphicTargetView
+    public class GraphicTargetTrackView : GraphicTargetView
     {
         private GraphicTargetTrackViewDrawer drawer;
         protected const int preLocationRadius = 2;  //历史位置圆形半径
@@ -97,7 +98,7 @@ namespace RadarDisplayPackage
             if (base.IsPointInActiveRect(p))
                 return true;
             Rect rect = new Rect((int)drawer.IdTextRect.Left - GraphicTargetTrackViewDrawer.iDtextRectLeftOffset, (int)drawer.IdTextRect.Top, (int)drawer.IdTextRect.Right, (int)drawer.IdTextRect.Bottom);
-            if (CoordinateSystem.IsPointInRect(CoordinateSystem.PointToPoint2F(p), rect))
+            if (Tools.IsPointInRect(Tools.PointToPoint2F(p), rect))
             {
                 return true;
             }

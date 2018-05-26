@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CycleDataDrivePackage;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -111,7 +112,7 @@ namespace TargetManagerPackage
         public static float ReverAngleDirection(float angle)
         {
             float rAngle = 360f - angle;
-            rAngle = PolarCoordinate.StandardAngle(rAngle);
+            rAngle = Tools.StandardAngle(rAngle);
 
             return rAngle;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Utilities;
 
 namespace CycleDataDrivePackage
 {
@@ -70,19 +71,19 @@ namespace CycleDataDrivePackage
         {
             int p = pos + HeadLength;
 
-            index =  MakeInt(data, p, DistanceLength);
+            index = Tools.MakeInt(data, p, DistanceLength);
             p += DistanceLength;
 
-            speed = MakeInt(data, p, speedLength);
+            speed = Tools.MakeInt(data, p, speedLength);
             p += speedLength;
 
             //int sign = MakeInt(data, p, elSignLength);
             p += elSignLength;
 
-            sumAM = MakeInt(data, p, sumAmLength);
+            sumAM = Tools.MakeInt(data, p, sumAmLength);
             p += sumAmLength;
 
-            differAM = MakeInt(data, p, differAmLength);
+            differAM = Tools.MakeInt(data, p, differAmLength);
 
             //float quotient = ((float)sumAM) / differAM;
             //int valueIndex;
@@ -109,17 +110,7 @@ namespace CycleDataDrivePackage
 
         public int Distance => (int)( Resolution * index);
 
-        public static int MakeInt( byte[] data, int pos, int count)     //用字节组合成整型，高位在前
-        {
-            int ret = 0;
-            for (int i = 0; i < count; i++, pos++)
-            {
-                ret <<= 8;
-                ret += data[pos];
-            }
 
-            return ret;
-        }
 
         private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
         {

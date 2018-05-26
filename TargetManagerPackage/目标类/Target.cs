@@ -1,4 +1,5 @@
 ﻿using System;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -34,11 +35,9 @@ namespace TargetManagerPackage
             set => CurrentCoordinate.Dis = value;
         }
 
-        public float Height => (float)(currentCoordinate.Dis * Math.Sin(AngleToRadian(currentCoordinate.El)));
+        public float Height => (float)(currentCoordinate.Dis * Math.Sin(Tools.AngleToRadian(currentCoordinate.El)));
 
         public  PolarCoordinate CurrentCoordinate => currentCoordinate;
-
-        public static double AngleToRadian(double angle) => Math.PI * angle / 180;
 
         public float DistanceTo(Target t) => CurrentCoordinate.DistanceTo(t.currentCoordinate);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -44,9 +45,9 @@ namespace RadarDisplayPackage
         {
             if (!isMouseDown) return;
             //计算绘制的圆形大小
-            Point2F position = CoordinateSystem.PointToPoint2F(e.Location);
+            Point2F position = Tools.PointToPoint2F(e.Location);
             mouseDragPosition = position;
-            float radius = (float)CoordinateSystem.DistanceBetween(position, mouseDownPosition);
+            float radius = (float)Tools.DistanceBetween(position, mouseDownPosition);
             zoomCircle = new Ellipse(mouseDownPosition, radius, radius);
                 
             //计算矩形区域位置和大小
@@ -60,7 +61,7 @@ namespace RadarDisplayPackage
         {
             if (isMouseDown || e.Button != MouseButtons.Left) return;
             isMouseDown = true;
-            mouseDownPosition = CoordinateSystem.PointToPoint2F(e.Location);   //记录鼠标按下的位置
+            mouseDownPosition = Tools.PointToPoint2F(e.Location);   //记录鼠标按下的位置
             mouseDragPosition = mouseDownPosition;
         }
 

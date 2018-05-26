@@ -52,6 +52,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="命令类\AntennaCommand.cs" />
+    <Compile Include="命令类\AntennaSetNormalSweepModeCommand.cs" />
+    <Compile Include="命令类\AntennaSetRotationRateCommand.cs" />
+    <Compile Include="命令类\AntennaSetSectionSweepModeCommand.cs" />
+    <Compile Include="命令类\Command.cs" />
+    <Compile Include="命令类\NullCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerAntennaControlCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerAutoWaveGateCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerOffsetCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerResetCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerSemiAutoWaveGateCommand.cs" />
+    <Compile Include="命令类\OverViewDisplayerZoomCommand.cs" />
+    <Compile Include="命令类\OverVIewDisplayerZoomStateCommand.cs" />
+    <Compile Include="命令类\SystemController.cs" />
+    <Compile Include="命令类\TargetManagerAddTrackGeneratorCommand.cs" />
+    <Compile Include="命令类\TargetManagerCommand.cs" />
+    <Compile Include="命令类\TargetManagerDeleteActiveTargetCommand.cs" />
+    <Compile Include="命令类\TargetManagerSwitchModeCommand.cs" />
+    <Compile Include="命令类\WaveGateAddCommand.cs" />
+    <Compile Include="命令类\WaveGateCommand.cs" />
+    <Compile Include="命令类\WaveGateDeleteActiveCommand.cs" />
+    <Compile Include="命令类\WaveGateDeleteCommand.cs" />
     <Compile Include="目标显示器类族\滚动按钮\DownScroller.cs" />
     <Compile Include="IControlStateObserver.cs" />
     <Compile Include="IControlStateProvider.cs" />
@@ -61,36 +84,13 @@
     <Compile Include="目标显示器类族\滚动按钮\OverViewDispalerScroll.cs" />
     <Compile Include="目标显示器类族\滚动按钮\RightScroller.cs" />
     <Compile Include="目标显示器类族\滚动按钮\UpScroller.cs" />
-    <Compile Include="命令类\TargetManagerAddTrackGeneratorCommand.cs" />
     <Compile Include="扇扫视图\SweepSectionManager.cs" />
     <Compile Include="扇扫视图\SweepSectionView.cs" />
-    <Compile Include="命令类\WaveGateDeleteActiveCommand.cs" />
     <Compile Include="目标显示器类族\OverView显示器状态类族\OverViewDisplayer_AntennaControlFixed60.cs" />
-    <Compile Include="命令类\TargetManagerDeleteActiveTargetCommand.cs" />
     <Compile Include="目标视图类族\DataGridViewTargetView.cs" />
     <Compile Include="目标视图类族\DataGridViewTargetViewManager.cs" />
     <Compile Include="目标视图类族\GraphicTargetViewManager.cs" />
-    <Compile Include="命令类\TargetManagerSwitchModeCommand.cs" />
-    <Compile Include="命令类\TargetManagerCommand.cs" />
     <Compile Include="目标视图类族\TargetViewManager.cs" />
-    <Compile Include="命令类\SystemController.cs" />
-    <Compile Include="命令类\AntennaSetRotationRateCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerAutoWaveGateCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerSemiAutoWaveGateCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerAntennaControlCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerResetCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerZoomCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerOffsetCommand.cs" />
-    <Compile Include="命令类\OverVIewDisplayerZoomStateCommand.cs" />
-    <Compile Include="命令类\WaveGateAddCommand.cs" />
-    <Compile Include="命令类\AntennaCommand.cs" />
-    <Compile Include="命令类\Command.cs" />
-    <Compile Include="命令类\WaveGateDeleteCommand.cs" />
-    <Compile Include="命令类\NullCommand.cs" />
-    <Compile Include="命令类\OverViewDisplayerCommand.cs" />
-    <Compile Include="命令类\AntennaSetNormalSweepModeCommand.cs" />
-    <Compile Include="命令类\AntennaSetSectionSweepModeCommand.cs" />
-    <Compile Include="命令类\WaveGateCommand.cs" />
     <Compile Include="波门\GraphicWaveGateViewManager.cs" />
     <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_Null.cs" />
     <Compile Include="目标视图类族\目标航迹绘制策略类族\GraphicTargetTrackViewDrawer_InvisibleNW.cs" />
@@ -144,6 +144,10 @@
     <ProjectReference Include="..\TargetManagerPackage\TargetManagerPackage.csproj">
       <Project>{d47a42cb-9152-4ccc-a39e-38ebfe4f1bb0}</Project>
       <Name>TargetManagerPackage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{bce36124-179e-45a2-8b0a-d4db9597277b}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

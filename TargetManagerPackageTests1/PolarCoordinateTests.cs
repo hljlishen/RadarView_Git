@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace TargetManagerPackage.Tests
 {
@@ -17,14 +18,14 @@ namespace TargetManagerPackage.Tests
             byte[] value = { 0xbb, 0xaa };
             float expected = 4804.2f;
 
-            Assert.AreEqual(expected, PolarCoordinate.BytesToFloat(value, 1));
+            Assert.AreEqual(expected, Tools.BytesToFloat(value, 1));
         }
 
         [TestMethod()]
         public void FloatToBytesTest()
         {
             float value = 24f;
-            byte[] data = PolarCoordinate.FloatToBytes(value, 1);
+            byte[] data = Tools.FloatToBytes(value, 1);
             byte[] expected = {0xbb, 0xaa};
 
             Assert.AreEqual(expected[0], data[0]);

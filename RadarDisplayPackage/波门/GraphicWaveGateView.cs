@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using TargetManagerPackage;
+using Utilities;
 
 
 namespace RadarDisplayPackage
@@ -27,8 +28,8 @@ namespace RadarDisplayPackage
             this.waveGate = waveGate;
 
             waveGateBrush = canvas.CreateSolidColorBrush(waveGate.IsSemiAuto ? 
-                GraphicTrackDisplayer.GetColorFFromRgb(255 ,255 ,0) : 
-                GraphicTrackDisplayer.GetColorFFromRgb(245, 222, 179));
+                Tools.GetColorFFromRgb(255 ,255 ,0) : 
+                Tools.GetColorFFromRgb(245, 222, 179));
 
             coodinateSystem = displayer.coordinateSystem;
 
@@ -107,7 +108,7 @@ namespace RadarDisplayPackage
 
         public void HandleMouseClick(Point p)
         {
-            Point2F p1 = CoordinateSystem.PointToPoint2F(p);
+            Point2F p1 = Tools.PointToPoint2F(p);
             if(IsPointInView(p1))    //如果点在波门范围内
                 Selected = !Selected;   //selected取反
         }

@@ -88,6 +88,10 @@
       <Project>{D47A42CB-9152-4CCC-A39E-38EBFE4F1BB0}</Project>
       <Name>TargetManagerPackage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{BCE36124-179E-45A2-8B0A-D4DB9597277B}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

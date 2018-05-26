@@ -69,10 +69,7 @@ namespace RadarDisplayPackage
             angleNumbers = new float[] { 0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330 };
         }
 
-        public static float DegreeToRadian(float angle)
-        {
-            return (angle / 180) * (float)Math.PI;
-        }
+
 
         //protected abstract void DrawAnimation(Bitmap bmp, Rectangle displayArea);
 

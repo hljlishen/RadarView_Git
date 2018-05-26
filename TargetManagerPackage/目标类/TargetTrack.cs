@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CycleDataDrivePackage;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -35,22 +36,22 @@ namespace TargetManagerPackage
 
             sectorIndex = sector;
 
-            trackID = DistanceCell.MakeInt(data, pos, TrackIdBytes);
+            trackID = Tools.MakeInt(data, pos, TrackIdBytes);
             pos += TrackIdBytes;
 
-            int az = DistanceCell.MakeInt(data, pos, AzBytes);
+            int az = Tools.MakeInt(data, pos, AzBytes);
             pos += AzBytes;
 
-            int dis = DistanceCell.MakeInt(data, pos, DisBytes);
+            int dis = Tools.MakeInt(data, pos, DisBytes);
             pos += DisBytes;
 
-            int el = DistanceCell.MakeInt(data, pos, ElBytes);
+            int el = Tools.MakeInt(data, pos, ElBytes);
             pos += ElBytes;
 
-            speed = DistanceCell.MakeInt(data, pos, SpeedBytes);
+            speed = Tools.MakeInt(data, pos, SpeedBytes);
             pos += SpeedBytes;
 
-            int speedAz = DistanceCell.MakeInt(data, pos, SpeedAzBytes);
+            int speedAz = Tools.MakeInt(data, pos, SpeedAzBytes);
 
             AZ = (float)az / 10;
             EL = (float)el / 10;
@@ -101,8 +102,8 @@ namespace TargetManagerPackage
         public override byte[] Serialize()
         {
             byte[] coodinateBytes = base.Serialize();
-            byte[] trackIdBytes = PolarCoordinate.FloatToBytes(trackID, 0);
-            byte[] speedBytes = PolarCoordinate.FloatToBytes((float)speed, 1);
+            byte[] trackIdBytes = Tools.FloatToBytes(trackID, 0);
+            byte[] speedBytes = Tools.FloatToBytes((float)speed, 1);
 
             List<byte> ls = new List<byte>(trackIdBytes);
             ls.AddRange(coodinateBytes);
