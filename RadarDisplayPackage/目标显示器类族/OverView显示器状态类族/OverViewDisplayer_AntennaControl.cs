@@ -112,7 +112,7 @@ namespace RadarDisplayPackage
             return OverViewState.AntennaControl;
         }
 
-        protected override Command CreateCommand()
+        protected override ICommand CreateCommand()
         {
             if (Math.Abs(beginAngle - dragAngle) < sweepAngleMinimum)
                 return new NullCommand();
@@ -122,7 +122,7 @@ namespace RadarDisplayPackage
             float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
 
             //创建天线控制命令
-            Command cmd = new AntennaSetSectionSweepModeCommand(begin, end); //传入-1表示按原始扫描速度进行扇扫
+            ICommand cmd = new AntennaSetSectionSweepModeCommand(begin, end); //传入-1表示按原始扫描速度进行扇扫
 
             //复位变量
             beginLinePoint = displayer.coordinateSystem.OriginalPoint;

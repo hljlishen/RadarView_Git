@@ -11,9 +11,6 @@ namespace RadarDisplayPackage
             waveGateBrush.Opacity = 0.5f;   //透明度
         }
 
-        public override OverViewState GetState()
-        {
-            return OverViewState.SemiAutoWaveGate;
-        }
+        public override OverViewState GetState() => OverViewState.SemiAutoWaveGate;
     }
 }

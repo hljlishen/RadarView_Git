@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadarDisplayPackage
+﻿namespace RadarDisplayPackage
 {
     public class OverViewDisplayerZoomStateCommand : OverViewDisplayerCommand
     {
@@ -13,9 +7,6 @@ namespace RadarDisplayPackage
 
         }
 
-        public override void Execute()
-        {
-            ovd.SwitchState(OverViewState.Zoom);
-        }
+        public override void Execute() => ovd.SwitchState(OverViewState.Zoom);
     }
 }

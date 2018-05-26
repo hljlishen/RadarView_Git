@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadarDisplayPackage
+﻿namespace RadarDisplayPackage
 {
-    class NullCommand : Command
+    class NullCommand : ICommand
     {
         public void Execute()
         {

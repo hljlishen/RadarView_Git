@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TargetManagerPackage;
+﻿using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
     public class TargetManagerSwitchModeCommand : TargetManagerCommand
     {
         TargetManagerMode mode;
-        public TargetManagerSwitchModeCommand(TargetManagerMode mode) : base()
+        public TargetManagerSwitchModeCommand(TargetManagerMode mode)
         {
             this.mode = mode;
         }
 
-        public override void Execute()
-        {
-            targetController.SwitchMode(mode);
-        }
+        public override void Execute() => targetController.SwitchMode(mode);
     }
 }

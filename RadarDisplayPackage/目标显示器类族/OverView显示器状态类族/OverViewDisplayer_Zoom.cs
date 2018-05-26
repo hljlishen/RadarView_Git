@@ -28,7 +28,7 @@ namespace RadarDisplayPackage
 
         private void DisplayControl_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Command cmd = new OverViewDisplayerOffsetCommand(displayer, e.Location);
+            ICommand cmd = new OverViewDisplayerOffsetCommand(displayer, e.Location);
             cmd.Execute();
         }
 
@@ -77,12 +77,12 @@ namespace RadarDisplayPackage
             return OverViewState.Zoom;
         }
 
-        protected override Command CreateCommand()
+        protected override ICommand CreateCommand()
         {
             if (Math.Abs(mouseDragPosition.X - mouseDownPosition.X) < 8 && Math.Abs(mouseDragPosition.Y - mouseDownPosition.Y) < 8)   //距离太小不放大
                 return new NullCommand();
 
-            Command cmd = new OverViewDisplayerZoomCommand(displayer, zoomRect);
+            ICommand cmd = new OverViewDisplayerZoomCommand(displayer, zoomRect);
             zoomCircle = new Ellipse();     //新建一个圆形，半径为0
             zoomRect = new Rect();
 

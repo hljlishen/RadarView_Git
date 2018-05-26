@@ -17,6 +17,10 @@ namespace RadarDisplayPackage
 
     public class OverViewDisplayer : GraphicTrackDisplayer,IControlStateSubject
     {
+        public delegate void NewWaveGateHandler(WaveGate waveGate);
+        public event NewWaveGateHandler NewWaveGate;
+        public delegate void NewSweepSectionHandler(AngleArea area);
+        public event NewSweepSectionHandler NewSweepSection;
         protected float beginAngle;    //视图正上方对应的角度
         internal OverViewDisplayerState ViewState;  //视图状态：放大、天线控制、自动、半自动
         private const int MaximumZoom = 40;  //放大倍数的最大值，超过这个值不处理放大操作
@@ -242,5 +246,9 @@ namespace RadarDisplayPackage
                 ob.NotifyChange(ViewState.GetState());
             }
         }
+
+        protected virtual void SendNewWaveGate(WaveGate wavegate) => NewWaveGate?.Invoke(wavegate);
+
+        protected virtual void SendNewSweepSection(AngleArea area) => NewSweepSection?.Invoke(area);
     }
 }

@@ -68,7 +68,7 @@ namespace RadarDisplayPackage
             {
                 if (views[i].Selected)
                 {
-                    Command cmd = new WaveGateDeleteCommand(views[i].WaveGate);
+                    ICommand cmd = new WaveGateDeleteCommand(views[i].WaveGate);
                     cmd.Execute();
                 }
             }

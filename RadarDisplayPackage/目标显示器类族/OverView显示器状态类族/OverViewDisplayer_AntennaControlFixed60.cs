@@ -4,7 +4,7 @@ using Utilities;
 
 namespace RadarDisplayPackage
 {
-    class OverViewDisplayer_AntennaControlFixed60 : OverViewDisplayerState
+    internal class OverViewDisplayer_AntennaControlFixed60 : OverViewDisplayerState
     {
         private readonly Brush antennaRangeAreaBrush;
         private readonly Brush dragLineBrush;
@@ -31,57 +31,53 @@ namespace RadarDisplayPackage
         public override void Draw()
         {
             SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);
-            if (isMouseDown)
-            {
-                Pie = displayer.Factory.CreatePathGeometry();   //扇形区域
+            if (!isMouseDown) return;
+            Pie = displayer.Factory.CreatePathGeometry();   //扇形区域
 
-                //开始合成扇形
-                GeometrySink gs = Pie.Open();
-                gs.BeginFigure(displayer.coordinateSystem.OriginalPoint, FigureBegin.Filled);
+            //开始合成扇形
+            GeometrySink gs = Pie.Open();
+            gs.BeginFigure(displayer.coordinateSystem.OriginalPoint, FigureBegin.Filled);
 
-                //添加第一条线
-                gs.AddLine(beginLinePoint);   //原始代码
+            //添加第一条线
+            gs.AddLine(beginLinePoint);   //原始代码
 
-                //扇形的X轴Y轴半径是矩形框width的一半
+            //扇形的X轴Y轴半径是矩形框width的一半
 
-                //添加弧线
-                ArcSegment arc = new ArcSegment(endLinePoint, size, 0, SweepDirection.Clockwise, ArcSize.Small);
-                gs.AddArc(arc);
+            //添加弧线
+            ArcSegment arc = new ArcSegment(endLinePoint, size, 0, SweepDirection.Clockwise, ArcSize.Small);
+            gs.AddArc(arc);
 
-                //添加第二条线
-                gs.AddLine(displayer.coordinateSystem.OriginalPoint);
-                gs.EndFigure(FigureEnd.Closed);
-                gs.Close();
+            //添加第二条线
+            gs.AddLine(displayer.coordinateSystem.OriginalPoint);
+            gs.EndFigure(FigureEnd.Closed);
+            gs.Close();
 
-                //绘制区域
-                DrawSweepSection();
-                displayer.Canvas.DrawLine(displayer.coordinateSystem.OriginalPoint, dragLinePoint, dragLineBrush, 3);
+            //绘制区域
+            DrawSweepSection();
+            displayer.Canvas.DrawLine(displayer.coordinateSystem.OriginalPoint, dragLinePoint, dragLineBrush, 3);
 
-                //释放资源
-                gs.Dispose();
-                Pie.Dispose();
-            }
+            //释放资源
+            gs.Dispose();
+            Pie.Dispose();
         }
 
         public override void MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMouseDown)
-            {
-                //计算拖拽位置和坐标原点连线的正北夹角
-                dragAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
-                dragLinePoint = displayer.coordinateSystem.CalIntersectionPoint(dragAngle);
+            if (!isMouseDown) return;
+            //计算拖拽位置和坐标原点连线的正北夹角
+            dragAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, Tools.PointToPoint2F(e.Location));
+            dragLinePoint = displayer.coordinateSystem.CalIntersectionPoint(dragAngle);
 
-                shouldExecuteCmd = true;
-                //计算开始角度及开始角度与圆周交点坐标
-                beginAngle = dragAngle - FixedSweepAngle / 2;
-                beginAngle = Tools.StandardAngle(beginAngle);
-                beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(beginAngle);
+            shouldExecuteCmd = true;
+            //计算开始角度及开始角度与圆周交点坐标
+            beginAngle = dragAngle - FixedSweepAngle / 2;
+            beginAngle = Tools.StandardAngle(beginAngle);
+            beginLinePoint = displayer.coordinateSystem.CalIntersectionPoint(beginAngle);
 
-                //计算结束角度及开始角度与圆周交点坐标
-                endAngle = dragAngle + FixedSweepAngle / 2;
-                endAngle = Tools.StandardAngle(endAngle);
-                endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
-            }
+            //计算结束角度及开始角度与圆周交点坐标
+            endAngle = dragAngle + FixedSweepAngle / 2;
+            endAngle = Tools.StandardAngle(endAngle);
+            endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)
@@ -116,10 +112,10 @@ namespace RadarDisplayPackage
 
         public override OverViewState GetState() => OverViewState.AntennaControl;
 
-        protected override Command CreateCommand()
+        protected override ICommand CreateCommand()
         {
             //创建天线控制命令
-            Command cmd = new AntennaSetSectionSweepModeCommand(beginAngle, endAngle); //传入-1表示按原始扫描速度进行扇扫
+            ICommand cmd = new AntennaSetSectionSweepModeCommand(beginAngle, endAngle); //传入-1表示按原始扫描速度进行扇扫
 
             //复位变量
             beginLinePoint = displayer.coordinateSystem.OriginalPoint;

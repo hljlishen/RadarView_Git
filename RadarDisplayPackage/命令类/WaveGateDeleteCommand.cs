@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TargetManagerPackage;
+﻿using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
     class WaveGateDeleteCommand : WaveGateCommand
     {
         WaveGate wg;
-        public WaveGateDeleteCommand(WaveGate wg) : base()
+        public WaveGateDeleteCommand(WaveGate wg)
         {
             this.wg = wg;
         }
 
-        public override void Execute()
-        {
-            waveGateController.DelWaveGate(wg);
-        }
+        public override void Execute() => waveGateController.DelWaveGate(wg);
     }
 }

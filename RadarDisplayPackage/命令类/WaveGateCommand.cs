@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TargetManagerPackage;
+﻿using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
-    abstract class WaveGateCommand : Command
+    abstract class WaveGateCommand : ICommand
     {
         protected IWaveGateController waveGateController;
 
-        public WaveGateCommand()
+        protected WaveGateCommand()
         {
             waveGateController = TargetManagerFactory.CreateWaveGateController();
         }

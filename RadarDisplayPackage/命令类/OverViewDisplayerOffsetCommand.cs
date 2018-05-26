@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Drawing;
 using Utilities;
 
@@ -17,9 +12,6 @@ namespace RadarDisplayPackage
             mouseDoubleClickPos = Tools.PointToPoint2F(p);
         }
 
-        public override void Execute()
-        {
-            ovd.OffsetDisplayerToPoint(mouseDoubleClickPos);
-        }
+        public override void Execute() => ovd.OffsetDisplayerToPoint(mouseDoubleClickPos);
     }
 }

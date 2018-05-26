@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadarDisplayPackage
+﻿namespace RadarDisplayPackage
 {
-    public abstract class OverViewDisplayerCommand : Command
+    public abstract class OverViewDisplayerCommand : ICommand
     {
         protected OverViewDisplayer ovd;
 
-        public OverViewDisplayerCommand(OverViewDisplayer ovd)
+        protected OverViewDisplayerCommand(OverViewDisplayer ovd)
         {
             this.ovd = ovd;
         }

@@ -89,7 +89,7 @@ namespace RadarDisplayPackage
             }
         }
 
-        protected override Command CreateCommand()
+        protected override ICommand CreateCommand()
         {
             float r1 = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
             float r2 = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDragPosition);
@@ -110,7 +110,7 @@ namespace RadarDisplayPackage
             float end = Tools.FindSmallArcEndAngle(beginAngle, dragAngle);
             WaveGate wg = new WaveGate(begin, end, dis1, dis2, isSemiAutoWaveGate);
 
-            Command cmd = new WaveGateAddCommand(wg);
+            ICommand cmd = new WaveGateAddCommand(wg);
 
             return cmd;
         }

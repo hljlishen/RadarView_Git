@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadarDisplayPackage
+﻿namespace RadarDisplayPackage
 {
-    interface Command
+    public interface ICommand
     {
        void Execute();     //执行命令
     }

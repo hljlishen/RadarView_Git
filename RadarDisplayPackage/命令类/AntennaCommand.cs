@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TargetManagerPackage;
+﻿using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
-    public abstract class AntennaCommand : Command
+    public abstract class AntennaCommand : ICommand
     {
         protected IAntennaController antenna;   //天线控制器
 

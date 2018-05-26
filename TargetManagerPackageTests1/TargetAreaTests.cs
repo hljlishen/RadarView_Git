@@ -1,11 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TargetManagerPackage;
-using System;
+﻿using CycleDataDrivePackage;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CycleDataDrivePackage;
 
 namespace TargetManagerPackage.Tests
 {

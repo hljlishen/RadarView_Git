@@ -15,9 +15,6 @@ namespace RadarDisplayPackage
             this.wg = wg;
         }
 
-        public override void Execute()
-        {
-            waveGateController.AddWaveGate(wg);
-        }
+        public override void Execute() => waveGateController.AddWaveGate(wg);
     }
 }

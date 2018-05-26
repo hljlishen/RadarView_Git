@@ -13,9 +13,6 @@ namespace RadarDisplayPackage
 
         }
 
-        public override void Execute()
-        {
-            ovd.SwitchState(OverViewState.SemiAutoWaveGate);
-        }
+        public override void Execute() => ovd.SwitchState(OverViewState.SemiAutoWaveGate);
     }
 }

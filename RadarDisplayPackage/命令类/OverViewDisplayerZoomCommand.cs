@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace RadarDisplayPackage
 {
@@ -15,9 +10,6 @@ namespace RadarDisplayPackage
             rect = zoomRect;
         }
 
-        public override void Execute()
-        {
-            ovd.ZoomArea(rect);
-        }
+        public override void Execute() => ovd.ZoomArea(rect);
     }
 }

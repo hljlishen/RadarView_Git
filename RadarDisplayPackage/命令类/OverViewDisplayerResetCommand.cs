@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadarDisplayPackage
+﻿namespace RadarDisplayPackage
 {
     public class OverViewDisplayerResetCommand : OverViewDisplayerCommand
     {
@@ -13,9 +7,6 @@ namespace RadarDisplayPackage
 
         }
 
-        public override void Execute()
-        {
-            ovd.ResetView();
-        }
+        public override void Execute() => ovd.ResetView();
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TargetManagerPackage;
+﻿using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
@@ -15,9 +10,6 @@ namespace RadarDisplayPackage
             this.direction = direction;
         }
 
-        public override void Execute()
-        {
-            antenna.SetRotateDirection(direction);
-        }
+        public override void Execute() => antenna.SetRotateDirection(direction);
     }
 }

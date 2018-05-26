@@ -13,7 +13,7 @@ namespace RadarDisplayPackage
         protected Graphics drawer;
         protected bool shouldExecuteCmd = true;
 
-        public OverViewDisplayerState(OverViewDisplayer displayer)
+        protected OverViewDisplayerState(OverViewDisplayer displayer)
         {
             this.displayer = displayer;
             drawer = displayer.DisplayControl.CreateGraphics();
@@ -28,7 +28,7 @@ namespace RadarDisplayPackage
         {
             if (isMouseDown && shouldExecuteCmd)
             {
-                Command cmd = CreateCommand();
+                ICommand cmd = CreateCommand();
                 cmd.Execute();
             }
             isMouseDown = false;
@@ -42,9 +42,9 @@ namespace RadarDisplayPackage
 
         public abstract void Draw();
 
-        protected virtual Command CreateCommand()
+        protected virtual ICommand CreateCommand()
         {
-            return null;
+            return new NullCommand();
         }
 
         public virtual void Dispose()

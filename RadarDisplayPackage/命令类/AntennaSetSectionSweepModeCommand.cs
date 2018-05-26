@@ -13,9 +13,6 @@ namespace RadarDisplayPackage
             this.endAngle = endAngle;
         }
 
-        public override void Execute()
-        {
-            antenna.SetSectionSweepMode(new AngleArea(beginAngle, endAngle));
-        }
+        public override void Execute() => antenna.SetSectionSweepMode(new AngleArea(beginAngle, endAngle));
     }
 }

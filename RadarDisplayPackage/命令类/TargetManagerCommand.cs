@@ -7,11 +7,11 @@ using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
-    public abstract class TargetManagerCommand : Command
+    public abstract class TargetManagerCommand : ICommand
     {
         protected ITargetManagerController targetController;
 
-        public TargetManagerCommand()
+        protected TargetManagerCommand()
         {
             targetController = TargetManagerFactory.CreateTargetManagerController();
         }
