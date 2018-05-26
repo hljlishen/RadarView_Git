@@ -56,8 +56,9 @@ namespace TargetManagerPackage
         {
             realData.DisCells.Clear();
             AngleArea testAngleArea = new AngleArea(0f, 33.75f);
-            //AngleArea testAngleArea1 = new AngleArea(101.25f, 133.57f);
+            AngleArea testAngleArea1 = new AngleArea(20f, 25f);
             //if (testAngleArea.IsAngleInArea(realData.Angle) /*|| testAngleArea1.IsAngleInArea(realData.Angle)*/)
+            if(!testAngleArea1.IsAngleInArea(realData.Angle))
             {
                 DistanceCell distanceCell = new DistanceCell(){index = 300, sumAM = 100000, az = realData.Angle};
                 realData.DisCells.Add(300,distanceCell);

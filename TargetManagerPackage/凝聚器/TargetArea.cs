@@ -16,7 +16,7 @@ namespace TargetManagerPackage
         private int _recordArrayIndex = -1;
         private bool _firstRound = true;
         private static int AreaWidthMinimum = 15;
-        private static int AreaWidthMaximum = 100;
+        private static int AreaWidthMaximum = 80;
         public int Width { get; private set; } = 0;
 
         private int NextIndex()
