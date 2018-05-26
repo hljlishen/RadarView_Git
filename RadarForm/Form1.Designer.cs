@@ -82,8 +82,6 @@
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.航机显示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.原始视频ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.凝聚点击ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.原始视频ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -705,8 +703,6 @@
             this.视图ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.航机显示ToolStripMenuItem,
             this.toolStripSeparator1,
-            this.原始视频ToolStripMenuItem,
-            this.凝聚点击ToolStripMenuItem,
             this.toolStripSeparator2,
             this.原始视频ToolStripMenuItem1});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
@@ -720,39 +716,19 @@
             this.航机显示ToolStripMenuItem.CheckOnClick = true;
             this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
-            // 
-            // 原始视频ToolStripMenuItem
-            // 
-            this.原始视频ToolStripMenuItem.Checked = true;
-            this.原始视频ToolStripMenuItem.CheckOnClick = true;
-            this.原始视频ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.原始视频ToolStripMenuItem.Name = "原始视频ToolStripMenuItem";
-            this.原始视频ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.原始视频ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
-            this.原始视频ToolStripMenuItem.Text = "原始视频";
-            this.原始视频ToolStripMenuItem.Click += new System.EventHandler(this.原始视频ToolStripMenuItem_Click);
-            // 
-            // 凝聚点击ToolStripMenuItem
-            // 
-            this.凝聚点击ToolStripMenuItem.CheckOnClick = true;
-            this.凝聚点击ToolStripMenuItem.Name = "凝聚点击ToolStripMenuItem";
-            this.凝聚点击ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.凝聚点击ToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
-            this.凝聚点击ToolStripMenuItem.Text = "凝聚点";
-            this.凝聚点击ToolStripMenuItem.Click += new System.EventHandler(this.凝聚点击ToolStripMenuItem_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // 原始视频ToolStripMenuItem1
             // 
@@ -760,7 +736,7 @@
             this.原始视频ToolStripMenuItem1.CheckOnClick = true;
             this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(202, 26);
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
             this.原始视频ToolStripMenuItem1.Text = "原始视频";
             this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
@@ -909,8 +885,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_port;
         private System.Windows.Forms.TextBox tb_ipAddress;
-        private System.Windows.Forms.ToolStripMenuItem 原始视频ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 凝聚点击ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btn_largeSectionSweep;
         private System.Windows.Forms.ToolStripMenuItem 方位角调整ToolStripMenuItem;

@@ -151,9 +151,6 @@ namespace RadarDisplayPackage
 
         public void SetDisplayTrackCourseStatus(bool state) => GraphicTargetTrackViewDrawer.ShouldDrawCourse = state;
 
-        //public void RefreshOverViewDisplayer
-        public void SwitchDotSource(bool dotSource) => new TargetManagmentSwitchDotSourceCommand(dotSource).Execute();
-
         public float GetAngleAdjustment() => CycleDataReader.AzAdjustment;
 
         public float SetAngleAdjustment(float angleAdjust) => CycleDataReader.AzAdjustment = angleAdjust;

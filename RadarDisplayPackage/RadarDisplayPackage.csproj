@@ -62,7 +62,6 @@
     <Compile Include="目标显示器类族\滚动按钮\RightScroller.cs" />
     <Compile Include="目标显示器类族\滚动按钮\UpScroller.cs" />
     <Compile Include="命令类\TargetManagerAddTrackGeneratorCommand.cs" />
-    <Compile Include="命令类\TargetManagmentSwitchDotSourceCommand.cs" />
     <Compile Include="扇扫视图\SweepSectionManager.cs" />
     <Compile Include="扇扫视图\SweepSectionView.cs" />
     <Compile Include="命令类\WaveGateDeleteActiveCommand.cs" />

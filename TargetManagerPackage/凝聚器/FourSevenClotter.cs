@@ -6,11 +6,11 @@ namespace TargetManagerPackage
 {
     class FourSevenClotter : Clotter
     {
-        private static int AreaWidthMinimum = 20;
-        private static int AreaWidthMaximum = 150;
-        private const int ExtentionEndTotalCount = 80;
-        private const int ExtentionEndThreshold = 10;
-        private int count = 0;
+        //private static int AreaWidthMinimum = 20;
+        //private static int AreaWidthMaximum = 150;
+        //private const int ExtentionEndTotalCount = 80;
+        //private const int ExtentionEndThreshold = 10;
+        //private int count = 0;
         public override void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
         {
             base.Clot(center, right,left,cells);

@@ -230,18 +230,6 @@ namespace RadarForm
                 btn_slower_Click(null, null);
         }
 
-        private void 原始视频ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.SwitchDotSource(true);
-            凝聚点击ToolStripMenuItem.Checked = false;
-        }
-
-        private void 凝聚点击ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.SwitchDotSource(false);
-            原始视频ToolStripMenuItem.Checked = false;
-        }
-
         private void tb_ipAddress_TextChanged(object sender, EventArgs e)
         {
 
