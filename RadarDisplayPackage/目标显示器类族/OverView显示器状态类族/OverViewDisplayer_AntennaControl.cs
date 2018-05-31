@@ -49,7 +49,7 @@ namespace RadarDisplayPackage
                 //判断上行扫过的方向，如果起始角度是鼠标点击的位置则扇形是顺时针扫过
                 //如果起始角度是鼠标拖动位置，则扇形是逆时针扫过
                 SweepDirection sd ;
-                sd = Math.Abs(begin - beginAngle) < 0.0001f ? SweepDirection.Clockwise : SweepDirection.Counterclockwise;
+                sd = Tools.FloatEquals(begin, beginAngle) ? SweepDirection.Clockwise : SweepDirection.Counterclockwise;
 
                 //扇形的X轴Y轴半径是矩形框width的一半
                 SizeF size = new SizeF(displayer.coordinateSystem.CoordinateArea.Width / 2, displayer.coordinateSystem.CoordinateArea.Height / 2);

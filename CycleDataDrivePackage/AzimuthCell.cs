@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Utilities;
 
@@ -30,6 +29,8 @@ namespace CycleDataDrivePackage
             int pos = DistanceCellsDataStartPosition;
             for(int i = 0; i < cellCount; i++)
             {
+                if (pos + DistanceCell.Length >= data.Length)       //数据溢出判断
+                    break;
                 var cell = new DistanceCell(data, pos){az = Angle, azInt = angleI};
 
                 if (CycleDataFilter.Pass(cell) && !DisCells.ContainsKey(cell.index))     //滤波
@@ -65,12 +66,11 @@ namespace CycleDataDrivePackage
             if (obj == null) return 1;
 
             AzimuthCell otherCell = (AzimuthCell) obj;
-            if (Angle - otherCell.Angle < 0.000001f)
+            if(Tools.FloatEquals(Angle, otherCell.Angle))
                 return 0;
             if (Angle > otherCell.Angle)
                 return 1;
-            else
-                return -1;
+            return -1;
         }
     }
 }

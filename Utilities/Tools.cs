@@ -10,6 +10,7 @@ namespace Utilities
 {
     public class Tools
     {
+        public const float Interval = 0.00001f;
         public static ColorF GetColorFFromRgb(int r, int g, int b) => new ColorF(new ColorI(r, g, b));
 
         public static double AngleToRadian(double angle) => Math.PI * angle / 180;//角度转弧度
@@ -144,13 +145,12 @@ namespace Utilities
             return max - min <= 180 ? max : min;
         }
 
-
+        public static bool FloatEquals(float a, float b) => Math.Abs(a - b) < Interval;
         public static bool IsPointInRect(Point2F p, Rect r) => p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
 
-        public static float StandardAngle(float degree) //将角度转化为0-360的浮点数
+        public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
         {
-            float angle = degree;
-            if (angle - 0 < 0.00001f) return angle;
+            if (FloatEquals(angle, 0)) return angle;
             if (angle < 0)
                 angle += 360;
             angle %= 360;

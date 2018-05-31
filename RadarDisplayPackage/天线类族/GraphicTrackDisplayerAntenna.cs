@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -25,26 +21,11 @@ namespace RadarDisplayPackage
 
         public virtual float AntennaAngle
         {
-            get
-            {
-                return antennaAngle;
-            }
-            set
-            {
-                if (value >= 360)
-                {
-                    value = value % 360;
-                }
-                if (value < 0)
-                {
-                    value = value % 360;
-                    value += 360;
-                }
-                antennaAngle = value;
-            }
+            get => antennaAngle;
+            set => antennaAngle = Tools.StandardAngle(value);
         }
 
-        public GraphicTrackDisplayerAntenna(RenderTarget canvas, D2DFactory factory, CoordinateSystem coordinateSystem)
+        protected GraphicTrackDisplayerAntenna(RenderTarget canvas, D2DFactory factory, CoordinateSystem coordinateSystem)
         {
             this.canvas = canvas;
             this.factory = factory;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using TargetManagerPackage;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -56,7 +57,7 @@ namespace RadarDisplayPackage
         {
             base.DrawSweepBorderLine();
 
-            if (sweepBeginAngle == 0 && sweepEndAngle == 0)
+            if (Tools.FloatEquals(sweepBeginAngle, 0) &&Tools.FloatEquals(sweepEndAngle, 0))
                 return;
 
             Point2F sweepBorderLinePoints1 = coordinateSystem.CalIntersectionPoint(sweepBeginAngle);

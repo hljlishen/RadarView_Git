@@ -14,7 +14,7 @@ namespace TargetManagerPackage
         {
             BeginAngle = Tools.StandardAngle(begin);
             EndAngle = Tools.StandardAngle(end);
-            if (EndAngle - 0 < 0.000001)    //区域的终止角度应为360，不能是0
+            if (Tools.FloatEquals(EndAngle, 0))    //区域的终止角度应为360，不能是0
                 EndAngle = 360;
 
             AcrossZeroDegree = IsZeroDegreeAcrossingAngleArea(this);
