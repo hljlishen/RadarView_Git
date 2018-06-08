@@ -37,7 +37,7 @@ namespace TargetManagerPackage
 
             foreach(TargetDot dot in dots)
             {
-                if (center.IsAngleInArea(dot.AZ))
+                if (center.IsAngleInArea(dot.Az))
                 {
                     center.AddNewDot(dot);
                 }

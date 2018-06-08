@@ -29,11 +29,11 @@ namespace RadarDisplayPackage
             if (t != null)
             {
                 dr.Cells[0].Value = ID;
-                dr.Cells[1].Value = t.AZ.ToString("0.0");
-                dr.Cells[2].Value = t.EL.ToString("0.0");
+                dr.Cells[1].Value = t.Az.ToString("0.0");
+                dr.Cells[2].Value = t.El.ToString("0.0");
                 dr.Cells[3].Value = t.Height.ToString("0.0");
-                dr.Cells[4].Value = t.speed.ToString("0.0");
-                dr.Cells[5].Value = t.score;
+                dr.Cells[4].Value = t.Speed.ToString("0.0");
+                dr.Cells[5].Value = t.Score;
             }
             else
             {
@@ -61,11 +61,11 @@ namespace RadarDisplayPackage
                 if (value != null)
                 {
                     //dr.Cells[0].Value = ((TargetTrack)target).trackID;
-                    dr.Cells[1].Value = target.AZ.ToString("0.0");
-                    dr.Cells[2].Value = target.EL.ToString("0.0");
+                    dr.Cells[1].Value = target.Az.ToString("0.0");
+                    dr.Cells[2].Value = target.El.ToString("0.0");
                     dr.Cells[3].Value = target.Dis.ToString("0.0");
                     dr.Cells[4].Value = target.Height.ToString("0.0");
-                    dr.Cells[5].Value = ((TargetTrack)target).speed.ToString("0.0");
+                    dr.Cells[5].Value = ((TargetTrack)target).Speed.ToString("0.0");
                     //dr.Visible = true;
                 }
                 else  //给target赋值null表示需要删除改目标航迹,只留下ID号，其余信息删除

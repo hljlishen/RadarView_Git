@@ -31,7 +31,7 @@ namespace TargetManagerPackage.Tests
             azCell.DisCells.Add(122, disCell8);
             azCell.DisCells.Add(132, disCell9);
 
-            List<TargetAreaEdge> ret = TargetAreaEdge.GetTargetAreaEdges(azCell);
+            List<TargetAreaEdge> ret = FourSevenClotter.GetTargetAreaEdges(azCell);
             Assert.IsTrue(true);
         }
     }

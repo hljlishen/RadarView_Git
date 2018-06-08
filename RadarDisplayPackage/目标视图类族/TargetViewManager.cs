@@ -11,6 +11,7 @@ namespace RadarDisplayPackage
         protected List<TargetView>[] dots;
         protected List<TargetView>[] tracks;
         protected static object _locker =  new object();
+        protected const int ShowTrackScoreThreshold = 3;
 
         protected TargetViewManager(TrackDisplayer displayer)
         {
@@ -74,20 +75,20 @@ namespace RadarDisplayPackage
             {
                 if (t is TargetTrack)
                 {
-                    foreach (TargetView view in tracks[t.sectorIndex])
+                    foreach (TargetView view in tracks[t.SectorIndex])
                     {
                         if (t != view.Target) continue;
-                        tracks[t.sectorIndex].Remove(view);
+                        tracks[t.SectorIndex].Remove(view);
                         view.Dispose();
                         break;      //跳出循环，否则会导致遍历失败
                     }
                 }
                 else
                 {
-                    foreach (TargetView view in dots[t.sectorIndex])
+                    foreach (TargetView view in dots[t.SectorIndex])
                     {
                         if (t != view.Target) continue;
-                        dots[t.sectorIndex].Remove(view);
+                        dots[t.SectorIndex].Remove(view);
                         view.Dispose();
                         break;      //跳出循环，否则会导致遍历失败
                     }
@@ -105,9 +106,9 @@ namespace RadarDisplayPackage
             lock (_locker)
             {
                 if (t is TargetTrack)
-                    tracks[t.sectorIndex].Add(view);
+                    tracks[t.SectorIndex].Add(view);
                 else
-                    dots[t.sectorIndex].Add(view);
+                    dots[t.SectorIndex].Add(view);
             }
         }
 
@@ -150,6 +151,7 @@ namespace RadarDisplayPackage
             //添加目标视图
             foreach (TargetTrack track in trackList)
             {
+                //if(track.Score <= ShowTrackScoreThreshold) continue;
                 TargetView view = CreateTargetView(track);
                 tracks[sectorIndex].Add(view);
             }

@@ -14,7 +14,7 @@ namespace TargetManagerPackage
 
         public void DeleteActiveTarget()
         {
-            if (track == null || !track.active) return;
+            if (track == null || !track.Active) return;
 
             targetManager.NotifyAllObservers(track, NotifyType.Delete);
             SystemCommunicator.DeleteTrack(track);  //消批
@@ -26,13 +26,13 @@ namespace TargetManagerPackage
         {
             if (track == null)
             {
-                track = TargetTrack.CreateTargetTrack(dot.CurrentCoordinate, null);
-                track.sectorIndex = dot.sectorIndex;
+                track = TargetTrack.CreateTargetTrack(dot.CurrentCoordinate, null, 13);
+                track.SectorIndex = dot.SectorIndex;
                 targetManager.NotifyAllObservers(track, NotifyType.Add);
             }
             else
             {
-                track.locations.Add(track.CurrentCoordinate);
+                track.Locations.Add(track.CurrentCoordinate);
                 track.Update(dot.CurrentCoordinate);
                 //if (dot.sectorIndex != track.sectorIndex)
                 //{

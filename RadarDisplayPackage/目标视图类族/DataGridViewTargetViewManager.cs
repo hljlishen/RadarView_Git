@@ -32,9 +32,9 @@ namespace RadarDisplayPackage
         {
             if (t is TargetTrack)
             {
-                int Id = ((TargetTrack)t).trackID;
+                int Id = ((TargetTrack)t).TrackId;
                 views[Id - 1].Target = t;
-                if (t.active)
+                if (t.Active)
                     views[Id - 1].Selected = true;
                 else
                     views[Id - 1].Selected = false;
@@ -45,7 +45,7 @@ namespace RadarDisplayPackage
         {
             if (t is TargetTrack)
             {
-                int Id = ((TargetTrack)t).trackID;
+                int Id = ((TargetTrack)t).TrackId;
                 views[Id - 1].Target = null;
                 views[Id - 1].Selected = false;
             }

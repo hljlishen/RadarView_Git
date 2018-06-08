@@ -72,10 +72,6 @@ namespace TargetManagerPackage
 
         public PolarCoordinate Copy() => new PolarCoordinate(this);
 
-        public bool EqualsTo(PolarCoordinate c) => false;
-
-        //public static float AngleToRadian(float angle) => (float)Math.PI * angle / 180;
-
         public float X => (float)(dis * Math.Cos(Tools.AngleToRadian( el)) * Math.Cos(Tools.AngleToRadian( az)));
 
         public float Y => (float)(dis * Math.Cos(Tools.AngleToRadian(el)) * Math.Sin(Tools.AngleToRadian(az)));

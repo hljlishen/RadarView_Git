@@ -70,7 +70,7 @@ namespace RadarDisplayPackage
         {
             if (IsPointInActiveRect((Point)p))
             {
-                target.active = !target.active;
+                target.Active = !target.Active;
                 targetController.SelectTarget(target);
                 return true;
             }

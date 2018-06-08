@@ -77,9 +77,9 @@ namespace TargetManagerPackage.Tests
                 ls.Add(azCellx);
             }
 
-            List<TargetArea> ls1 = TargetArea.GetTargetAreas(ls);
+            List<TargetArea> ls1 = FourSevenClotter.GetTargetAreas(ls);
 
-            List<TargetAreaEdge> ret = TargetAreaEdge.GetTargetAreaEdges(azCell);
+            List<TargetAreaEdge> ret = FourSevenClotter.GetTargetAreaEdges(azCell);
             Assert.IsTrue(true);
         }
     }

@@ -79,7 +79,7 @@ namespace RadarDisplayPackage
         {
             PolarCoordinate coordinate =
                 ((GraphicTrackDisplayer)displayer).coordinateSystem.PointToCoordinate(Tools.PointToPoint2F(mouseLocation));
-            TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { sectorIndex = 0 };
+            TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { SectorIndex = 0 };
             TargetView view = ((GraphicTrackDisplayer)displayer).targetsManager.CreateTargetView(dot);
 
             return (GraphicTargetDotView)view;
@@ -93,9 +93,9 @@ namespace RadarDisplayPackage
                 if (taget == null)
                     return null;
                 if (taget.GetType() == typeof(TargetDot))
-                    view = new GraphicTargetDotView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                    view = new GraphicTargetDotView(taget, _sectorDrawer[taget.SectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
                 else
-                    view = new GraphicTargetTrackView(taget, _sectorDrawer[taget.sectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                    view = new GraphicTargetTrackView(taget, _sectorDrawer[taget.SectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
                 return view;
             }
         }
@@ -111,9 +111,9 @@ namespace RadarDisplayPackage
                     //获取目标航迹视图
                     var view = CreateTargetView(target);
                     if (target is TargetDot)
-                        dots[target.sectorIndex].Add(view);
+                        dots[target.SectorIndex].Add(view);
                     else
-                        this.tracks[target.sectorIndex].Add(view);
+                        this.tracks[target.SectorIndex].Add(view);
                 }
             }
         }
@@ -171,14 +171,14 @@ namespace RadarDisplayPackage
         protected override void AddTarget(Target t)
         {
             base.AddTarget(t);
-            DrawSector(t.sectorIndex);
+            DrawSector(t.SectorIndex);
 
         }
 
         protected override void RemoveTarget(Target t)
         {
             base.RemoveTarget(t);
-            DrawSector(t.sectorIndex);
+            DrawSector(t.SectorIndex);
         }
 
         public override void Dispose()

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 
 namespace Utilities
 {
@@ -161,7 +158,7 @@ namespace Utilities
         public static float ReverAngleDirection(float angle)
         {
             float rAngle = 360f - angle;
-            //rAngle = StandardAngle(rAngle);
+            rAngle = StandardAngle(rAngle);
 
             return rAngle;
         }
@@ -169,12 +166,12 @@ namespace Utilities
         public static byte[] FloatToBytes(float value, int validBits)  //浮点数保留精度后转为byte数组，高位在前
         {
             List<byte> ls = new List<byte>();
-            int value_int = (int)(value * Math.Pow(10, validBits));
+            int valueInt = (int)(value * Math.Pow(10, validBits));
             int rightShiftCount = 0;
 
             while (true)
             {
-                int tmp = value_int >> (rightShiftCount++ * 8);
+                int tmp = valueInt >> (rightShiftCount++ * 8);
                 if (tmp == 0)
                     break;
 
@@ -206,6 +203,41 @@ namespace Utilities
             }
 
             return ret;
+        }
+
+        public static double CalRotationTimeSpan(float beginAngle, float endAngle, int rotationsPerMinute,
+            int rotationDirection)      //rotationDirection = 1为顺时针， rotationDirection=2位逆时针
+        {
+            if (FloatEquals(beginAngle, endAngle)) return 0;
+            double angleSpan;
+            double degreePerSecond = rotationsPerMinute * 360f / 60f;
+            switch (rotationDirection)
+            {
+                case 1: //顺时针
+                    if (beginAngle > endAngle)      //天线需要跨越正北
+                    {
+                        angleSpan = endAngle + 360 - beginAngle;
+                    }
+                    else
+                    {
+                        angleSpan = endAngle - beginAngle;
+                    }
+                    break;
+                case 2: //逆时针
+                    if (beginAngle > endAngle)
+                    {
+                        angleSpan = beginAngle - endAngle;
+                    }
+                    else
+                    {
+                        angleSpan = beginAngle + 360 - endAngle;
+                    }
+                    break;
+                default:
+                    throw new Exception("CalRotationTimeSpan函数收到的转动方向错误");
+            }
+
+            return angleSpan / degreePerSecond;
         }
     }
 }

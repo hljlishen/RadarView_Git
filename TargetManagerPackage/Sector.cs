@@ -41,7 +41,7 @@ namespace TargetManagerPackage
             {
                 foreach (TargetTrack t in Tracks)
                 {
-                    if (t.active)
+                    if (t.Active)
                         ls.Add(t);
                 }
             }
@@ -54,7 +54,7 @@ namespace TargetManagerPackage
             {
                 for (int i = Tracks.Count - 1; i >= 0; i--) //逆向遍历
                 {
-                    if (!Tracks[i].active) continue;
+                    if (!Tracks[i].Active) continue;
                     Tracks[i].Dispose();
                     Tracks.RemoveAt(i);
                 }
@@ -65,7 +65,7 @@ namespace TargetManagerPackage
         {
             lock (_locker)
             {
-                dot.sectorIndex = Index;
+                dot.SectorIndex = Index;
                 PrepareDots.Add(dot);
             }
         }
@@ -83,7 +83,7 @@ namespace TargetManagerPackage
         {
             lock (_locker)
             {
-                dot.sectorIndex = Index;
+                dot.SectorIndex = Index;
                 NewDots.Add(dot);
             }
         }
@@ -92,7 +92,7 @@ namespace TargetManagerPackage
         {
             lock (_locker)
             {
-                track.sectorIndex = Index;
+                track.SectorIndex = Index;
                 Tracks.Add(track);
             }
         }

@@ -16,7 +16,7 @@ namespace TargetManagerPackage
                     if (center.IsAngleInArea(cell.GetAngle()))
                     {
                         DistanceCell dis = (DistanceCell) o;
-                        TargetDot dot = new TargetDot(cell.GetAngle(), dis.el, dis.Distance) {amValue = dis.sumAM};
+                        TargetDot dot = new TargetDot(cell.GetAngle(), dis.el, dis.Distance) {AmValue = dis.sumAM};
                         center.AddNewDot(dot);
                     }
                 }

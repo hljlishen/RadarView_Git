@@ -18,15 +18,15 @@ namespace TargetManagerPackage
         {
             this.targetManager = targetManager;
             //track = new TargetTrack(coordinate);
-            track = TargetTrack.CreateTargetTrack(coordinate, null);
-            track.sectorIndex = GetTrackSectorId(track);
+            track = TargetTrack.CreateTargetTrack(coordinate, null, 13);
+            track.SectorIndex = GetTrackSectorId(track);
             targetManager.NotifyAllObservers(track, NotifyType.Add);
             center = coordinate;
         }
 
         public void UpdateTrack(Sector s)
         {
-            if (track.sectorIndex != s.Index) return;
+            if (track.SectorIndex != s.Index) return;
             MoveTrack();
 
             targetManager.NotifyAllObservers(track, NotifyType.Update);
@@ -36,7 +36,7 @@ namespace TargetManagerPackage
 
         public bool DeleteTrackIfActive()
         {
-            if (!track.active) return false;
+            if (!track.Active) return false;
 
             targetManager.NotifyAllObservers(track, NotifyType.Delete);
             SystemCommunicator.DeleteTrack(track);
@@ -47,7 +47,7 @@ namespace TargetManagerPackage
         {
             foreach (var s in targetManager.Sectors)
             {
-                if (s.IsAngleInArea(t.AZ))
+                if (s.IsAngleInArea(t.Az))
                 {
                     return s.Index;
                 }
@@ -60,9 +60,9 @@ namespace TargetManagerPackage
         {
             track.Update(NextCoordinate());
             int sectorIndex = GetTrackSectorId(track);
-            if(track.sectorIndex != sectorIndex)
+            if(track.SectorIndex != sectorIndex)
                 targetManager.NotifyAllObservers(track, NotifyType.Delete);
-            track.sectorIndex = sectorIndex;
+            track.SectorIndex = sectorIndex;
             targetManager.NotifyAllObservers(track, NotifyType.Update);
         }
 

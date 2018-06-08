@@ -20,7 +20,7 @@ namespace RadarDisplayPackage
             PreLocations = new List<Ellipse>();
             TargetTrack t = (TargetTrack)target;
 
-            foreach(PolarCoordinate c in t.locations)
+            foreach(PolarCoordinate c in t.Locations)
             {
                 Point2F p;
                 p = CoordinateSystem.CoordinateToPoint(c);

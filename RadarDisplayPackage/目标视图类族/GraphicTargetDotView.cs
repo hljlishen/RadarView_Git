@@ -19,8 +19,8 @@ namespace RadarDisplayPackage
             if (!((TargetDot) target).IsClotDot)
             {
                 targetViewRadius = 2;
-                float redColorValue = CalRedColorValue(target.amValue);
-                float blueColorValue = CalBlueColorValue(target.amValue);
+                float redColorValue = CalRedColorValue(target.AmValue);
+                float blueColorValue = CalBlueColorValue(target.AmValue);
                 targetViewBrush = canvas.CreateSolidColorBrush(new ColorF(redColorValue, 0.184f, blueColorValue));
             }
            else

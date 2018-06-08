@@ -37,7 +37,7 @@ namespace RadarDisplayPackage
             targetViewBrush = view.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255 ,128 ,0)); //橘黄
             idBrush = view.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255 ,192 ,203)); //粉色
             idBrush.Opacity = 1;
-            tagBrush = view.Canvas.CreateSolidColorBrush(!view.Target.active ? Tools.GetColorFFromRgb(65, 105, 225) : Tools.GetColorFFromRgb(255, 0, 0));
+            tagBrush = view.Canvas.CreateSolidColorBrush(!view.Target.Active ? Tools.GetColorFFromRgb(65, 105, 225) : Tools.GetColorFFromRgb(255, 0, 0));
             tagBrush.Opacity = 0.6f;
 
             preLocationsBrush = view.Canvas.CreateSolidColorBrush(Tools.GetColorFFromRgb(255, 255, 255));   //white
@@ -58,9 +58,9 @@ namespace RadarDisplayPackage
             renderTarget.FillGeometry(pg, tagBrush);
             renderTarget.FillGeometry(idTag, tagBrush);
             TargetTrack t = (TargetTrack)View.Target;
-            if (t.trackID < 10)     //标签是一位数还是两位数
+            if (t.TrackId < 10)     //标签是一位数还是两位数
                 idTextRect.Left += smallIDOffset;
-            renderTarget.DrawText(t.trackID.ToString(), idFormation, idTextRect, idBrush);
+            renderTarget.DrawText(t.TrackId.ToString(), idFormation, idTextRect, idBrush);
 
 
             //释放资源

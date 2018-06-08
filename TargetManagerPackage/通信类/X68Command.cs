@@ -17,11 +17,11 @@ namespace TargetManagerPackage
 
         public byte[] Serialize()
         {
-            List<byte> cmdBytes = new List<byte>(){ CommandTypeCode, SourceDeviceCode, DestinationDeviceCode, CommandType, (byte)_track.trackID};
+            List<byte> cmdBytes = new List<byte>(){ CommandTypeCode, SourceDeviceCode, DestinationDeviceCode, CommandType, (byte)_track.TrackId};
 
             cmdBytes.AddRange(IntToByteLsb((int)_track.Dis, 4));
-            cmdBytes.AddRange(IntToByteLsb((int)(_track.AZ * 100), 2));
-            cmdBytes.AddRange(IntToByteLsb((int)(_track.EL * 100), 2));
+            cmdBytes.AddRange(IntToByteLsb((int)(_track.Az * 100), 2));
+            cmdBytes.AddRange(IntToByteLsb((int)(_track.El * 100), 2));
             cmdBytes.AddRange(Crc16(cmdBytes.ToArray()));
 
             return cmdBytes.ToArray();

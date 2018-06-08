@@ -30,15 +30,15 @@ namespace TargetManagerPackage
             cmdBytes.Add(CommandTypeCode); //0x80
             cmdBytes.Add(_resendCount);
             cmdBytes.AddRange(IntToByteLsb(CommandLength,2));
-            cmdBytes.AddRange(IntToByteLsb(_track.trackID,2));
+            cmdBytes.AddRange(IntToByteLsb(_track.TrackId,2));
             cmdBytes.Add((byte)DateTime.Now.Hour);
             cmdBytes.Add((byte)DateTime.Now.Minute);
             cmdBytes.Add((byte)DateTime.Now.Second);
             cmdBytes.Add((byte)(DateTime.Now.Millisecond / 10));
             cmdBytes.AddRange(_reservedBytes);
             cmdBytes.AddRange(IntToByteLsb((int)_track.Dis, 4));
-            cmdBytes.AddRange(IntToByteLsb((int)(_track.AZ * 100), 2));
-            cmdBytes.AddRange(IntToByteLsb((int)(_track.EL * 100), 2));
+            cmdBytes.AddRange(IntToByteLsb((int)(_track.Az * 100), 2));
+            cmdBytes.AddRange(IntToByteLsb((int)(_track.El * 100), 2));
             cmdBytes.Add(_targetProperty);
             cmdBytes.Add(_beanCategory);
             cmdBytes.Add(CalBytesXor(cmdBytes.ToArray(),0,cmdBytes.Count));

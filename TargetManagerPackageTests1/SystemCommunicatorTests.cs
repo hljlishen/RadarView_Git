@@ -34,18 +34,18 @@ namespace TargetManagerPackage.Tests
             //Assert.AreEqual(SystemCommunicator.IntToByteLsb(data, 2)[1], expected[1]);
         }
 
-        [TestMethod()]
-        public void Send0X80CmdTest()
-        {
-            TargetTrack t = new TargetTrack
-            {
-                trackID = 155,
-                AZ = 256.3f,
-                EL = 15.4f,
-                Dis = 2500f
-            };
+        //[TestMethod()]
+        //public void Send0X80CmdTest()
+        //{
+        //    TargetTrack t = new TargetTrack
+        //    {
+        //        trackID = 155,
+        //        AZ = 256.3f,
+        //        EL = 15.4f,
+        //        Dis = 2500f
+        //    };
 
-            SystemCommunicator.Send0X80Cmd(t);
-        }
+        //    SystemCommunicator.Send0X80Cmd(t);
+        //}
     }
 }

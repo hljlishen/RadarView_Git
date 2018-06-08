@@ -3,19 +3,17 @@
     class DotCorelatorV1 : DotCorelator
     {
         public const int threshold = 500;
-        public override void Corelate(Sector center, Sector left, Sector right)
-        {
-            foreach(TargetDot oldDot in center.OldDots)
-            {
-                if(!CorelateDot(oldDot, center))
-                {
-                    if (!CorelateDot(oldDot, right))
-                        CorelateDot(oldDot, left);
-                }
-            }
+        //public override void Corelate(Sector center, Sector left, Sector right)
+        //{
+        //    foreach(TargetDot oldDot in center.OldDots)
+        //    {
+        //        if (CorelateDot(oldDot, center)) continue;
+        //        if (CorelateDot(oldDot, right)) continue;
+        //        CorelateDot(oldDot, left);
+        //    }
 
-            NotifyDeleteSectorTrack(center);
-        }
+        //    NotifyDeleteSectorTrack(center);
+        //}
 
         private bool CorelateDot(TargetDot oldDot, Sector center)
         {
@@ -28,11 +26,11 @@
 
                 if (distance < threshold)
                 {
-                    TargetTrack track = TargetTrack.CreateTargetTrack(newDot.CurrentCoordinate, oldDot.CurrentCoordinate);
+                    TargetTrack track = TargetTrack.CreateTargetTrack(newDot.CurrentCoordinate, oldDot.CurrentCoordinate,3);
                     if (track == null)   //创建航迹失败
                         continue;
 
-                    newDot.Adopted = true;
+                    //newDot.Adopted = true;
                     oldDot.Adopted = true;
                     center.AddTrack(track);
                     ret = true;

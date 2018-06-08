@@ -35,8 +35,8 @@ namespace TargetManagerPackage
 
             _trackCorelator = new TrackCorelatorV1();//航迹相关器
 
-            _mode = TargetManagerMode.Manual;
-            _dotCorelator = new DotCorelator_Manual();//自由点相关器
+            _mode = TargetManagerMode.Intelligent;
+            _dotCorelator = new DotCorelatorV1();//自由点相关器
 
             _freeDotDeleter = new FreeDotDeleter();  //自由点删除器
 
@@ -323,6 +323,15 @@ namespace TargetManagerPackage
                 Sector pre = PreviousSector(tmp);
                 Sector nex = NextSector(tmp);
                 _clotter47.Clot(tmp, nex, pre, azCells);
+
+                tmp = PreviousSector(tmp);
+                pre = PreviousSector(tmp);
+                nex = NextSector(tmp);
+                _dotCorelator.Corelate(tmp, pre, nex);
+                if (tmp.Tracks.Count > 0)
+                {
+
+                }
 
                 foreach (var generator in trackGenerators)  //更新产生的航迹
                     generator.UpdateTrack(s);
