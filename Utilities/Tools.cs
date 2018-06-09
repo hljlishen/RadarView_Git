@@ -239,5 +239,11 @@ namespace Utilities
 
             return angleSpan / degreePerSecond;
         }
+
+        public static int RandomInt(int minimum, int maximum)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            return random.Next(minimum, maximum);
+        }
     }
 }

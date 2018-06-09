@@ -89,6 +89,7 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lab_trackHeight = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -321,6 +322,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lab_trackHeight);
             this.groupBox1.Controls.Add(this.btn_counterclockwise);
             this.groupBox1.Controls.Add(this.btn_Rpm20);
             this.groupBox1.Controls.Add(this.btn_Rpm10);
@@ -494,7 +496,6 @@
             this.tb_ipAddress.Size = new System.Drawing.Size(104, 21);
             this.tb_ipAddress.TabIndex = 23;
             this.tb_ipAddress.Text = "192.168.10.5";
-            this.tb_ipAddress.TextChanged += new System.EventHandler(this.tb_ipAddress_TextChanged);
             // 
             // btn_startUDP
             // 
@@ -716,19 +717,19 @@
             this.航机显示ToolStripMenuItem.CheckOnClick = true;
             this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
             // 
             // 原始视频ToolStripMenuItem1
             // 
@@ -736,7 +737,7 @@
             this.原始视频ToolStripMenuItem1.CheckOnClick = true;
             this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.原始视频ToolStripMenuItem1.Text = "原始视频";
             this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
@@ -776,6 +777,15 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
+            // 
+            // lab_trackHeight
+            // 
+            this.lab_trackHeight.AutoSize = true;
+            this.lab_trackHeight.Location = new System.Drawing.Point(121, 147);
+            this.lab_trackHeight.Name = "lab_trackHeight";
+            this.lab_trackHeight.Size = new System.Drawing.Size(41, 12);
+            this.lab_trackHeight.TabIndex = 18;
+            this.lab_trackHeight.Text = "label4";
             // 
             // Form1
             // 
@@ -817,6 +827,7 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -891,6 +902,7 @@
         private System.Windows.Forms.Button btn_resume;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 原始视频ToolStripMenuItem1;
+        private System.Windows.Forms.Label lab_trackHeight;
     }
 }
 

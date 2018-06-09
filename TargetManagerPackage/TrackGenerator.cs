@@ -28,8 +28,8 @@ namespace TargetManagerPackage
         {
             if (track.SectorIndex != s.Index) return;
             MoveTrack();
-
             targetManager.NotifyAllObservers(track, NotifyType.Update);
+            track.SetRefreshTimeNow();  //设置更新时间
             SystemCommunicator.UpdateTrack(track);
             OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendTrack(track);
         }
@@ -58,7 +58,8 @@ namespace TargetManagerPackage
 
         public void MoveTrack()
         {
-            track.Update(NextCoordinate());
+            track.Update(NextStraightCoordinate());
+            TargetTrack.SetTrackHeight(track, MouseTargetTracker.TrackHeight);
             int sectorIndex = GetTrackSectorId(track);
             if(track.SectorIndex != sectorIndex)
                 targetManager.NotifyAllObservers(track, NotifyType.Delete);
@@ -66,12 +67,11 @@ namespace TargetManagerPackage
             targetManager.NotifyAllObservers(track, NotifyType.Update);
         }
 
-        private PolarCoordinate NextCoordinate()
+        private PolarCoordinate NextCircleCoordinate()
         {
             PolarCoordinate coordinate = new PolarCoordinate();
-            Random random = new Random(DateTime.Now.Millisecond);
-            int distanceRandomValue = random.Next(10, 50);
-            int azRandomValue = random.Next(0, 10);
+            int distanceRandomValue = Tools.RandomInt(10, 50);
+            int azRandomValue = Tools.RandomInt(0, 10);
             double x = center.Dis * Math.Cos(Tools.AngleToRadian(90 - center.Az));
             double y = center.Dis * Math.Sin(Tools.AngleToRadian(90 - center.Az));
             double x1 = x + 100 * Math.Cos(Tools.AngleToRadian(90 - angle));
@@ -82,9 +82,17 @@ namespace TargetManagerPackage
             coordinate.Az = (float)alpha ;
             coordinate.Dis = (float)r + distanceRandomValue;
             coordinate.El = 0;
-            angle += 51.4f + azRandomValue;
-            //angle = random.Next(0, 360);
+            angle += 51.4f + azRandomValue;;
             return coordinate;
+        }
+
+        private PolarCoordinate NextStraightCoordinate()
+        {
+            float speed = 10f; //速度10m/s
+            float dis = track.Dis;
+            TimeSpan time = DateTime.Now - track.LastRefreshTime;
+            dis = dis + (float)time.TotalSeconds * speed;
+            return new PolarCoordinate(track.CurrentCoordinate.Az + Tools.RandomInt(-3,3) / 6f, track.CurrentCoordinate.El, dis);
         }
     }
 }

@@ -185,7 +185,9 @@ namespace TargetManagerPackage
                 if (area.Width < AreaWidthMinimum || area.Width > AreaWidthMaximum)
                     continue;
                 List<DistanceCell> disCells = area.GetDistanceCells();
-                dots.Add(ClotSingleDot_MassCenter(disCells));
+                TargetDot dot = ClotSingleDot_MassCenter(disCells);
+                dot.DotWidth = area.Width;      //凝聚点的宽度
+                dots.Add(dot);
             }
 
             return dots;
@@ -212,36 +214,6 @@ namespace TargetManagerPackage
             double az = azPowerSum / powerSum;
             //az = AdjustAz((float)az);       //修正回差
             return new TargetDot() { Az = (float)az, El = 0, Dis = dis, IsClotDot = true };
-        }
-
-        private static TargetDot ClotSingleDot_MaxAm(List<DistanceCell> distanceCells)
-        {
-            PolarCoordinate c = new PolarCoordinate();
-            int amMax = 0;
-            float az = 0, el = 0, dis = 0;
-            foreach (DistanceCell cell in distanceCells)
-            {
-                if (amMax >= cell.sumAM) continue;
-                amMax = cell.sumAM;
-                az = cell.az;
-                el = cell.el;
-                dis = cell.Distance;
-            }
-
-            //az = AdjustAz(az);
-            return new TargetDot(az, el, dis) { IsClotDot = true };
-        }
-
-        private static float AdjustAz(float az)
-        {
-            RotateDirection direction = TargetManagerFactory.CreateAntennaDataProvider().GetAntennaDirection();
-            switch (direction)
-            {
-                case RotateDirection.ClockWise:
-                    return az - 0.5f;
-                default:
-                    return az + 0.5f;
-            }
         }
     }
 }

@@ -44,6 +44,19 @@ namespace RadarForm
             svd.Distance = 1000;
             ovd.Distance = 3000;
             btn_WaveGate.Enabled = false;
+            MouseWheel += OnMouseWheel;
+            ShowTrackHeight();
+        }
+
+        private void ShowTrackHeight() => lab_trackHeight.Text = SystemController.GetTrackHeight().ToString("0.0");
+
+        private void OnMouseWheel(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.Delta > 0)
+                SystemController.SetTrackHeight(SystemController.GetTrackHeight() + 5);
+            else
+                SystemController.SetTrackHeight(SystemController.GetTrackHeight() - 5);
+            ShowTrackHeight();
         }
 
         private string MakeIpAddressAndPortString() => tb_ipAddress.Text + ":" + tb_port.Text;
@@ -228,11 +241,6 @@ namespace RadarForm
 
             if (e.KeyValue == 34) //PageDown
                 btn_slower_Click(null, null);
-        }
-
-        private void tb_ipAddress_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btn_largeSectionSweep_Click(object sender, EventArgs e) => controller.AntennaSetSectionSweepMode(100f, 260f);

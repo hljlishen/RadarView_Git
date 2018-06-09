@@ -157,5 +157,15 @@ namespace RadarDisplayPackage
         public float GetAngleAdjustment() => CycleDataReader.AzAdjustment;
 
         public float SetAngleAdjustment(float angleAdjust) => CycleDataReader.AzAdjustment = angleAdjust;
+
+        public static void SetTrackHeight(float height)
+        {
+            MouseTargetTracker.TrackHeight = height > 0 ? height : 0;
+        }
+
+        public static float GetTrackHeight()
+        {
+            return MouseTargetTracker.TrackHeight;
+        }
     }
 }

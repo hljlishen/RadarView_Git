@@ -14,42 +14,13 @@ namespace TargetManagerPackage
         public double Speed { get; } = 0;
 
         public int Score { get; set; }           //航迹评分
-        //private static int TrackIdBytes = 2;
-        //private static int SpeedBytes = 2;
-        //protected static int AzBytes = 2;
-        //protected static int ElBytes = 2;
-        //protected static int DisBytes = 4;
-        //protected static int SpeedAzBytes = 2;
 
-        //public TargetTrack(byte[] data, int p, int sector)     
-        //{
+        public static void SetTrackHeight(TargetTrack track , float height)
+        {
+            float angle = (float)Tools.RadianToAngle((float)Math.Asin(height / track.Dis));
+            track.El = angle;
+        }
 
-        //    locations = new List<PolarCoordinate>();
-        //    int pos = p;
-
-        //    sectorIndex = sector;
-
-        //    trackID = Tools.MakeInt(data, pos, TrackIdBytes);
-        //    pos += TrackIdBytes;
-
-        //    int az = Tools.MakeInt(data, pos, AzBytes);
-        //    pos += AzBytes;
-
-        //    int dis = Tools.MakeInt(data, pos, DisBytes);
-        //    pos += DisBytes;
-
-        //    int el = Tools.MakeInt(data, pos, ElBytes);
-        //    pos += ElBytes;
-
-        //    speed = Tools.MakeInt(data, pos, SpeedBytes);
-        //    pos += SpeedBytes;
-
-        //    int speedAz = Tools.MakeInt(data, pos, SpeedAzBytes);
-
-        //    AZ = (float)az / 10;
-        //    EL = (float)el / 10;
-        //    Dis = dis;
-        //}
         private TargetTrack(PolarCoordinate c)
         {
             CurrentCoordinate = c;

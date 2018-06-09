@@ -13,7 +13,7 @@ namespace TargetManagerPackage
         public const float DroneMaximumSpeed = 16;  //无人机速度最大值，单位：m/s
         public const float DroneMinimumSpeed = 2;  //无人机速度最大值，单位：m/s
         public DateTime LastRefreshTime { get; set; }
-        protected void SetRefreshTimeNow() => LastRefreshTime = DateTime.Now;
+        public void SetRefreshTimeNow() => LastRefreshTime = DateTime.Now;
         protected TimeSpan TimeSpanSinceLastRefresh(DateTime time) => time - LastRefreshTime;
         protected float MaximumFlyDistanceSinceLastRefresh(DateTime time) => (float)TimeSpanSinceLastRefresh(time).TotalSeconds * DroneMaximumSpeed;
         protected float MinimumFlyDistanceSinceLastRefresh(DateTime time) => (float)TimeSpanSinceLastRefresh(time).TotalSeconds * DroneMinimumSpeed;

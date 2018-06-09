@@ -327,11 +327,7 @@ namespace TargetManagerPackage
                 tmp = PreviousSector(tmp);
                 pre = PreviousSector(tmp);
                 nex = NextSector(tmp);
-                _dotCorelator.Corelate(tmp, pre, nex);
-                if (tmp.Tracks.Count > 0)
-                {
-
-                }
+                //_dotCorelator.Corelate(tmp, pre, nex);
 
                 foreach (var generator in trackGenerators)  //更新产生的航迹
                     generator.UpdateTrack(s);
