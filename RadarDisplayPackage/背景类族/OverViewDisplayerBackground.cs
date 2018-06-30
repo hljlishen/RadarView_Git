@@ -39,7 +39,7 @@ namespace RadarDisplayPackage
             angleLineBrush = canvas.CreateSolidColorBrush(new ColorF(128, 138, 135));   //冷灰
             sectorCount = TargetManagerFactory.CreateTargetDataProvider().GetSectorCount();
 
-            angleLines = CalSectorBordAngles(sectorCount);//绘制扇区边界线，应注释改行
+            //angleLines = CalSectorBordAngles(sectorCount);//绘制扇区边界线，应注释改行
            
             //初始化四个距离分划线
             ellipse1 = new Ellipse(csp.OriginalPoint, csp.CoordinateArea.Width / 2, csp.CoordinateArea.Height / 2);
@@ -81,8 +81,8 @@ namespace RadarDisplayPackage
             //角度虚线
             foreach (float angle in angleLines)
             {
-                x = coordinateSystem.OriginalPoint.X + ((float)coordinateSystem.CoordinateArea.Width / 2) * (float)Math.Sin(Tools.AngleToRadian(angle));
-                y = coordinateSystem.OriginalPoint.Y - ((float)coordinateSystem.CoordinateArea.Height / 2) * (float)Math.Cos(Tools.AngleToRadian(angle));
+                x = coordinateSystem.OriginalPoint.X + ((float)coordinateSystem.CoordinateArea.Width / 2) * (float)Math.Sin(Tools.DegreeToRadian(angle));
+                y = coordinateSystem.OriginalPoint.Y - ((float)coordinateSystem.CoordinateArea.Height / 2) * (float)Math.Cos(Tools.DegreeToRadian(angle));
                 canvas.DrawLine(coordinateSystem.OriginalPoint, new Point2F((int)x, (int)y), angleLineBrush, angleLineWidth, AngleLineStrokeStyle);    //画线
             }
 

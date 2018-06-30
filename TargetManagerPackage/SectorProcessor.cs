@@ -48,7 +48,7 @@ namespace TargetManagerPackage
         {
             lock(_locker)
             foreach (ITargetObserver ob in Observers)
-                ob.NotifyUpdateSectorTrack(s.Tracks, s.Index);
+                ob.NotifyUpdateSectorTrack(s.StableTracks, s.Index);
         }
 
         protected void NotifyDeleteSectorTrack(Sector s)

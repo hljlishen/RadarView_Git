@@ -49,6 +49,7 @@ namespace RadarDisplayPackage
         {
             //计算ID框和三角形位置
             PathGeometry pg = BuildTriangle();
+            if (pg == null) return;
             RoundedRectangleGeometry idTag = BuildIdTag();
 
             if (ShouldDrawCourse)
@@ -57,16 +58,16 @@ namespace RadarDisplayPackage
             //画ID标签
             renderTarget.FillGeometry(pg, tagBrush);
             renderTarget.FillGeometry(idTag, tagBrush);
-            TargetTrack t = (TargetTrack)View.Target;
-            if (t.TrackId < 10)     //标签是一位数还是两位数
+            TargetTrack t = (TargetTrack) View.Target;
+            if (t.TrackId < 10) //标签是一位数还是两位数
                 idTextRect.Left += smallIDOffset;
             renderTarget.DrawText(t.TrackId.ToString(), idFormation, idTextRect, idBrush);
-
 
             //释放资源
             pg.Dispose();
             idTag.Dispose();
         }
+
         public virtual void Draw() => Draw(View.Canvas);
 
         protected abstract PathGeometry BuildTriangle();

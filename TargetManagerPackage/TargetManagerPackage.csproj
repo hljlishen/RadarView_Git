@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossSectorTarget.cs" />
+    <Compile Include="方位单元管理器\TargetSimulator.cs" />
+    <Compile Include="方位单元管理器\ITestDataGenerator.cs" />
     <Compile Include="凝聚器\FourSevenClotter.cs" />
     <Compile Include="凝聚器\TargetArea.cs" />
     <Compile Include="通信类\EthernetData.cs" />
@@ -80,7 +83,7 @@
     <Compile Include="SectorProcessor.cs" />
     <Compile Include="航迹相关器\TrackCorelatorV1.cs" />
     <Compile Include="航迹相关器\TrackCorrelator.cs" />
-    <Compile Include="CycleDataMatrix.cs" />
+    <Compile Include="方位单元管理器\CycleDataMatrix.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="TargetManager.cs" />
     <Compile Include="航迹管理器\ITargetManagerController.cs" />

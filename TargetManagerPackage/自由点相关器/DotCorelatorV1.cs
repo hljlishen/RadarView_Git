@@ -26,7 +26,7 @@
 
                 if (distance < threshold)
                 {
-                    TargetTrack track = TargetTrack.CreateTargetTrack(newDot.CurrentCoordinate, oldDot.CurrentCoordinate,3);
+                    TargetTrack track = TargetTrack.CreateTargetTrack(newDot, oldDot,3);
                     if (track == null)   //创建航迹失败
                         continue;
 

@@ -112,7 +112,14 @@ namespace TargetManagerPackage
                 foreach (Sector s in Sectors)
                 {
                     NotifyDeleteSectorDots(s);
+                    NotifyDeleteSectorTracks(s);
+                    mouseTargetTracker?.DeleteTrack();
                     s.ClearAllTargets();
+                    foreach (var generator in trackGenerators)
+                    {
+                        generator.Dispose();
+                    }
+                    trackGenerators.Clear();
                 }
             }
         }
@@ -124,18 +131,18 @@ namespace TargetManagerPackage
             {
                 foreach (Sector s in Sectors)
                 {
-                    ls.AddRange(s.Tracks);
+                    ls.AddRange(s.StableTracks);
                 }
 
-                //添加航迹生成器的航迹
-                foreach (var generator in trackGenerators)
-                {
-                    ls.Add(generator.track);
-                }
+                ////添加航迹生成器的航迹
+                //foreach (var generator in trackGenerators)
+                //{
+                //    ls.Add(generator.track);
+                //}
 
-                //添加鼠标追踪器的航迹
-                if (mouseTargetTracker.track != null)
-                    ls.Add(mouseTargetTracker.track);
+                ////添加鼠标追踪器的航迹
+                //if (mouseTargetTracker.track != null)
+                //    ls.Add(mouseTargetTracker.track);
             }
 
             return ls;
@@ -206,7 +213,7 @@ namespace TargetManagerPackage
                 //}
 
                 ////使用MouseTargetTracker用鼠标的点击跟踪航迹,如果需要手动起批，应注释此行代码
-                mouseTargetTracker.UpdateTrack((TargetDot) t);
+                mouseTargetTracker.UpdateTrack((TargetDot)t);
             }
         }
 
@@ -319,15 +326,12 @@ namespace TargetManagerPackage
                 //Sector tmp = s;
 
                 //index - 1扇区点迹凝聚
-                AzimuthCell[] azCells = CycleDataMatrix.CreateCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
-                Sector pre = PreviousSector(tmp);
-                Sector nex = NextSector(tmp);
-                _clotter47.Clot(tmp, nex, pre, azCells);
+                //AzimuthCell[] azCells = CycleDataMatrix.CreateCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
+                //_clotter47.Clot(tmp, NextSector(tmp), PreviousSector(tmp), azCells);
 
-                tmp = PreviousSector(tmp);
-                pre = PreviousSector(tmp);
-                nex = NextSector(tmp);
-                //_dotCorelator.Corelate(tmp, pre, nex);
+                //tmp = PreviousSector(tmp);
+                //_trackCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));    //航迹相关
+                //_dotCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));      //自由点起批
 
                 foreach (var generator in trackGenerators)  //更新产生的航迹
                     generator.UpdateTrack(s);

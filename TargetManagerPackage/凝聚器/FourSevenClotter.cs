@@ -9,9 +9,9 @@ namespace TargetManagerPackage
         private static int AreaWidthMinimum = 20;
         private static int AreaWidthMaximum = 150;
         //private int count = 0;
-        public override void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
+        public override void Clot(Sector center, Sector nextSector, Sector preSector, AzimuthCell[] cells)
         {
-            base.Clot(center, right,left,cells);
+            base.Clot(center, nextSector, preSector, cells);
 
             List<TargetDot> dots = ClotAzCells(new List<AzimuthCell>(cells));
 
@@ -19,12 +19,12 @@ namespace TargetManagerPackage
             {
                 if (center.IsAngleInArea(targetDot.Az))
                     center.AddNewDot(targetDot);
-                if(right.IsAngleInArea(targetDot.Az))
-                    right.AddPrepareDot(targetDot);
-                if (left.IsAngleInArea(targetDot.Az))
-                    left.AddPrepareDot(targetDot);
+                if(nextSector.IsAngleInArea(targetDot.Az))
+                    nextSector.AddPrepareDot(targetDot);
+                if (preSector.IsAngleInArea(targetDot.Az))
+                    preSector.AddPrepareDot(targetDot);
             }
-            center.LoadPrepareDot();
+            center.LoadPrepareDots();
             NotifyUpdateSectorDot(center);  //通知更新该扇区的目标点视图
         }
 

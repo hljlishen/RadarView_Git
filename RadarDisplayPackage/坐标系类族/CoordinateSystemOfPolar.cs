@@ -31,13 +31,13 @@ namespace RadarDisplayPackage
             //if (coordinate.ProjectedDis != -1)      //有待优化，取projectedDis的方式不合理
             //    projectedDistance = coordinate.ProjectedDis;
             //else
-            //    projectedDistance = coordinate.Dis * Math.Cos(AngleToRadian(coordinate.El));  //水平面的投影距离
+            //    projectedDistance = coordinate.Dis * Math.Cos(DegreeToRadian(coordinate.El));  //水平面的投影距离
 
             projectedDistance = coordinate.Dis;     //会导致波门绘制失效
 
             double r = (((double)CoordinateArea.Width / 2) / (Range)) * (projectedDistance);
-            double sin = Math.Sin(Tools.AngleToRadian(coordinate.Az));
-            double cos = Math.Cos(Tools.AngleToRadian(coordinate.Az));
+            double sin = Math.Sin(Tools.DegreeToRadian(coordinate.Az));
+            double cos = Math.Cos(Tools.DegreeToRadian(coordinate.Az));
             double x1 = r * sin;
             double y1 = r * cos;
             x1 = OriginalPoint.X + x1;
@@ -148,16 +148,16 @@ namespace RadarDisplayPackage
 
         public override Point2F CalIntersectionPoint(float angle)
         {
-            double x = CoordinateArea.Width * Math.Sin(Tools.AngleToRadian(angle)) / 2 + OriginalPoint.X;
-            double y = OriginalPoint.Y - CoordinateArea.Width * Math.Cos(Tools.AngleToRadian(angle)) / 2;
+            double x = CoordinateArea.Width * Math.Sin(Tools.DegreeToRadian(angle)) / 2 + OriginalPoint.X;
+            double y = OriginalPoint.Y - CoordinateArea.Width * Math.Cos(Tools.DegreeToRadian(angle)) / 2;
 
             return new Point2F((float)x, (float)y);
         }
 
         public Point2F CalIntersectionPoint(float angle, float radius)
         {
-            double x = radius * Math.Sin(Tools.AngleToRadian(angle)) + OriginalPoint.X;
-            double y = OriginalPoint.Y - radius * Math.Cos(Tools.AngleToRadian(angle));
+            double x = radius * Math.Sin(Tools.DegreeToRadian(angle)) + OriginalPoint.X;
+            double y = OriginalPoint.Y - radius * Math.Cos(Tools.DegreeToRadian(angle));
 
             return new Point2F((float)x, (float)y);
         }
@@ -168,7 +168,7 @@ namespace RadarDisplayPackage
 
             //计算拖拽位置和坐标原点连线的正北夹角
             var angle = Tools.AngleToNorth(OriginalPoint, p);
-            angle = (float)Tools.AngleToRadian(angle);
+            angle = (float)Tools.DegreeToRadian(angle);
 
             //计算起始角度对应直线与坐标系外圈圆周的交点坐标
             ret.X = (int)(OriginalPoint.X + r * Math.Sin(angle));

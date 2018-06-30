@@ -256,5 +256,7 @@ namespace RadarForm
         private void btn_resume_Click(object sender, EventArgs e) => controller.DataSourceResume();
 
         private void 原始视频ToolStripMenuItem1_Click(object sender, EventArgs e) => Clotter.ShouldShowOriginalVideo = 原始视频ToolStripMenuItem1.Checked;
+
+        private void btn_Rpm20_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm20);
     }
 }

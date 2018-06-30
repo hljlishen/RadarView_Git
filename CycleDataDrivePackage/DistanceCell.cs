@@ -77,7 +77,7 @@ namespace CycleDataDrivePackage
             speed = Tools.MakeInt(data, p, speedLength);
             p += speedLength;
 
-            //int sign = MakeInt(data, p, elSignLength);
+            int sign = Tools.MakeInt(data, p, elSignLength);
             p += elSignLength;
 
             sumAM = Tools.MakeInt(data, p, sumAmLength);
@@ -85,22 +85,22 @@ namespace CycleDataDrivePackage
 
             differAM = Tools.MakeInt(data, p, differAmLength);
 
-            //float quotient = ((float)sumAM) / differAM;
-            //int valueIndex;
+            float quotient = ((float)sumAM) / differAM;
+            int valueIndex;
 
-            //if (sign == 1)   //负角度
-            //{
-            //    valueIndex = FindNearestValueIndex(NegtiveElQuotients, quotient);
-            //    el = -valueIndex;
-            //}
-            //else             //正角度
-            //{
-            //    valueIndex = FindNearestValueIndex(PositiveElQuotients, quotient);
-            //    el = valueIndex;
-            //}
+            if (sign == 1)   //负角度
+            {
+                valueIndex = FindNearestValueIndex(NegtiveElQuotients, quotient);
+                el = -valueIndex;
+            }
+            else             //正角度
+            {
+                valueIndex = FindNearestValueIndex(PositiveElQuotients, quotient);
+                el = valueIndex;
+            }
 
-            //el += 15;
-            el = 0;
+            el += 15;
+            //el = 0;
         }
 
         public DistanceCell()
@@ -111,25 +111,25 @@ namespace CycleDataDrivePackage
         public int Distance => (int)( Resolution * index);
 
 
-        //private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
-        //{
-        //    if (value > values[0])
-        //        return 0;
-        //    if (value < values[values.Length - 1])
-        //        return values.Length - 1;
-        //    for(int i = 0; i < values.Length; i ++)
-        //    {
-        //        if(value <= values[i] && value > values[i+1] )
-        //        {
-        //            float differI = Math.Abs(values[i] - value);
-        //            float differI1 = Math.Abs(values[i + 1] - value);
-        //            if (differI < differI1)
-        //                return i;
-        //            return i + 1;
-        //        }
-        //    }
+        private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
+        {
+            if (value > values[0])
+                return 0;
+            if (value < values[values.Length - 1])
+                return values.Length - 1;
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (value <= values[i] && value > values[i + 1])
+                {
+                    float differI = Math.Abs(values[i] - value);
+                    float differI1 = Math.Abs(values[i + 1] - value);
+                    if (differI < differI1)
+                        return i;
+                    return i + 1;
+                }
+            }
 
-        //    return -1;
-        //}
+            return -1;
+        }
     }
 }

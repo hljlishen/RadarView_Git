@@ -6,13 +6,13 @@ namespace TargetManagerPackage
     public abstract class Clotter : SectorProcessor
     {
         public static bool ShouldShowOriginalVideo { get; set; } = true;
-        public virtual void Clot(Sector center, Sector right, Sector left, AzimuthCell[] cells)
+        public virtual void Clot(Sector center, Sector nextSector, Sector preSector, AzimuthCell[] cells)
         {
             //MoveNewDotToOldDot(center);
             center.BeginProcessSector();
 
             if(ShouldShowOriginalVideo)
-                ShowOriginalVideo(center, right, left, cells);
+                ShowOriginalVideo(center, nextSector, preSector, cells);
         }
 
         protected abstract List<TargetDot> ClotAzCells(List<AzimuthCell> azCells);

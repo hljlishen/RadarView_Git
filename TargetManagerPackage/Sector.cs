@@ -7,9 +7,11 @@ namespace TargetManagerPackage
         public int Index;        //编号
 
         public List<TargetDot> PrepareDots { get; }
+        public List<TargetTrack> ExchangeTracks { get; }
         public List<TargetDot> NewDots { get; set; }
         public List<TargetDot> OldDots { get; }
-        public List<TargetTrack> Tracks { get; set; }
+        public List<TargetTrack> StableTracks { get; }
+        public List<TargetTrack> TrackHeads { get; }
         public const int SectorCount = 32;
         private readonly object _locker = new object();
 
@@ -20,7 +22,9 @@ namespace TargetManagerPackage
             PrepareDots = new List<TargetDot>();
             NewDots = new List<TargetDot>();
             OldDots = new List<TargetDot>();
-            Tracks = new List<TargetTrack>();
+            StableTracks = new List<TargetTrack>();
+            TrackHeads = new List<TargetTrack>();
+            ExchangeTracks = new List<TargetTrack>();
         }
 
         public void ClearAllTargets()
@@ -28,8 +32,10 @@ namespace TargetManagerPackage
             lock (_locker)
             {
                 NewDots?.Clear();
-                Tracks?.Clear();
+                StableTracks?.Clear();
                 OldDots?.Clear();
+                PrepareDots?.Clear();
+                ExchangeTracks?.Clear();
             }
         }
 
@@ -39,7 +45,7 @@ namespace TargetManagerPackage
 
             lock (_locker)
             {
-                foreach (TargetTrack t in Tracks)
+                foreach (TargetTrack t in StableTracks)
                 {
                     if (t.Active)
                         ls.Add(t);
@@ -52,11 +58,11 @@ namespace TargetManagerPackage
         {
             lock (_locker)
             {
-                for (int i = Tracks.Count - 1; i >= 0; i--) //逆向遍历
+                for (int i = StableTracks.Count - 1; i >= 0; i--) //逆向遍历
                 {
-                    if (!Tracks[i].Active) continue;
-                    Tracks[i].Dispose();
-                    Tracks.RemoveAt(i);
+                    if (!StableTracks[i].Active) continue;
+                    StableTracks[i].Dispose();
+                    StableTracks.RemoveAt(i);
                 }
             }
         }
@@ -70,12 +76,45 @@ namespace TargetManagerPackage
             }
         }
 
-        public void LoadPrepareDot()
+        public void LoadPrepareDots()
         {
             lock (_locker)
             {
                 NewDots.AddRange(PrepareDots);
                 PrepareDots.Clear();
+            }
+        }
+
+        public void LoadExchangeTracks()
+        {
+            lock (_locker)
+            {
+                StableTracks.AddRange(ExchangeTracks);
+                ExchangeTracks.Clear();
+            }
+        }
+
+        public void AcceptTrackFromOtherSector(TargetTrack track)
+        {
+            lock (_locker)
+            {
+                ExchangeTracks.Add(track);
+                track.SectorIndex = Index;
+            }
+        }
+
+        public void DeleteUnqualifiedTracks()       //删除不合格航迹
+        {
+            lock (_locker)
+            {
+                for (int i = StableTracks.Count - 1; i >= 0; i--)
+                {
+                    if (StableTracks[i].Score <= TargetTrack.ScoreMinimum)
+                    {
+                        StableTracks[i].Dispose();
+                        StableTracks.RemoveAt(i);
+                    }
+                }
             }
         }
 
@@ -93,7 +132,7 @@ namespace TargetManagerPackage
             lock (_locker)
             {
                 track.SectorIndex = Index;
-                Tracks.Add(track);
+                StableTracks.Add(track);
             }
         }
 
@@ -102,7 +141,7 @@ namespace TargetManagerPackage
             lock (_locker)
             {
                 if (track != null)
-                    Tracks.Remove(track);
+                    StableTracks.Remove(track);
             }
         }
 

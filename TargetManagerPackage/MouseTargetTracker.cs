@@ -9,7 +9,7 @@ namespace TargetManagerPackage
         private static float trackHeight = 150f;
         public static float TrackHeight
         {
-            get => trackHeight + Tools.RandomInt(-5,5);
+            get => trackHeight + Tools.RandomInt(-25,25);
             set => trackHeight = value;
         }
 
@@ -18,6 +18,8 @@ namespace TargetManagerPackage
             this.targetManager = targetManager;
         }
 
+        public void DeleteTrack() => track = null;
+
         public void DeleteActiveTarget()
         {
             if (track == null || !track.Active) return;
@@ -25,32 +27,31 @@ namespace TargetManagerPackage
             targetManager.NotifyAllObservers(track, NotifyType.Delete);
             SystemCommunicator.DeleteTrack(track);  //消批
             track = null;
-
         }
-
-
 
         public void UpdateTrack(TargetDot dot)
         {
             if (track == null)
             {
-                track = TargetTrack.CreateTargetTrack(dot.CurrentCoordinate, null, 13);
-                TargetTrack.SetTrackHeight(track, TrackHeight);
+                track = TargetTrack.CreateTargetTrack(dot, null, 13);
+                track.IsFake = true;
+                //TargetTrack.SetTrackHeight(track, TrackHeight);
                 track.SectorIndex = dot.SectorIndex;
                 targetManager.NotifyAllObservers(track, NotifyType.Add);
+                targetManager.Sectors[dot.SectorIndex].AddTrack(track);
             }
             else
             {
                 track.Locations.Add(track.CurrentCoordinate);
                 track.Update(dot.CurrentCoordinate);
-                //if (dot.sectorIndex != track.sectorIndex)
-                //{
-                //    targetManager.NotifyAllObservers(track, NotifyType.Update);
-                //}
-                //else
-                //{
-                //    targetManager.NotifyAllObservers(track, NotifyType.Update);
-                //}
+                if (dot.SectorIndex != track.SectorIndex)
+                {
+                    targetManager.NotifyAllObservers(track, NotifyType.Update);
+                }
+                else
+                {
+                    targetManager.NotifyAllObservers(track, NotifyType.Update);
+                }
                 TargetTrack.SetTrackHeight(track, TrackHeight);
                 targetManager.NotifyAllObservers(track, NotifyType.Update);
             }

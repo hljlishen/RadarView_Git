@@ -41,7 +41,7 @@ namespace TargetManagerPackage
                 if (DotsCanCorelate(oldDot,newDot) && oldDot.IsDotRelated(newDot))   //两个点是否相关成功
                 {
                     TargetTrack track =
-                        TargetTrack.CreateTargetTrack(newDot.CurrentCoordinate, oldDot.CurrentCoordinate, 3);
+                        TargetTrack.CreateTargetTrack(newDot, oldDot, 3);
                     if (track == null)   //创建航迹失败，航迹编号满
                         continue;
 

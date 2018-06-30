@@ -26,7 +26,7 @@ namespace TargetManagerPackage
             Az = az;
             El = el;
             Dis = dis;
-            CurrentCoordinate.ProjectedDis = (float)(dis * Math.Cos(Tools.AngleToRadian(el)));
+            CurrentCoordinate.ProjectedDis = (float)(dis * Math.Cos(Tools.DegreeToRadian(el)));
             SetRefreshTimeNow();
         }
 

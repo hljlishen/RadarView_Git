@@ -48,6 +48,7 @@
             this.rb_semiAuto = new System.Windows.Forms.RadioButton();
             this.rb_auto = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lab_trackHeight = new System.Windows.Forms.Label();
             this.btn_counterclockwise = new System.Windows.Forms.Button();
             this.btn_Rpm20 = new System.Windows.Forms.Button();
             this.btn_Rpm10 = new System.Windows.Forms.Button();
@@ -89,7 +90,6 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lab_trackHeight = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -339,6 +339,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "天线控制";
             // 
+            // lab_trackHeight
+            // 
+            this.lab_trackHeight.AutoSize = true;
+            this.lab_trackHeight.Location = new System.Drawing.Point(121, 147);
+            this.lab_trackHeight.Name = "lab_trackHeight";
+            this.lab_trackHeight.Size = new System.Drawing.Size(41, 12);
+            this.lab_trackHeight.TabIndex = 18;
+            this.lab_trackHeight.Text = "label4";
+            // 
             // btn_counterclockwise
             // 
             this.btn_counterclockwise.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -361,6 +370,7 @@
             this.btn_Rpm20.TabIndex = 17;
             this.btn_Rpm20.Text = "20Rpm";
             this.btn_Rpm20.UseVisualStyleBackColor = false;
+            this.btn_Rpm20.Click += new System.EventHandler(this.btn_Rpm20_Click);
             // 
             // btn_Rpm10
             // 
@@ -777,15 +787,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // lab_trackHeight
-            // 
-            this.lab_trackHeight.AutoSize = true;
-            this.lab_trackHeight.Location = new System.Drawing.Point(121, 147);
-            this.lab_trackHeight.Name = "lab_trackHeight";
-            this.lab_trackHeight.Size = new System.Drawing.Size(41, 12);
-            this.lab_trackHeight.TabIndex = 18;
-            this.lab_trackHeight.Text = "label4";
             // 
             // Form1
             // 

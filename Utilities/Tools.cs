@@ -10,9 +10,9 @@ namespace Utilities
         public const float Interval = 0.00001f;
         public static ColorF GetColorFFromRgb(int r, int g, int b) => new ColorF(new ColorI(r, g, b));
 
-        public static double AngleToRadian(double angle) => Math.PI * angle / 180;//角度转弧度
+        public static double DegreeToRadian(double angle) => Math.PI * angle / 180;//角度转弧度
 
-        public static double RadianToAngle(double radian) => 180 * radian / Math.PI;//弧度转角度
+        public static double RadianToDegree(double radian) => 180 * radian / Math.PI;//弧度转角度
 
         public static Rect ZoomRectangle(Rect rect, double percent)     //以rect的中心点为中心，将rect放缩percent的百分比
         {
@@ -62,11 +62,11 @@ namespace Utilities
             var distance = (float)DistanceBetween(center, p);
             var x = p.X - center.X;
             var angleR = (float)Math.Asin(x / distance);
-            var angle = RadianToAngle(angleR);
+            var angle = RadianToDegree(angleR);
 
             //float y = center.Y - p.Y;
             //double angleR1 = Math.Acos(y / distance);
-            //angleR1 = RadianToAngle(angleR1);
+            //angleR1 = RadianToDegree(angleR1);
 
             if (p.X >= center.X && p.Y <= center.Y)   //第一象限
             {

@@ -26,10 +26,20 @@ namespace TargetManagerPackage.Tests
         {
             float value = 24f;
             byte[] data = Tools.FloatToBytes(value, 1);
-            byte[] expected = {0xbb, 0xaa};
+            byte[] expected = { 0xbb, 0xaa };
 
             Assert.AreEqual(expected[0], data[0]);
             Assert.AreEqual(expected[1], data[1]);
+        }
+
+        [TestMethod()]
+        public void RetangularToPolarCoordinateTest()
+        {
+            float x = 100;
+            float y = 100;
+            float z = 100;
+
+            PolarCoordinate p = PolarCoordinate.RetangularToPolarCoordinate(x, y, z);
         }
     }
 }

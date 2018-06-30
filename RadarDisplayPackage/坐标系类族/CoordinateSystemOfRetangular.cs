@@ -34,7 +34,7 @@ namespace RadarDisplayPackage
         public override Point2F CoordinateToPoint(PolarCoordinate coordinate)
         {
             double r = (coordinate.Az / 360) * CoordinateArea.Width; //
-            double height = coordinate.Dis * Math.Sin(Tools.AngleToRadian(coordinate.El));
+            double height = coordinate.Dis * Math.Sin(Tools.DegreeToRadian(coordinate.El));
 
             //if (height > Range)     //是否超出范围
             //{

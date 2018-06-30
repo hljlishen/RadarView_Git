@@ -4,37 +4,80 @@ using Utilities;
 
 namespace TargetManagerPackage
 {
-    public class TargetTrack : Target,IDisposable
+    public class TargetTrack : Target,IDisposable, IComparable
     {
         private const int TrackMaximumCount = 200;
         private static readonly int[] Id = new int[TrackMaximumCount];
         public int TrackId { get; set; } = 10;         //批号
         internal PolarCoordinate predictLocation; //预测坐标
         public List<PolarCoordinate> Locations; //历史坐标，最新的在最后
-        public double Speed { get; } = 0;
+
+        public bool IsFake { get; set; } = false;
+
+        public double Speed => Math.Sqrt(Math.Pow(XSpeed, 2) + Math.Pow(YSpeed, 2) + Math.Pow(ZSpeed, 2));
+
+        public double XSpeed { get; set; } = 0;
+        public double YSpeed { get; set; } = 0;
+        public double ZSpeed { get; set; } = 0;
+
+        public PolarCoordinate PredictCoordinate(DateTime time)
+        {
+            TimeSpan interval = time - LastRefreshTime;
+            double x = CurrentCoordinate.X + XSpeed * interval.TotalSeconds;
+            double y = CurrentCoordinate.Y + YSpeed * interval.TotalSeconds;
+            double z = CurrentCoordinate.Z + ZSpeed * interval.TotalSeconds;
+
+            return PolarCoordinate.RetangularToPolarCoordinate((float)x, (float)y, (float)z);
+        }
 
         public int Score { get; set; }           //航迹评分
+        public const int ScoreMaximum = 12;
+        public const int ScoreMinimum = 0;
+
+        public void ScoreAdd(int socre)
+        {
+            Score += socre;
+
+            Score = Score > ScoreMaximum ? ScoreMaximum : Score;
+            Score = Score < ScoreMinimum ? ScoreMinimum : Score;
+        }
 
         public static void SetTrackHeight(TargetTrack track , float height)
         {
-            float angle = (float)Tools.RadianToAngle((float)Math.Asin(height / track.Dis));
+            float angle = (float)Tools.RadianToDegree((float)Math.Asin(height / track.Dis));
             track.El = angle;
         }
 
-        private TargetTrack(PolarCoordinate c)
+        private TargetTrack(TargetDot currunt, TargetDot pre)
         {
-            CurrentCoordinate = c;
+            CurrentCoordinate = currunt.CurrentCoordinate;
             Locations = new List<PolarCoordinate>();
+            if(pre != null)
+                Locations.Add(pre.CurrentCoordinate);
+            if (pre != null)
+                (XSpeed, YSpeed, ZSpeed) = CalSpeed(pre.CurrentCoordinate, currunt.CurrentCoordinate,
+                currunt.LastRefreshTime - pre.LastRefreshTime);     //计算速度
             SetRefreshTimeNow();
         }
 
         public void Update(PolarCoordinate c)
         {
+            (XSpeed, YSpeed, ZSpeed) = CalSpeed(CurrentCoordinate, c, DateTime.Now - LastRefreshTime);  //计算三个方向速度
             Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
             CurrentCoordinate = c;
+            SetRefreshTimeNow();        //设置更新时间
         }
 
-        public static TargetTrack CreateTargetTrack(PolarCoordinate current, PolarCoordinate pre, int initScore)
+        public (float, float, float) CalSpeed(PolarCoordinate lastCoordinate, PolarCoordinate curruntCoordinate, TimeSpan time)
+        {
+            double xSpeed = (curruntCoordinate.X - lastCoordinate.X) / time.TotalSeconds;
+            double ySpeed = (curruntCoordinate.Y - lastCoordinate.Y) / time.TotalSeconds;
+            double zSpeed = (curruntCoordinate.Z - lastCoordinate.Z) / time.TotalSeconds;
+
+            return ((float) xSpeed, (float) ySpeed, (float) zSpeed);
+        }
+
+        public static TargetTrack CreateTargetTrack(TargetDot current, TargetDot pre, int initScore)
         {
             int trackid = -1;
             for(int i = 0; i < TrackMaximumCount; i++)
@@ -52,10 +95,11 @@ namespace TargetManagerPackage
                 return null;
             }
 
-            TargetTrack t = new TargetTrack(current) {Score = initScore};
-            if(pre != null)
-                t.Locations.Add(pre);   //上周期自由点的位置添加为历史位置
-            t.TrackId = trackid + 1;
+            TargetTrack t = new TargetTrack(current, pre)
+            {
+                Score = initScore,
+                TrackId = trackid + 1
+            };
             return t;
         }
 
@@ -81,6 +125,14 @@ namespace TargetManagerPackage
         {
             Id[TrackId - 1] = 0;    //释放ID号
             Locations?.Clear();
+        }
+
+        public int CompareTo(object obj)
+        {
+            TargetTrack track = (TargetTrack) obj;
+            if (Score > track.Score) return 1;
+            if (Score < track.Score) return -1;
+            return 0;
         }
     }
 }

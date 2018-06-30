@@ -30,8 +30,8 @@ namespace RadarDisplayPackage
             Point2F center = coordinateSystem.OriginalPoint;
             Rect coordinateArea = coordinateSystem.CoordinateArea;
 
-            float x1 = center.X + (int)(coordinateArea.Width / 2 * Math.Sin(Tools.AngleToRadian(antennaAngle)));
-            float y1 = center.Y - (int)(coordinateArea.Width / 2 * Math.Cos(Tools.AngleToRadian(antennaAngle)));
+            float x1 = center.X + (int)(coordinateArea.Width / 2 * Math.Sin(Tools.DegreeToRadian(antennaAngle)));
+            float y1 = center.Y - (int)(coordinateArea.Width / 2 * Math.Cos(Tools.DegreeToRadian(antennaAngle)));
             canvas.DrawLine( center, new Point2F(x1, y1),antennaBrush,antennaWidth);
             //canvas.PopLayer();
         }

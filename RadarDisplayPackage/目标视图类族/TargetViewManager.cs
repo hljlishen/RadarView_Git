@@ -151,7 +151,7 @@ namespace RadarDisplayPackage
             //添加目标视图
             foreach (TargetTrack track in trackList)
             {
-                //if(track.Score <= ShowTrackScoreThreshold) continue;
+                //if (track.Score <= ShowTrackScoreThreshold) continue;
                 TargetView view = CreateTargetView(track);
                 tracks[sectorIndex].Add(view);
             }

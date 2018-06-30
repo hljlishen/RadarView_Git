@@ -36,7 +36,7 @@ namespace TargetManagerPackage
             set => CurrentCoordinate.Dis = value;
         }
 
-        public float Height => (float)(CurrentCoordinate.Dis * Math.Sin(Tools.AngleToRadian(CurrentCoordinate.El)));
+        public float Height => (float)(CurrentCoordinate.Dis * Math.Sin(Tools.DegreeToRadian(CurrentCoordinate.El)));
 
         public float DistanceTo(Target t) => CurrentCoordinate.DistanceTo(t.CurrentCoordinate);
 

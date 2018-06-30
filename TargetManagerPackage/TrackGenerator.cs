@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Utilities;
 
 namespace TargetManagerPackage
@@ -18,7 +14,11 @@ namespace TargetManagerPackage
         {
             this.targetManager = targetManager;
             //track = new TargetTrack(coordinate);
-            track = TargetTrack.CreateTargetTrack(coordinate, null, 13);
+            
+            track = TargetTrack.CreateTargetTrack(new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis), null, 13);
+            int sectorIndex = GetTrackSectorId(track);
+            targetManager.Sectors[sectorIndex].AddTrack(track);
+            track.IsFake = true;
             track.SectorIndex = GetTrackSectorId(track);
             targetManager.NotifyAllObservers(track, NotifyType.Add);
             center = coordinate;
@@ -61,10 +61,15 @@ namespace TargetManagerPackage
             track.Update(NextStraightCoordinate());
             TargetTrack.SetTrackHeight(track, MouseTargetTracker.TrackHeight);
             int sectorIndex = GetTrackSectorId(track);
-            if(track.SectorIndex != sectorIndex)
-                targetManager.NotifyAllObservers(track, NotifyType.Delete);
-            track.SectorIndex = sectorIndex;
-            targetManager.NotifyAllObservers(track, NotifyType.Update);
+            if (track.SectorIndex != sectorIndex)
+            {
+                //targetManager.NotifyAllObservers(track, NotifyType.Delete);
+                targetManager.Sectors[track.SectorIndex].RemoveTrack(track);
+                track.SectorIndex = sectorIndex;
+                targetManager.Sectors[sectorIndex].AddTrack(track);
+            }
+
+            //targetManager.NotifyAllObservers(track, NotifyType.Update);
         }
 
         private PolarCoordinate NextCircleCoordinate()
@@ -72,11 +77,11 @@ namespace TargetManagerPackage
             PolarCoordinate coordinate = new PolarCoordinate();
             int distanceRandomValue = Tools.RandomInt(10, 50);
             int azRandomValue = Tools.RandomInt(0, 10);
-            double x = center.Dis * Math.Cos(Tools.AngleToRadian(90 - center.Az));
-            double y = center.Dis * Math.Sin(Tools.AngleToRadian(90 - center.Az));
-            double x1 = x + 100 * Math.Cos(Tools.AngleToRadian(90 - angle));
-            double y1 = y + 100 * Math.Sin(Tools.AngleToRadian(90 - angle));
-            double alpha = 90 - Tools.RadianToAngle(Math.Atan2(y1, x1));
+            double x = center.Dis * Math.Cos(Tools.DegreeToRadian(90 - center.Az));
+            double y = center.Dis * Math.Sin(Tools.DegreeToRadian(90 - center.Az));
+            double x1 = x + 100 * Math.Cos(Tools.DegreeToRadian(90 - angle));
+            double y1 = y + 100 * Math.Sin(Tools.DegreeToRadian(90 - angle));
+            double alpha = 90 - Tools.RadianToDegree(Math.Atan2(y1, x1));
             alpha = Tools.StandardAngle((float) alpha);
             double r = Math.Sqrt(Math.Pow(x1, 2) + Math.Pow(y1, 2));
             coordinate.Az = (float)alpha ;
@@ -93,6 +98,11 @@ namespace TargetManagerPackage
             TimeSpan time = DateTime.Now - track.LastRefreshTime;
             dis = dis + (float)time.TotalSeconds * speed;
             return new PolarCoordinate(track.CurrentCoordinate.Az + Tools.RandomInt(-3,3) / 6f, track.CurrentCoordinate.El, dis);
+        }
+
+        public void Dispose()
+        {
+            track.Dispose();
         }
     }
 }

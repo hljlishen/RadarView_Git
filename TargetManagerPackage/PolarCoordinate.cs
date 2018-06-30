@@ -26,7 +26,7 @@ namespace TargetManagerPackage
                 el = value;
                 if(el > 0 && dis > 0)
                 {
-                    ProjectedDis = (float)(dis * Math.Cos(Tools.AngleToRadian(el)));
+                    ProjectedDis = (float)(dis * Math.Cos(Tools.DegreeToRadian(el)));
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace TargetManagerPackage
                 dis = value;
                 if (el > 0 && dis > 0)
                 {
-                    ProjectedDis = (float)(dis * Math.Cos(Tools.AngleToRadian((float)el)));
+                    ProjectedDis = (float)(dis * Math.Cos(Tools.DegreeToRadian((float)el)));
                 }
             }
         }
@@ -72,11 +72,11 @@ namespace TargetManagerPackage
 
         public PolarCoordinate Copy() => new PolarCoordinate(this);
 
-        public float X => (float)(dis * Math.Cos(Tools.AngleToRadian( el)) * Math.Cos(Tools.AngleToRadian( az)));
+        public float X => (float)(dis * Math.Cos(Tools.DegreeToRadian( el)) * Math.Cos(Tools.DegreeToRadian( az)));
 
-        public float Y => (float)(dis * Math.Cos(Tools.AngleToRadian(el)) * Math.Sin(Tools.AngleToRadian(az)));
+        public float Y => (float)(dis * Math.Cos(Tools.DegreeToRadian(el)) * Math.Sin(Tools.DegreeToRadian(az)));
 
-        public float Z => (float)(dis * Math.Sin(Tools.AngleToRadian(el)));
+        public float Z => (float)(dis * Math.Sin(Tools.DegreeToRadian(el)));
 
         public static float DistanceBetween(PolarCoordinate c1, PolarCoordinate c2)
         {
@@ -94,6 +94,16 @@ namespace TargetManagerPackage
             ls.AddRange(Tools.FloatToBytes(dis,1));
 
             return ls.ToArray();
+        }
+
+        public static PolarCoordinate RetangularToPolarCoordinate(float x, float y, float z)
+        {
+            double hypotenuse = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+            double dis = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
+            double el = Tools.RadianToDegree(Math.Acos(hypotenuse / dis));
+            double az = Tools.RadianToDegree(Math.Acos(x / hypotenuse));
+
+            return new PolarCoordinate((float)az, (float)el, (float)dis);
         }
     }
 }
