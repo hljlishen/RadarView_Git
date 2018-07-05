@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TargetManagerPackage;
 using Utilities;
+using System;
 
 namespace RadarDisplayPackage
 {
@@ -121,6 +122,7 @@ namespace RadarDisplayPackage
                 targetsManager.Dispose();
                 targetsManager = new GraphicTargetViewManager(this);
             }
+            GC.Collect();
         }
 
         internal override GraphicTrackDisplayerBackground CreateBackground()
