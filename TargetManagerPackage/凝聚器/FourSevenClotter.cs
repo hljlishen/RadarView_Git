@@ -196,6 +196,7 @@ namespace TargetManagerPackage
         public static TargetDot ClotSingleDot_MassCenter(List<DistanceCell> distanceCells)
         {
             double azPowerSum = 0;
+            double elPowerSum = 0;
             double powerSum = 0;
             int amMax = 0;
             float dis = 0;
@@ -204,6 +205,7 @@ namespace TargetManagerPackage
             {
                 powerSum += distanceCell.sumAM;
                 azPowerSum += distanceCell.sumAM * distanceCell.az;
+                elPowerSum += distanceCell.sumAM * distanceCell.el;
 
                 //距离取最大幅度的距离
                 if (amMax >= distanceCell.sumAM) continue;
@@ -212,8 +214,9 @@ namespace TargetManagerPackage
             }
 
             double az = azPowerSum / powerSum;
+            double el = elPowerSum / powerSum;
             //az = AdjustAz((float)az);       //修正回差
-            return new TargetDot() { Az = (float)az, El = 0, Dis = dis, IsClotDot = true };
+            return new TargetDot() { Az = (float)az, El = (float)el, Dis = dis, IsClotDot = true };
         }
     }
 }

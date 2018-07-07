@@ -326,8 +326,8 @@ namespace TargetManagerPackage
                 //Sector tmp = s;
 
                 //index - 1扇区点迹凝聚
-                //AzimuthCell[] azCells = CycleDataMatrix.CreateCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
-                //_clotter47.Clot(tmp, NextSector(tmp), PreviousSector(tmp), azCells);
+                AzimuthCell[] azCells = CycleDataMatrix.CreateCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
+                _clotter47.Clot(tmp, NextSector(tmp), PreviousSector(tmp), azCells);
 
                 //tmp = PreviousSector(tmp);
                 //_trackCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));    //航迹相关

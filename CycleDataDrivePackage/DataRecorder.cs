@@ -38,7 +38,7 @@ namespace CycleDataDrivePackage
 
         public void Dispose()
         {
-            _writer.Close();
+            _writer?.Close();
             _writer?.Dispose();
 
             if(IsEmptyFile(_filePath))
