@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossSectorTarget.cs" />
+    <Compile Include="方位单元管理器\CrossSectorTarget.cs" />
+    <Compile Include="方位单元管理器\ElTestTargets.cs" />
     <Compile Include="方位单元管理器\TargetSimulator.cs" />
     <Compile Include="方位单元管理器\ITestDataGenerator.cs" />
     <Compile Include="凝聚器\FourSevenClotter.cs" />

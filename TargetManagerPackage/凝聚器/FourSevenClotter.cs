@@ -85,7 +85,7 @@ namespace TargetManagerPackage
                 return ret;
 
             //有相邻单元格
-            if (!(azimuthCell.DisCells[upperIndex]).Occupied)    //相邻单元格未被其他区域占用
+            if (!azimuthCell.DisCells[upperIndex].Occupied)    //相邻单元格未被其他区域占用
                 ret = ret.Merge(GetDisCellTargetAreaEdge(upperIndex, azimuthCell));      //递归调用此函数，寻找相邻单元格的相邻单元格
 
             //相邻单元格被其他区域占用

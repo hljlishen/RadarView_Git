@@ -129,7 +129,7 @@ namespace TargetManagerPackage
             {
                 foreach (DistanceCell otherCell in otherEdge.Cells)
                 {
-                    if (Math.Abs(cell.index - otherCell.index) <= 4)
+                    if (Math.Abs(cell.index - otherCell.index) <= 4 && Math.Abs(cell.el - otherCell.el) < 1)
                         return true;
                 }
             }

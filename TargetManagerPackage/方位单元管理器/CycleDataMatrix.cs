@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TargetManagerPackage.方位单元管理器;
 
 namespace TargetManagerPackage
 {
@@ -11,14 +12,13 @@ namespace TargetManagerPackage
         private int _currentMatrixIndex;       //新数据存储位置           
         public const int AzimuthCellCount = 1024;        //数组的长度
         private static CycleDataMatrix _cycleDataMatrix;
-        private ITestDataGenerator _testDataGenerator;
+        private readonly ITestDataGenerator _testDataGenerator;
 
         public CycleDataMatrix()
         {
             //初始化矩阵
             Matrix = new AzimuthCell[AzimuthCellCount];
-            //_testDataGenerator = new CrossSectorTarget();
-            _testDataGenerator = new TargetSimulator();
+            _testDataGenerator = new ElTestTargets();
         }
 
 
@@ -26,10 +26,6 @@ namespace TargetManagerPackage
 
         public void SaveAzimuthCell(AzimuthCell data)   //添加周期数据
         {
-            //if (!ShouldSaveData(data))
-            //    return;
-            //data = ChangeRealDataToTestData(data);      //测试用，应注释掉此行
-            //data = RemoveDistanceBelow(data, 900);
             //data = _testDataGenerator.ModifyOriginalData(data);
             _currentMatrixIndex = NextIndex(_currentMatrixIndex);
             Matrix[_currentMatrixIndex]?.Dispose();

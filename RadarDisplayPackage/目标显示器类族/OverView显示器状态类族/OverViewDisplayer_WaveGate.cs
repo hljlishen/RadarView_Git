@@ -73,20 +73,19 @@ namespace RadarDisplayPackage
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (!isMouseDown && !displayer.coordinateSystem.PointOutOfRange(e.Location) || e.Button != MouseButtons.Left)
-            {
-                isMouseDown = true;
+            if (!ShouldExecuteFunction(e)) return;
 
-                //记录鼠标按下的位置
-                mouseDownPosition = Tools.PointToPoint2F(e.Location);
-                mouseDragPosition = mouseDownPosition;
+            isMouseDown = true;
+            //记录鼠标按下的位置
+            mouseDownPosition = Tools.PointToPoint2F(e.Location);
+            mouseDragPosition = mouseDownPosition;
 
-                //计算第一个径向距离
-                mouseDownPositionRadius = (float)Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
+            //计算第一个径向距离
+            mouseDownPositionRadius =
+                (float) Tools.DistanceBetween(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
 
-                //计算点击位置和坐标原点连线的正北夹角
-                beginAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
-            }
+            //计算点击位置和坐标原点连线的正北夹角
+            beginAngle = Tools.AngleToNorth(displayer.coordinateSystem.OriginalPoint, mouseDownPosition);
         }
 
         public override void MouseUp(object sender, MouseEventArgs e)

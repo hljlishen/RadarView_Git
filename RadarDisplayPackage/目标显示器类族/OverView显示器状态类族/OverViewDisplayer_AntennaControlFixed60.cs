@@ -83,7 +83,7 @@ namespace RadarDisplayPackage
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (isMouseDown || e.Button != MouseButtons.Left) return;
+            if (!ShouldExecuteFunction(e)) return;
             shouldExecuteCmd = false;   //鼠标点击但未拖动，此时松开鼠标不执行命令
             isMouseDown = true;
             mouseDownPosition = Tools.PointToPoint2F(e.Location);
@@ -101,8 +101,6 @@ namespace RadarDisplayPackage
             endAngle = dragAngle + FixedSweepAngle / 2;
             endAngle = Tools.StandardAngle(endAngle);
             endLinePoint = displayer.coordinateSystem.CalIntersectionPoint(endAngle);
-
-            //dragAngle += 30;
         }
 
         public override void Dispose()

@@ -59,7 +59,7 @@ namespace RadarDisplayPackage
 
         public override void MouseDown(object sender, MouseEventArgs e)
         {
-            if (isMouseDown || e.Button != MouseButtons.Left) return;
+            if (!ShouldExecuteFunction(e)) return;
             isMouseDown = true;
             mouseDownPosition = Tools.PointToPoint2F(e.Location);   //记录鼠标按下的位置
             mouseDragPosition = mouseDownPosition;

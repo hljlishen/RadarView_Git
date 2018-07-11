@@ -542,7 +542,7 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
-            this.tb_filePath.Text = "D:\\2018-04-28 13-53-29周扫";
+            this.tb_filePath.Text = "C:\\软件开发\\RadarView_git 10_99 - 副本\\2018-07-04 17-16-34";
             // 
             // btn_start
             // 

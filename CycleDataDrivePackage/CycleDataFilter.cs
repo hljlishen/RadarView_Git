@@ -10,9 +10,8 @@ namespace CycleDataDrivePackage
 
         public static bool Pass(DistanceCell cell)
         {
-            if (cell.speed > SpeedMinimum && cell.speed < SpeedMaximum && cell.sumAM > AmThreshold/*&& ! Permanent.Contains(cell.index)*/)
-                return true;
-            return false;
+            return cell.speed > SpeedMinimum && cell.speed < SpeedMaximum && cell.sumAM > AmThreshold
+                   && cell.el > 0;
         }
     }
 }
