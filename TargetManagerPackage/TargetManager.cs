@@ -35,7 +35,7 @@ namespace TargetManagerPackage
 
             _trackCorelator = new TrackCorelatorV1();//航迹相关器
 
-            _mode = TargetManagerMode.Intelligent;
+            _mode = TargetManagerMode.Manual;
             _dotCorelator = new DotCorelatorV1();//自由点相关器
 
             _freeDotDeleter = new FreeDotDeleter();  //自由点删除器
@@ -201,19 +201,20 @@ namespace TargetManagerPackage
             }
             else
             {
-                ////此段代码正常处理手动起批，如果使用MouseTargetTracker用鼠标的点击跟踪航迹，应注释此段代码
-                //if (_mode != TargetManagerMode.Manual)   //非手动模式不作处理
-                //    return;
+                //此段代码正常处理手动起批，如果使用MouseTargetTracker用鼠标的点击跟踪航迹，应注释此段代码
+                if (_mode != TargetManagerMode.Manual)   //非手动模式不作处理
+                    return;
+                TargetTrack track = TargetTrack.CreateTargetTrack((TargetDot)t, null, t.SectorIndex);
+                if (track == null) return;
+                lock (_locker)
+                {
+                    Sectors[t.SectorIndex].AddTrack(track);
+                }
 
-                //TargetTrack track = TargetTrack.CreateTargetTrack(t.CurrentCoordinate, t.CurrentCoordinate);
-                //if (track != null)
-                //{
-                //    _sectors[t.sectorIndex].AddTrack(track);
-                //    NotifyAllObservers(track, NotifyType.Add);
-                //}
+                NotifyAllObservers(track, NotifyType.Add);
 
-                ////使用MouseTargetTracker用鼠标的点击跟踪航迹,如果需要手动起批，应注释此行代码
-                mouseTargetTracker.UpdateTrack((TargetDot)t);
+                //使用MouseTargetTracker用鼠标的点击跟踪航迹,如果需要手动起批，应注释此行代码
+                //mouseTargetTracker.UpdateTrack((TargetDot)t);
             }
         }
 
@@ -329,9 +330,9 @@ namespace TargetManagerPackage
                 AzimuthCell[] azCells = CycleDataMatrix.CreateCycleDataMatrix().GetAzimuthCellsInSectorSpan(tmp, tmp);//获取刚扫过的扇区所包含的方位单元数组
                 _clotter47.Clot(tmp, NextSector(tmp), PreviousSector(tmp), azCells);
 
-                //tmp = PreviousSector(tmp);
-                //_trackCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));    //航迹相关
-                //_dotCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));      //自由点起批
+                tmp = PreviousSector(tmp);
+                _trackCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));    //航迹相关
+                _dotCorelator.Corelate(tmp, NextSector(tmp), PreviousSector(tmp));      //自由点起批
 
                 foreach (var generator in trackGenerators)  //更新产生的航迹
                     generator.UpdateTrack(s);

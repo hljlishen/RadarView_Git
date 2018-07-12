@@ -79,7 +79,20 @@ namespace RadarDisplayPackage
         {
             PolarCoordinate coordinate =
                 ((GraphicTrackDisplayer)displayer).coordinateSystem.PointToCoordinate(Tools.PointToPoint2F(mouseLocation));
-            TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { SectorIndex = 0 };
+
+            //计算所属扇区
+            int sectorCount = targetProvider.GetSectorCount();
+            int sectorIndex = 0;
+            double angleSpan = ((double)360) / sectorCount;
+            for (int index = 0; index < sectorCount; index++)
+            {
+                if (coordinate.Az >= index * angleSpan && coordinate.Az < (index + 1) * angleSpan)
+                {
+                    sectorIndex = index;
+                    break;
+                }    
+            }//计算所属扇区完成
+            TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { SectorIndex = sectorIndex };
             TargetView view = ((GraphicTrackDisplayer)displayer).targetsManager.CreateTargetView(dot);
 
             return (GraphicTargetDotView)view;

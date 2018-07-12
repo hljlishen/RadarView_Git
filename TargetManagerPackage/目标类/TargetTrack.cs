@@ -11,6 +11,9 @@ namespace TargetManagerPackage
         public int TrackId { get; set; } = 10;         //批号
         internal PolarCoordinate predictLocation; //预测坐标
         public List<PolarCoordinate> Locations; //历史坐标，最新的在最后
+        public const double XSpeedMaximum = 16;
+        public const double YSpeedMaximum = 16;
+        public const double ZSpeedMaximum = 10;
 
         public bool IsFake { get; set; } = false;
 
@@ -22,6 +25,8 @@ namespace TargetManagerPackage
 
         public PolarCoordinate PredictCoordinate(DateTime time)
         {
+            if (Locations.Count == 0)   //没有历史位置，返回当前位置
+                return CurrentCoordinate;
             TimeSpan interval = time - LastRefreshTime;
             double x = CurrentCoordinate.X + XSpeed * interval.TotalSeconds;
             double y = CurrentCoordinate.Y + YSpeed * interval.TotalSeconds;
@@ -52,11 +57,19 @@ namespace TargetManagerPackage
         {
             CurrentCoordinate = currunt.CurrentCoordinate;
             Locations = new List<PolarCoordinate>();
-            if(pre != null)
-                Locations.Add(pre.CurrentCoordinate);
             if (pre != null)
+            {
+                Locations.Add(pre.CurrentCoordinate);
                 (XSpeed, YSpeed, ZSpeed) = CalSpeed(pre.CurrentCoordinate, currunt.CurrentCoordinate,
-                currunt.LastRefreshTime - pre.LastRefreshTime);     //计算速度
+                    currunt.LastRefreshTime - pre.LastRefreshTime); //计算速度
+            }
+            else
+            {
+                XSpeed = XSpeedMaximum;
+                YSpeed = YSpeedMaximum;
+                ZSpeed = ZSpeedMaximum;
+            }
+
             SetRefreshTimeNow();
         }
 
@@ -133,6 +146,13 @@ namespace TargetManagerPackage
             if (Score > track.Score) return 1;
             if (Score < track.Score) return -1;
             return 0;
+        }
+
+        public float GetCrelateRadius()
+        {
+            if (Locations.Count == 0)
+                return 500;
+            return 50;
         }
     }
 }

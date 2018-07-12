@@ -18,7 +18,7 @@ namespace TargetManagerPackage
                         if(CorelateTrack(center.StableTracks[i], previous))   //上个扇区有相关点
                         {
                             //与上个扇区的点相关上
-                            previous.AddTrack(center.StableTracks[i]);
+                            previous.AcceptTrackFromOtherSector(center.StableTracks[i]);
                             center.RemoveTrack(center.StableTracks[i]);
                         }
                         else
@@ -60,14 +60,13 @@ namespace TargetManagerPackage
             {
                 if (newDot.Adopted || !newDot.IsClotDot) //被之前的航迹相关上了,或者不是凝聚点
                     continue;
-                if (predictCoordinate.DistanceTo(newDot.CurrentCoordinate) < threshold)
-                {
-                    newDot.Adopted = true;
-                    track.Update(newDot.CurrentCoordinate);
-                    track.ScoreAdd(3);
-                    ret = true;
-                    break; //已经相关上，返回上层循环  
-                }
+                if (!(predictCoordinate.DistanceTo(newDot.CurrentCoordinate) < track.GetCrelateRadius()))
+                    continue;
+                newDot.Adopted = true;
+                track.Update(newDot.CurrentCoordinate);
+                track.ScoreAdd(3);
+                ret = true;
+                break; //已经相关上，返回上层循环  
             }
 
             return ret;

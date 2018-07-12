@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using TargetManagerPackage;
-using System.Threading;
-using System.Data;
+﻿using System.Windows.Forms;
 
 namespace RadarDisplayPackage
 {
@@ -46,31 +39,41 @@ namespace RadarDisplayPackage
 
             DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
             column.Name = "ID";
-            column.HeaderText = "批号";
+            column.HeaderText = @"批号";
             dgv.Columns.Add(column);
 
-            column = new DataGridViewTextBoxColumn();
-            column.Name = "az";
-            column.HeaderText = "方位";
+            column = new DataGridViewTextBoxColumn
+            {
+                Name = "az",
+                HeaderText = @"方位"
+            };
             dgv.Columns.Add(column);
 
-            column = new DataGridViewTextBoxColumn();
-            column.Name = "el";
-            column.HeaderText = "仰角";
+            column = new DataGridViewTextBoxColumn
+            {
+                Name = "el",
+                HeaderText = @"仰角"
+            };
             dgv.Columns.Add(column);
-            column = new DataGridViewTextBoxColumn();
-            column.Name = "diatance";
-            column.HeaderText = "距离";
+            column = new DataGridViewTextBoxColumn
+            {
+                Name = "diatance",
+                HeaderText = @"距离"
+            };
             dgv.Columns.Add(column);
 
-            column = new DataGridViewTextBoxColumn();
-            column.Name = "height";
-            column.HeaderText = "高度";
+            column = new DataGridViewTextBoxColumn
+            {
+                Name = "height",
+                HeaderText = @"高度"
+            };
             dgv.Columns.Add(column);
 
-            column = new DataGridViewTextBoxColumn();
-            column.Name = "speed";
-            column.HeaderText = "速度";
+            column = new DataGridViewTextBoxColumn
+            {
+                Name = "speed",
+                HeaderText = @"速度"
+            };
             dgv.Columns.Add(column);
 
             dgv.Dock = DockStyle.Fill;
