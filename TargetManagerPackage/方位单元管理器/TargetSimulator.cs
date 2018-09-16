@@ -8,17 +8,19 @@ namespace TargetManagerPackage
         public double Distance { get; set; } = 0;
         private DateTime _lastRefreshTime;
         public float TargetSpeed { get; set; }
+        private AngleArea movementArea;
 
-        public TargetSimulator()
+        public TargetSimulator(AngleArea targetMovementArea)
         {
             _lastRefreshTime = DateTime.Now;
             TargetSpeed = 10;
+            movementArea = targetMovementArea;
         }
 
         public AzimuthCell ModifyOriginalData(AzimuthCell originalData)
         {
-            AngleArea testAngleArea1 = new AngleArea(20f, 30f);
-            if (!testAngleArea1.IsAngleInArea(originalData.Angle))
+            //AngleArea testAngleArea1 = new AngleArea(20f, 30f);
+            if (!movementArea.IsAngleInArea(originalData.Angle))
                 return originalData;
             originalData.DisCells.Clear();
             TimeSpan interval = DateTime.Now - _lastRefreshTime;

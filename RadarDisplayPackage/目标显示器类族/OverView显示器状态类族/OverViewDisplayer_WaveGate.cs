@@ -90,6 +90,7 @@ namespace RadarDisplayPackage
 
         public override void MouseUp(object sender, MouseEventArgs e)
         {
+            if (!isMouseDown) return;
             base.MouseUp(sender, e);
             WaveGate waveGate = CalWaveGate();
             if (waveGate != null)

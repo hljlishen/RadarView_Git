@@ -6,6 +6,7 @@ namespace CycleDataDrivePackage
 {
     public class DistanceCell
     {
+        public const float AntennaFixedEl = 15;
         public bool adopted = false;    //是否已经被录取
         public int index;               //单元编号
         //public int azIndex;             //所在方位单元的编号
@@ -46,6 +47,7 @@ namespace CycleDataDrivePackage
 
             el = (float)Math.Asin(0.114f * eldif);
             el = (float)Tools.RadianToDegree(el);
+            el += AntennaFixedEl;
 
             sumAM = Tools.MakeInt(data, p, elAm0Length);
             p += elAm0Length;

@@ -155,7 +155,8 @@ namespace RadarDisplayPackage
                     break;
 
                 case OverViewState.AntennaControl:
-                    ret = new OverViewDisplayer_AntennaControlFixed60(this);
+                    //ret = new OverViewDisplayerAntennaControlFixed60(this);
+                    ret = new OverViewDisplayer_AntennaContrl_Attach(this);
                     break;
 
                 case OverViewState.AutoWaveGate:

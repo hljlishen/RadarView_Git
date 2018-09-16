@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.DirectX;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.Graphics;
+using Utilities;
 
 namespace RadarDisplayPackage
 {
@@ -16,48 +17,29 @@ namespace RadarDisplayPackage
         protected CoordinateSystem coordinateSystem;
         //protected Brush backgroundBrush;
         float beginAngle;
-        float distance = 5000;
         protected float[] angleLines;
         protected float[] angleNumbers;
         protected float[] distanceNumbers;
 
         public virtual float BeginAngle
         {
-            get
-            {
-                return beginAngle;
-            }
+            get => beginAngle;
 
             set
             {
-                beginAngle = value % 360;
+                beginAngle = Tools.StandardAngle(value);
                 for (int i = 0; i < angleNumbers.Length; i++)
                 {
-                    angleNumbers[i] = angleLines[i] + BeginAngle;
-                    if (angleNumbers[i] >= 360)
-                        angleNumbers[i] -= 360;
-                    if (angleNumbers[i] < 0)
-                        angleNumbers[i] += 360;
+                    angleNumbers[i] = Tools.StandardAngle(angleLines[i] + BeginAngle);
                 }
             }
         }
 
-        public virtual float Distance
-        {
-            get
-            {
-                return distance;
-            }
-
-            set
-            {
-                distance = value;
-            }
-        }
+        public virtual float Distance { get; set; } = 5000;
 
         public abstract void Draw();
 
-        public GraphicTrackDisplayerBackground(RenderTarget canvas,D2DFactory factory, CoordinateSystem coordinateSystem)
+        protected GraphicTrackDisplayerBackground(RenderTarget canvas,D2DFactory factory, CoordinateSystem coordinateSystem)
         {
             this.canvas = canvas;
             this.factory = factory;

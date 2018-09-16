@@ -30,7 +30,7 @@ namespace TargetManagerPackage
             InitializeSectors();
             _obs = new List<ITargetObserver>();
 
-            _clotter = new Clotter_Test();
+            //_clotter = new Clotter_Test();
             _clotter47 = new FourSevenClotter();
 
             _trackCorelator = new TrackCorelatorV1();//航迹相关器
@@ -202,19 +202,19 @@ namespace TargetManagerPackage
             else
             {
                 //此段代码正常处理手动起批，如果使用MouseTargetTracker用鼠标的点击跟踪航迹，应注释此段代码
-                if (_mode != TargetManagerMode.Manual)   //非手动模式不作处理
-                    return;
-                TargetTrack track = TargetTrack.CreateTargetTrack((TargetDot)t, null, t.SectorIndex);
-                if (track == null) return;
-                lock (_locker)
-                {
-                    Sectors[t.SectorIndex].AddTrack(track);
-                }
+                //if (_mode != TargetManagerMode.Manual)   //非手动模式不作处理
+                //    return;
+                //TargetTrack track = TargetTrack.CreateTargetTrack((TargetDot)t, null, t.SectorIndex);
+                //if (track == null) return;
+                //lock (_locker)
+                //{
+                //    Sectors[t.SectorIndex].AddTrack(track);
+                //}
 
-                NotifyAllObservers(track, NotifyType.Add);
+                //NotifyAllObservers(track, NotifyType.Add);
 
                 //使用MouseTargetTracker用鼠标的点击跟踪航迹,如果需要手动起批，应注释此行代码
-                //mouseTargetTracker.UpdateTrack((TargetDot)t);
+                mouseTargetTracker.UpdateTrack((TargetDot)t);
             }
         }
 
@@ -246,7 +246,7 @@ namespace TargetManagerPackage
             if (!_obs.Contains(ob) && ob != null)
                 _obs?.Add(ob);
 
-            _clotter.RegisterObserver(ob);           //代理凝聚器观察者的注册
+            _clotter?.RegisterObserver(ob);           //代理凝聚器观察者的注册
             _trackCorelator.RegisterObserver(ob);    //代理相关器观察者的注册 
             _dotCorelator.RegisterObserver(ob);
             _freeDotDeleter.RegisterObserver(ob);
@@ -259,7 +259,7 @@ namespace TargetManagerPackage
             if (_obs.Contains(ob))
                 _obs?.Remove(ob);
 
-            _clotter.UnregisterObserver(ob);             //代理凝聚器观察者的反注册
+            _clotter?.UnregisterObserver(ob);             //代理凝聚器观察者的反注册
             _trackCorelator.UnregisterObserver(ob);      //代理相关器观察者的反注册 
             _dotCorelator.UnregisterObserver(ob);
             _freeDotDeleter.UnregisterObserver(ob);
