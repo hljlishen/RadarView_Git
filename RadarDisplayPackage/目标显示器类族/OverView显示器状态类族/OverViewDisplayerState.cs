@@ -45,8 +45,8 @@ namespace RadarDisplayPackage
 
         protected bool ShouldExecuteFunction(MouseEventArgs e)
         {
-            if (!isMouseDown && !displayer.coordinateSystem.PointOutOfRange(e.Location) && e.Button == MouseButtons.Left &&
-                Control.ModifierKeys == Keys.Alt)
+            if (!isMouseDown && !displayer.coordinateSystem.PointOutOfRange(e.Location) && e.Button == MouseButtons.Left /* &&
+                Control.ModifierKeys == Keys.Alt*/)
                 return true;
             return false;
         }

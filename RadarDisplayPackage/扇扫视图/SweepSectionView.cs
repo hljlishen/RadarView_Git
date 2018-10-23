@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
 using TargetManagerPackage;
+using Utilities;
 using SweepDirection = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.SweepDirection;
 
 namespace RadarDisplayPackage
@@ -11,17 +12,21 @@ namespace RadarDisplayPackage
         private readonly OverViewDisplayer _displayer;
         private readonly Brush _antennaRangeAreaBrush;
         private readonly Brush _antennaRangeBorlderBrush;
-        private Point2F _beginLinePoint;
-        private Point2F _endLinePoint;
+        private readonly Point2F _beginLinePoint;
+        private readonly Point2F _endLinePoint;
+        private readonly AngleArea _sweepAngleArea;
+        private readonly Brush _centerSectorBorder;
 
         public SweepSectionView(AngleArea sweepSection, OverViewDisplayer displayer)
         {
+            _sweepAngleArea = sweepSection;
             _displayer = displayer;
 
             _antennaRangeAreaBrush = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 0, 0));
             _antennaRangeAreaBrush.Opacity = 0.25f;
             _antennaRangeBorlderBrush = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 0, 0));
             _antennaRangeBorlderBrush.Opacity = 1;
+            _centerSectorBorder = displayer.Canvas.CreateSolidColorBrush(new ColorF(1, 1, 0));
 
             _sweepSectionGraphic = displayer.Factory.CreatePathGeometry();
             GeometrySink gs = _sweepSectionGraphic.Open();
@@ -51,6 +56,20 @@ namespace RadarDisplayPackage
             //_antennaRangeAreaBrush.Opacity = 1;
             _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, _beginLinePoint, _antennaRangeBorlderBrush, 3);
             _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, _endLinePoint, _antennaRangeBorlderBrush, 3);
+
+            DrawCenterSector();     //画中央扇区
+        }
+
+        private void DrawCenterSector()
+        {
+            float angle1 = Tools.StandardAngle(_sweepAngleArea.BeginAngle + 23);
+            float angle2 = Tools.StandardAngle(_sweepAngleArea.EndAngle - 23);
+
+            var centerSectorBegin = _displayer.coordinateSystem.CalIntersectionPoint(angle1);
+            var centerSectorEnd = _displayer.coordinateSystem.CalIntersectionPoint(angle2);
+
+            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, centerSectorBegin, _centerSectorBorder, 3);
+            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, centerSectorEnd, _centerSectorBorder, 3);
         }
 
         public void Dispose()

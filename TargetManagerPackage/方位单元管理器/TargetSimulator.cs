@@ -21,7 +21,7 @@ namespace TargetManagerPackage
         {
             //AngleArea testAngleArea1 = new AngleArea(20f, 30f);
             if (!movementArea.IsAngleInArea(originalData.Angle))
-                return originalData;
+                return null;
             originalData.DisCells.Clear();
             TimeSpan interval = DateTime.Now - _lastRefreshTime;
             _lastRefreshTime = DateTime.Now;
