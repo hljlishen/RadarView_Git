@@ -8,8 +8,8 @@ namespace RadarDisplayPackage
     {
         protected ITargetDataProvider targetProvider;
         protected TrackDisplayer displayer;
-        protected List<TargetView>[] dots;
-        protected List<TargetView>[] tracks;
+        protected List<TargetView>[] _DotViews;
+        protected List<TargetView>[] _TrackViews;
         protected static object _locker =  new object();
         protected const int ShowTrackScoreThreshold = 3;
 
@@ -30,13 +30,13 @@ namespace RadarDisplayPackage
 
             lock (_locker)
             {
-                dots = new List<TargetView>[count];
-                tracks = new List<TargetView>[count];
+                _DotViews = new List<TargetView>[count];
+                _TrackViews = new List<TargetView>[count];
 
                 for (int i = 0; i < count; i++)     //初始化链表
                 {
-                    dots[i] = new List<TargetView>();
-                    tracks[i] = new List<TargetView>();
+                    _DotViews[i] = new List<TargetView>();
+                    _TrackViews[i] = new List<TargetView>();
                 }
             }
         }
@@ -75,20 +75,20 @@ namespace RadarDisplayPackage
             {
                 if (t is TargetTrack)
                 {
-                    foreach (TargetView view in tracks[t.SectorIndex])
+                    foreach (TargetView view in _TrackViews[t.SectorIndex])
                     {
                         if (t != view.Target) continue;
-                        tracks[t.SectorIndex].Remove(view);
+                        _TrackViews[t.SectorIndex].Remove(view);
                         view.Dispose();
                         break;      //跳出循环，否则会导致遍历失败
                     }
                 }
                 else
                 {
-                    foreach (TargetView view in dots[t.SectorIndex])
+                    foreach (TargetView view in _DotViews[t.SectorIndex])
                     {
                         if (t != view.Target) continue;
-                        dots[t.SectorIndex].Remove(view);
+                        _DotViews[t.SectorIndex].Remove(view);
                         view.Dispose();
                         break;      //跳出循环，否则会导致遍历失败
                     }
@@ -106,9 +106,9 @@ namespace RadarDisplayPackage
             lock (_locker)
             {
                 if (t is TargetTrack)
-                    tracks[t.SectorIndex].Add(view);
+                    _TrackViews[t.SectorIndex].Add(view);
                 else
-                    dots[t.SectorIndex].Add(view);
+                    _DotViews[t.SectorIndex].Add(view);
             }
         }
 
@@ -127,7 +127,7 @@ namespace RadarDisplayPackage
         {
             lock (_locker)
             {
-                dots[sectorIndex].Clear();
+                _DotViews[sectorIndex].Clear();
 
                 if (newDots == null) //空对象表示删除该区域所有点
                     return;
@@ -136,14 +136,14 @@ namespace RadarDisplayPackage
                 foreach (TargetDot dot in newDots)
                 {
                     var view = CreateTargetView(dot);
-                    dots[sectorIndex].Add(view);
+                    _DotViews[sectorIndex].Add(view);
                 }
             }
         }
 
         public virtual void NotifyUpdateSectorTrack(List<TargetTrack> trackList, int sectorIndex)
         {
-            tracks[sectorIndex].Clear();
+            _TrackViews[sectorIndex].Clear();
 
             if (trackList == null)   //空对象表示删除该区域所有点
                 return;
@@ -153,7 +153,8 @@ namespace RadarDisplayPackage
             {
                 //if (track.Score <= ShowTrackScoreThreshold) continue;
                 TargetView view = CreateTargetView(track);
-                tracks[sectorIndex].Add(view);
+                if(view != null)
+                    _TrackViews[sectorIndex].Add(view);
             }
         }
 

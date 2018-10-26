@@ -1,24 +1,29 @@
 ﻿using System.Collections.Generic;
 using TargetManagerPackage;
+using System.Windows.Forms;
 
 namespace RadarDisplayPackage
 {
     class DataGridViewTargetViewManager : TargetViewManager
     {
-        protected DataGridViewTargetView[] views;
+        //protected DataGridViewTargetView[] views;
         protected const int TrackMaximum = 200;
+
+        public List<TargetTrack>[] _tracks;
 
         public DataGridViewTargetViewManager(DataGridViewDisplayer displayer) : base(displayer)
         {
-            views = new DataGridViewTargetView[TrackMaximum];   //最大16个航迹
+            _tracks = new List<TargetTrack>[TargetManagerFactory.CreateTargetDataProvider().GetSectorCount()];
 
-            for (int i = 0; i < TrackMaximum; i++)
-            {
-                views[i] = new DataGridViewTargetView(null, displayer, i + 1) {Target = null};
-                //赋值null,可以隐藏该行
-                views[i].DisplayTarget();       //向displayer.dgv添加行
-                views[i].Selected = false;      //默认未被选中
-            }
+            //views = new DataGridViewTargetView[TrackMaximum];   //最大200个航迹
+
+            //for (int i = 0; i < TrackMaximum; i++)
+            //{
+            //    views[i] = new DataGridViewTargetView(null, displayer, i + 1) {Target = null};
+            //    //赋值null,可以隐藏该行
+            //    views[i].DisplayTarget();       //向displayer.dgv添加行
+            //    views[i].Selected = false;      //默认未被选中
+            //}
 
             LoadTargetViews(targetProvider.GetTargetTracks());
         }
@@ -32,12 +37,12 @@ namespace RadarDisplayPackage
         {
             if (t is TargetTrack)
             {
-                int Id = ((TargetTrack)t).TrackId;
-                views[Id - 1].Target = t;
-                if (t.Active)
-                    views[Id - 1].Selected = true;
-                else
-                    views[Id - 1].Selected = false;
+                //int Id = ((TargetTrack)t).TrackId;
+                //views[Id - 1].Target = t;
+                //if (t.Active)
+                //    views[Id - 1].Selected = true;
+                //else
+                //    views[Id - 1].Selected = false;
             }
         }
 
@@ -46,8 +51,8 @@ namespace RadarDisplayPackage
             if (t is TargetTrack)
             {
                 int Id = ((TargetTrack)t).TrackId;
-                views[Id - 1].Target = null;
-                views[Id - 1].Selected = false;
+                //views[Id - 1].Target = null;
+                //views[Id - 1].Selected = false;
             }
         }
 
@@ -71,12 +76,7 @@ namespace RadarDisplayPackage
 
         public override void NotifyUpdateSectorTrack(List<TargetTrack> trackList, int sectorIndex)
         {
-            base.NotifyUpdateSectorTrack(trackList, sectorIndex);
-
-            foreach (var track in tracks[sectorIndex])
-            {
-                //AddTarget(track.Target);
-            }
+            ((DataGridViewDisplayer)displayer).UpdateTargetTracks(trackList, sectorIndex);
         }
     }
 }

@@ -45,11 +45,11 @@ namespace RadarDisplayPackage
             lock (_locker)
             {
                 //鼠标点击事件转发给每个视图对象处理,倒叙遍历，因为遍历过程中会有航迹的删除和添加
-                for (int i = dots.Length - 1; i >= 0; i--)
+                for (int i = _DotViews.Length - 1; i >= 0; i--)
                 {
-                    for (int j = dots[i].Count - 1; j >= 0; j--)
+                    for (int j = _DotViews[i].Count - 1; j >= 0; j--)
                     {
-                        if (dots[i][j].HandleMouseClick(e.Location)) //点击位置附近有多个目标时，只选取一个目标
+                        if (_DotViews[i][j].HandleMouseClick(e.Location)) //点击位置附近有多个目标时，只选取一个目标
                         {
                             stopFindingDot = true;
                             break;
@@ -60,11 +60,11 @@ namespace RadarDisplayPackage
                         break;
                 }
 
-                for (int i = tracks.Length - 1; i >= 0; i--)
+                for (int i = _TrackViews.Length - 1; i >= 0; i--)
                 {
-                    for (int j = tracks[i].Count - 1; j >= 0; j--)
+                    for (int j = _TrackViews[i].Count - 1; j >= 0; j--)
                     {
-                        if(tracks[i][j].HandleMouseClick(e.Location))
+                        if(_TrackViews[i][j].HandleMouseClick(e.Location))
                             return;
                     }
                 }
@@ -124,9 +124,9 @@ namespace RadarDisplayPackage
                     //获取目标航迹视图
                     var view = CreateTargetView(target);
                     if (target is TargetDot)
-                        dots[target.SectorIndex].Add(view);
+                        _DotViews[target.SectorIndex].Add(view);
                     else
-                        this.tracks[target.SectorIndex].Add(view);
+                        this._TrackViews[target.SectorIndex].Add(view);
                 }
             }
         }
@@ -162,11 +162,11 @@ namespace RadarDisplayPackage
                 _sectorDrawer[sectorIndex].Clear();
 
                 //绘制目标点
-                foreach (var view in dots[sectorIndex])
+                foreach (var view in _DotViews[sectorIndex])
                     view.DisplayTarget();
 
                 //绘制目标航迹
-                foreach (var view in tracks[sectorIndex])
+                foreach (var view in _TrackViews[sectorIndex])
                     view.DisplayTarget();
 
                 _sectorDrawer[sectorIndex].EndDraw();
@@ -199,7 +199,7 @@ namespace RadarDisplayPackage
             lock (_locker)
             {
                 base.Dispose();
-                foreach (List<TargetView> ls in dots)
+                foreach (List<TargetView> ls in _DotViews)
                 {
                     foreach (var view in ls)
                     {
@@ -207,7 +207,7 @@ namespace RadarDisplayPackage
                     }
                 }
 
-                foreach (List<TargetView> ls in tracks)
+                foreach (List<TargetView> ls in _TrackViews)
                 {
                     foreach (var targetView in ls)
                     {

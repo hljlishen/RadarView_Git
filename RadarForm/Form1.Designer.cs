@@ -198,7 +198,7 @@
             this.tb_distance.Name = "tb_distance";
             this.tb_distance.Size = new System.Drawing.Size(94, 21);
             this.tb_distance.TabIndex = 10;
-            this.tb_distance.Text = "4000";
+            this.tb_distance.Text = "3000";
             this.tb_distance.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_distance_KeyDown);
             // 
             // btn_distance
@@ -542,7 +542,7 @@
             this.tb_filePath.Name = "tb_filePath";
             this.tb_filePath.Size = new System.Drawing.Size(214, 21);
             this.tb_filePath.TabIndex = 0;
-            this.tb_filePath.Text = "C:\\软件开发\\RadarView_git 10_99 - 副本\\2018-07-04 17-16-34";
+            this.tb_filePath.Text = "D:\\2018-10-25 17-25-18(you.mubiao)";
             // 
             // btn_start
             // 
