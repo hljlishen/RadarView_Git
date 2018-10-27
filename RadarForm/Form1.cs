@@ -14,6 +14,7 @@ namespace RadarForm
         private OverViewDisplayer ovd;
         private SideViewDisplayer svd;
         private DataGridViewDisplayer dgvd;
+        private TextDisplayer textDisplayer;
         private SystemController controller;
 
         public Form1()
@@ -39,8 +40,9 @@ namespace RadarForm
             svd = new SideViewDisplayer(pnl_sideView);
             controller = new SystemController(ovd);
             controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());    //默认链接UDP数据
-            dgvd = new DataGridViewDisplayer(pnl_gridView);
-            ovd.RegisterObserver(this);
+            //dgvd = new DataGridViewDisplayer(pnl_gridView);
+            textDisplayer = new TextDisplayer(pnl_gridView);
+            //ovd.RegisterObserver(this);
             svd.Distance = 1000;
             ovd.Distance = 3000;
             btn_WaveGate.Enabled = false;

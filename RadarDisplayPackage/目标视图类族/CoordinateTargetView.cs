@@ -7,7 +7,7 @@ using Utilities;
 
 namespace RadarDisplayPackage
 {
-    public abstract class  GraphicTargetView : TargetView,IDisposable
+    public abstract class  CoordinateTargetView : TargetView,IDisposable
     {
         protected RenderTarget canvas;
         protected D2DFactory factory;
@@ -39,9 +39,11 @@ namespace RadarDisplayPackage
 
         public CoordinateSystem CoordinateSystem { get; }
 
-        protected GraphicTargetView(Target target, RenderTarget canvas, D2DFactory factory, CoordinateSystem coordinateSystem)
+        protected CoordinateTargetView(Target target, RenderTarget canvas, D2DFactory factory, CoordinateSystem coordinateSystem)
             : base(target)
         {
+            if (target == null) return;
+
             this.canvas = canvas;
             this.factory = factory;
             CoordinateSystem = coordinateSystem;

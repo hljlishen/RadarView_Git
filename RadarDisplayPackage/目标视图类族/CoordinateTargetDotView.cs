@@ -4,7 +4,7 @@ using Utilities;
 
 namespace RadarDisplayPackage
 {
-    internal class GraphicTargetDotView : GraphicTargetView
+    internal class CoordinateTargetDotView : CoordinateTargetView
     {
         private const float ColorValueMax = 1;
         private const float ColorValueMin = 0.586f;
@@ -13,7 +13,7 @@ namespace RadarDisplayPackage
         private const float BlueColorConst = ColorValueMax;
         private const float BlueColorCoefficient = -RedColorCoefficient;
 
-        public GraphicTargetDotView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs)
+        public CoordinateTargetDotView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs)
             : base(target, rt, factory, cs)
         {
             if (!((TargetDot) target).IsClotDot)
@@ -54,6 +54,17 @@ namespace RadarDisplayPackage
         {
             base.Dispose();
             targetViewBrush?.Dispose();
+        }
+    }
+
+    public class DoNothingTargetView : CoordinateTargetView
+    {
+        public DoNothingTargetView() : base(null, null, null, null)
+        {
+        }
+
+        public override void Draw(RenderTarget renderTarget)
+        {
         }
     }
 }

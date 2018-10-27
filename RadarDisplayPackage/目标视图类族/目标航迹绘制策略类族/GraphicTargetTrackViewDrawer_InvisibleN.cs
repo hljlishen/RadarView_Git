@@ -9,7 +9,7 @@ namespace RadarDisplayPackage
 {
     class GraphicTargetTrackViewDrawer_InvisibleN : GraphicTargetTrackViewDrawer_Invisible
     {
-        public GraphicTargetTrackViewDrawer_InvisibleN(GraphicTargetTrackView view) : base(view) { }
+        public GraphicTargetTrackViewDrawer_InvisibleN(CoordinateTargetTrackView view) : base(view) { }
 
         protected override PathGeometry BuildTriangle()
         {

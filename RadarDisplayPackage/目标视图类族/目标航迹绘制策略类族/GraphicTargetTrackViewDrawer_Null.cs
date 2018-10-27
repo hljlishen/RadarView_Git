@@ -9,7 +9,7 @@ namespace RadarDisplayPackage
 {
     class GraphicTargetTrackViewDrawer_Null : GraphicTargetTrackViewDrawer  //NullObject模式，应用于超出显示范围的目标，绘制目标时什么都不做
     {
-        public GraphicTargetTrackViewDrawer_Null(GraphicTargetTrackView view) : base(view)
+        public GraphicTargetTrackViewDrawer_Null(CoordinateTargetTrackView view) : base(view)
         {
         }
 

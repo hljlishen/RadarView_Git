@@ -9,7 +9,7 @@ namespace RadarDisplayPackage
     public abstract class GraphicTargetTrackViewDrawer : IDisposable
     {
         public static bool ShouldDrawCourse { get; set; } = true;
-        protected GraphicTargetTrackView View;
+        protected CoordinateTargetTrackView View;
         protected Brush idBrush; //标签文本画刷
         protected Brush tagBrush; //标签框画刷
         //PathGeometry pg;
@@ -28,7 +28,7 @@ namespace RadarDisplayPackage
             set => idTextRect = value;
         }
 
-        protected GraphicTargetTrackViewDrawer(GraphicTargetTrackView view)
+        protected GraphicTargetTrackViewDrawer(CoordinateTargetTrackView view)
         {
             this.View = view;
 

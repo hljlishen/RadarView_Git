@@ -10,7 +10,7 @@ namespace RadarDisplayPackage
     abstract class GraphicTargetTrackViewDrawer_Invisible : GraphicTargetTrackViewDrawer //北方超出边界
     {
         protected Point2F projectivePosition;     //在可视区域边缘的投影坐标
-        public GraphicTargetTrackViewDrawer_Invisible(GraphicTargetTrackView view) : base(view)
+        public GraphicTargetTrackViewDrawer_Invisible(CoordinateTargetTrackView view) : base(view)
         {
             projectivePosition = GetProjectivePosition();
             tagBrush.Opacity = 0.5f;

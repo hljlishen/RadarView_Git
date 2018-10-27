@@ -12,8 +12,9 @@ namespace RadarDisplayPackage
     {
         public SideViewDisplayer(Panel h) : base(h)
         {
+            targetsManager = new CoordinateTargetViewManager(this);
             //Distance = 3000;
-            //targetsManager = new GraphicTargetViewManager(this);
+            //targetsManager = new CoordinateTargetViewManager(this);
         }
 
         public override float Distance
@@ -25,7 +26,7 @@ namespace RadarDisplayPackage
                 base.Distance = value;
                 background.Distance = value;
                 targetsManager?.Dispose();
-                targetsManager = new GraphicTargetViewManager(this);
+                targetsManager = new CoordinateTargetViewManager(this);
             }
         }
 

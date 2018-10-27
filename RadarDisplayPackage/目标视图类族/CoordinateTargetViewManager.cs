@@ -7,10 +7,10 @@ using Utilities;
 
 namespace RadarDisplayPackage
 {
-    class GraphicTargetViewManager :TargetViewManager
+    class CoordinateTargetViewManager :TargetViewManager
     {
         private BitmapRenderTarget[] _sectorDrawer;
-        public GraphicTargetViewManager(GraphicTrackDisplayer displayer) : base(displayer)
+        public CoordinateTargetViewManager(GraphicTrackDisplayer displayer) : base(displayer)
         {
             //鼠标点击事件
             displayer.DisplayControl.MouseClick += DisplayControl_MouseClick;
@@ -70,12 +70,12 @@ namespace RadarDisplayPackage
                 }
 
                 //运行到此处说明没有点击位置没有任何目标,为MouseTargetTracker生成一个目标点
-                GraphicTargetDotView view = GenerateGraphicTargetDotViewFromMouseLocation(e.Location);
+                CoordinateTargetDotView view = GenerateGraphicTargetDotViewFromMouseLocation(e.Location);
                 view.HandleMouseClick(e.Location);
             }
         }
 
-        private GraphicTargetDotView GenerateGraphicTargetDotViewFromMouseLocation(Point mouseLocation)
+        private CoordinateTargetDotView GenerateGraphicTargetDotViewFromMouseLocation(Point mouseLocation)
         {
             PolarCoordinate coordinate =
                 ((GraphicTrackDisplayer)displayer).coordinateSystem.PointToCoordinate(Tools.PointToPoint2F(mouseLocation));
@@ -95,20 +95,25 @@ namespace RadarDisplayPackage
             TargetDot dot = new TargetDot(coordinate.Az, coordinate.El, coordinate.Dis) { SectorIndex = sectorIndex };
             TargetView view = ((GraphicTrackDisplayer)displayer).targetsManager.CreateTargetView(dot);
 
-            return (GraphicTargetDotView)view;
+            return (CoordinateTargetDotView)view;
         }
 
         public override TargetView CreateTargetView(Target taget)
         {
             lock (_locker)
             {
-                GraphicTargetView view;
+                //if (displayer is TextDisplayer)
+                //{
+                //    if(taget is TargetDot)
+                //        return new DoNothingTargetView();
+                //}
+                CoordinateTargetView view;
                 if (taget == null)
                     return null;
                 if (taget.GetType() == typeof(TargetDot))
-                    view = new GraphicTargetDotView(taget, _sectorDrawer[taget.SectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                    view = new CoordinateTargetDotView(taget, _sectorDrawer[taget.SectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
                 else
-                    view = new GraphicTargetTrackView(taget, _sectorDrawer[taget.SectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
+                    view = new CoordinateTargetTrackView(taget, _sectorDrawer[taget.SectorIndex], ((GraphicTrackDisplayer)displayer).Factory, ((GraphicTrackDisplayer)displayer).coordinateSystem);
                 return view;
             }
         }
@@ -133,7 +138,7 @@ namespace RadarDisplayPackage
 
         public override void DisplayTargetViews()
         {
-            base.DisplayTargetViews();
+            //base.DisplayTargetViews();
             foreach(BitmapRenderTarget brt in _sectorDrawer)     //绘制位图
             {
                 ((GraphicTrackDisplayer)displayer).Canvas.DrawBitmap(brt.Bitmap);
@@ -211,7 +216,7 @@ namespace RadarDisplayPackage
                 {
                     foreach (var targetView in ls)
                     {
-                        var view = (GraphicTargetTrackView)targetView;
+                        var view = (CoordinateTargetTrackView)targetView;
                         view.Dispose();
                     }
                 }

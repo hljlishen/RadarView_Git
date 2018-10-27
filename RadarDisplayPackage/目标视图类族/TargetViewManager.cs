@@ -41,14 +41,7 @@ namespace RadarDisplayPackage
             }
         }
 
-        public virtual void DisplayTargetViews()
-        {
-            //lock (views)
-            //{
-            //    foreach (GraphicTargetView view in views)
-            //        view?.DisplayTarget();
-            //}
-        }
+        public abstract void DisplayTargetViews();
 
         public virtual void NotifyChange(Target t, NotifyType type)
         {

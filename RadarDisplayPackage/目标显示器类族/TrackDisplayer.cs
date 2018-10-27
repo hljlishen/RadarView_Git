@@ -13,10 +13,10 @@ namespace RadarDisplayPackage
         protected object _locker = new object();
 
 
-        protected TrackDisplayer(Control Holder)
+        protected TrackDisplayer(Control holder)
         {
-            Holder.Controls.Clear();
-            DisplayControl = Holder;
+            holder.Controls.Clear();
+            DisplayControl = holder;
 
             timer = new Timer {Interval = 30};
             timer.Tick += Timer_Tick;

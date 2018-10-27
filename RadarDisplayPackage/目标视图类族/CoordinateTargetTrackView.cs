@@ -6,14 +6,14 @@ using Utilities;
 
 namespace RadarDisplayPackage
 {
-    public class GraphicTargetTrackView : GraphicTargetView
+    public class CoordinateTargetTrackView : CoordinateTargetView
     {
         private GraphicTargetTrackViewDrawer drawer;
         protected const int preLocationRadius = 2;  //历史位置圆形半径
 
         public List<Ellipse> PreLocations { get; set; }
 
-        public GraphicTargetTrackView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs) 
+        public CoordinateTargetTrackView(Target target, RenderTarget rt, D2DFactory factory, CoordinateSystem cs) 
             :base(target, rt, factory, cs)
         {
             drawer = CreateDrawer();

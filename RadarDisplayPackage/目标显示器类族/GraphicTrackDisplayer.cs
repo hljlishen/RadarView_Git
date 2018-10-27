@@ -19,7 +19,6 @@ namespace RadarDisplayPackage
 
             // ReSharper disable once VirtualMemberCallInConstructor
             coordinateSystem = CreateCoordinateSystem();    //最先创建坐标系
-            targetsManager = new GraphicTargetViewManager(this);
             background = CreateBackground();    //创建背景
             antenna = CreateAntenna();          //创建天线
         }
@@ -46,13 +45,13 @@ namespace RadarDisplayPackage
             Canvas.Clear();
 
             //绘制背景
-            background.Draw();
+            background?.Draw();
 
             //绘制目标
-            targetsManager.DisplayTargetViews();
+            targetsManager?.DisplayTargetViews();
 
             //绘制天线
-            antenna.Draw();
+            antenna?.Draw();
 
             //其他：波门、扫描范围线
             OtherDrawing(); //模板模式的hook

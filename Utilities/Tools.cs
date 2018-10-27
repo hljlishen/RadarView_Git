@@ -108,6 +108,19 @@ namespace Utilities
             return ret;
         }
 
+        public static RectF MoveRectToPoint(RectF rect, Point2F point)
+        {
+            float width = rect.Width;
+            float height = rect.Height;
+
+            rect.Left = point.X;
+            rect.Top = point.Y;
+            rect.Right = rect.Left + width;
+            rect.Bottom = rect.Top + height;
+
+            return rect;
+        }
+
         public static Point2F PointToPoint2F(Point p) => new Point2F(p.X, p.Y);
 
         public static Point Point2FToPoint(Point2F p) => new Point((int)p.X, (int)p.Y);
@@ -144,6 +157,8 @@ namespace Utilities
 
         public static bool FloatEquals(float a, float b) => Math.Abs(a - b) < Interval;
         public static bool IsPointInRect(Point2F p, Rect r) => p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
+
+        public static bool IsPointInRect(Point p, RectF r) => p.X >= r.Left && p.X <= r.Right && p.Y >= r.Top && p.Y <= r.Bottom;
 
         public static float StandardAngle(float angle) //将角度转化为0-360的浮点数
         {

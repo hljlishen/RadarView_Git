@@ -38,6 +38,8 @@ namespace RadarDisplayPackage
 
         public OverViewDisplayer(Panel displayerContain) : base(displayerContain)
         {
+            targetsManager = new CoordinateTargetViewManager(this);
+
             beginAngle = 0.0f;
 
             ViewState = CreateState(OverViewState.Zoom);
@@ -120,7 +122,7 @@ namespace RadarDisplayPackage
                 ViewState = CreateState(ViewState.GetState());  //根据坐标系重算状态数据
                 _sweepSectionManager.CalSweepSectionView();      //重新计算区域大小
                 targetsManager.Dispose();
-                targetsManager = new GraphicTargetViewManager(this);
+                targetsManager = new CoordinateTargetViewManager(this);
             }
             GC.Collect();
         }

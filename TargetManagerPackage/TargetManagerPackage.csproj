@@ -50,6 +50,7 @@
     <Compile Include="方位单元管理器\ITestDataGenerator.cs" />
     <Compile Include="凝聚器\FourSevenClotter.cs" />
     <Compile Include="凝聚器\TargetArea.cs" />
+    <Compile Include="目标类\TrackIdComparer.cs" />
     <Compile Include="通信类\EthernetData.cs" />
     <Compile Include="MouseTargetTracker.cs" />
     <Compile Include="通信类\X68Command.cs" />

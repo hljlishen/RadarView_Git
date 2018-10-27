@@ -4,7 +4,7 @@ namespace RadarDisplayPackage
 {
     class GraphicTargetTrackViewDrawer_Visible : GraphicTargetTrackViewDrawer
     {
-        public GraphicTargetTrackViewDrawer_Visible(GraphicTargetTrackView view) : base(view) { }
+        public GraphicTargetTrackViewDrawer_Visible(CoordinateTargetTrackView view) : base(view) { }
 
 
         public override void Draw()
