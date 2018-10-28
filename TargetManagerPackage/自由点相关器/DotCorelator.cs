@@ -21,6 +21,8 @@ namespace TargetManagerPackage
         {
             foreach (TargetDot oldDot in center.OldDots)
             {
+                if ((oldDot.Dis > 1500 && oldDot.Dis < 2500) || (oldDot.Dis> 2600 && oldDot.Dis < 2700))
+                    continue; //屏蔽杂波多的区域
                 if (CorelateDotToSector(oldDot, center)) continue;
                 if (CorelateDotToSector(oldDot, right)) continue;
                 CorelateDotToSector(oldDot, left);      //和左侧扇区中的点相关

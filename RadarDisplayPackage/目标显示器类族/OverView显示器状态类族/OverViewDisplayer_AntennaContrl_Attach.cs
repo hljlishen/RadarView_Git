@@ -5,7 +5,7 @@ using Utilities;
 
 namespace RadarDisplayPackage
 {
-    class OverViewDisplayer_AntennaContrl_Attach : OverViewDisplayerAntennaControlFixed60
+    internal class OverViewDisplayerAntennaContrlAttach : OverViewDisplayerAntennaControlFixed60
     {
         private readonly int _sectiorCount;
         private float _sectorCoverage;
@@ -16,7 +16,7 @@ namespace RadarDisplayPackage
         private float _centerSectorBorderAngle2;
         private Point2F _centerSectorBorderIntersectorPoint1;
         private Point2F _centerSectorBorderIntersectorPoint2;
-        public OverViewDisplayer_AntennaContrl_Attach(OverViewDisplayer displayer) : base(displayer)
+        public OverViewDisplayerAntennaContrlAttach(OverViewDisplayer displayer) : base(displayer)
         {
             _sectiorCount = GetSectorCount();
             _sectorCenter = CalSectorCenter();

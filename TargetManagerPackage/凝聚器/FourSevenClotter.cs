@@ -216,7 +216,8 @@ namespace TargetManagerPackage
             double az = azPowerSum / powerSum;
             double el = elPowerSum / powerSum;
             //az = AdjustAz((float)az);       //修正回差
-            return new TargetDot() { Az = (float)az, El = (float)el, Dis = dis, IsClotDot = true };
+
+            return new TargetDot((float)az, (float)el, dis) { IsClotDot = true };
         }
     }
 }

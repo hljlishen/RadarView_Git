@@ -5,7 +5,7 @@ namespace TargetManagerPackage
 {
     public abstract class Clotter : SectorProcessor
     {
-        public static bool ShouldShowOriginalVideo { get; set; } = true;
+        public static bool ShouldShowOriginalVideo { get; set; } = false;
         public virtual void Clot(Sector center, Sector nextSector, Sector preSector, AzimuthCell[] cells)
         {
             //MoveNewDotToOldDot(center);

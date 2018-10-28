@@ -727,27 +727,25 @@
             this.航机显示ToolStripMenuItem.CheckOnClick = true;
             this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // 原始视频ToolStripMenuItem1
             // 
-            this.原始视频ToolStripMenuItem1.Checked = true;
             this.原始视频ToolStripMenuItem1.CheckOnClick = true;
-            this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
             this.原始视频ToolStripMenuItem1.Text = "原始视频";
             this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
