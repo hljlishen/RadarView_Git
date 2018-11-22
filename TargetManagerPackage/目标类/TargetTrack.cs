@@ -6,10 +6,13 @@ namespace TargetManagerPackage
 {
     public class TargetTrack : Target,IDisposable, IComparable
     {
+        public delegate void ChangeSectorHandler(Target target, int toSectorIndex);
+        public ChangeSectorHandler ChangeSector;
+        public bool IsFocused { get; } = false;
         private const int TrackMaximumCount = 200;
         private static readonly int[] Id = new int[TrackMaximumCount];
         public int TrackId { get; set; } = 10;         //批号
-        internal PolarCoordinate predictLocation; //预测坐标
+        public PolarCoordinate PredictLocation; //预测坐标
         public List<PolarCoordinate> Locations; //历史坐标，最新的在最后
         public const double XSpeedMaximum = 16;
         public const double YSpeedMaximum = 16;
@@ -22,6 +25,17 @@ namespace TargetManagerPackage
         public double XSpeed { get; set; } = 0;
         public double YSpeed { get; set; } = 0;
         public double ZSpeed { get; set; } = 0;
+
+        public override int SectorIndex
+        {
+            get => _sectorIndex;
+            set
+            {
+                if (value == _sectorIndex) return;
+                ChangeSector?.Invoke(this, value);
+                _sectorIndex = value;
+            }
+        }
 
         public PolarCoordinate PredictCoordinate(DateTime time)
         {
@@ -136,6 +150,7 @@ namespace TargetManagerPackage
 
         public void Dispose()
         {
+            Unfocus();
             Id[TrackId - 1] = 0;    //释放ID号
             Locations?.Clear();
         }
@@ -153,6 +168,16 @@ namespace TargetManagerPackage
             if (Locations.Count == 0)
                 return 500;
             return 50;
+        }
+
+        public void Focus()
+        {
+            TargetManagerFactory.RegisterTrackObserver(this);
+        }
+
+        public void Unfocus()
+        {
+            TargetManagerFactory.UnregisterTrackObserver(this);
         }
     }
 }

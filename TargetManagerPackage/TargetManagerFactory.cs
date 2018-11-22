@@ -7,6 +7,7 @@
         private static AntennaSectionSweepController _sectionSweepController;
         private static DataSourceController _dataSourcController;
         private static AntennaLeaveAngleAreaSubject _antennaLeaveAngleAreaSubject;
+        private static TrackChangeSectorObserver _trackObserver;
 
         public static DataSourceController CreateDataSourceController() => _dataSourcController ?? (_dataSourcController = new DataSourceController());
 
@@ -24,7 +25,7 @@
 
         public static IWaveGateController CreateWaveGateController() => CreateWaveGateManager();
 
-        private static AntennaSectionSweepController CreateAntennaManager() => _sectionSweepController ?? (_sectionSweepController = new AntennaSectionSweepController());
+        internal static AntennaSectionSweepController CreateAntennaManager() => _sectionSweepController ?? (_sectionSweepController = new AntennaSectionSweepController());
 
         public static IAntennaController CreateAntennaContoller() => CreateAntennaManager();
 
@@ -35,5 +36,11 @@
         public static RotateDirection GetAntennaDirection() => (CreateAntennaManager() as IAntennaDataProvider).GetAntennaDirection();
 
         public static ISweepModeSubject CreateSweepModeSubject() => CreateAntennaManager();
+
+        private static TrackChangeSectorObserver CreateTrackObserver() => _trackObserver ?? (_trackObserver = new TrackChangeSectorObserver());
+
+        internal static void RegisterTrackObserver(TargetTrack track) => CreateTrackObserver().RegisterTrack(track);
+
+        internal static void UnregisterTrackObserver(TargetTrack track) => CreateTrackObserver().UnregisterTrack(track);
     }
 }

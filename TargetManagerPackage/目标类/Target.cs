@@ -5,9 +5,13 @@ namespace TargetManagerPackage
 {
     public class Target
     {
+
+        protected int _sectorIndex = -1;
         public PolarCoordinate CurrentCoordinate { get; set; } = new PolarCoordinate();
         public bool Active { get; set; }     //是否被界面选中，删除航迹时删除所有被选中的航迹
-        public int SectorIndex { get; set; } = -1;
+        public virtual int SectorIndex
+        { get => _sectorIndex; set=>_sectorIndex = value; }
+
         public int AmValue { get; set; } = 0;
         public const int AmValueMaximum = 65535;
         public const float DroneMaximumSpeed = 16;  //无人机速度最大值，单位：m/s

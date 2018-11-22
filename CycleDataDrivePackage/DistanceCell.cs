@@ -20,11 +20,12 @@ namespace CycleDataDrivePackage
         public static readonly float Resolution = 2.92f;     //距离分辨率3米*2.5f
         private const int HeadLength = 2;                    //包头长度2字节
         private static readonly int DistanceLength = 2;      //距离长度2字节
-        private static readonly int speedLength = 2;         //速度长度2字节
-        private static readonly int el0Length = 1;            //仰角0长度
-        private static readonly int el1Length = 1;            //仰角1长度
-        private static readonly int elAm0Length = 4;         //幅度长度4字节
-        private static readonly int elAm1Length = 4;      //幅度长度4字节
+        private static readonly int speedLength = 1;         //速度长度1字节
+        private static readonly int el0Length = 2;            //仰角0长度
+        private static readonly int el1Length = 2;            //仰角1长度
+        private static readonly int backupLength = 1;           //备用字节
+        private static readonly int elAm0Length = 3;         //幅度长度3字节
+        private static readonly int elAm1Length = 3;      //幅度长度3字节
         public static readonly int Length = DistanceLength + elAm0Length + elAm1Length + speedLength  + HeadLength + el0Length + el1Length; //距离单元总长度
 
         public DistanceCell(byte[] data, int pos)
@@ -42,6 +43,7 @@ namespace CycleDataDrivePackage
 
             double el1 = CalEl(data[p]);
             p += el1Length;
+            p += backupLength;
 
             double eldif = el0 - el1;
 

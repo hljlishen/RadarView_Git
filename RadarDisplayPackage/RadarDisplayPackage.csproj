@@ -77,6 +77,7 @@
     <Compile Include="命令类\WaveGateDeleteActiveCommand.cs" />
     <Compile Include="命令类\WaveGateDeleteCommand.cs" />
     <Compile Include="目标显示器类族\TextDisplayer.cs" />
+    <Compile Include="背景类族\TextDisplayerBackgroud.cs" />
     <Compile Include="目标显示器类族\TextTargetViewManager.cs" />
     <Compile Include="目标显示器类族\滚动按钮\DownScroller.cs" />
     <Compile Include="IControlStateObserver.cs" />

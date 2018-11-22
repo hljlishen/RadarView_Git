@@ -3,6 +3,7 @@ using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using TargetManagerPackage;
 using Utilities;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
@@ -18,12 +19,25 @@ namespace RadarDisplayPackage.目标显示器类族
         public TextTargetViewManager(TrackDisplayer displayer) : base(displayer)
         {
             displayer.DisplayControl.MouseClick += DisplayControl_MouseClick;
+            displayer.DisplayControl.MouseDoubleClick += DisplayControlOnMouseDoubleClick;
             Top = ((TextDisplayer)displayer).DrawTargetArea.Top;
             views = new List<TextTargetView>();
             targetTracks = new List<TargetTrack>[targetProvider.GetSectorCount()];
             for (int i = 0; i < targetTracks.Length; i++)
             {
                 targetTracks[i] = new List<TargetTrack>();
+            }
+        }
+
+        private void DisplayControlOnMouseDoubleClick(object sender, MouseEventArgs mouseEventArgs)
+        {
+            lock (_locker)
+            {
+                foreach (var textTargetView in views)
+                {
+                    if (textTargetView.HandleMouseDoubleClick(mouseEventArgs.Location))
+                        return;
+                }
             }
         }
 
@@ -190,6 +204,18 @@ namespace RadarDisplayPackage.目标显示器类族
             if(Tools.IsPointInRect((Point) p, activeRect))
             {
                 ((TargetTrack) target).Active = !((TargetTrack) target).Active;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool HandleMouseDoubleClick(object p)
+        {
+            if (Tools.IsPointInRect((Point)p, activeRect))
+            {
+                ((TargetTrack)target).Active = true;
+                ((TargetTrack)target).Focus();
                 return true;
             }
 
