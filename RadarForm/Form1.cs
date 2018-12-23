@@ -42,9 +42,9 @@ namespace RadarForm
             controller.ConnectDataSource("UDP", MakeIpAddressAndPortString());    //默认链接UDP数据
             //dgvd = new DataGridViewDisplayer(pnl_gridView);
             textDisplayer = new TextDisplayer(pnl_gridView);
-            //ovd.RegisterObserver(this);
+            ovd.RegisterObserver(this);
             svd.Distance = 1000;
-            ovd.Distance = 3000;
+            ovd.Distance = 5000;
             btn_WaveGate.Enabled = false;
             MouseWheel += OnMouseWheel;
             ShowTrackHeight();

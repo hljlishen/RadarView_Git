@@ -127,6 +127,8 @@ namespace TargetManagerPackage
                 Score = initScore,
                 TrackId = trackid + 1
             };
+
+            SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
             return t;
         }
 

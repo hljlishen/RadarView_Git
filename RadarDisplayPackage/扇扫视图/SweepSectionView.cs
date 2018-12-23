@@ -68,8 +68,9 @@ namespace RadarDisplayPackage
             var centerSectorBegin = _displayer.coordinateSystem.CalIntersectionPoint(angle1);
             var centerSectorEnd = _displayer.coordinateSystem.CalIntersectionPoint(angle2);
 
-            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, centerSectorBegin, _centerSectorBorder, 3);
-            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, centerSectorEnd, _centerSectorBorder, 3);
+            _centerSectorBorder.Opacity = 0.5f;
+            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, centerSectorBegin, _centerSectorBorder, 1);
+            _displayer.Canvas.DrawLine(_displayer.coordinateSystem.OriginalPoint, centerSectorEnd, _centerSectorBorder, 1);
         }
 
         public void Dispose()

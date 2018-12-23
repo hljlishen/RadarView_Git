@@ -198,7 +198,7 @@
             this.tb_distance.Name = "tb_distance";
             this.tb_distance.Size = new System.Drawing.Size(94, 21);
             this.tb_distance.TabIndex = 10;
-            this.tb_distance.Text = "3000";
+            this.tb_distance.Text = "5000";
             this.tb_distance.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_distance_KeyDown);
             // 
             // btn_distance
@@ -273,11 +273,13 @@
             // rb_intelligent
             // 
             this.rb_intelligent.AutoSize = true;
+            this.rb_intelligent.Checked = true;
             this.rb_intelligent.ForeColor = System.Drawing.Color.Chartreuse;
             this.rb_intelligent.Location = new System.Drawing.Point(364, 29);
             this.rb_intelligent.Name = "rb_intelligent";
             this.rb_intelligent.Size = new System.Drawing.Size(47, 16);
             this.rb_intelligent.TabIndex = 0;
+            this.rb_intelligent.TabStop = true;
             this.rb_intelligent.Text = "智能";
             this.rb_intelligent.UseVisualStyleBackColor = true;
             this.rb_intelligent.CheckedChanged += new System.EventHandler(this.rb_intelligent_CheckedChanged);
@@ -285,13 +287,11 @@
             // rb_manual
             // 
             this.rb_manual.AutoSize = true;
-            this.rb_manual.Checked = true;
             this.rb_manual.ForeColor = System.Drawing.Color.Chartreuse;
             this.rb_manual.Location = new System.Drawing.Point(268, 29);
             this.rb_manual.Name = "rb_manual";
             this.rb_manual.Size = new System.Drawing.Size(47, 16);
             this.rb_manual.TabIndex = 0;
-            this.rb_manual.TabStop = true;
             this.rb_manual.Text = "手动";
             this.rb_manual.UseVisualStyleBackColor = true;
             this.rb_manual.CheckedChanged += new System.EventHandler(this.rb_manual_CheckedChanged);
@@ -727,25 +727,25 @@
             this.航机显示ToolStripMenuItem.CheckOnClick = true;
             this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
             // 
             // 原始视频ToolStripMenuItem1
             // 
             this.原始视频ToolStripMenuItem1.CheckOnClick = true;
             this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.原始视频ToolStripMenuItem1.Text = "原始视频";
             this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
