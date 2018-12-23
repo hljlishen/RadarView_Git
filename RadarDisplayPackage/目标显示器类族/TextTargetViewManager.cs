@@ -136,7 +136,7 @@ namespace RadarDisplayPackage.目标显示器类族
         private readonly Brush _borderBrush;
         private readonly TextFormat _inactiveTextFormat;
         private readonly Brush _inactiveBrush;
-        private readonly TextFormat _activeTextFormat;
+        //private readonly TextFormat _activeTextFormat;
         private readonly Brush _activeBrush;
         public TextTargetView(Target target, TextDisplayer displayer, Point2F drawPoint) : base(target)
         {

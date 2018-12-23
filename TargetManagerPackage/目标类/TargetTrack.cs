@@ -106,18 +106,9 @@ namespace TargetManagerPackage
 
         public static TargetTrack CreateTargetTrack(TargetDot current, TargetDot pre, int initScore)
         {
-            int trackid = -1;
-            for(int i = 0; i < TrackMaximumCount; i++)
-            {
-                if(Id[i] != 1)  
-                {
-                    trackid = i;
-                    Id[i] = 1;
-                    break;
-                }
-            }
+            int trackid = GetNextTrackId();
 
-            if (trackid == -1)
+            if (trackid == 0)
             {
                 return null;
             }
@@ -125,11 +116,27 @@ namespace TargetManagerPackage
             TargetTrack t = new TargetTrack(current, pre)
             {
                 Score = initScore,
-                TrackId = trackid + 1
+                TrackId = trackid
             };
 
             SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
             return t;
+        }
+
+        private static int GetNextTrackId()
+        {
+            int trackid = -1;
+            for(int i = 0; i < TrackMaximumCount; i++)
+            {
+                if(Id[i] != 1)  
+                {
+                    trackid = i;
+                    Id[i] = 1;
+                    return i + 1;
+                }
+            }
+
+            return 0;
         }
 
         public static void ReleaseAllTrackIDs()

@@ -13,7 +13,7 @@ namespace RadarForm
     {
         private OverViewDisplayer ovd;
         private SideViewDisplayer svd;
-        private DataGridViewDisplayer dgvd;
+        //private DataGridViewDisplayer dgvd;
         private TextDisplayer textDisplayer;
         private SystemController controller;
 
@@ -260,5 +260,29 @@ namespace RadarForm
         private void 原始视频ToolStripMenuItem1_Click(object sender, EventArgs e) => Clotter.ShouldShowOriginalVideo = 原始视频ToolStripMenuItem1.Checked;
 
         private void btn_Rpm20_Click(object sender, EventArgs e) => controller.AntennaSetRotationRate(RotateRate.Rpm20);
+
+        private void btn_powerAmplifierCtrl_Click(object sender, EventArgs e)
+        {
+            if (btn_powerAmplifierCtrl.Text == "开功放")
+            {
+                PowerAmplifier.IsAmplifierOpen = true;
+                btn_powerAmplifierCtrl.Text = "关功放";
+            }
+            else if (btn_powerAmplifierCtrl.Text == "关功放")
+            {
+                PowerAmplifier.IsAmplifierOpen = false;
+                btn_powerAmplifierCtrl.Text = "开功放";
+            }
+            else
+            {
+                // no else
+            }
+        }
+
+        private void btn_Range11_Click(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.Rt11;
+
+        private void btn_5_Click(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.Rt5;
+
+        private void btn_close_Click(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.RtClose;
     }
 }

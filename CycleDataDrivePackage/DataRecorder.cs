@@ -7,7 +7,7 @@ namespace CycleDataDrivePackage
     class DataRecorder : IDisposable
     {
         private readonly BinaryWriter _writer;
-        private string _filePath;
+        //private string _filePath;
 
         public DataRecorder()
         {
@@ -28,10 +28,10 @@ namespace CycleDataDrivePackage
 
         private bool IsEmptyFile(string file)
         {
-            if (_filePath == null)
-            {
-                return false;
-            }
+            //if (_filePath == null)
+            //{
+            //    return false;
+            //}
             FileInfo fileInfo = new FileInfo(file);
             return fileInfo.Length == 0;
         }
@@ -41,8 +41,8 @@ namespace CycleDataDrivePackage
             _writer?.Close();
             _writer?.Dispose();
 
-            if(IsEmptyFile(_filePath))
-                File.Delete(_filePath);
+            //if(IsEmptyFile(_filePath))
+            //    File.Delete(_filePath);
         }
     }
 }

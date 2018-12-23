@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PowerAamplifier.cs" />
     <Compile Include="TrackChangeSectorObserver.cs" />
     <Compile Include="方位单元管理器\CrossSectorTarget.cs" />
     <Compile Include="方位单元管理器\ElTestTargets.cs" />
