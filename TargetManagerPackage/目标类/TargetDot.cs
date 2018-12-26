@@ -21,11 +21,11 @@ namespace TargetManagerPackage
             float dis = DistanceTo(dot);
             float disMax = MaximumFlyDistanceSinceLastRefresh(dot.LastRefreshTime);
             float disMin = MinimumFlyDistanceSinceLastRefresh(dot.LastRefreshTime);
-            if (dot.SectorIndex == 13 && dot.Dis > 600 && dot.Dis < 800 && Dis > 600 && Dis < 800)
-            {
-                DateTime d1 = dot.LastRefreshTime;
-                DateTime d2 = LastRefreshTime;
-            }
+            //if (dot.SectorIndex == 13 && dot.Dis > 600 && dot.Dis < 800 && Dis > 600 && Dis < 800)
+            //{
+            //    DateTime d1 = dot.LastRefreshTime;
+            //    DateTime d2 = LastRefreshTime;
+            //}
             return dis <= disMax && dis > disMin;
         }
 

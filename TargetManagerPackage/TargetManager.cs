@@ -140,9 +140,9 @@ namespace TargetManagerPackage
                 //    ls.Add(generator.track);
                 //}
 
-                ////添加鼠标追踪器的航迹
-                //if (mouseTargetTracker.track != null)
-                //    ls.Add(mouseTargetTracker.track);
+                //添加鼠标追踪器的航迹
+                if (mouseTargetTracker.track != null)
+                    ls.Add(mouseTargetTracker.track);
             }
 
             return ls;

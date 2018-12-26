@@ -13,7 +13,6 @@ namespace RadarForm
     {
         private OverViewDisplayer ovd;
         private SideViewDisplayer svd;
-        //private DataGridViewDisplayer dgvd;
         private TextDisplayer textDisplayer;
         private SystemController controller;
 
@@ -43,7 +42,7 @@ namespace RadarForm
             //dgvd = new DataGridViewDisplayer(pnl_gridView);
             textDisplayer = new TextDisplayer(pnl_gridView);
             ovd.RegisterObserver(this);
-            svd.Distance = 1000;
+            svd.Distance = 90;
             ovd.Distance = 5000;
             btn_WaveGate.Enabled = false;
             MouseWheel += OnMouseWheel;

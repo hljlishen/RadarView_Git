@@ -15,7 +15,8 @@ namespace RadarDisplayPackage
         public CoordinateSystemOfRetangular(Rect drawArea, double range, D2DFactory factory) : base(drawArea, range, factory)
         {
             //zoomPercent = 0.8;
-            Range = 5000;   //默认5公里
+            //Range = 5000;   //默认5公里
+            Range = 360;
         }
 
         protected override Point2F FindOriginalPoint(Rect coordniteArea)
@@ -34,14 +35,10 @@ namespace RadarDisplayPackage
         public override Point2F CoordinateToPoint(PolarCoordinate coordinate)
         {
             double r = (coordinate.Az / 360) * CoordinateArea.Width; //
-            double height = coordinate.Dis * Math.Sin(Tools.DegreeToRadian(coordinate.El));
 
-            //if (height > Range)     //是否超出范围
-            //{
-            //    p = new Point2F();
-            //    return false;
-            //}
-            
+
+            //double height = coordinate.Dis * Math.Sin(Tools.DegreeToRadian(coordinate.El)); //正常计算高度代码！！！正式程序运行此行
+            double height = coordinate.El;
             double h = height * CoordinateArea.Height / Range;
 
             float x1 = OriginalPoint.X + (int)r;

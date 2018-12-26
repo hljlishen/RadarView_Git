@@ -27,7 +27,8 @@ namespace CycleDataDrivePackage
         private static readonly int backupLength = 1;           //备用字节
         private static readonly int elAm0Length = 3;         //幅度长度3字节
         private static readonly int elAm1Length = 3;      //幅度长度3字节
-        public static readonly int Length = DistanceLength + elAm0Length + elAm1Length + speedLength  + HeadLength + el0Length + el1Length; //距离单元总长度
+        public static readonly int Length = DistanceLength + elAm0Length + elAm1Length + speedLength  + 
+            HeadLength + el0Length + el1Length + backupLength; //距离单元总长度
 
         public DistanceCell(byte[] data, int pos)
         {
@@ -39,10 +40,10 @@ namespace CycleDataDrivePackage
             speed = Tools.MakeInt(data, p, speedLength);
             p += speedLength;
 
-            double el0 = CalEl(data[p]);
+            double el0 = CalEl((short)Tools.MakeInt(data, p, el0Length));
             p += el0Length;
 
-            double el1 = CalEl(data[p]);
+            double el1 = CalEl((short)Tools.MakeInt(data, p, el1Length));
             p += el1Length;
             p += backupLength;
 
@@ -65,10 +66,10 @@ namespace CycleDataDrivePackage
 
         public int Distance => (int)( Resolution * index);
 
-        public static double CalEl(byte b)
+        public static double CalEl(short b)
         {
-            byte high4 = (byte)(b >> 4);
-            byte low4 = (byte)(b & 0xf);
+            byte high4 = (byte)(b >> 7);
+            byte low4 = (byte)(b & 0x7f);
             int intergerPart;
 
             switch (high4)
@@ -97,12 +98,12 @@ namespace CycleDataDrivePackage
                 case 7:
                     intergerPart = -1;
                     break;
-                    default:
-                        intergerPart = 0;
-                        break;  
+               default:
+                    intergerPart = 0;
+                    break;  
             }
 
-            double decimalPart = ((double)low4) / 128;
+            double decimalPart = ((double)low4) / 127;
 
             return intergerPart + decimalPart;
         }
