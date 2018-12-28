@@ -47,6 +47,7 @@ namespace RadarForm
             btn_WaveGate.Enabled = false;
             MouseWheel += OnMouseWheel;
             ShowTrackHeight();
+            rb_5.Checked = true;
         }
 
         private void ShowTrackHeight() => lab_trackHeight.Text = SystemController.GetTrackHeight().ToString("0.0");
@@ -277,11 +278,10 @@ namespace RadarForm
                 // no else
             }
         }
+        private void rb_10_CheckedChanged(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.Rt11;
 
-        private void btn_Range11_Click(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.Rt11;
+        private void rb_5_CheckedChanged(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.Rt5;
 
-        private void btn_5_Click(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.Rt5;
-
-        private void btn_close_Click(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.RtClose;
+        private void rb_close_CheckedChanged(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.RtClose;
     }
 }

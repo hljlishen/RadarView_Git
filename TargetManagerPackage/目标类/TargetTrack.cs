@@ -142,15 +142,15 @@ namespace TargetManagerPackage
 
         private static int GetNextTrackIdUpword()
         {
-            for (int i = latestId; i < latestId; i++)
+            for (int i = latestId + 1; i != latestId; i++)
             {
                 if (i >= TrackMaximumCount)
-                    i = 0;
+                    i = 1;
                 if (Id[i] != 1)
                 {
                     latestId = i;
                     Id[i] = 1;
-                    return i + 1;
+                    return i;
                 }
             }
 

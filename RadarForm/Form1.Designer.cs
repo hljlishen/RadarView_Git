@@ -48,9 +48,6 @@
             this.rb_semiAuto = new System.Windows.Forms.RadioButton();
             this.rb_auto = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btn_close = new System.Windows.Forms.Button();
-            this.btn_5 = new System.Windows.Forms.Button();
-            this.btn_Range11 = new System.Windows.Forms.Button();
             this.btn_powerAmplifierCtrl = new System.Windows.Forms.Button();
             this.lab_trackHeight = new System.Windows.Forms.Label();
             this.btn_counterclockwise = new System.Windows.Forms.Button();
@@ -94,6 +91,9 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rb_10 = new System.Windows.Forms.RadioButton();
+            this.rb_5 = new System.Windows.Forms.RadioButton();
+            this.rb_close = new System.Windows.Forms.RadioButton();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -173,7 +173,7 @@
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(480, 408);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "控制";
@@ -326,9 +326,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btn_close);
-            this.groupBox1.Controls.Add(this.btn_5);
-            this.groupBox1.Controls.Add(this.btn_Range11);
+            this.groupBox1.Controls.Add(this.rb_close);
+            this.groupBox1.Controls.Add(this.rb_5);
+            this.groupBox1.Controls.Add(this.rb_10);
             this.groupBox1.Controls.Add(this.btn_powerAmplifierCtrl);
             this.groupBox1.Controls.Add(this.lab_trackHeight);
             this.groupBox1.Controls.Add(this.btn_counterclockwise);
@@ -346,42 +346,6 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "天线控制";
-            // 
-            // btn_close
-            // 
-            this.btn_close.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_close.Location = new System.Drawing.Point(289, 153);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.Size = new System.Drawing.Size(56, 23);
-            this.btn_close.TabIndex = 19;
-            this.btn_close.Text = "关波形";
-            this.btn_close.UseVisualStyleBackColor = false;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
-            // 
-            // btn_5
-            // 
-            this.btn_5.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_5.Location = new System.Drawing.Point(200, 153);
-            this.btn_5.Name = "btn_5";
-            this.btn_5.Size = new System.Drawing.Size(56, 23);
-            this.btn_5.TabIndex = 19;
-            this.btn_5.Text = "5";
-            this.btn_5.UseVisualStyleBackColor = false;
-            this.btn_5.Click += new System.EventHandler(this.btn_5_Click);
-            // 
-            // btn_Range11
-            // 
-            this.btn_Range11.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_Range11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Range11.Location = new System.Drawing.Point(112, 153);
-            this.btn_Range11.Name = "btn_Range11";
-            this.btn_Range11.Size = new System.Drawing.Size(56, 23);
-            this.btn_Range11.TabIndex = 19;
-            this.btn_Range11.Text = "10";
-            this.btn_Range11.UseVisualStyleBackColor = false;
-            this.btn_Range11.Click += new System.EventHandler(this.btn_Range11_Click);
             // 
             // btn_powerAmplifierCtrl
             // 
@@ -507,7 +471,7 @@
             this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(480, 408);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "数据源选择";
@@ -843,6 +807,42 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
+            // rb_10
+            // 
+            this.rb_10.AutoSize = true;
+            this.rb_10.Location = new System.Drawing.Point(124, 156);
+            this.rb_10.Name = "rb_10";
+            this.rb_10.Size = new System.Drawing.Size(35, 16);
+            this.rb_10.TabIndex = 20;
+            this.rb_10.TabStop = true;
+            this.rb_10.Text = "10";
+            this.rb_10.UseVisualStyleBackColor = true;
+            this.rb_10.CheckedChanged += new System.EventHandler(this.rb_10_CheckedChanged);
+            // 
+            // rb_5
+            // 
+            this.rb_5.AutoSize = true;
+            this.rb_5.Location = new System.Drawing.Point(212, 156);
+            this.rb_5.Name = "rb_5";
+            this.rb_5.Size = new System.Drawing.Size(29, 16);
+            this.rb_5.TabIndex = 20;
+            this.rb_5.TabStop = true;
+            this.rb_5.Text = "5";
+            this.rb_5.UseVisualStyleBackColor = true;
+            this.rb_5.CheckedChanged += new System.EventHandler(this.rb_5_CheckedChanged);
+            // 
+            // rb_close
+            // 
+            this.rb_close.AutoSize = true;
+            this.rb_close.Location = new System.Drawing.Point(290, 156);
+            this.rb_close.Name = "rb_close";
+            this.rb_close.Size = new System.Drawing.Size(59, 16);
+            this.rb_close.TabIndex = 20;
+            this.rb_close.TabStop = true;
+            this.rb_close.Text = "关波形";
+            this.rb_close.UseVisualStyleBackColor = true;
+            this.rb_close.CheckedChanged += new System.EventHandler(this.rb_close_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -960,9 +960,9 @@
         private System.Windows.Forms.ToolStripMenuItem 原始视频ToolStripMenuItem1;
         private System.Windows.Forms.Label lab_trackHeight;
         private System.Windows.Forms.Button btn_powerAmplifierCtrl;
-        private System.Windows.Forms.Button btn_close;
-        private System.Windows.Forms.Button btn_5;
-        private System.Windows.Forms.Button btn_Range11;
+        private System.Windows.Forms.RadioButton rb_close;
+        private System.Windows.Forms.RadioButton rb_5;
+        private System.Windows.Forms.RadioButton rb_10;
     }
 }
 

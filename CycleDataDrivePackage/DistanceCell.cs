@@ -18,7 +18,7 @@ namespace CycleDataDrivePackage
         public float el;                //仰角
         public bool Occupied = false;   //是否已被划入区域
         //public static readonly float Resolution = 2.92f;     //距离分辨率3米*2.5f
-        public static readonly float Resolution = 4.48f;     //距离分辨率3米*2.5f
+        public static readonly float Resolution = 5.84f;     //距离分辨率3米*2.5f
         private const int HeadLength = 2;                    //包头长度2字节
         private static readonly int DistanceLength = 2;      //距离长度2字节
         private static readonly int speedLength = 1;         //速度长度1字节
