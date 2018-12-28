@@ -42,7 +42,7 @@ namespace RadarForm
             //dgvd = new DataGridViewDisplayer(pnl_gridView);
             textDisplayer = new TextDisplayer(pnl_gridView);
             ovd.RegisterObserver(this);
-            svd.Distance = 90;
+            svd.Distance = 500;
             ovd.Distance = 5000;
             btn_WaveGate.Enabled = false;
             MouseWheel += OnMouseWheel;
@@ -262,15 +262,15 @@ namespace RadarForm
 
         private void btn_powerAmplifierCtrl_Click(object sender, EventArgs e)
         {
-            if (btn_powerAmplifierCtrl.Text == "开功放")
+            if (btn_powerAmplifierCtrl.Text == "开发射")
             {
                 PowerAmplifier.IsAmplifierOpen = true;
-                btn_powerAmplifierCtrl.Text = "关功放";
+                btn_powerAmplifierCtrl.Text = "关发射";
             }
-            else if (btn_powerAmplifierCtrl.Text == "关功放")
+            else if (btn_powerAmplifierCtrl.Text == "关发射")
             {
                 PowerAmplifier.IsAmplifierOpen = false;
-                btn_powerAmplifierCtrl.Text = "开功放";
+                btn_powerAmplifierCtrl.Text = "开发射";
             }
             else
             {

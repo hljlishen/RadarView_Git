@@ -6,7 +6,7 @@ namespace CycleDataDrivePackage
 {
     public class DistanceCell
     {
-        public const float AntennaFixedEl = 15;
+        public const float AntennaFixedEl = 12;
         public bool adopted = false;    //是否已经被录取
         public int index;               //单元编号
         //public int azIndex;             //所在方位单元的编号
@@ -41,22 +41,32 @@ namespace CycleDataDrivePackage
             p += speedLength;
 
             double el0 = CalEl((short)Tools.MakeInt(data, p, el0Length));
+            //double el0 = CalEl(0x31e);
             p += el0Length;
 
             double el1 = CalEl((short)Tools.MakeInt(data, p, el1Length));
+            //double el1 = CalEl(0xe9);
             p += el1Length;
             p += backupLength;
 
             double eldif = el0 - el1;
+            if (eldif < -Math.PI)
+                eldif += Math.PI * 2;
+            else if (eldif > Math.PI)
+                eldif -= Math.PI * 2;
 
-            el = (float)Math.Asin(0.114f * eldif);
+            el = (float)Math.Asin(0.03f * eldif);
             el = (float)Tools.RadianToDegree(el);
             el += AntennaFixedEl;
+
+            //Console.WriteLine(el);
 
             sumAM = Tools.MakeInt(data, p, elAm0Length);
             p += elAm0Length;
 
             differAM = Tools.MakeInt(data, p, elAm1Length);
+
+            //Console.WriteLine(el);
         }
 
         public DistanceCell()
@@ -105,7 +115,7 @@ namespace CycleDataDrivePackage
 
             double decimalPart = ((double)low4) / 127;
 
-            return intergerPart + decimalPart;
+            return intergerPart + decimalPart /*< 0 ? intergerPart + decimalPart + 2*Math.PI : intergerPart + decimalPart*/;
         }
 
 

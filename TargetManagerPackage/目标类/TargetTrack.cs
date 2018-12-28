@@ -25,6 +25,7 @@ namespace TargetManagerPackage
         public double XSpeed { get; set; } = 0;
         public double YSpeed { get; set; } = 0;
         public double ZSpeed { get; set; } = 0;
+        private static int latestId = 0;
 
         public override int SectorIndex
         {
@@ -106,7 +107,7 @@ namespace TargetManagerPackage
 
         public static TargetTrack CreateTargetTrack(TargetDot current, TargetDot pre, int initScore)
         {
-            int trackid = GetNextTrackId();
+            int trackid = GetNextTrackIdUpword();
 
             if (trackid == 0)
             {
@@ -131,6 +132,23 @@ namespace TargetManagerPackage
                 if(Id[i] != 1)  
                 {
                     trackid = i;
+                    Id[i] = 1;
+                    return i + 1;
+                }
+            }
+
+            return 0;
+        }
+
+        private static int GetNextTrackIdUpword()
+        {
+            for (int i = latestId; i < latestId; i++)
+            {
+                if (i >= TrackMaximumCount)
+                    i = 0;
+                if (Id[i] != 1)
+                {
+                    latestId = i;
                     Id[i] = 1;
                     return i + 1;
                 }

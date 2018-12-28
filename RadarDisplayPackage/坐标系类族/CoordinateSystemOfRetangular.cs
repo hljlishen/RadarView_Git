@@ -37,8 +37,8 @@ namespace RadarDisplayPackage
             double r = (coordinate.Az / 360) * CoordinateArea.Width; //
 
 
-            //double height = coordinate.Dis * Math.Sin(Tools.DegreeToRadian(coordinate.El)); //正常计算高度代码！！！正式程序运行此行
-            double height = coordinate.El;
+            double height = coordinate.Dis * Math.Sin(Tools.DegreeToRadian(coordinate.El)); //正常计算高度代码！！！正式程序运行此行
+            //double height = coordinate.El;
             double h = height * CoordinateArea.Height / Range;
 
             float x1 = OriginalPoint.X + (int)r;

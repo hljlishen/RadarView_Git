@@ -4,11 +4,11 @@ namespace RadarDisplayPackage
 {
     class SweepSectionManager : ISweepModeObserver
     {
-        OverViewDisplayer displayer;
+        GraphicTrackDisplayer displayer;
         ISweepModeSubject sweepModeSubject;
-        SweepSectionView view;
+        ISweepSectionView view;
 
-        public SweepSectionManager(OverViewDisplayer displayer)
+        public SweepSectionManager(GraphicTrackDisplayer displayer)
         {
             this.displayer = displayer;
             sweepModeSubject = TargetManagerFactory.CreateSweepModeSubject();
@@ -30,10 +30,10 @@ namespace RadarDisplayPackage
         public void CalSweepSectionView()
         {
             view?.Dispose();
-            //view = sweepModeSubject.IsSectionSweeping() ? new SweepSectionView(sweepModeSubject.GetSweepSection(), displayer) : null;
-
             if(sweepModeSubject.IsSectionSweeping())
-                view = new SweepSectionView(sweepModeSubject.GetSweepSection(), displayer);
+            {
+                view = displayer.CreateSweepSwctionView(sweepModeSubject.GetSweepSection());
+            }  
             else
             {
                 view = null;

@@ -3,6 +3,7 @@ using RadarDisplayPackage.目标显示器类族;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
@@ -35,5 +36,10 @@ namespace RadarDisplayPackage
         internal override GraphicTrackDisplayerAntenna CreateAntenna() => null;
 
         internal override CoordinateSystem CreateCoordinateSystem() => null;
+
+        internal override ISweepSectionView CreateSweepSwctionView(AngleArea sweepSection)
+        {
+            return null;
+        }
     }
 }

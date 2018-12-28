@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
 using System.Windows.Forms;
+using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
@@ -36,6 +37,8 @@ namespace RadarDisplayPackage
         internal abstract GraphicTrackDisplayerAntenna CreateAntenna();
 
         internal abstract CoordinateSystem CreateCoordinateSystem();
+
+        internal abstract ISweepSectionView CreateSweepSwctionView(AngleArea sweepSection);
 
         public override void UpdateInfomation()   //定时器时间到，更新picbox中的图形，需要绘制天线和航迹
         {

@@ -15,9 +15,6 @@ namespace RadarDisplayPackage
         protected D2DFactory factory;
         protected CoordinateSystem coordinateSystem;
         protected IAntennaDataProvider antenna;
-        protected float sweepBeginAngle;
-        protected float sweepEndAngle;
-        protected Brush sweepBorderBrush;
 
         public virtual float AntennaAngle
         {
@@ -35,8 +32,6 @@ namespace RadarDisplayPackage
             //注册观察者
             antenna = TargetManagerFactory.CreateAntennaDataProvider();
             antenna.RegisterObserver(this);
-
-            sweepBorderBrush = canvas.CreateSolidColorBrush(new ColorF(255, 0, 0)); //红色
         }
 
         public  void Draw()
@@ -45,29 +40,16 @@ namespace RadarDisplayPackage
         }
 
         abstract protected void DrawAntenna();
-        abstract protected void DrawGlow(RotateDirection d);
 
         public void AntennaNotifyChange()
         {
             antennaAngle = antenna.GetCurrentAntennaAngle();
-
-            if(antenna.IsSectionSweeping()) //扇扫
-            {
-                sweepBeginAngle = antenna.GetSweepBeginAngle();
-                sweepEndAngle = antenna.GetSweepEndAngle();
-            }
         }
 
         public virtual void Dispose()
         {
             antennaBrush?.Dispose();
-            sweepBorderBrush?.Dispose();
             antenna.UnregisterObserver(this);
-        }
-
-        protected virtual void DrawSweepBorderLine()
-        {
-
         }
     }
 }

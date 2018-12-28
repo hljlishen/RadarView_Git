@@ -35,29 +35,5 @@ namespace RadarDisplayPackage
             canvas.DrawLine( center, new Point2F(x1, y1),antennaBrush,antennaWidth);
             //canvas.PopLayer();
         }
-
-        protected override void DrawGlow(RotateDirection d)
-        {
-            //float fLastAngle = antennaAngle - 90;
-
-            //for (int i = 0; i < glowPieCount; i++)
-            //{
-            //    int alpha = i * 255 / (glowPieCount);
-            //    Brush brush = new SolidBrush(Color.FromArgb(alpha, Color.Green));
-            //    canvas.dra(brush, coordinateArea, fLastAngle, glowSweepStep);
-            //    fLastAngle += glowSweepStep;
-            //}
-        }
-
-        protected override void DrawSweepBorderLine()
-        {
-            base.DrawSweepBorderLine();
-
-            Point2F sweepBorderLinePoints1 = coordinateSystem.CalIntersectionPoint(sweepBeginAngle);
-            Point2F sweepBorderLinePoints2 = coordinateSystem.CalIntersectionPoint(sweepEndAngle);
-
-            canvas.DrawLine(coordinateSystem.OriginalPoint, sweepBorderLinePoints1, sweepBorderBrush, 3);
-            canvas.DrawLine(coordinateSystem.OriginalPoint, sweepBorderLinePoints2, sweepBorderBrush, 3);
-        }
     }
 }

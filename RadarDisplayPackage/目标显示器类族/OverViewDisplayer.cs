@@ -255,5 +255,10 @@ namespace RadarDisplayPackage
         public virtual void SendNewWaveGate(WaveGate wavegate) => NewWaveGate?.Invoke(wavegate);
 
         public virtual void SendNewSweepSection(AngleArea area) => NewSweepSection?.Invoke(area);
+
+        internal override ISweepSectionView CreateSweepSwctionView(AngleArea sweepSection)
+        {
+            return new OverSweepSectionView(sweepSection, this);
+        }
     }
 }

@@ -146,7 +146,7 @@ namespace RadarDisplayPackage
             foreach (var dgvRow in Dgv.Rows)
             {
                 DataGridViewRow row = (DataGridViewRow)dgvRow;
-                if (row.Cells["ID"].Value == null || row.Cells["ID"].Value == "")
+                if (row.Cells["ID"].Value == null || row.Cells["ID"].Value.ToString() == "")
                 {
                     return row.Index;
                 }
@@ -162,7 +162,7 @@ namespace RadarDisplayPackage
                 foreach (var dgvRow in Dgv.Rows)
                 {
                     DataGridViewRow row = (DataGridViewRow)dgvRow;
-                    if (row.Cells["ID"].Value == null || row.Cells["ID"].Value == "") continue;
+                    if (row.Cells["ID"].Value == null || row.Cells["ID"].Value.ToString() == "") continue;
 
                     if ((int) row.Cells["ID"].Value == targetTrack.TrackId)
                     {

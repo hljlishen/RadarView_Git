@@ -5,14 +5,17 @@
 //using System.Drawing;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using TargetManagerPackage;
 
 namespace RadarDisplayPackage
 {
     public class SideViewDisplayer : GraphicTrackDisplayer
     {
+        private SweepSectionManager sweepSectionManager;
         public SideViewDisplayer(Panel h) : base(h)
         {
             targetsManager = new CoordinateTargetViewManager(this);
+            sweepSectionManager = new SweepSectionManager(this);
             //Distance = 3000;
             //targetsManager = new CoordinateTargetViewManager(this);
         }
@@ -50,6 +53,17 @@ namespace RadarDisplayPackage
         internal override CoordinateSystem CreateCoordinateSystem()
         {
             return new CoordinateSystemOfRetangular(drawArea, distance, Factory);
+        }
+
+        protected override void OtherDrawing()
+        {
+            base.OtherDrawing();
+            sweepSectionManager.Draw();
+        }
+
+        internal override ISweepSectionView CreateSweepSwctionView(AngleArea sweepSection)
+        {
+            return new SideViewSweepView(sweepSection, this);
         }
     }
 }
