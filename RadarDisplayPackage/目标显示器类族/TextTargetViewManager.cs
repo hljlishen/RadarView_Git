@@ -124,6 +124,7 @@ namespace RadarDisplayPackage.目标显示器类族
 
         public override void NotifyChange(Target t, NotifyType type)
         {
+            if (type != NotifyType.Delete) return;
             foreach (List<TargetTrack> views in targetTracks)
             {
                 foreach(TargetTrack track in views)

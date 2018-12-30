@@ -101,13 +101,17 @@ namespace CycleDataDrivePackage
         public void Pause()
         {
             //if(ReadDatathread.ThreadState == ThreadState.Running)
-                ReadDatathread.Suspend();
+#pragma warning disable CS0618 // 类型或成员已过时
+            ReadDatathread.Suspend();
+#pragma warning restore CS0618 // 类型或成员已过时
         }
 
         public void Resume()
         {
             if (ReadDatathread.ThreadState == ThreadState.Suspended)
+#pragma warning disable CS0618 // 类型或成员已过时
                 ReadDatathread.Resume();
+#pragma warning restore CS0618 // 类型或成员已过时
         }
 
         public virtual void Dispose()

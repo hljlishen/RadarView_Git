@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using Utilities;
 
 namespace CycleDataDrivePackage
@@ -9,7 +8,6 @@ namespace CycleDataDrivePackage
         public const float AntennaFixedEl = 12;
         public bool adopted = false;    //是否已经被录取
         public int index;               //单元编号
-        //public int azIndex;             //所在方位单元的编号
         public float az;                //方位角
         public int azInt;               //换算成真实角度之前的整形值
         public int sumAM;               //和幅度
@@ -17,18 +15,15 @@ namespace CycleDataDrivePackage
         public int speed;               //速度
         public float el;                //仰角
         public bool Occupied = false;   //是否已被划入区域
-        //public static readonly float Resolution = 2.92f;     //距离分辨率3米*2.5f
         public static readonly float Resolution = 5.84f;     //距离分辨率3米*2.5f
         private const int HeadLength = 2;                    //包头长度2字节
         private static readonly int DistanceLength = 2;      //距离长度2字节
         private static readonly int speedLength = 1;         //速度长度1字节
-        private static readonly int el0Length = 2;            //仰角0长度
-        private static readonly int el1Length = 2;            //仰角1长度
-        private static readonly int backupLength = 1;           //备用字节
-        private static readonly int elAm0Length = 3;         //幅度长度3字节
-        private static readonly int elAm1Length = 3;      //幅度长度3字节
+        private static readonly int elLength = 3;            //仰角0长度
+        private static readonly int elAm0Length = 4;         //幅度长度3字节
+        private static readonly int elAm1Length = 4;      //幅度长度3字节
         public static readonly int Length = DistanceLength + elAm0Length + elAm1Length + speedLength  + 
-            HeadLength + el0Length + el1Length + backupLength; //距离单元总长度
+            HeadLength + elLength; //距离单元总长度
 
         public DistanceCell(byte[] data, int pos)
         {
@@ -40,14 +35,12 @@ namespace CycleDataDrivePackage
             speed = Tools.MakeInt(data, p, speedLength);
             p += speedLength;
 
-            double el0 = CalEl((short)Tools.MakeInt(data, p, el0Length));
-            //double el0 = CalEl(0x31e);
-            p += el0Length;
-
-            double el1 = CalEl((short)Tools.MakeInt(data, p, el1Length));
-            //double el1 = CalEl(0xe9);
-            p += el1Length;
-            p += backupLength;
+            uint elTmp = (uint)Tools.MakeInt(data, p, elLength);
+            p += elLength;
+            short el1Tmp = (short)(elTmp & 0x3ff);
+            double el1 = CalEl(el1Tmp);
+            short el0Tmp = (short)((elTmp & 0xffc000) >> 14); 
+            double el0 = CalEl(el0Tmp);
 
             double eldif = el0 - el1;
             if (eldif < -Math.PI)
@@ -59,14 +52,10 @@ namespace CycleDataDrivePackage
             el = (float)Tools.RadianToDegree(el);
             el += AntennaFixedEl;
 
-            //Console.WriteLine(el);
-
             sumAM = Tools.MakeInt(data, p, elAm0Length);
             p += elAm0Length;
 
             differAM = Tools.MakeInt(data, p, elAm1Length);
-
-            //Console.WriteLine(el);
         }
 
         public DistanceCell()
