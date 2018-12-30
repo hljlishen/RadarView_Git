@@ -48,6 +48,9 @@
             this.rb_semiAuto = new System.Windows.Forms.RadioButton();
             this.rb_auto = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rb_close = new System.Windows.Forms.RadioButton();
+            this.rb_5 = new System.Windows.Forms.RadioButton();
+            this.rb_10 = new System.Windows.Forms.RadioButton();
             this.btn_powerAmplifierCtrl = new System.Windows.Forms.Button();
             this.lab_trackHeight = new System.Windows.Forms.Label();
             this.btn_counterclockwise = new System.Windows.Forms.Button();
@@ -91,9 +94,6 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rb_10 = new System.Windows.Forms.RadioButton();
-            this.rb_5 = new System.Windows.Forms.RadioButton();
-            this.rb_close = new System.Windows.Forms.RadioButton();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -346,6 +346,42 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "天线控制";
+            // 
+            // rb_close
+            // 
+            this.rb_close.AutoSize = true;
+            this.rb_close.Location = new System.Drawing.Point(290, 156);
+            this.rb_close.Name = "rb_close";
+            this.rb_close.Size = new System.Drawing.Size(59, 16);
+            this.rb_close.TabIndex = 20;
+            this.rb_close.TabStop = true;
+            this.rb_close.Text = "关波形";
+            this.rb_close.UseVisualStyleBackColor = true;
+            this.rb_close.CheckedChanged += new System.EventHandler(this.rb_close_CheckedChanged);
+            // 
+            // rb_5
+            // 
+            this.rb_5.AutoSize = true;
+            this.rb_5.Location = new System.Drawing.Point(212, 156);
+            this.rb_5.Name = "rb_5";
+            this.rb_5.Size = new System.Drawing.Size(29, 16);
+            this.rb_5.TabIndex = 20;
+            this.rb_5.TabStop = true;
+            this.rb_5.Text = "5";
+            this.rb_5.UseVisualStyleBackColor = true;
+            this.rb_5.CheckedChanged += new System.EventHandler(this.rb_5_CheckedChanged);
+            // 
+            // rb_10
+            // 
+            this.rb_10.AutoSize = true;
+            this.rb_10.Location = new System.Drawing.Point(124, 156);
+            this.rb_10.Name = "rb_10";
+            this.rb_10.Size = new System.Drawing.Size(35, 16);
+            this.rb_10.TabIndex = 20;
+            this.rb_10.TabStop = true;
+            this.rb_10.Text = "10";
+            this.rb_10.UseVisualStyleBackColor = true;
+            this.rb_10.CheckedChanged += new System.EventHandler(this.rb_10_CheckedChanged);
             // 
             // btn_powerAmplifierCtrl
             // 
@@ -748,25 +784,27 @@
             this.航机显示ToolStripMenuItem.CheckOnClick = true;
             this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // 原始视频ToolStripMenuItem1
             // 
+            this.原始视频ToolStripMenuItem1.Checked = true;
             this.原始视频ToolStripMenuItem1.CheckOnClick = true;
+            this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
             this.原始视频ToolStripMenuItem1.Text = "原始视频";
             this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
@@ -806,42 +844,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // rb_10
-            // 
-            this.rb_10.AutoSize = true;
-            this.rb_10.Location = new System.Drawing.Point(124, 156);
-            this.rb_10.Name = "rb_10";
-            this.rb_10.Size = new System.Drawing.Size(35, 16);
-            this.rb_10.TabIndex = 20;
-            this.rb_10.TabStop = true;
-            this.rb_10.Text = "10";
-            this.rb_10.UseVisualStyleBackColor = true;
-            this.rb_10.CheckedChanged += new System.EventHandler(this.rb_10_CheckedChanged);
-            // 
-            // rb_5
-            // 
-            this.rb_5.AutoSize = true;
-            this.rb_5.Location = new System.Drawing.Point(212, 156);
-            this.rb_5.Name = "rb_5";
-            this.rb_5.Size = new System.Drawing.Size(29, 16);
-            this.rb_5.TabIndex = 20;
-            this.rb_5.TabStop = true;
-            this.rb_5.Text = "5";
-            this.rb_5.UseVisualStyleBackColor = true;
-            this.rb_5.CheckedChanged += new System.EventHandler(this.rb_5_CheckedChanged);
-            // 
-            // rb_close
-            // 
-            this.rb_close.AutoSize = true;
-            this.rb_close.Location = new System.Drawing.Point(290, 156);
-            this.rb_close.Name = "rb_close";
-            this.rb_close.Size = new System.Drawing.Size(59, 16);
-            this.rb_close.TabIndex = 20;
-            this.rb_close.TabStop = true;
-            this.rb_close.Text = "关波形";
-            this.rb_close.UseVisualStyleBackColor = true;
-            this.rb_close.CheckedChanged += new System.EventHandler(this.rb_close_CheckedChanged);
             // 
             // Form1
             // 

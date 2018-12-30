@@ -1,20 +1,26 @@
 ﻿namespace TargetManagerPackage.目标类
 {
-    class CirculateStrategy : FindTrackIdStrategy
+    public class CirculateStrategy : FindTrackIdStrategy
     {
         private static int latestId = 0;
         public override int NextId()
         {
-            for (int i = latestId + 1; i != latestId; i++)
+            bool isFirstLoop = true;
+            for (int i = latestId;; i++)
             {
+                if(!isFirstLoop)
+                {
+                    if (i == latestId) break;
+                }
                 if (i >= TrackMaximumCount)
                     i = 0;
                 if (Id[i] != 1)
                 {
-                    latestId = i;
+                    latestId = i+1;
                     Id[i] = 1;
                     return i + 1;
                 }
+                isFirstLoop = false;
             }
 
             return 0;

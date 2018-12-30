@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TargetManagerPackage.目标类
 {
-    abstract class FindTrackIdStrategy
+    public abstract class FindTrackIdStrategy
     {
-        protected const int TrackMaximumCount = 200;
-        protected static readonly int[] Id = new int[TrackMaximumCount];
+        public const int TrackMaximumCount = 200;
+        protected readonly int[] Id = new int[TrackMaximumCount];
 
         public abstract int NextId();
-        public static void ReleaseId(int id)
+        public void ReleaseId(int id)
         {
             Id[id - 1] = 0;
         }

@@ -121,6 +121,21 @@ namespace RadarDisplayPackage.目标显示器类族
                 targetTracks[sectorIndex].AddRange(trackList);
             }
         }
+
+        public override void NotifyChange(Target t, NotifyType type)
+        {
+            foreach (List<TargetTrack> views in targetTracks)
+            {
+                foreach(TargetTrack track in views)
+                {
+                    if (track == t)
+                    {
+                        views.Remove(track);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     class TextTargetView : TargetView/*, IComparable*/

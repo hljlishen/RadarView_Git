@@ -65,21 +65,22 @@ namespace TargetManagerPackage
 
         public AngleArea CalAntiInertiaSection(AngleArea area)
         {
-            switch (Rate)
-            {
-                case RotateRate.Rpm0:
-                    return area;
-                case RotateRate.Rpm2:
-                    return new AngleArea(area.BeginAngle + 2 , area.EndAngle - 2 );
-                case RotateRate.Rpm5:
-                    return new AngleArea(area.BeginAngle - 2, area.EndAngle + 2);
-                case RotateRate.Rpm10:
-                    return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
-                case RotateRate.Rpm20:
-                    return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
-                default:
-                    return null;
-            }
+            return area;
+            //switch (Rate)
+            //{
+            //    case RotateRate.Rpm0:
+            //        return area;
+            //    case RotateRate.Rpm2:
+            //        return new AngleArea(area.BeginAngle + 2 , area.EndAngle - 2 );
+            //    case RotateRate.Rpm5:
+            //        return new AngleArea(area.BeginAngle - 2, area.EndAngle + 2);
+            //    case RotateRate.Rpm10:
+            //        return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
+            //    case RotateRate.Rpm20:
+            //        return new AngleArea(area.BeginAngle + 14, area.EndAngle - 14);
+            //    default:
+            //        return null;
+            //}
 
         }
 

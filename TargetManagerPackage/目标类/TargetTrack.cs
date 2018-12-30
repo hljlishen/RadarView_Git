@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Utilities;
+using TargetManagerPackage.目标类;
 
 namespace TargetManagerPackage
 {
@@ -9,8 +10,6 @@ namespace TargetManagerPackage
         public delegate void ChangeSectorHandler(Target target, int toSectorIndex);
         public ChangeSectorHandler ChangeSector;
         public bool IsFocused { get; } = false;
-        private const int TrackMaximumCount = 200;
-        private static readonly int[] Id = new int[TrackMaximumCount];
         public int TrackId { get; set; } = 10;         //批号
         public PolarCoordinate PredictLocation; //预测坐标
         public List<PolarCoordinate> Locations; //历史坐标，最新的在最后
@@ -25,7 +24,8 @@ namespace TargetManagerPackage
         public double XSpeed { get; set; } = 0;
         public double YSpeed { get; set; } = 0;
         public double ZSpeed { get; set; } = 0;
-        private static int latestId = 0;
+
+        internal static FindTrackIdStrategy FindIdStrategy { get; set; } = null;
 
         public override int SectorIndex
         {
@@ -107,7 +107,7 @@ namespace TargetManagerPackage
 
         public static TargetTrack CreateTargetTrack(TargetDot current, TargetDot pre, int initScore)
         {
-            int trackid = GetNextTrackIdUpword();
+            int trackid = FindIdStrategy.NextId();
 
             if (trackid == 0)
             {
@@ -122,39 +122,6 @@ namespace TargetManagerPackage
 
             SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
             return t;
-        }
-
-        private static int GetNextTrackId()
-        {
-            int trackid = -1;
-            for(int i = 0; i < TrackMaximumCount; i++)
-            {
-                if(Id[i] != 1)  
-                {
-                    trackid = i;
-                    Id[i] = 1;
-                    return i + 1;
-                }
-            }
-
-            return 0;
-        }
-
-        private static int GetNextTrackIdUpword()
-        {
-            for (int i = latestId + 1; i != latestId; i++)
-            {
-                if (i >= TrackMaximumCount)
-                    i = 1;
-                if (Id[i] != 1)
-                {
-                    latestId = i;
-                    Id[i] = 1;
-                    return i;
-                }
-            }
-
-            return 0;
         }
 
         public static void ReleaseAllTrackIDs()
@@ -178,33 +145,28 @@ namespace TargetManagerPackage
         public void Dispose()
         {
             Unfocus();
-            Id[TrackId - 1] = 0;    //释放ID号
+            FindIdStrategy.ReleaseId(TrackId);
             Locations?.Clear();
         }
 
         public int CompareTo(object obj)
         {
             TargetTrack track = (TargetTrack) obj;
-            if (Score > track.Score) return 1;
-            if (Score < track.Score) return -1;
-            return 0;
+            return Score.CompareTo(track.Score);
+            //if (Score > track.Score) return 1;
+            //if (Score < track.Score) return -1;
+            //return 0;
         }
 
-        public float GetCrelateRadius()
+        public float GetCorelateRadius()
         {
             if (Locations.Count == 0)
-                return 500;
-            return 50;
+                return 800;
+            return 500;
         }
 
-        public void Focus()
-        {
-            TargetManagerFactory.RegisterTrackObserver(this);
-        }
+        public void Focus() => TargetManagerFactory.RegisterTrackObserver(this);
 
-        public void Unfocus()
-        {
-            TargetManagerFactory.UnregisterTrackObserver(this);
-        }
+        public void Unfocus() => TargetManagerFactory.UnregisterTrackObserver(this);
     }
 }

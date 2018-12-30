@@ -10,7 +10,7 @@ namespace TargetManagerPackage
     {
         public AzimuthCell[] Matrix { get; private set; }
         private int _currentMatrixIndex;       //新数据存储位置           
-        public const int AzimuthCellCount = 1024;        //数组的长度
+        public const int AzimuthCellCount = 256;        //数组的长度
         private static CycleDataMatrix _cycleDataMatrix;
         private readonly ITestDataGenerator _testDataGenerator;
 

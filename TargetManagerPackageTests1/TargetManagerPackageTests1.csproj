@@ -71,6 +71,7 @@
     <Compile Include="X80DataTests.cs" />
     <Compile Include="天线控制器\AntennaManagerAngleAreaTests.cs" />
     <Compile Include="天线控制器\角度区域监听器\AngleAreaAngleAreaTests.cs" />
+    <Compile Include="目标类\CirculateStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

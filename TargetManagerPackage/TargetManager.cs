@@ -1,5 +1,6 @@
 ﻿using CycleDataDrivePackage;
 using System;
+using TargetManagerPackage.目标类;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,6 +42,8 @@ namespace TargetManagerPackage
             _freeDotDeleter = new FreeDotDeleter();  //自由点删除器
 
             _viewDeleter = new DotViewDeleter();
+
+            TargetTrack.FindIdStrategy = new FromBeginningStrategy();
 
             mouseTargetTracker = new MouseTargetTracker(this);
 
