@@ -78,6 +78,7 @@ namespace RadarDisplayPackage
             set
             {
                 base.Distance = value;
+                CycleDataDrivePackage.CycleDataFilter.DistanceMax = distance;
                 background.Distance = value;
                 SetCoordinateArea(coordinateSystem.CoordinateArea);
             }

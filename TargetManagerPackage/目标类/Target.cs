@@ -24,7 +24,12 @@ namespace TargetManagerPackage
 
         protected TimeSpan TimeSpanSinceLastRefresh(DateTime time) => time - LastRefreshTime;
         protected float MaximumFlyDistanceSinceLastRefresh(DateTime time) => (float)TimeSpanSinceLastRefresh(time).TotalSeconds * DroneMaximumSpeed;
-        protected float MinimumFlyDistanceSinceLastRefresh(DateTime time) => (float)TimeSpanSinceLastRefresh(time).TotalSeconds * DroneMinimumSpeed;
+        protected float MinimumFlyDistanceSinceLastRefresh(DateTime time)
+        {
+            float minDistance = 10;
+            float min =  (float)TimeSpanSinceLastRefresh(time).TotalSeconds * DroneMinimumSpeed;
+            return Math.Max(min, minDistance);
+        }
 
         public float Az
         {

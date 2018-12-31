@@ -153,16 +153,13 @@ namespace TargetManagerPackage
         {
             TargetTrack track = (TargetTrack) obj;
             return Score.CompareTo(track.Score);
-            //if (Score > track.Score) return 1;
-            //if (Score < track.Score) return -1;
-            //return 0;
         }
 
         public float GetCorelateRadius()
         {
             if (Locations.Count == 0)
-                return 800;
-            return 500;
+                return 500;
+            return 200;
         }
 
         public void Focus() => TargetManagerFactory.RegisterTrackObserver(this);

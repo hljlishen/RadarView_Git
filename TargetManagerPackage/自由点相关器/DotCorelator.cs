@@ -21,8 +21,8 @@ namespace TargetManagerPackage
         {
             foreach (TargetDot oldDot in center.OldDots)
             {
-                if ((oldDot.Dis > 1500 && oldDot.Dis < 2500) || (oldDot.Dis> 2600 && oldDot.Dis < 2700))
-                    continue; //屏蔽杂波多的区域
+                //if ((oldDot.Dis > 1500 && oldDot.Dis < 2500) || (oldDot.Dis> 2600 && oldDot.Dis < 2700))
+                //    continue; //屏蔽杂波多的区域
                 if (CorelateDotToSector(oldDot, center)) continue;
                 if (CorelateDotToSector(oldDot, right)) continue;
                 CorelateDotToSector(oldDot, left);      //和左侧扇区中的点相关
@@ -40,7 +40,7 @@ namespace TargetManagerPackage
                 if (newDot.Adopted || !newDot.IsClotDot) //已经被航迹相关上的点不作处理
                     continue;
 
-                if (DotsCanCorelate(oldDot,newDot) && oldDot.IsDotRelated(newDot))   //两个点是否相关成功
+                if (oldDot.IsDotRelated(newDot) && DotsCanCorelate(oldDot,newDot))   //两个点是否相关成功
                 {
                     TargetTrack track =
                         TargetTrack.CreateTargetTrack(newDot, oldDot, 3);
