@@ -48,6 +48,14 @@ namespace TargetManagerPackage
             mouseTargetTracker = new MouseTargetTracker(this);
 
             trackGenerators = new List<TrackGenerator>();
+
+            InitDistanceCellFilter();
+        }
+
+        private void InitDistanceCellFilter()
+        {
+            DistanceCellFilter.AddCircleFilter(new CircleFilter(4900, 5100, 2500000));
+            DistanceCellFilter.AddCircleFilter(new CircleFilter(3450, 3700, 18000000));
         }
 
         public void AddTrackGenerator(PolarCoordinate coordinate)
@@ -118,6 +126,8 @@ namespace TargetManagerPackage
                     NotifyDeleteSectorTracks(s);
                     mouseTargetTracker?.DeleteTrack();
                     s.ClearAllTargets();
+
+                    //删除假航迹
                     foreach (var generator in trackGenerators)
                     {
                         generator.Dispose();

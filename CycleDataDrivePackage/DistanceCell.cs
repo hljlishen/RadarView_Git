@@ -58,6 +58,9 @@ namespace CycleDataDrivePackage
             p += elAm0Length;
 
             differAM = Tools.MakeInt(data, p, elAm1Length);
+
+            //if (index * Resolution > 3400 && index * Resolution < 3700 && sumAM > 1711101)
+            //    Console.WriteLine(sumAM);
         }
 
         public DistanceCell()

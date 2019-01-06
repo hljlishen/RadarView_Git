@@ -19,16 +19,7 @@ namespace CycleDataDrivePackage
             Socket socket = GetSocket(localIpAndPort);
 
             EndPoint remoteEndPoint = GetIpEndPoint(remoteIpAndPort);
-
-            try
-            {
-                socket.SendTo(data, remoteEndPoint);
-            }
-            catch
-            {
-                //ignored
-                //MessageBox.Show("");
-            }
+            socket?.SendTo(data, remoteEndPoint);
         }
 
         public static void BeginRecvData(string localIpAndPort, string remoteIpAndPort, ReceiveDataHandler handler)
