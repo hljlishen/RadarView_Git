@@ -15,7 +15,7 @@ namespace RadarDisplayPackage
 
         public List<RectF> HeaderRects { get; }
 
-        private readonly string[] _columnNames = {"批号", "方位", "仰角", "距离", "速度"};
+        private readonly string[] _columnNames = {"批号", "方位", "仰角", "高度", "距离", "速度"};
 
         public TextDisplayer(Panel holder) : base(holder)
         {

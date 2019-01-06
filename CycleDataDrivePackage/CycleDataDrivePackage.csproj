@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="AzimuthCell.cs" />
     <Compile Include="BinFileReader.cs" />
-    <Compile Include="CycleDataFilter.cs" />
+    <Compile Include="DistanceCellFilter.cs" />
     <Compile Include="DataRecorder.cs" />
     <Compile Include="UdpEthernetCenter.cs" />
     <Compile Include="UltraHighAccurateTimer.cs" />

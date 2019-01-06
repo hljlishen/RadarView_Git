@@ -11,7 +11,8 @@ namespace CycleDataDrivePackage
         private static UdpCycleDataReader _udpReader;
         private static BinFileReader _binReader;
 
-        private static BinFileReader CreateBinReader() => _binReader ?? (_binReader = new BinFileReader());
+        //private static BinFileReader CreateBinReader() => _binReader ?? (_binReader = new BinFileReader());
+        private static BinFileReader CreateBinReader() => new BinFileReader();
 
         private static UdpCycleDataReader CreateUdpReader() => _udpReader ?? (_udpReader = new UdpCycleDataReader());
 

@@ -166,6 +166,7 @@ namespace RadarDisplayPackage.目标显示器类族
             _texts.Add(track.TrackId.ToString());
             _texts.Add(track.Az.ToString("0.0"));
             _texts.Add(track.El.ToString("0.0"));
+            _texts.Add(track.Height.ToString("0.0"));
             _texts.Add(track.Dis.ToString("0.0"));
             _texts.Add(track.Speed.ToString("0.0"));
 

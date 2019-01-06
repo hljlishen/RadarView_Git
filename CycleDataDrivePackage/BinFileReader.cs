@@ -28,9 +28,9 @@ namespace CycleDataDrivePackage
         {
             _reader = LoadFile(Source);
             int bytesRead = 0;
-            while (bytesRead < _reader.BaseStream.Length)
+            lock (this)
             {
-                lock (this)
+                while ( _reader.BaseStream!= null && bytesRead < _reader.BaseStream.Length)
                 {
                     var data = new byte[_readLength];
                     _reader.Read(data, 0, _readLength);

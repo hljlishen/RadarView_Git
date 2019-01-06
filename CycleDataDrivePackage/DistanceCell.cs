@@ -109,11 +109,6 @@ namespace CycleDataDrivePackage
             return intergerPart + decimalPart /*< 0 ? intergerPart + decimalPart + 2*Math.PI : intergerPart + decimalPart*/;
         }
 
-        private double AdjustEl(double el)
-        {
-            return el - 0.068f;
-        }
-
         private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
         {
             if (value > values[0])

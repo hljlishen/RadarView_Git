@@ -117,7 +117,6 @@ namespace CycleDataDrivePackage
         public virtual void Dispose()
         {
             StopReading();
-            ReadDatathread.Abort();
         }
 
         public void RebindSource(string source) => Source = source;
