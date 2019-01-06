@@ -33,7 +33,7 @@ namespace CycleDataDrivePackage
                     break;
                 var cell = new DistanceCell(data, pos){az = Angle, azInt = angleI};
 
-                if (CycleDataFilter.Pass(cell) && !DisCells.ContainsKey(cell.index))     //滤波
+                if (DistanceCellFilter.Pass(cell) && !DisCells.ContainsKey(cell.index))     //滤波
                     DisCells.Add(cell.index, cell);
 
                 pos += DistanceCell.Length;

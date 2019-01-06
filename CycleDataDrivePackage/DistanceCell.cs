@@ -43,13 +43,15 @@ namespace CycleDataDrivePackage
             double el0 = CalEl(el0Tmp);
 
             double eldif = el0 - el1;
+            //eldif -= 2.28f;/* 第二套设备俯仰角校正系数*/
+            eldif -= 0.83f;/* 第一套设备俯仰角校正系数*/
             if (eldif < -Math.PI)
                 eldif += Math.PI * 2;
             else if (eldif > Math.PI)
                 eldif -= Math.PI * 2;
 
             el = (float)Math.Asin(0.03f * eldif);
-            el = (float)Tools.RadianToDegree(el);
+            el = (float)Tools.RadianToDegree(el)/* - 3.9f*/;
             el += AntennaFixedEl;
 
             sumAM = Tools.MakeInt(data, p, elAm0Length);
@@ -107,6 +109,10 @@ namespace CycleDataDrivePackage
             return intergerPart + decimalPart /*< 0 ? intergerPart + decimalPart + 2*Math.PI : intergerPart + decimalPart*/;
         }
 
+        private double AdjustEl(double el)
+        {
+            return el - 0.068f;
+        }
 
         private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
         {

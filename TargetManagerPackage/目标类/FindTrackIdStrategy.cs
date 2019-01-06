@@ -8,7 +8,7 @@ namespace TargetManagerPackage.目标类
 {
     public abstract class FindTrackIdStrategy
     {
-        public const int TrackMaximumCount = 200;
+        public const int TrackMaximumCount = 64;
         protected readonly int[] Id = new int[TrackMaximumCount];
 
         public abstract int NextId();

@@ -46,6 +46,7 @@ namespace TargetManagerPackage
             _sweepSection = area;
             UnregisterAngleAreaNotification();
             RegisterAngleAreaNotification(area);
+            AzimuthCellFilter.PassArea = area;
         }
 
         private void UnregisterAngleAreaNotification()
@@ -70,6 +71,7 @@ namespace TargetManagerPackage
             _sweepSection = null;
             _isSectionSweeping = false;
             UnregisterAngleAreaNotification();
+            AzimuthCellFilter.PassArea = null;
         }
 
         public void NotifyLeaveAngleArea(AngleArea area) => AntennaLeaveSectionSweepAngleArea();//天线扫过了扇扫区域，需要翻转天线

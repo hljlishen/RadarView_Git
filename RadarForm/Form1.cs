@@ -280,16 +280,22 @@ namespace RadarForm
         }
         private void rb_10_CheckedChanged(object sender, EventArgs e)
         {
+            if (!rb_10.Checked) return;
             PowerAmplifier.CurrentRange = RangeType.Rt11;
             ovd.Distance = 10000;
         }
 
         private void rb_5_CheckedChanged(object sender, EventArgs e)
         {
+            if (!rb_5.Checked) return;
             PowerAmplifier.CurrentRange = RangeType.Rt5;
             ovd.Distance = 5000;
         }
 
-        private void rb_close_CheckedChanged(object sender, EventArgs e) => PowerAmplifier.CurrentRange = RangeType.RtClose;
+        private void rb_close_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!rb_close.Checked) return;
+            PowerAmplifier.CurrentRange = RangeType.RtClose;
+        }
     }
 }

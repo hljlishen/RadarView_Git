@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TargetManagerPackage.方位单元管理器;
 
 namespace TargetManagerPackage
 {
@@ -27,6 +26,7 @@ namespace TargetManagerPackage
         public void SaveAzimuthCell(AzimuthCell data)   //添加周期数据
         {
             //data = _testDataGenerator.ModifyOriginalData(data);
+            if (!AzimuthCellFilter.Pass(data)) return;
             _currentMatrixIndex = NextIndex(_currentMatrixIndex);
             Matrix[_currentMatrixIndex]?.Dispose();
             Matrix[_currentMatrixIndex] = data;           //保存周期数据

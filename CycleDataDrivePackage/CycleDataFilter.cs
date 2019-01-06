@@ -1,7 +1,7 @@
 ﻿
 namespace CycleDataDrivePackage
 {
-    public class CycleDataFilter
+    public class DistanceCellFilter
     {
         public static int AmThreshold = 0;
         public static int SpeedMaximum = 59;

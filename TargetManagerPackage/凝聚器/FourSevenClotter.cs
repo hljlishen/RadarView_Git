@@ -185,7 +185,7 @@ namespace TargetManagerPackage
                 if (area.Width < AreaWidthMinimum || area.Width > AreaWidthMaximum)
                     continue;
                 List<DistanceCell> disCells = area.GetDistanceCells();
-                TargetDot dot = ClotSingleDot_MassCenter(disCells);
+                TargetDot dot = ClotSingleDot_MaxAm(disCells);
                 dot.DotWidth = area.Width;      //凝聚点的宽度
                 dots.Add(dot);
             }
@@ -218,6 +218,27 @@ namespace TargetManagerPackage
             //az = AdjustAz((float)az);       //修正回差
 
             return new TargetDot((float)az, (float)el, dis) { IsClotDot = true };
+        }
+
+        public static TargetDot ClotSingleDot_MaxAm(List<DistanceCell> distanceCells)
+        {
+            double az = 0;
+            double el = 0;
+            double dis = 0;
+            double maxAm = 0;
+
+            foreach (DistanceCell distanceCell in distanceCells)
+            {
+                if(maxAm < distanceCell.sumAM)
+                {
+                    maxAm = distanceCell.sumAM;
+                    az = distanceCell.az;
+                    el = distanceCell.el;
+                    dis = distanceCell.Distance;
+                }
+            }
+
+            return new TargetDot((float)az, (float)el, (float)dis) { IsClotDot = true };
         }
     }
 }

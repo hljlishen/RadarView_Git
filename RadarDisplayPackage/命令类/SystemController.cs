@@ -130,17 +130,17 @@ namespace RadarDisplayPackage
 
         public void ConnectDataSource(string readerType, string scr) => dataSourceController.ConnectDataSource(readerType, scr);
 
-        public void SetCycleDataFilterAmThreshold(int am) => CycleDataFilter.AmThreshold = am >= 0 ? am : CycleDataFilter.AmThreshold;
+        public void SetCycleDataFilterAmThreshold(int am) => DistanceCellFilter.AmThreshold = am >= 0 ? am : DistanceCellFilter.AmThreshold;
 
-        public void SetCycleDataFilterSpeedMinimum(int speed) => CycleDataFilter.SpeedMinimum = speed;
+        public void SetCycleDataFilterSpeedMinimum(int speed) => DistanceCellFilter.SpeedMinimum = speed;
 
-        public void SetCycleDataFilterSpeedMaximum(int speed) => CycleDataFilter.SpeedMaximum = speed;
+        public void SetCycleDataFilterSpeedMaximum(int speed) => DistanceCellFilter.SpeedMaximum = speed;
 
-        public int GetCycleDataFilterAmThreshold() => CycleDataFilter.AmThreshold;
+        public int GetCycleDataFilterAmThreshold() => DistanceCellFilter.AmThreshold;
 
-        public int GetCycleDataFilterSpeedMinimum() => CycleDataFilter.SpeedMinimum;
+        public int GetCycleDataFilterSpeedMinimum() => DistanceCellFilter.SpeedMinimum;
 
-        public int GetCycleDataFilterSpeedMaximum() => CycleDataFilter.SpeedMaximum;
+        public int GetCycleDataFilterSpeedMaximum() => DistanceCellFilter.SpeedMaximum;
 
         public void DeleteActiveWaveGates() => deleteActiveWaveGatesCmd.Execute();
 

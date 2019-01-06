@@ -94,6 +94,7 @@ namespace TargetManagerPackage
             Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
             CurrentCoordinate = c;
             SetRefreshTimeNow();        //设置更新时间
+            SystemCommunicator.UpdateTrack(this);
         }
 
         public (float, float, float) CalSpeed(PolarCoordinate lastCoordinate, PolarCoordinate curruntCoordinate, TimeSpan time)
@@ -144,6 +145,7 @@ namespace TargetManagerPackage
 
         public void Dispose()
         {
+            SystemCommunicator.DeleteTrack(this);
             Unfocus();
             FindIdStrategy.ReleaseId(TrackId);
             Locations?.Clear();
