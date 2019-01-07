@@ -14,7 +14,7 @@ namespace TargetManagerPackage
         Rt5,
         RtClose
     }
-    public class PowerAmplifier
+    public class FpgaCommunicator
     {
         private static bool _isAmplifierOpen;
         private static RangeType _currentRange;
@@ -24,7 +24,7 @@ namespace TargetManagerPackage
             set
             {
                 _isAmplifierOpen = value;
-                SendCmd();
+                SetFpgaMode();
             }
         }
         public static RangeType CurrentRange
@@ -33,14 +33,14 @@ namespace TargetManagerPackage
             set
             {
                 _currentRange = value;
-                SendCmd();
+                SetFpgaMode();
             }
         }
         private static byte[] FrameBytes = new byte[5] { 0x50, 0x32, 0x46, 0x64, 0 };
         private const string LocalIpAndPortString = "192.168.10.99:2013";
         private const string FpgaIpAndPortString = "192.168.10.5:2005";
 
-        public static void SendCmd()
+        static byte MakeFifthBytes()
         {
             byte fifthByte = 0;
 
@@ -58,12 +58,25 @@ namespace TargetManagerPackage
                 case RangeType.RtClose:
                     fifthByte += 0x01;
                     break;
-                default:
-                    break;
             }
 
-            FrameBytes[4] = fifthByte;
+            return fifthByte;
+        }
 
+        private static byte AddAdjustAntennaAngleBit(byte fifthByte) => (byte) (fifthByte | 0x04);
+
+        private static void SetFpgaMode()
+        {
+            FrameBytes[4] = MakeFifthBytes();
+
+            UdpEthernetCenter.SendData(FrameBytes, LocalIpAndPortString, FpgaIpAndPortString);
+        }
+
+        public static void SetCurrentAntennaAngleToZero()
+        {
+            byte fifthByte = MakeFifthBytes();
+            fifthByte = AddAdjustAntennaAngleBit(fifthByte);
+            FrameBytes[4] = fifthByte;
             UdpEthernetCenter.SendData(FrameBytes, LocalIpAndPortString, FpgaIpAndPortString);
         }
     }

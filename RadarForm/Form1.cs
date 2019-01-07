@@ -263,15 +263,15 @@ namespace RadarForm
 
         private void btn_powerAmplifierCtrl_Click(object sender, EventArgs e)
         {
-            if (btn_powerAmplifierCtrl.Text == "开发射")
+            if (btn_powerAmplifierCtrl.Text == @"开发射")
             {
-                PowerAmplifier.IsAmplifierOpen = true;
-                btn_powerAmplifierCtrl.Text = "关发射";
+                FpgaCommunicator.IsAmplifierOpen = true;
+                btn_powerAmplifierCtrl.Text = @"关发射";
             }
-            else if (btn_powerAmplifierCtrl.Text == "关发射")
+            else if (btn_powerAmplifierCtrl.Text == @"关发射")
             {
-                PowerAmplifier.IsAmplifierOpen = false;
-                btn_powerAmplifierCtrl.Text = "开发射";
+                FpgaCommunicator.IsAmplifierOpen = false;
+                btn_powerAmplifierCtrl.Text = @"开发射";
             }
             else
             {
@@ -281,21 +281,26 @@ namespace RadarForm
         private void rb_10_CheckedChanged(object sender, EventArgs e)
         {
             if (!rb_10.Checked) return;
-            PowerAmplifier.CurrentRange = RangeType.Rt11;
+            FpgaCommunicator.CurrentRange = RangeType.Rt11;
             ovd.Distance = 10000;
         }
 
         private void rb_5_CheckedChanged(object sender, EventArgs e)
         {
             if (!rb_5.Checked) return;
-            PowerAmplifier.CurrentRange = RangeType.Rt5;
+            FpgaCommunicator.CurrentRange = RangeType.Rt5;
             ovd.Distance = 5000;
         }
 
         private void rb_close_CheckedChanged(object sender, EventArgs e)
         {
             if (!rb_close.Checked) return;
-            PowerAmplifier.CurrentRange = RangeType.RtClose;
+            FpgaCommunicator.CurrentRange = RangeType.RtClose;
+        }
+
+        private void btn_AntennaZero_Click(object sender, EventArgs e)
+        {
+            FpgaCommunicator.SetCurrentAntennaAngleToZero();
         }
     }
 }

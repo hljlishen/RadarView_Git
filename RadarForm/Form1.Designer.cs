@@ -94,6 +94,7 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_AntennaZero = new System.Windows.Forms.Button();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -326,6 +327,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_AntennaZero);
             this.groupBox1.Controls.Add(this.rb_close);
             this.groupBox1.Controls.Add(this.rb_5);
             this.groupBox1.Controls.Add(this.rb_10);
@@ -784,19 +786,19 @@
             this.航机显示ToolStripMenuItem.CheckOnClick = true;
             this.航机显示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.航机显示ToolStripMenuItem.Name = "航机显示ToolStripMenuItem";
-            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.航机显示ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.航机显示ToolStripMenuItem.Text = "航迹显示";
             this.航机显示ToolStripMenuItem.Click += new System.EventHandler(this.航机显示ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
             // 
             // 原始视频ToolStripMenuItem1
             // 
@@ -804,7 +806,7 @@
             this.原始视频ToolStripMenuItem1.CheckOnClick = true;
             this.原始视频ToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.原始视频ToolStripMenuItem1.Name = "原始视频ToolStripMenuItem1";
-            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.原始视频ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.原始视频ToolStripMenuItem1.Text = "原始视频";
             this.原始视频ToolStripMenuItem1.Click += new System.EventHandler(this.原始视频ToolStripMenuItem1_Click);
             // 
@@ -844,6 +846,18 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
+            // 
+            // btn_AntennaZero
+            // 
+            this.btn_AntennaZero.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_AntennaZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_AntennaZero.Location = new System.Drawing.Point(370, 153);
+            this.btn_AntennaZero.Name = "btn_AntennaZero";
+            this.btn_AntennaZero.Size = new System.Drawing.Size(57, 23);
+            this.btn_AntennaZero.TabIndex = 21;
+            this.btn_AntennaZero.Text = "矫正0位";
+            this.btn_AntennaZero.UseVisualStyleBackColor = false;
+            this.btn_AntennaZero.Click += new System.EventHandler(this.btn_AntennaZero_Click);
             // 
             // Form1
             // 
@@ -965,6 +979,7 @@
         private System.Windows.Forms.RadioButton rb_close;
         private System.Windows.Forms.RadioButton rb_5;
         private System.Windows.Forms.RadioButton rb_10;
+        private System.Windows.Forms.Button btn_AntennaZero;
     }
 }
 

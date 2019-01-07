@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzimuthCellFilter.cs" />
-    <Compile Include="PowerAamplifier.cs" />
+    <Compile Include="FpgaCommunicator.cs" />
     <Compile Include="TrackChangeSectorObserver.cs" />
     <Compile Include="方位单元管理器\CrossSectorTarget.cs" />
     <Compile Include="方位单元管理器\ElTestTargets.cs" />
