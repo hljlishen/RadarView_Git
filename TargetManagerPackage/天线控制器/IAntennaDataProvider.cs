@@ -86,7 +86,7 @@ namespace TargetManagerPackage
                 : RotateDirection.CounterClockWise;
         }
 
-        public void NotifyNewCycleData(byte[] rawData)
+        public virtual void NotifyNewCycleData(byte[] rawData)
         {
                 UpdateAntennaAngle(rawData);
 

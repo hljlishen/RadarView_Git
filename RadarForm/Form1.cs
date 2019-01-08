@@ -298,9 +298,54 @@ namespace RadarForm
             FpgaCommunicator.CurrentRange = RangeType.RtClose;
         }
 
-        private void btn_AntennaZero_Click(object sender, EventArgs e)
+        private void btn_AntennaZero_Click(object sender, EventArgs e) => FpgaCommunicator.SetCurrentAntennaAngleToZero();
+
+        private void rb_CounterclockWise_CheckedChanged(object sender, EventArgs e)
         {
-            FpgaCommunicator.SetCurrentAntennaAngleToZero();
+            if (!rb_CounterclockWise.Checked) return;
+            controller.AntennaSetRotateDirection(RotateDirection.ClockWise);
+        }
+
+        private void rb_ClockWise_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!rb_ClockWise.Checked) return;
+            controller.AntennaSetRotateDirection(RotateDirection.CounterClockWise);
+        }
+
+        private void rb_Stop_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rb_Stop.Checked)
+                controller.AntennaSetRotationRate(RotateRate.Rpm0);
+        }
+
+        private void rb_2rpm_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rb_2rpm.Checked)
+                controller.AntennaSetRotationRate(RotateRate.Rpm2);
+        }
+
+        private void rb_5rpm_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rb_5rpm.Checked)
+                controller.AntennaSetRotationRate(RotateRate.Rpm5);
+        }
+
+        private void rb_10rmp_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rb_10rmp.Checked)
+                controller.AntennaSetRotationRate(RotateRate.Rpm10);
+        }
+
+        private void rb_20rmp_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rb_20rmp.Checked)
+                controller.AntennaSetRotationRate(RotateRate.Rpm20);
+        }
+
+        private void rb_toZero_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rb_toZero.Checked)
+                controller.AntennaSetZeroDegree();
         }
     }
 }

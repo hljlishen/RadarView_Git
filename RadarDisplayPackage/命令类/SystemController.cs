@@ -99,6 +99,8 @@ namespace RadarDisplayPackage
         public void AntennaSetRotateDirection(RotateDirection direct) => new AntennaSetNormalSweepModeCommand(direct).Execute();
 
 
+        public void AntennaSetZeroDegree() => new SetAntennaToZeroDegreeCommand().Execute();
+
         //切换起批模式
         public void TargetManagerSwitchMode(string  modeName)
         {

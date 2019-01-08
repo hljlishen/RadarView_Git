@@ -15,6 +15,6 @@ namespace RadarDisplayPackage
             this.rate = rate;
         }
 
-        public override void Execute() => antenna.SetRotateRate( rate);
+        public override void Execute() => antenna.SetRotateRate(rate);
     }
 }

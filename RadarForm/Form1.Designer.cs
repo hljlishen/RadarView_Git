@@ -48,10 +48,22 @@
             this.rb_semiAuto = new System.Windows.Forms.RadioButton();
             this.rb_auto = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.btn_AntennaZero = new System.Windows.Forms.Button();
+            this.btn_powerAmplifierCtrl = new System.Windows.Forms.Button();
+            this.rb_10 = new System.Windows.Forms.RadioButton();
             this.rb_close = new System.Windows.Forms.RadioButton();
             this.rb_5 = new System.Windows.Forms.RadioButton();
-            this.rb_10 = new System.Windows.Forms.RadioButton();
-            this.btn_powerAmplifierCtrl = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rb_toZero = new System.Windows.Forms.RadioButton();
+            this.rb_20rmp = new System.Windows.Forms.RadioButton();
+            this.rb_10rmp = new System.Windows.Forms.RadioButton();
+            this.rb_5rpm = new System.Windows.Forms.RadioButton();
+            this.rb_2rpm = new System.Windows.Forms.RadioButton();
+            this.rb_Stop = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rb_ClockWise = new System.Windows.Forms.RadioButton();
+            this.rb_CounterclockWise = new System.Windows.Forms.RadioButton();
             this.lab_trackHeight = new System.Windows.Forms.Label();
             this.btn_counterclockwise = new System.Windows.Forms.Button();
             this.btn_Rpm20 = new System.Windows.Forms.Button();
@@ -94,7 +106,6 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_AntennaZero = new System.Windows.Forms.Button();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -103,6 +114,9 @@
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -327,11 +341,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btn_AntennaZero);
-            this.groupBox1.Controls.Add(this.rb_close);
-            this.groupBox1.Controls.Add(this.rb_5);
-            this.groupBox1.Controls.Add(this.rb_10);
-            this.groupBox1.Controls.Add(this.btn_powerAmplifierCtrl);
+            this.groupBox1.Controls.Add(this.groupBox8);
+            this.groupBox1.Controls.Add(this.groupBox3);
+            this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.lab_trackHeight);
             this.groupBox1.Controls.Add(this.btn_counterclockwise);
             this.groupBox1.Controls.Add(this.btn_Rpm20);
@@ -342,17 +354,68 @@
             this.groupBox1.Controls.Add(this.btn_Rpm0);
             this.groupBox1.Controls.Add(this.btn_clockwise);
             this.groupBox1.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox1.Location = new System.Drawing.Point(6, 99);
+            this.groupBox1.Location = new System.Drawing.Point(6, 77);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(467, 191);
+            this.groupBox1.Size = new System.Drawing.Size(467, 220);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "天线控制";
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.btn_AntennaZero);
+            this.groupBox8.Controls.Add(this.btn_powerAmplifierCtrl);
+            this.groupBox8.Controls.Add(this.rb_10);
+            this.groupBox8.Controls.Add(this.rb_close);
+            this.groupBox8.Controls.Add(this.rb_5);
+            this.groupBox8.ForeColor = System.Drawing.Color.Chartreuse;
+            this.groupBox8.Location = new System.Drawing.Point(26, 143);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(419, 58);
+            this.groupBox8.TabIndex = 21;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "天线控制";
+            // 
+            // btn_AntennaZero
+            // 
+            this.btn_AntennaZero.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_AntennaZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_AntennaZero.Location = new System.Drawing.Point(318, 22);
+            this.btn_AntennaZero.Name = "btn_AntennaZero";
+            this.btn_AntennaZero.Size = new System.Drawing.Size(57, 23);
+            this.btn_AntennaZero.TabIndex = 21;
+            this.btn_AntennaZero.Text = "矫正0位";
+            this.btn_AntennaZero.UseVisualStyleBackColor = false;
+            this.btn_AntennaZero.Click += new System.EventHandler(this.btn_AntennaZero_Click);
+            // 
+            // btn_powerAmplifierCtrl
+            // 
+            this.btn_powerAmplifierCtrl.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_powerAmplifierCtrl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_powerAmplifierCtrl.Location = new System.Drawing.Point(17, 22);
+            this.btn_powerAmplifierCtrl.Name = "btn_powerAmplifierCtrl";
+            this.btn_powerAmplifierCtrl.Size = new System.Drawing.Size(56, 23);
+            this.btn_powerAmplifierCtrl.TabIndex = 19;
+            this.btn_powerAmplifierCtrl.Text = "开发射";
+            this.btn_powerAmplifierCtrl.UseVisualStyleBackColor = false;
+            this.btn_powerAmplifierCtrl.Click += new System.EventHandler(this.btn_powerAmplifierCtrl_Click);
+            // 
+            // rb_10
+            // 
+            this.rb_10.AutoSize = true;
+            this.rb_10.Location = new System.Drawing.Point(105, 25);
+            this.rb_10.Name = "rb_10";
+            this.rb_10.Size = new System.Drawing.Size(35, 16);
+            this.rb_10.TabIndex = 20;
+            this.rb_10.TabStop = true;
+            this.rb_10.Text = "10";
+            this.rb_10.UseVisualStyleBackColor = true;
+            this.rb_10.CheckedChanged += new System.EventHandler(this.rb_10_CheckedChanged);
+            // 
             // rb_close
             // 
             this.rb_close.AutoSize = true;
-            this.rb_close.Location = new System.Drawing.Point(290, 156);
+            this.rb_close.Location = new System.Drawing.Point(235, 25);
             this.rb_close.Name = "rb_close";
             this.rb_close.Size = new System.Drawing.Size(59, 16);
             this.rb_close.TabIndex = 20;
@@ -364,7 +427,7 @@
             // rb_5
             // 
             this.rb_5.AutoSize = true;
-            this.rb_5.Location = new System.Drawing.Point(212, 156);
+            this.rb_5.Location = new System.Drawing.Point(178, 25);
             this.rb_5.Name = "rb_5";
             this.rb_5.Size = new System.Drawing.Size(29, 16);
             this.rb_5.TabIndex = 20;
@@ -373,29 +436,129 @@
             this.rb_5.UseVisualStyleBackColor = true;
             this.rb_5.CheckedChanged += new System.EventHandler(this.rb_5_CheckedChanged);
             // 
-            // rb_10
+            // groupBox3
             // 
-            this.rb_10.AutoSize = true;
-            this.rb_10.Location = new System.Drawing.Point(124, 156);
-            this.rb_10.Name = "rb_10";
-            this.rb_10.Size = new System.Drawing.Size(35, 16);
-            this.rb_10.TabIndex = 20;
-            this.rb_10.TabStop = true;
-            this.rb_10.Text = "10";
-            this.rb_10.UseVisualStyleBackColor = true;
-            this.rb_10.CheckedChanged += new System.EventHandler(this.rb_10_CheckedChanged);
+            this.groupBox3.Controls.Add(this.rb_toZero);
+            this.groupBox3.Controls.Add(this.rb_20rmp);
+            this.groupBox3.Controls.Add(this.rb_10rmp);
+            this.groupBox3.Controls.Add(this.rb_5rpm);
+            this.groupBox3.Controls.Add(this.rb_2rpm);
+            this.groupBox3.Controls.Add(this.rb_Stop);
+            this.groupBox3.ForeColor = System.Drawing.Color.Chartreuse;
+            this.groupBox3.Location = new System.Drawing.Point(26, 79);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(419, 58);
+            this.groupBox3.TabIndex = 20;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "天线转速";
             // 
-            // btn_powerAmplifierCtrl
+            // rb_toZero
             // 
-            this.btn_powerAmplifierCtrl.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_powerAmplifierCtrl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_powerAmplifierCtrl.Location = new System.Drawing.Point(30, 153);
-            this.btn_powerAmplifierCtrl.Name = "btn_powerAmplifierCtrl";
-            this.btn_powerAmplifierCtrl.Size = new System.Drawing.Size(56, 23);
-            this.btn_powerAmplifierCtrl.TabIndex = 19;
-            this.btn_powerAmplifierCtrl.Text = "开发射";
-            this.btn_powerAmplifierCtrl.UseVisualStyleBackColor = false;
-            this.btn_powerAmplifierCtrl.Click += new System.EventHandler(this.btn_powerAmplifierCtrl_Click);
+            this.rb_toZero.AutoSize = true;
+            this.rb_toZero.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_toZero.Location = new System.Drawing.Point(353, 23);
+            this.rb_toZero.Name = "rb_toZero";
+            this.rb_toZero.Size = new System.Drawing.Size(47, 16);
+            this.rb_toZero.TabIndex = 3;
+            this.rb_toZero.Text = "回零";
+            this.rb_toZero.UseVisualStyleBackColor = true;
+            this.rb_toZero.CheckedChanged += new System.EventHandler(this.rb_toZero_CheckedChanged);
+            // 
+            // rb_20rmp
+            // 
+            this.rb_20rmp.AutoSize = true;
+            this.rb_20rmp.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_20rmp.Location = new System.Drawing.Point(286, 23);
+            this.rb_20rmp.Name = "rb_20rmp";
+            this.rb_20rmp.Size = new System.Drawing.Size(53, 16);
+            this.rb_20rmp.TabIndex = 2;
+            this.rb_20rmp.Text = "20rpm";
+            this.rb_20rmp.UseVisualStyleBackColor = true;
+            this.rb_20rmp.CheckedChanged += new System.EventHandler(this.rb_20rmp_CheckedChanged);
+            // 
+            // rb_10rmp
+            // 
+            this.rb_10rmp.AutoSize = true;
+            this.rb_10rmp.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_10rmp.Location = new System.Drawing.Point(217, 23);
+            this.rb_10rmp.Name = "rb_10rmp";
+            this.rb_10rmp.Size = new System.Drawing.Size(53, 16);
+            this.rb_10rmp.TabIndex = 2;
+            this.rb_10rmp.Text = "10rpm";
+            this.rb_10rmp.UseVisualStyleBackColor = true;
+            this.rb_10rmp.CheckedChanged += new System.EventHandler(this.rb_10rmp_CheckedChanged);
+            // 
+            // rb_5rpm
+            // 
+            this.rb_5rpm.AutoSize = true;
+            this.rb_5rpm.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_5rpm.Location = new System.Drawing.Point(147, 23);
+            this.rb_5rpm.Name = "rb_5rpm";
+            this.rb_5rpm.Size = new System.Drawing.Size(47, 16);
+            this.rb_5rpm.TabIndex = 2;
+            this.rb_5rpm.Text = "5rpm";
+            this.rb_5rpm.UseVisualStyleBackColor = true;
+            this.rb_5rpm.CheckedChanged += new System.EventHandler(this.rb_5rpm_CheckedChanged);
+            // 
+            // rb_2rpm
+            // 
+            this.rb_2rpm.AutoSize = true;
+            this.rb_2rpm.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_2rpm.Location = new System.Drawing.Point(81, 23);
+            this.rb_2rpm.Name = "rb_2rpm";
+            this.rb_2rpm.Size = new System.Drawing.Size(47, 16);
+            this.rb_2rpm.TabIndex = 2;
+            this.rb_2rpm.Text = "2rpm";
+            this.rb_2rpm.UseVisualStyleBackColor = true;
+            this.rb_2rpm.CheckedChanged += new System.EventHandler(this.rb_2rpm_CheckedChanged);
+            // 
+            // rb_Stop
+            // 
+            this.rb_Stop.AutoSize = true;
+            this.rb_Stop.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_Stop.Location = new System.Drawing.Point(17, 23);
+            this.rb_Stop.Name = "rb_Stop";
+            this.rb_Stop.Size = new System.Drawing.Size(47, 16);
+            this.rb_Stop.TabIndex = 1;
+            this.rb_Stop.Text = "停止";
+            this.rb_Stop.UseVisualStyleBackColor = true;
+            this.rb_Stop.CheckedChanged += new System.EventHandler(this.rb_Stop_CheckedChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rb_ClockWise);
+            this.groupBox2.Controls.Add(this.rb_CounterclockWise);
+            this.groupBox2.ForeColor = System.Drawing.Color.Chartreuse;
+            this.groupBox2.Location = new System.Drawing.Point(27, 20);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(418, 51);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "周扫方向";
+            // 
+            // rb_ClockWise
+            // 
+            this.rb_ClockWise.AutoSize = true;
+            this.rb_ClockWise.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_ClockWise.Location = new System.Drawing.Point(255, 22);
+            this.rb_ClockWise.Name = "rb_ClockWise";
+            this.rb_ClockWise.Size = new System.Drawing.Size(59, 16);
+            this.rb_ClockWise.TabIndex = 2;
+            this.rb_ClockWise.Text = "顺时针";
+            this.rb_ClockWise.UseVisualStyleBackColor = true;
+            this.rb_ClockWise.CheckedChanged += new System.EventHandler(this.rb_ClockWise_CheckedChanged);
+            // 
+            // rb_CounterclockWise
+            // 
+            this.rb_CounterclockWise.AutoSize = true;
+            this.rb_CounterclockWise.ForeColor = System.Drawing.Color.Chartreuse;
+            this.rb_CounterclockWise.Location = new System.Drawing.Point(90, 22);
+            this.rb_CounterclockWise.Name = "rb_CounterclockWise";
+            this.rb_CounterclockWise.Size = new System.Drawing.Size(59, 16);
+            this.rb_CounterclockWise.TabIndex = 1;
+            this.rb_CounterclockWise.Text = "逆时针";
+            this.rb_CounterclockWise.UseVisualStyleBackColor = true;
+            this.rb_CounterclockWise.CheckedChanged += new System.EventHandler(this.rb_CounterclockWise_CheckedChanged);
             // 
             // lab_trackHeight
             // 
@@ -847,18 +1010,6 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
-            // btn_AntennaZero
-            // 
-            this.btn_AntennaZero.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_AntennaZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AntennaZero.Location = new System.Drawing.Point(370, 153);
-            this.btn_AntennaZero.Name = "btn_AntennaZero";
-            this.btn_AntennaZero.Size = new System.Drawing.Size(57, 23);
-            this.btn_AntennaZero.TabIndex = 21;
-            this.btn_AntennaZero.Text = "矫正0位";
-            this.btn_AntennaZero.UseVisualStyleBackColor = false;
-            this.btn_AntennaZero.Click += new System.EventHandler(this.btn_AntennaZero_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -879,7 +1030,6 @@
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
@@ -900,6 +1050,12 @@
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -980,6 +1136,17 @@
         private System.Windows.Forms.RadioButton rb_5;
         private System.Windows.Forms.RadioButton rb_10;
         private System.Windows.Forms.Button btn_AntennaZero;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton rb_ClockWise;
+        private System.Windows.Forms.RadioButton rb_CounterclockWise;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rb_20rmp;
+        private System.Windows.Forms.RadioButton rb_10rmp;
+        private System.Windows.Forms.RadioButton rb_5rpm;
+        private System.Windows.Forms.RadioButton rb_2rpm;
+        private System.Windows.Forms.RadioButton rb_Stop;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.RadioButton rb_toZero;
     }
 }
 

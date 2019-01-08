@@ -23,5 +23,7 @@
         void SetRotateDirection(RotateDirection direct);//停止扇扫，切换成正常扫描模式
 
         void SetRotateRate(RotateRate rate);
+
+        void SetAntennaToZeroDegree();
     }
 }
