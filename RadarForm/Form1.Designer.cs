@@ -106,6 +106,11 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_send12 = new System.Windows.Forms.Button();
+            this.btn_send68 = new System.Windows.Forms.Button();
+            this.btn_delete68 = new System.Windows.Forms.Button();
+            this.btn_delete12 = new System.Windows.Forms.Button();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -121,6 +126,7 @@
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_sideView
@@ -174,6 +180,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(3, 7);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1010,6 +1017,67 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.Color.Black;
+            this.tabPage3.Controls.Add(this.btn_delete68);
+            this.tabPage3.Controls.Add(this.btn_delete12);
+            this.tabPage3.Controls.Add(this.btn_send68);
+            this.tabPage3.Controls.Add(this.btn_send12);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(480, 408);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "测试";
+            // 
+            // btn_send12
+            // 
+            this.btn_send12.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_send12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_send12.Location = new System.Drawing.Point(35, 32);
+            this.btn_send12.Name = "btn_send12";
+            this.btn_send12.Size = new System.Drawing.Size(56, 23);
+            this.btn_send12.TabIndex = 20;
+            this.btn_send12.Text = "发送12";
+            this.btn_send12.UseVisualStyleBackColor = false;
+            this.btn_send12.Click += new System.EventHandler(this.btn_send12_Click);
+            // 
+            // btn_send68
+            // 
+            this.btn_send68.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_send68.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_send68.Location = new System.Drawing.Point(35, 74);
+            this.btn_send68.Name = "btn_send68";
+            this.btn_send68.Size = new System.Drawing.Size(56, 23);
+            this.btn_send68.TabIndex = 20;
+            this.btn_send68.Text = "发送68";
+            this.btn_send68.UseVisualStyleBackColor = false;
+            this.btn_send68.Click += new System.EventHandler(this.btn_send68_Click);
+            // 
+            // btn_delete68
+            // 
+            this.btn_delete68.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_delete68.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_delete68.Location = new System.Drawing.Point(275, 74);
+            this.btn_delete68.Name = "btn_delete68";
+            this.btn_delete68.Size = new System.Drawing.Size(56, 23);
+            this.btn_delete68.TabIndex = 21;
+            this.btn_delete68.Text = "删除68";
+            this.btn_delete68.UseVisualStyleBackColor = false;
+            this.btn_delete68.Click += new System.EventHandler(this.btn_delete68_Click);
+            // 
+            // btn_delete12
+            // 
+            this.btn_delete12.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_delete12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_delete12.Location = new System.Drawing.Point(275, 32);
+            this.btn_delete12.Name = "btn_delete12";
+            this.btn_delete12.Size = new System.Drawing.Size(56, 23);
+            this.btn_delete12.TabIndex = 22;
+            this.btn_delete12.Text = "删除12";
+            this.btn_delete12.UseVisualStyleBackColor = false;
+            this.btn_delete12.Click += new System.EventHandler(this.btn_delete12_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1063,6 +1131,7 @@
             this.groupBox6.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1147,6 +1216,11 @@
         private System.Windows.Forms.RadioButton rb_Stop;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.RadioButton rb_toZero;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button btn_send68;
+        private System.Windows.Forms.Button btn_send12;
+        private System.Windows.Forms.Button btn_delete68;
+        private System.Windows.Forms.Button btn_delete12;
     }
 }
 

@@ -347,5 +347,25 @@ namespace RadarForm
             if(rb_toZero.Checked)
                 controller.AntennaSetZeroDegree();
         }
+
+        private void btn_send12_Click(object sender, EventArgs e)
+        {
+            TestDataSender.SendTrack12();
+        }
+
+        private void btn_send68_Click(object sender, EventArgs e)
+        {
+            TestDataSender.SendTrack68();
+        }
+
+        private void btn_delete12_Click(object sender, EventArgs e)
+        {
+            TestDataSender.DeleteTrack12();
+        }
+
+        private void btn_delete68_Click(object sender, EventArgs e)
+        {
+            TestDataSender.DeleteTrack68();
+        }
     }
 }
