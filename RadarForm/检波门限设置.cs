@@ -19,6 +19,7 @@ namespace RadarForm
             tb_amThreshold.Text = _controller.GetCycleDataFilterAmThreshold().ToString();
             tb_speedMinimum.Text = _controller.GetCycleDataFilterSpeedMinimum().ToString();
             tb_speedMaximum.Text = _controller.GetCycleDataFilterSpeedMaximum().ToString();
+            tb_height.Text = _controller.GetCycleDataFilterHeightThreshold().ToString();
         }
 
         private void btn_speedConfirm_Click(object sender, EventArgs e)
@@ -106,6 +107,24 @@ namespace RadarForm
                 MessageBox.Show("请输入数字");
                 return plus.ToString();
             }
+        }
+
+        private void btn_height_Click(object sender, EventArgs e)
+        {
+            if (Form1.ParseInt(tb_height, out var height))
+                _controller.SetCycleDataFilterHeightMinimum(height);
+        }
+
+        private void btn_heightDown_Click(object sender, EventArgs e)
+        {
+            tb_height.Text = StringPlusInt(tb_height.Text, -1);
+            _controller.SetCycleDataFilterHeightMinimum(int.Parse(tb_height.Text));
+        }
+
+        private void btn_heightUp_Click(object sender, EventArgs e)
+        {
+            tb_height.Text = StringPlusInt(tb_height.Text, 1);
+            _controller.SetCycleDataFilterHeightMinimum(int.Parse(tb_height.Text));
         }
     }
 }

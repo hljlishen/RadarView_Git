@@ -138,11 +138,15 @@ namespace RadarDisplayPackage
 
         public void SetCycleDataFilterSpeedMaximum(int speed) => DistanceCellFilter.SpeedMaximum = speed;
 
+        public void SetCycleDataFilterHeightMinimum(int height) => DistanceCellFilter.HeightMinimum = height;
+
         public int GetCycleDataFilterAmThreshold() => DistanceCellFilter.AmThreshold;
 
         public int GetCycleDataFilterSpeedMinimum() => DistanceCellFilter.SpeedMinimum;
 
         public int GetCycleDataFilterSpeedMaximum() => DistanceCellFilter.SpeedMaximum;
+
+        public int GetCycleDataFilterHeightThreshold() => DistanceCellFilter.HeightMinimum;
 
         public void DeleteActiveWaveGates() => deleteActiveWaveGatesCmd.Execute();
 

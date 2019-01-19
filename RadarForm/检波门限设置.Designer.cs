@@ -43,6 +43,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btn_speedMaximumDown = new System.Windows.Forms.Button();
             this.btn_speedMaximumUp = new System.Windows.Forms.Button();
+            this.btn_heightUp = new System.Windows.Forms.Button();
+            this.btn_heightDown = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btn_height = new System.Windows.Forms.Button();
+            this.tb_height = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // tb_speedMinimum
@@ -189,11 +194,63 @@
             this.btn_speedMaximumUp.UseVisualStyleBackColor = true;
             this.btn_speedMaximumUp.Click += new System.EventHandler(this.btn_speedMaximumUp_Click);
             // 
+            // btn_heightUp
+            // 
+            this.btn_heightUp.Location = new System.Drawing.Point(166, 295);
+            this.btn_heightUp.Name = "btn_heightUp";
+            this.btn_heightUp.Size = new System.Drawing.Size(46, 21);
+            this.btn_heightUp.TabIndex = 7;
+            this.btn_heightUp.Text = ">>";
+            this.btn_heightUp.UseVisualStyleBackColor = true;
+            this.btn_heightUp.Click += new System.EventHandler(this.btn_heightUp_Click);
+            // 
+            // btn_heightDown
+            // 
+            this.btn_heightDown.Location = new System.Drawing.Point(112, 295);
+            this.btn_heightDown.Name = "btn_heightDown";
+            this.btn_heightDown.Size = new System.Drawing.Size(46, 21);
+            this.btn_heightDown.TabIndex = 8;
+            this.btn_heightDown.Text = "<<";
+            this.btn_heightDown.UseVisualStyleBackColor = true;
+            this.btn_heightDown.Click += new System.EventHandler(this.btn_heightDown_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(39, 271);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "高度门限";
+            // 
+            // btn_height
+            // 
+            this.btn_height.Location = new System.Drawing.Point(235, 268);
+            this.btn_height.Name = "btn_height";
+            this.btn_height.Size = new System.Drawing.Size(75, 48);
+            this.btn_height.TabIndex = 5;
+            this.btn_height.Text = "设置";
+            this.btn_height.UseVisualStyleBackColor = true;
+            this.btn_height.Click += new System.EventHandler(this.btn_height_Click);
+            // 
+            // tb_height
+            // 
+            this.tb_height.Location = new System.Drawing.Point(112, 268);
+            this.tb_height.Name = "tb_height";
+            this.tb_height.Size = new System.Drawing.Size(100, 21);
+            this.tb_height.TabIndex = 4;
+            this.tb_height.Text = "20";
+            // 
             // 检波门限设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 266);
+            this.ClientSize = new System.Drawing.Size(366, 343);
+            this.Controls.Add(this.btn_heightUp);
+            this.Controls.Add(this.btn_heightDown);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btn_height);
+            this.Controls.Add(this.tb_height);
             this.Controls.Add(this.btn_amUp);
             this.Controls.Add(this.btn_speedMaximumUp);
             this.Controls.Add(this.btn_speedUp);
@@ -239,5 +296,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_speedMaximumDown;
         private System.Windows.Forms.Button btn_speedMaximumUp;
+        private System.Windows.Forms.Button btn_heightUp;
+        private System.Windows.Forms.Button btn_heightDown;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_height;
+        private System.Windows.Forms.TextBox tb_height;
     }
 }

@@ -7,6 +7,7 @@ namespace CycleDataDrivePackage
         public static int AmThreshold = 0;
         public static int SpeedMaximum = 59;
         public static int SpeedMinimum = 5;
+        public static int HeightMinimum = 25;
         public static double DistanceMax = double.MaxValue;
         public static double CircleDistanceBegin = 4900;      //回波圈开始的距离
         public static double CircleDistanceEnd = 5100;        //回波圈结束的距离
@@ -21,6 +22,10 @@ namespace CycleDataDrivePackage
             {
                 if (!filter.Pass(cell)) return false;
             }
+
+            if (cell.Heigth <= HeightMinimum)
+                return false;
+
             return cell.speed > SpeedMinimum && cell.speed < SpeedMaximum && cell.sumAM > AmThreshold
                    && cell.el > 0 && cell.Distance < DistanceMax;
         }

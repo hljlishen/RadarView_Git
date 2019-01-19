@@ -70,6 +70,8 @@ namespace CycleDataDrivePackage
 
         public int Distance => (int)( Resolution * index);
 
+        public double Heigth => Math.Sin(Tools.DegreeToRadian(el)) * Distance;
+
         public static double CalEl(short b)
         {
             byte high4 = (byte)(b >> 7);
