@@ -5,8 +5,8 @@ namespace CycleDataDrivePackage
     public class DistanceCellFilter
     {
         public static int AmThreshold = 0;
-        public static int SpeedMaximum = 59;
-        public static int SpeedMinimum = 5;
+        public static int SpeedMaximum = 121;
+        public static int SpeedMinimum = 7;
         public static int HeightMinimum = 25;
         public static double DistanceMax = double.MaxValue;
         public static double CircleDistanceBegin = 4900;      //回波圈开始的距离

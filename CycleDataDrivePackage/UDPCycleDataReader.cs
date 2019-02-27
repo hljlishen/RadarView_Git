@@ -12,15 +12,12 @@ namespace CycleDataDrivePackage
             _recorder = new DataRecorder();
         }
 
-        protected override void ReadData()
-        {
-            UdpEthernetCenter.RecvData(UdpCycleDataReadIpAndPortString, Source, NotifyAllObservers);
-        }
+        protected override void ReadData() => UdpEthernetCenter.RecvData(UdpCycleDataReadIpAndPortString, Source, NotifyAllObservers);
 
         protected override void NotifyAllObservers(byte[] rawData)
         {
-            base.NotifyAllObservers(rawData);
             _recorder.RecordBytes(rawData, 0, rawData.Length);
+            base.NotifyAllObservers(rawData);
         }
 
         public override void Dispose()

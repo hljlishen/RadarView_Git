@@ -60,7 +60,8 @@ namespace CycleDataDrivePackage
             lock (Obs)
             {
                 foreach (ICycleDataObserver ob in Obs)
-                    ob.NotifyNewCycleData(AdjustCycleDataAngle( rawData));
+                    ob.NotifyNewCycleData(AdjustCycleDataAngle(rawData));
+                //ob.NotifyNewCycleData(rawData);
             }
         }
 

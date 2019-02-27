@@ -88,6 +88,11 @@
             this.btn_pause = new System.Windows.Forms.Button();
             this.btn_slower = new System.Windows.Forms.Button();
             this.btn_faster = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_delete68 = new System.Windows.Forms.Button();
+            this.btn_delete12 = new System.Windows.Forms.Button();
+            this.btn_send68 = new System.Windows.Forms.Button();
+            this.btn_send12 = new System.Windows.Forms.Button();
             this.btn_antennaControl = new System.Windows.Forms.Button();
             this.btn_resetAntenna = new System.Windows.Forms.Button();
             this.btn_WaveGate = new System.Windows.Forms.Button();
@@ -106,11 +111,9 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btn_send12 = new System.Windows.Forms.Button();
-            this.btn_send68 = new System.Windows.Forms.Button();
-            this.btn_delete68 = new System.Windows.Forms.Button();
-            this.btn_delete12 = new System.Windows.Forms.Button();
+            this.btn_AzAdjustment = new System.Windows.Forms.Button();
+            this.tb_AzAdjustment = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -125,8 +128,8 @@
             this.tabPage2.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_sideView
@@ -838,6 +841,70 @@
             this.btn_faster.UseVisualStyleBackColor = true;
             this.btn_faster.Click += new System.EventHandler(this.btn_faster_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.Color.Black;
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Controls.Add(this.tb_AzAdjustment);
+            this.tabPage3.Controls.Add(this.btn_AzAdjustment);
+            this.tabPage3.Controls.Add(this.btn_delete68);
+            this.tabPage3.Controls.Add(this.btn_delete12);
+            this.tabPage3.Controls.Add(this.btn_send68);
+            this.tabPage3.Controls.Add(this.btn_send12);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(480, 408);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "测试";
+            // 
+            // btn_delete68
+            // 
+            this.btn_delete68.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_delete68.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_delete68.Location = new System.Drawing.Point(275, 74);
+            this.btn_delete68.Name = "btn_delete68";
+            this.btn_delete68.Size = new System.Drawing.Size(56, 23);
+            this.btn_delete68.TabIndex = 21;
+            this.btn_delete68.Text = "删除68";
+            this.btn_delete68.UseVisualStyleBackColor = false;
+            this.btn_delete68.Click += new System.EventHandler(this.btn_delete68_Click);
+            // 
+            // btn_delete12
+            // 
+            this.btn_delete12.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_delete12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_delete12.Location = new System.Drawing.Point(275, 32);
+            this.btn_delete12.Name = "btn_delete12";
+            this.btn_delete12.Size = new System.Drawing.Size(56, 23);
+            this.btn_delete12.TabIndex = 22;
+            this.btn_delete12.Text = "删除12";
+            this.btn_delete12.UseVisualStyleBackColor = false;
+            this.btn_delete12.Click += new System.EventHandler(this.btn_delete12_Click);
+            // 
+            // btn_send68
+            // 
+            this.btn_send68.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_send68.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_send68.Location = new System.Drawing.Point(35, 74);
+            this.btn_send68.Name = "btn_send68";
+            this.btn_send68.Size = new System.Drawing.Size(56, 23);
+            this.btn_send68.TabIndex = 20;
+            this.btn_send68.Text = "发送68";
+            this.btn_send68.UseVisualStyleBackColor = false;
+            this.btn_send68.Click += new System.EventHandler(this.btn_send68_Click);
+            // 
+            // btn_send12
+            // 
+            this.btn_send12.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_send12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_send12.Location = new System.Drawing.Point(35, 32);
+            this.btn_send12.Name = "btn_send12";
+            this.btn_send12.Size = new System.Drawing.Size(56, 23);
+            this.btn_send12.TabIndex = 20;
+            this.btn_send12.Text = "发送12";
+            this.btn_send12.UseVisualStyleBackColor = false;
+            this.btn_send12.Click += new System.EventHandler(this.btn_send12_Click);
+            // 
             // btn_antennaControl
             // 
             this.btn_antennaControl.BackColor = System.Drawing.Color.LightSteelBlue;
@@ -1017,66 +1084,35 @@
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
-            // tabPage3
+            // btn_AzAdjustment
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.Black;
-            this.tabPage3.Controls.Add(this.btn_delete68);
-            this.tabPage3.Controls.Add(this.btn_delete12);
-            this.tabPage3.Controls.Add(this.btn_send68);
-            this.tabPage3.Controls.Add(this.btn_send12);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(480, 408);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "测试";
+            this.btn_AzAdjustment.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_AzAdjustment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_AzAdjustment.Location = new System.Drawing.Point(203, 121);
+            this.btn_AzAdjustment.Name = "btn_AzAdjustment";
+            this.btn_AzAdjustment.Size = new System.Drawing.Size(56, 23);
+            this.btn_AzAdjustment.TabIndex = 23;
+            this.btn_AzAdjustment.Text = "设置";
+            this.btn_AzAdjustment.UseVisualStyleBackColor = false;
+            this.btn_AzAdjustment.Click += new System.EventHandler(this.btn_AzAdjustment_Click);
             // 
-            // btn_send12
+            // tb_AzAdjustment
             // 
-            this.btn_send12.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_send12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_send12.Location = new System.Drawing.Point(35, 32);
-            this.btn_send12.Name = "btn_send12";
-            this.btn_send12.Size = new System.Drawing.Size(56, 23);
-            this.btn_send12.TabIndex = 20;
-            this.btn_send12.Text = "发送12";
-            this.btn_send12.UseVisualStyleBackColor = false;
-            this.btn_send12.Click += new System.EventHandler(this.btn_send12_Click);
+            this.tb_AzAdjustment.Location = new System.Drawing.Point(97, 121);
+            this.tb_AzAdjustment.Name = "tb_AzAdjustment";
+            this.tb_AzAdjustment.Size = new System.Drawing.Size(100, 21);
+            this.tb_AzAdjustment.TabIndex = 24;
+            this.tb_AzAdjustment.Text = "0";
             // 
-            // btn_send68
+            // label4
             // 
-            this.btn_send68.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_send68.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_send68.Location = new System.Drawing.Point(35, 74);
-            this.btn_send68.Name = "btn_send68";
-            this.btn_send68.Size = new System.Drawing.Size(56, 23);
-            this.btn_send68.TabIndex = 20;
-            this.btn_send68.Text = "发送68";
-            this.btn_send68.UseVisualStyleBackColor = false;
-            this.btn_send68.Click += new System.EventHandler(this.btn_send68_Click);
-            // 
-            // btn_delete68
-            // 
-            this.btn_delete68.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_delete68.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_delete68.Location = new System.Drawing.Point(275, 74);
-            this.btn_delete68.Name = "btn_delete68";
-            this.btn_delete68.Size = new System.Drawing.Size(56, 23);
-            this.btn_delete68.TabIndex = 21;
-            this.btn_delete68.Text = "删除68";
-            this.btn_delete68.UseVisualStyleBackColor = false;
-            this.btn_delete68.Click += new System.EventHandler(this.btn_delete68_Click);
-            // 
-            // btn_delete12
-            // 
-            this.btn_delete12.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_delete12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_delete12.Location = new System.Drawing.Point(275, 32);
-            this.btn_delete12.Name = "btn_delete12";
-            this.btn_delete12.Size = new System.Drawing.Size(56, 23);
-            this.btn_delete12.TabIndex = 22;
-            this.btn_delete12.Text = "删除12";
-            this.btn_delete12.UseVisualStyleBackColor = false;
-            this.btn_delete12.Click += new System.EventHandler(this.btn_delete12_Click);
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Lime;
+            this.label4.Location = new System.Drawing.Point(38, 124);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "方位偏移";
             // 
             // Form1
             // 
@@ -1129,9 +1165,10 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1221,6 +1258,9 @@
         private System.Windows.Forms.Button btn_send12;
         private System.Windows.Forms.Button btn_delete68;
         private System.Windows.Forms.Button btn_delete12;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tb_AzAdjustment;
+        private System.Windows.Forms.Button btn_AzAdjustment;
     }
 }
 

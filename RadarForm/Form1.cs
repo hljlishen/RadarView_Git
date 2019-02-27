@@ -43,11 +43,11 @@ namespace RadarForm
             textDisplayer = new TextDisplayer(pnl_gridView);
             ovd.RegisterObserver(this);
             svd.Distance = 500;
-            ovd.Distance = 5000;
             btn_WaveGate.Enabled = false;
             MouseWheel += OnMouseWheel;
             ShowTrackHeight();
             rb_5.Checked = true;
+            ovd.Distance = 3200;
         }
 
         private void ShowTrackHeight() => lab_trackHeight.Text = SystemController.GetTrackHeight().ToString("0.0");
@@ -366,6 +366,18 @@ namespace RadarForm
         private void btn_delete68_Click(object sender, EventArgs e)
         {
             TestDataSender.DeleteTrack68();
+        }
+
+        private void btn_AzAdjustment_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                controller.SetAzAdjustment(float.Parse(tb_AzAdjustment.Text));
+            }
+            catch
+            {
+                MessageBox.Show(@"方位偏差格式错误，请输入一个浮点数");
+            }
         }
     }
 }

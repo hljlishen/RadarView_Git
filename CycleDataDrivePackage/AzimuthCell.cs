@@ -6,6 +6,7 @@ namespace CycleDataDrivePackage
 {
     public class AzimuthCell : IDisposable, IComparable
     {
+        public static float AzAdjustment = 0;
         public Dictionary<int, DistanceCell> DisCells;
         public const int HeadLength = 28; //包头28字节
         public const int TailLength = 2; //包尾2字节
@@ -40,15 +41,12 @@ namespace CycleDataDrivePackage
             }
         }
 
-        public AzimuthCell()
-        {
-            DisCells = new Dictionary<int, DistanceCell>();
-        }
+        public AzimuthCell() => DisCells = new Dictionary<int, DistanceCell>();
 
         private static float CalAngle(int angleIntFromCycleData)
         {
             float realAngle = ((float)angleIntFromCycleData) * 360 / 65536;
-            return realAngle;
+            return Tools.StandardAngle( realAngle + AzAdjustment);
         }
 
         public float GetAngle() => Angle;

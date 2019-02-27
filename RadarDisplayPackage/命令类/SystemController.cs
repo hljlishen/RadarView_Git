@@ -173,5 +173,7 @@ namespace RadarDisplayPackage
         {
             return MouseTargetTracker.TrackHeight;
         }
+
+        public void SetAzAdjustment(float adjustment) => AzimuthCell.AzAdjustment = adjustment;
     }
 }
