@@ -6,7 +6,7 @@ namespace TargetManagerPackage
 {
     class FourSevenClotter : Clotter
     {
-        private static int AreaWidthMinimum = 2;
+        private static int AreaWidthMinimum = 10;
         private static int AreaWidthMaximum = 100;
         //private int count = 0;
         public override void Clot(Sector center, Sector nextSector, Sector preSector, AzimuthCell[] cells)

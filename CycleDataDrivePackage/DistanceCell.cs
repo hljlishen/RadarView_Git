@@ -5,6 +5,7 @@ namespace CycleDataDrivePackage
 {
     public class DistanceCell
     {
+        public static float ElAdjustment = -5f;
         public const float AntennaFixedEl = 12;
         public bool adopted = false;    //是否已经被录取
         public int index;               //单元编号
@@ -52,7 +53,7 @@ namespace CycleDataDrivePackage
 
             el = (float)Math.Asin(0.03f * eldif);
             el = (float)Tools.RadianToDegree(el)/* - 3.9f*/;
-            el += AntennaFixedEl;
+            el += AntennaFixedEl- ElAdjustment;
 
             sumAM = Tools.MakeInt(data, p, elAm0Length);
             p += elAm0Length;
@@ -114,25 +115,25 @@ namespace CycleDataDrivePackage
             return intergerPart + decimalPart /*< 0 ? intergerPart + decimalPart + 2*Math.PI : intergerPart + decimalPart*/;
         }
 
-        private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
-        {
-            if (value > values[0])
-                return 0;
-            if (value < values[values.Length - 1])
-                return values.Length - 1;
-            for (int i = 0; i < values.Length; i++)
-            {
-                if (value <= values[i] && value > values[i + 1])
-                {
-                    float differI = Math.Abs(values[i] - value);
-                    float differI1 = Math.Abs(values[i + 1] - value);
-                    if (differI < differI1)
-                        return i;
-                    return i + 1;
-                }
-            }
+        //private static int FindNearestValueIndex(float[] values, float value)     //查找values中与value最接近的值的下标
+        //{
+        //    if (value > values[0])
+        //        return 0;
+        //    if (value < values[values.Length - 1])
+        //        return values.Length - 1;
+        //    for (int i = 0; i < values.Length; i++)
+        //    {
+        //        if (value <= values[i] && value > values[i + 1])
+        //        {
+        //            float differI = Math.Abs(values[i] - value);
+        //            float differI1 = Math.Abs(values[i + 1] - value);
+        //            if (differI < differI1)
+        //                return i;
+        //            return i + 1;
+        //        }
+        //    }
 
-            return -1;
-        }
+        //    return -1;
+        //}
     }
 }

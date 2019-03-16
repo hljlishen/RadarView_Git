@@ -5,7 +5,7 @@ namespace TargetManagerPackage
 {
     class TrackGenerator
     {
-        public TargetTrack track { get; }
+        public TargetTrack track { get; private set; }
         private TargetManager targetManager;
         private float angle = 0;
         private PolarCoordinate center;
@@ -39,7 +39,9 @@ namespace TargetManagerPackage
             if (!track.Active) return false;
 
             targetManager.NotifyAllObservers(track, NotifyType.Delete);
-            SystemCommunicator.DeleteTrack(track);
+            //SystemCommunicator.DeleteTrack(track);
+            track.Destory();
+            track = null;
             return true;
         }
 

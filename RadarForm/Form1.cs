@@ -249,7 +249,7 @@ namespace RadarForm
 
         private void 方位角调整ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            方位角调整 form = new 方位角调整();
+            方位角调整 form = new 方位角调整(controller);
             form.ShowDialog();
         }
 

@@ -89,6 +89,9 @@
             this.btn_slower = new System.Windows.Forms.Button();
             this.btn_faster = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tb_AzAdjustment = new System.Windows.Forms.TextBox();
+            this.btn_AzAdjustment = new System.Windows.Forms.Button();
             this.btn_delete68 = new System.Windows.Forms.Button();
             this.btn_delete12 = new System.Windows.Forms.Button();
             this.btn_send68 = new System.Windows.Forms.Button();
@@ -111,9 +114,6 @@
             this.警戒区寿命ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.方位角调整ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_AzAdjustment = new System.Windows.Forms.Button();
-            this.tb_AzAdjustment = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.pnl_sideView.SuspendLayout();
             this.pnl_gridView.SuspendLayout();
             this.pnl_control.SuspendLayout();
@@ -857,6 +857,36 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "测试";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Lime;
+            this.label4.Location = new System.Drawing.Point(38, 124);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "方位偏移";
+            // 
+            // tb_AzAdjustment
+            // 
+            this.tb_AzAdjustment.Location = new System.Drawing.Point(97, 121);
+            this.tb_AzAdjustment.Name = "tb_AzAdjustment";
+            this.tb_AzAdjustment.Size = new System.Drawing.Size(100, 21);
+            this.tb_AzAdjustment.TabIndex = 24;
+            this.tb_AzAdjustment.Text = "0";
+            // 
+            // btn_AzAdjustment
+            // 
+            this.btn_AzAdjustment.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_AzAdjustment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_AzAdjustment.Location = new System.Drawing.Point(203, 121);
+            this.btn_AzAdjustment.Name = "btn_AzAdjustment";
+            this.btn_AzAdjustment.Size = new System.Drawing.Size(56, 23);
+            this.btn_AzAdjustment.TabIndex = 23;
+            this.btn_AzAdjustment.Text = "设置";
+            this.btn_AzAdjustment.UseVisualStyleBackColor = false;
+            this.btn_AzAdjustment.Click += new System.EventHandler(this.btn_AzAdjustment_Click);
+            // 
             // btn_delete68
             // 
             this.btn_delete68.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -1075,7 +1105,7 @@
             // 
             this.方位角调整ToolStripMenuItem.Name = "方位角调整ToolStripMenuItem";
             this.方位角调整ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.方位角调整ToolStripMenuItem.Text = "方位角调整";
+            this.方位角调整ToolStripMenuItem.Text = "角度调整";
             this.方位角调整ToolStripMenuItem.Click += new System.EventHandler(this.方位角调整ToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
@@ -1083,36 +1113,6 @@
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
             this.关于ToolStripMenuItem.Text = "关于";
-            // 
-            // btn_AzAdjustment
-            // 
-            this.btn_AzAdjustment.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn_AzAdjustment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AzAdjustment.Location = new System.Drawing.Point(203, 121);
-            this.btn_AzAdjustment.Name = "btn_AzAdjustment";
-            this.btn_AzAdjustment.Size = new System.Drawing.Size(56, 23);
-            this.btn_AzAdjustment.TabIndex = 23;
-            this.btn_AzAdjustment.Text = "设置";
-            this.btn_AzAdjustment.UseVisualStyleBackColor = false;
-            this.btn_AzAdjustment.Click += new System.EventHandler(this.btn_AzAdjustment_Click);
-            // 
-            // tb_AzAdjustment
-            // 
-            this.tb_AzAdjustment.Location = new System.Drawing.Point(97, 121);
-            this.tb_AzAdjustment.Name = "tb_AzAdjustment";
-            this.tb_AzAdjustment.Size = new System.Drawing.Size(100, 21);
-            this.tb_AzAdjustment.TabIndex = 24;
-            this.tb_AzAdjustment.Text = "0";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Lime;
-            this.label4.Location = new System.Drawing.Point(38, 124);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 25;
-            this.label4.Text = "方位偏移";
             // 
             // Form1
             // 

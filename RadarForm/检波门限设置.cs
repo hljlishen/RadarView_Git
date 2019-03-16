@@ -112,19 +112,19 @@ namespace RadarForm
         private void btn_height_Click(object sender, EventArgs e)
         {
             if (Form1.ParseInt(tb_height, out var height))
-                _controller.SetCycleDataFilterHeightMinimum(height);
+                _controller.SetCycleDataFilterHeightThreshold(height);
         }
 
         private void btn_heightDown_Click(object sender, EventArgs e)
         {
             tb_height.Text = StringPlusInt(tb_height.Text, -1);
-            _controller.SetCycleDataFilterHeightMinimum(int.Parse(tb_height.Text));
+            _controller.SetCycleDataFilterHeightThreshold(int.Parse(tb_height.Text));
         }
 
         private void btn_heightUp_Click(object sender, EventArgs e)
         {
             tb_height.Text = StringPlusInt(tb_height.Text, 1);
-            _controller.SetCycleDataFilterHeightMinimum(int.Parse(tb_height.Text));
+            _controller.SetCycleDataFilterHeightThreshold(int.Parse(tb_height.Text));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿namespace TargetManagerPackage
+﻿using TargetManagerPackage.目标类;
+namespace TargetManagerPackage
 {
     public class TargetManagerFactory
     {
@@ -9,6 +10,20 @@
         private static AntennaLeaveAngleAreaSubject _antennaLeaveAngleAreaSubject;
         private static TrackChangeSectorObserver _trackObserver;
 
+
+        public static void Initialize()
+        {
+            //初始化目标航迹类
+            ITrackSerializer serializer = new QhOpticalDeviceSerializer();
+            //IPort port = new TcpClientPort("192.168.1.45", 8080);
+            IPort port = new UdpPort("10.14.16.88", 5600, 6000);
+            port.Open();
+            TrackSender sender = new TrackSender(port, serializer);
+            TargetTrack.Sender = sender;
+
+            MouseTargetTracker.sender = sender;
+            TargetTrack.FindIdStrategy = new FromBeginningStrategy();
+        }
         public static DataSourceController CreateDataSourceController() => _dataSourcController ?? (_dataSourcController = new DataSourceController());
 
         public static TargetManager CreateTrackManager() => _targetManager ?? (_targetManager = new TargetManager());

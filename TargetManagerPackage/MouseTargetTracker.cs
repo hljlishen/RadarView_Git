@@ -5,6 +5,7 @@ namespace TargetManagerPackage
     public class MouseTargetTracker
     {
         public TargetTrack track { get; set; }
+        public static TrackSender sender;
         private readonly TargetManager targetManager;
         private static float trackHeight = 150f;
         public static float TrackHeight
@@ -25,7 +26,8 @@ namespace TargetManagerPackage
             if (track == null || !track.Active) return;
 
             targetManager.NotifyAllObservers(track, NotifyType.Delete);
-            SystemCommunicator.DeleteTrack(track);  //消批
+            //SystemCommunicator.DeleteTrack(track);  //消批
+            track.Destory();
             track = null;
         }
 
@@ -44,18 +46,19 @@ namespace TargetManagerPackage
             {
                 track.Locations.Add(track.CurrentCoordinate);
                 track.Update(dot.CurrentCoordinate);
-                if (dot.SectorIndex != track.SectorIndex)
-                {
-                    targetManager.NotifyAllObservers(track, NotifyType.Update);
-                }
-                else
-                {
-                    targetManager.NotifyAllObservers(track, NotifyType.Update);
-                }
+                //if (dot.SectorIndex != track.SectorIndex)
+                //{
+                //    targetManager.NotifyAllObservers(track, NotifyType.Update);
+                //}
+                //else
+                //{
+                //    targetManager.NotifyAllObservers(track, NotifyType.Update);
+                //}
                 TargetTrack.SetTrackHeight(track, TrackHeight);
                 targetManager.NotifyAllObservers(track, NotifyType.Update);
             }
             SystemCommunicator.UpdateTrack(track);  //发送给系统
+            sender.UpdateTrack(track);
             OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendTrack(track);
         }
     }

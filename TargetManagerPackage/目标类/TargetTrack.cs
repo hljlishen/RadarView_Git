@@ -5,7 +5,7 @@ using TargetManagerPackage.目标类;
 
 namespace TargetManagerPackage
 {
-    public class TargetTrack : Target,IDisposable, IComparable
+    public class TargetTrack : Target, IDisposable, IComparable
     {
         public delegate void ChangeSectorHandler(Target target, int toSectorIndex);
         public ChangeSectorHandler ChangeSector;
@@ -26,6 +26,7 @@ namespace TargetManagerPackage
         public double ZSpeed { get; set; } = 0;
 
         internal static FindTrackIdStrategy FindIdStrategy { get; set; } = null;
+        internal static TrackSender Sender { get; set; } = null;
 
         public override int SectorIndex
         {
@@ -94,8 +95,11 @@ namespace TargetManagerPackage
             Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
             CurrentCoordinate = c;
             SetRefreshTimeNow();        //设置更新时间
-            SystemCommunicator.UpdateTrack(this);
+            //SystemCommunicator.UpdateTrack(this);
+            //Sender.UpdateTrack(this);
         }
+
+        public void Destory() => Dispose();
 
         public (float, float, float) CalSpeed(PolarCoordinate lastCoordinate, PolarCoordinate curruntCoordinate, TimeSpan time)
         {
@@ -121,7 +125,7 @@ namespace TargetManagerPackage
                 TrackId = trackid
             };
 
-            SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
+            //SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
             return t;
         }
 
@@ -146,6 +150,7 @@ namespace TargetManagerPackage
         public void Dispose()
         {
             SystemCommunicator.DeleteTrack(this);
+            //Sender.DestoryTrack(this);
             Unfocus();
             FindIdStrategy.ReleaseId(TrackId);
             Locations?.Clear();
@@ -164,7 +169,11 @@ namespace TargetManagerPackage
             return 200;
         }
 
-        public void Focus() => TargetManagerFactory.RegisterTrackObserver(this);
+        public void Focus()
+        {
+            Sender.UpdateTrack(this);
+            //TargetManagerFactory.RegisterTrackObserver(this);
+        }
 
         public void Unfocus() => TargetManagerFactory.UnregisterTrackObserver(this);
     }

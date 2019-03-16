@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="配置文件\Config.cs" />
+    <Compile Include="配置文件\IniFileOperator.cs" />
     <Compile Include="命令类\SetAntennaToZeroDegreeCommand.cs" />
     <Compile Include="扇扫视图\ISweepSectionView.cs" />
     <Compile Include="扇扫视图\SideViewSweepView.cs" />
