@@ -47,6 +47,8 @@ namespace RadarForm
             MouseWheel += OnMouseWheel;
             ShowTrackHeight();
             rb_5.Checked = true;
+            FpgaCommunicator.IsAmplifierOpen = true;    //开发射
+            FpgaCommunicator.CurrentRange = RangeType.Rt5;
             ovd.Distance = 3200;
         }
 
@@ -378,6 +380,11 @@ namespace RadarForm
             {
                 MessageBox.Show(@"方位偏差格式错误，请输入一个浮点数");
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            controller.AntennaSetZeroDegree();
         }
     }
 }

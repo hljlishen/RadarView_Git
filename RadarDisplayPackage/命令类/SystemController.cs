@@ -28,7 +28,6 @@ namespace RadarDisplayPackage
         {
             TargetManagerFactory.Initialize();
             config = new Config();
-            config.SetElAdjustment(2.2f);
             LoadConfig();
 
             //目标显示器命令初始化
@@ -55,6 +54,7 @@ namespace RadarDisplayPackage
             SetCycleDataFilterSpeedMinimum(GetCycleDataFilterSpeedMinimum());
             SetAzAdjustment(GetAzAdjustment());
             SetElAdjustment(GetElAdjustment());
+            SetAntennaStopDegree(GetAntennaStopDegree());
         }
 
         private void Ovd_NewWaveGate(WaveGate waveGate) => new WaveGateAddCommand(waveGate).Execute();
@@ -111,7 +111,7 @@ namespace RadarDisplayPackage
         public void AntennaSetRotateDirection(RotateDirection direct) => new AntennaSetNormalSweepModeCommand(direct).Execute();
 
 
-        public void AntennaSetZeroDegree() => new SetAntennaToZeroDegreeCommand().Execute();
+        public void AntennaSetZeroDegree() => new SetAntennaToDegreeCommand(config.GetStopDegree()).Execute();
 
         //切换起批模式
         public void TargetManagerSwitchMode(string  modeName)
@@ -204,6 +204,10 @@ namespace RadarDisplayPackage
             config.SetElAdjustment(adjustment);
         }
 
+        public float GetAntennaStopDegree() => config.GetStopDegree();
+
+        public void SetAntennaStopDegree(float degree) => config.SetStopDegree(degree);
+
         public void DeleteActiveWaveGates() => deleteActiveWaveGatesCmd.Execute();
 
         public void DataSourceSpeedUp() => dataSourceController.SpeedUp();
@@ -216,9 +220,9 @@ namespace RadarDisplayPackage
 
         public void SetDisplayTrackCourseStatus(bool state) => GraphicTargetTrackViewDrawer.ShouldDrawCourse = state;
 
-        public float GetAngleAdjustment() => CycleDataReader.AzAdjustment;
+        //public float GetAngleAdjustment() => CycleDataReader.AzAdjustment;
 
-        public float SetAngleAdjustment(float angleAdjust) => CycleDataReader.AzAdjustment = angleAdjust;
+        //public float SetAngleAdjustment(float angleAdjust) => CycleDataReader.AzAdjustment = angleAdjust;
 
         public static void SetTrackHeight(float height)
         {

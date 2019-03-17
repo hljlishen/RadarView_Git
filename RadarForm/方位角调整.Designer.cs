@@ -34,6 +34,9 @@
             this.btn_elConfirm = new System.Windows.Forms.Button();
             this.tb_elAdjustment = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btn_confirmAntennaStopDegree = new System.Windows.Forms.Button();
+            this.tb_antennaStopDegree = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_confirm
@@ -57,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 40);
+            this.label1.Location = new System.Drawing.Point(60, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 2;
@@ -84,20 +87,50 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 78);
+            this.label2.Location = new System.Drawing.Point(60, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 2;
             this.label2.Text = "仰角";
             // 
+            // btn_confirmAntennaStopDegree
+            // 
+            this.btn_confirmAntennaStopDegree.Location = new System.Drawing.Point(270, 108);
+            this.btn_confirmAntennaStopDegree.Name = "btn_confirmAntennaStopDegree";
+            this.btn_confirmAntennaStopDegree.Size = new System.Drawing.Size(75, 23);
+            this.btn_confirmAntennaStopDegree.TabIndex = 0;
+            this.btn_confirmAntennaStopDegree.Text = "设置";
+            this.btn_confirmAntennaStopDegree.UseVisualStyleBackColor = true;
+            this.btn_confirmAntennaStopDegree.Click += new System.EventHandler(this.btn_confirmAntennaStopDegree_Click);
+            // 
+            // tb_antennaStopDegree
+            // 
+            this.tb_antennaStopDegree.Location = new System.Drawing.Point(99, 110);
+            this.tb_antennaStopDegree.Name = "tb_antennaStopDegree";
+            this.tb_antennaStopDegree.Size = new System.Drawing.Size(142, 21);
+            this.tb_antennaStopDegree.TabIndex = 1;
+            this.tb_antennaStopDegree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_azAngleAdjustment_KeyDown);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 113);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "天线归位角度";
+            // 
             // 方位角调整
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(369, 118);
+            this.ClientSize = new System.Drawing.Size(369, 162);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.tb_antennaStopDegree);
             this.Controls.Add(this.tb_elAdjustment);
+            this.Controls.Add(this.btn_confirmAntennaStopDegree);
             this.Controls.Add(this.tb_azAngleAdjustment);
             this.Controls.Add(this.btn_elConfirm);
             this.Controls.Add(this.btn_confirm);
@@ -119,5 +152,8 @@
         private System.Windows.Forms.Button btn_elConfirm;
         private System.Windows.Forms.TextBox tb_elAdjustment;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btn_confirmAntennaStopDegree;
+        private System.Windows.Forms.TextBox tb_antennaStopDegree;
+        private System.Windows.Forms.Label label3;
     }
 }

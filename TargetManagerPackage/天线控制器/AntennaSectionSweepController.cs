@@ -10,6 +10,7 @@ namespace TargetManagerPackage
         private AngleArea _sweepSection;                            //用户设置的扇扫区域
         private readonly AntennaRotateController _rotateController;     //
         private bool isStoping = false;
+        private float stopDegree;
 
         public AntennaSectionSweepController()
         {
@@ -45,8 +46,9 @@ namespace TargetManagerPackage
                 BeginSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
         }
 
-        public void SetAntennaToZeroDegree()
+        public void SetAntennaToZeroDegree(float stopDegree)
         {
+            this.stopDegree = stopDegree;
             StopSectionSweep();
             SetRotateRate(RotateRate.Rpm2);
             isStoping = true;
@@ -55,11 +57,11 @@ namespace TargetManagerPackage
         public override void NotifyNewCycleData(byte[] rawData)
         {
             base.NotifyNewCycleData(rawData);
-            if(isStoping && IsAngleNearZeroDegree())    //停止转动
+            if(isStoping && IsAngleNearStopDegree())    //停止转动
                 SetRotateRate(RotateRate.Rpm0);
         }
 
-        private bool IsAngleNearZeroDegree() => Math.Abs(AntennaCurrentAngle - 0) < 1 || Math.Abs(360 - AntennaCurrentAngle) < 1;
+        private bool IsAngleNearStopDegree() => Math.Abs(AntennaCurrentAngle - stopDegree) < 1 || Math.Abs(360 + stopDegree - AntennaCurrentAngle) < 1;
 
         private void BeginSectionSweep(AngleArea area)
         {

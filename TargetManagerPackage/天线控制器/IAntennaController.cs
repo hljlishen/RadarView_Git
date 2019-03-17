@@ -24,6 +24,6 @@
 
         void SetRotateRate(RotateRate rate);
 
-        void SetAntennaToZeroDegree();
+        void SetAntennaToZeroDegree(float degree);
     }
 }

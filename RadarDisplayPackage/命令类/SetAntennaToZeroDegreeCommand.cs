@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace RadarDisplayPackage
 {
-    class SetAntennaToZeroDegreeCommand : AntennaCommand
+    class SetAntennaToDegreeCommand : AntennaCommand
     {
-        public override void Execute() => antenna.SetAntennaToZeroDegree();
+        private float stopDegree;
+        public SetAntennaToDegreeCommand(float degree)
+        {
+            this.stopDegree = degree;
+        }
+        public override void Execute() => antenna.SetAntennaToZeroDegree(stopDegree);
     }
 }

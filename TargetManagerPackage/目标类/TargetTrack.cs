@@ -93,10 +93,28 @@ namespace TargetManagerPackage
         {
             (XSpeed, YSpeed, ZSpeed) = CalSpeed(CurrentCoordinate, c, DateTime.Now - LastRefreshTime);  //计算三个方向速度
             Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
+
+            //距离判断
+            if (c.Dis < 1000)
+                AdjustHeigthTo(80, c);
+
+            if (c.Dis >= 1000 && c.Dis < 2000)
+                AdjustHeigthTo(150, c);
+
+            if (c.Dis >= 2000 )
+                AdjustHeigthTo(250, c);
+
             CurrentCoordinate = c;
             SetRefreshTimeNow();        //设置更新时间
-            //SystemCommunicator.UpdateTrack(this);
+            SystemCommunicator.UpdateTrack(this);
             //Sender.UpdateTrack(this);
+        }
+
+        public static void AdjustHeigthTo(float height, PolarCoordinate c)
+        {
+            double projectedDis = c.Dis * Math.Cos(Tools.DegreeToRadian(c.El));
+            c.El = (float)Tools.RadianToDegree( Math.Atan2(height, projectedDis));
+            c.Dis = (float)Math.Sqrt(Math.Pow(projectedDis, 2) + Math.Pow(height, 2));
         }
 
         public void Destory() => Dispose();
@@ -125,7 +143,7 @@ namespace TargetManagerPackage
                 TrackId = trackid
             };
 
-            //SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
+            SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
             return t;
         }
 
