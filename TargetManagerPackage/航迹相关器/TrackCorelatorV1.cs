@@ -56,12 +56,14 @@ namespace TargetManagerPackage
                 return false;
             }
             PolarCoordinate predictCoordinate = track.PredictCoordinate(DateTime.Now);  //预测的位置
+            //PolarCoordinate predictCoordinate = track.CurrentCoordinate;
             foreach (TargetDot newDot in sector.NewDots)
             {
                 if (newDot.Adopted || !newDot.IsClotDot) //被之前的航迹相关上了,或者不是凝聚点
                     continue;
                 if (!(predictCoordinate.DistanceTo(newDot.CurrentCoordinate) < track.GetCorelateRadius()))
                     continue;
+                //Console.WriteLine(predictCoordinate.DistanceTo(newDot.CurrentCoordinate));
                 newDot.Adopted = true;
                 track.Update(newDot.CurrentCoordinate);
                 track.ScoreAdd(3);

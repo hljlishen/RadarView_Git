@@ -44,6 +44,7 @@ namespace TargetManagerPackage
                 {
                     TargetTrack track =
                         TargetTrack.CreateTargetTrack(newDot, oldDot, 3);
+                    //track.OutputInfo("create: ");
                     if (track == null)   //创建航迹失败，航迹编号满
                         continue;
 

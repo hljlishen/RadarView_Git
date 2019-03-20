@@ -3,8 +3,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using TargetManagerPackage;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace RadarForm
 {

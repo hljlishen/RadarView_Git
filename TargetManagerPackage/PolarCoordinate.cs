@@ -72,9 +72,9 @@ namespace TargetManagerPackage
 
         public PolarCoordinate Copy() => new PolarCoordinate(this);
 
-        public float X => (float)(dis * Math.Cos(Tools.DegreeToRadian( el)) * Math.Cos(Tools.DegreeToRadian( az)));
+        public float X => (float)(dis * Math.Cos(Tools.DegreeToRadian(el)) * Math.Sin(Tools.DegreeToRadian(az)));
 
-        public float Y => (float)(dis * Math.Cos(Tools.DegreeToRadian(el)) * Math.Sin(Tools.DegreeToRadian(az)));
+        public float Y => (float)(dis * Math.Cos(Tools.DegreeToRadian(el)) * Math.Cos(Tools.DegreeToRadian(az)));
 
         public float Z => (float)(dis * Math.Sin(Tools.DegreeToRadian(el)));
 
@@ -101,7 +101,14 @@ namespace TargetManagerPackage
             double hypotenuse = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
             double dis = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
             double el = Tools.RadianToDegree(Math.Acos(hypotenuse / dis));
-            double az = Tools.RadianToDegree(Math.Acos(x / hypotenuse));
+            double az = Tools.RadianToDegree(Math.Atan(Math.Abs(x) / Math.Abs(y)));
+
+            if (x > 0 && y < 0)
+                az = 180 - az;
+            if (x < 0 && y < 0)
+                az = 180 + az;
+            if (x < 0 && y > 0)
+                az = 360 - az;
 
             return new PolarCoordinate((float)az, (float)el, (float)dis);
         }

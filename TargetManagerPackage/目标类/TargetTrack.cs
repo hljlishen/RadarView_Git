@@ -92,22 +92,32 @@ namespace TargetManagerPackage
         public void Update(PolarCoordinate c)
         {
             (XSpeed, YSpeed, ZSpeed) = CalSpeed(CurrentCoordinate, c, DateTime.Now - LastRefreshTime);  //计算三个方向速度
-            Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
 
             //距离判断
-            if (c.Dis < 1000)
-                AdjustHeigthTo(80, c);
+            //if (c.Dis < 1000)
+            //{
+            //    Random random = new Random(DateTime.Now.Millisecond);
+            //    AdjustHeigthTo(80 + random.Next(-5, 5), c);
+            //}
 
-            if (c.Dis >= 1000 && c.Dis < 2000)
-                AdjustHeigthTo(150, c);
+            //if (c.Dis >= 1000 && c.Dis < 2000)
+            //{
+            //    Random random = new Random(DateTime.Now.Millisecond);
+            //    AdjustHeigthTo(150 + random.Next(-5, 5), c);
+            //}
 
-            if (c.Dis >= 2000 )
-                AdjustHeigthTo(250, c);
+            //if (c.Dis >= 2000)
+            //{
+            //    Random random = new Random(DateTime.Now.Millisecond);
+            //    AdjustHeigthTo(250 + random.Next(-5, 5), c);
+            //}
 
+            Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
             CurrentCoordinate = c;
             SetRefreshTimeNow();        //设置更新时间
-            SystemCommunicator.UpdateTrack(this);
-            //Sender.UpdateTrack(this);
+            //OutputInfo("update:  ");
+            //SystemCommunicator.UpdateTrack(this);
+            Sender.UpdateTrack(this);
         }
 
         public static void AdjustHeigthTo(float height, PolarCoordinate c)
@@ -117,7 +127,17 @@ namespace TargetManagerPackage
             c.Dis = (float)Math.Sqrt(Math.Pow(projectedDis, 2) + Math.Pow(height, 2));
         }
 
-        public void Destory() => Dispose();
+        public void OutputInfo(string infoHead)
+        {
+            string info = infoHead + $"id={TrackId}   socre={Score}    historyCount={Locations.Count}";
+            Console.WriteLine(info);
+        }
+
+        public void Destory()
+        {
+            //OutputInfo("delete:  ");
+            Dispose();
+        }
 
         public (float, float, float) CalSpeed(PolarCoordinate lastCoordinate, PolarCoordinate curruntCoordinate, TimeSpan time)
         {
@@ -143,7 +163,8 @@ namespace TargetManagerPackage
                 TrackId = trackid
             };
 
-            SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
+            //SystemCommunicator.UpdateTrack(t);  //发送目标信息给控制中心
+            Sender.NewTrack(t);
             return t;
         }
 
@@ -167,8 +188,8 @@ namespace TargetManagerPackage
 
         public void Dispose()
         {
-            SystemCommunicator.DeleteTrack(this);
-            //Sender.DestoryTrack(this);
+            //SystemCommunicator.DeleteTrack(this);
+            Sender.DestoryTrack(this);
             Unfocus();
             FindIdStrategy.ReleaseId(TrackId);
             Locations?.Clear();
@@ -183,8 +204,8 @@ namespace TargetManagerPackage
         public float GetCorelateRadius()
         {
             if (Locations.Count == 0)
-                return 500;
-            return 200;
+                return 200;
+            return 500;
         }
 
         public void Focus()
