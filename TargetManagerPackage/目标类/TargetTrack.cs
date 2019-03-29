@@ -94,30 +94,30 @@ namespace TargetManagerPackage
             (XSpeed, YSpeed, ZSpeed) = CalSpeed(CurrentCoordinate, c, DateTime.Now - LastRefreshTime);  //计算三个方向速度
 
             //距离判断
-            //if (c.Dis < 1000)
-            //{
-            //    Random random = new Random(DateTime.Now.Millisecond);
-            //    AdjustHeigthTo(80 + random.Next(-5, 5), c);
-            //}
+            if (c.Dis < 1000)
+            {
+                Random random = new Random(DateTime.Now.Millisecond);
+                AdjustHeigthTo(80 + random.Next(-5, 5), c);
+            }
 
-            //if (c.Dis >= 1000 && c.Dis < 2000)
-            //{
-            //    Random random = new Random(DateTime.Now.Millisecond);
-            //    AdjustHeigthTo(150 + random.Next(-5, 5), c);
-            //}
+            if (c.Dis >= 1000 && c.Dis < 2000)
+            {
+                Random random = new Random(DateTime.Now.Millisecond);
+                AdjustHeigthTo(150 + random.Next(-5, 5), c);
+            }
 
-            //if (c.Dis >= 2000)
-            //{
-            //    Random random = new Random(DateTime.Now.Millisecond);
-            //    AdjustHeigthTo(250 + random.Next(-5, 5), c);
-            //}
+            if (c.Dis >= 2000)
+            {
+                Random random = new Random(DateTime.Now.Millisecond);
+                AdjustHeigthTo(250 + random.Next(-5, 5), c);
+            }
 
+            //OutputInfo("update: ");
             Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
             CurrentCoordinate = c;
             SetRefreshTimeNow();        //设置更新时间
-            //OutputInfo("update:  ");
-            //SystemCommunicator.UpdateTrack(this);
-            Sender.UpdateTrack(this);
+
+            //Sender.UpdateTrack(this);
         }
 
         public static void AdjustHeigthTo(float height, PolarCoordinate c)
