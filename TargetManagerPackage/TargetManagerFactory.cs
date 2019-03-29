@@ -16,7 +16,6 @@ namespace TargetManagerPackage
             //初始化目标航迹类
             //ITrackSerializer serializer = new QhOpticalDeviceSerializer();//清华大学光电设备协议
             //IPort port = new UdpPort("10.14.16.88", 5600, 6000);    //清华大学光电设备Udp接口
-
             ITrackSerializer serializer = new Casc12thSerializer();     //12院协议
             IPort port = new UdpPort("192.168.10.33", 10011, 10012);    //12院Udp接口
             port.Open();
@@ -26,6 +25,13 @@ namespace TargetManagerPackage
             MouseTargetTracker.sender = sender;
             //TargetTrack.FindIdStrategy = new FromBeginningStrategy();
             TargetTrack.FindIdStrategy = new CirculateStrategy();
+
+
+            //初始化RemoteController
+            Casa12thSectionSweepCmdProcessor p = new Casa12thSectionSweepCmdProcessor(CreateAntennaContoller());
+            IPort udp = new UdpPort("192.168.1.45", 8080, 1002);
+            RemoteController remoteController = new RemoteController(udp);
+            remoteController.AddProcessor(p);
         }
         public static DataSourceController CreateDataSourceController() => _dataSourcController ?? (_dataSourcController = new DataSourceController());
 

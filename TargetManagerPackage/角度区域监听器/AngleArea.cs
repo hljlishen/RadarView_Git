@@ -5,12 +5,17 @@ namespace TargetManagerPackage
 {
     public class AngleArea
     {
-        public float BeginAngle { get; }
-        public float EndAngle { get;}
+        public float BeginAngle { get; private set; }
+        public float EndAngle { get; private set; }
 
-        public readonly bool AcrossZeroDegree;
+        public bool AcrossZeroDegree { get; private set; }
 
         public AngleArea(float begin, float end)
+        {
+            Initialize(begin, end);
+        }
+
+        private void Initialize(float begin, float end)
         {
             BeginAngle = Tools.StandardAngle(begin);
             EndAngle = Tools.StandardAngle(end);
@@ -18,6 +23,11 @@ namespace TargetManagerPackage
                 EndAngle = 360;
 
             AcrossZeroDegree = IsZeroDegreeAcrossingAngleArea(this);
+        }
+
+        public AngleArea(double begin, double end)
+        {
+            Initialize((float)begin, (float)end);
         }
 
         public static bool IsZeroDegreeAcrossingAngleArea(AngleArea area) => area.BeginAngle > area.EndAngle;

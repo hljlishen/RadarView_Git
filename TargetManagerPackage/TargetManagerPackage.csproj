@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzimuthCellFilter.cs" />
+    <Compile Include="IRemoteController.cs" />
     <Compile Include="串行化\Casc12thSerializer.cs" />
     <Compile Include="FpgaCommunicator.cs" />
     <Compile Include="IPort.cs" />
