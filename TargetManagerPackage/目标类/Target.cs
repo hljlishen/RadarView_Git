@@ -14,7 +14,7 @@ namespace TargetManagerPackage
 
         public int AmValue { get; set; } = 0;
         public const int AmValueMaximum = 65535;
-        public const float DroneMaximumSpeed = 16;  //无人机速度最大值，单位：m/s
+        public const float DroneMaximumSpeed = 15;  //无人机速度最大值，单位：m/s
         public const float DroneMinimumSpeed = 2;  //无人机速度最大值，单位：m/s
         public DateTime LastRefreshTime { get; set; }
         public void SetRefreshTimeNow()

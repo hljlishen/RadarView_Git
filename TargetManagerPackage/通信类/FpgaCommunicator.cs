@@ -10,9 +10,9 @@ namespace TargetManagerPackage
 
     public enum RangeType
     {
-        Rt11,
-        Rt5,
-        RtClose
+        Rt11 = 11,
+        Rt5 = 5,
+        RtClose = 0
     }
     public class FpgaCommunicator
     {
@@ -65,7 +65,7 @@ namespace TargetManagerPackage
 
         private static byte AddAdjustAntennaAngleBit(byte fifthByte) => (byte) (fifthByte | 0x04);
 
-        private static void SetFpgaMode()
+        public static void SetFpgaMode()
         {
             FrameBytes[4] = MakeFifthBytes();
 

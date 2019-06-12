@@ -47,7 +47,7 @@ namespace TargetManagerPackage
                     if (track == null)   //创建航迹失败，航迹编号满
                         continue;
 
-                    //newDot.Adopted = true;    //自由点相关时，一个目标点可以与多个自由点相关
+                    newDot.Adopted = true;    //自由点相关时，一个目标点可以与多个自由点相关
                     oldDot.Adopted = true;
                     sector.AddTrack(track);
 
@@ -59,7 +59,17 @@ namespace TargetManagerPackage
         }
 
         protected virtual bool DotsCanCorelate(TargetDot dot1, TargetDot dot2) //根据不同起批状态判断两个点击是否可以相关，波门状态下需判断两个点是否在同一波门
-            => true;
+        {
+            if (Math.Abs(dot1.Height - dot2.Height) > 70)
+                return false;
+
+            if (dot1.Height < 50 || dot2.Height < 50)
+                return false;
+
+            if (dot1.Height > 300 || dot2.Height > 300)
+                return false;
+            return true;
+        }
 
         public void Dispose()
         {

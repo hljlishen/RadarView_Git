@@ -111,8 +111,10 @@ namespace TargetManagerPackage
                 {
                     if (StableTracks[i].Score <= TargetTrack.ScoreMinimum)
                     {
-                        StableTracks[i].Destory();
+                        //StableTracks[i].Destory();
+                        TargetTrack t = StableTracks[i];
                         StableTracks.RemoveAt(i);
+                        t.Destory();
                     }
                 }
             }

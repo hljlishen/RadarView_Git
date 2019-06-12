@@ -8,8 +8,8 @@ namespace TargetManagerPackage
     {
         public byte[] Serialize(TargetTrack track, SerializeType type)
         {
-            if (type == SerializeType.Destory)
-                track.Dis = 0;
+            //if (type == SerializeType.Destory)
+            //    track.Dis = 0;
             List<byte> cmdBytes = new List<byte> { LocalDeviceCode, RespondCode };
             cmdBytes.AddRange(Tools.IntToByteLsb(NextSendCount(), 2));     //发送计数
             cmdBytes.Add(SystmDeviceCode);
@@ -22,7 +22,10 @@ namespace TargetManagerPackage
             cmdBytes.Add((byte)DateTime.Now.Second);
             cmdBytes.Add((byte)(DateTime.Now.Millisecond / 10));
             cmdBytes.AddRange(_reservedBytes);
-            cmdBytes.AddRange(Tools.IntToByteLsb((int)track.Dis, 4));
+            if(type != SerializeType.Destory)
+                cmdBytes.AddRange(Tools.IntToByteLsb((int)track.Dis, 4));
+            else
+                cmdBytes.AddRange(Tools.IntToByteLsb(0, 4));
             cmdBytes.AddRange(Tools.IntToByteLsb((int)(track.Az * 100), 2));
             cmdBytes.AddRange(Tools.IntToByteLsb((int)(track.El * 100), 2));
             cmdBytes.Add(_targetProperty);

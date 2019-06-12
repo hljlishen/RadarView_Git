@@ -47,7 +47,9 @@ namespace RadarForm
             rb_5.Checked = true;
             FpgaCommunicator.IsAmplifierOpen = true;    //开发射
             FpgaCommunicator.CurrentRange = RangeType.Rt5;
-            ovd.Distance = 3200;
+
+            btn_distance_Click(null, null); //发送p显量程
+
         }
 
         private void ShowTrackHeight() => lab_trackHeight.Text = SystemController.GetTrackHeight().ToString("0.0");
@@ -158,7 +160,7 @@ namespace RadarForm
         private void btn_browse_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            if(DialogResult.OK == ofd.ShowDialog())
+            if (DialogResult.OK == ofd.ShowDialog())
             {
                 tb_filePath.Text = ofd.FileName;
             }
@@ -174,7 +176,7 @@ namespace RadarForm
 
         private void tb_distance_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
                 btn_distance_Click(sender, null);
         }
 
@@ -191,7 +193,7 @@ namespace RadarForm
             try
             {
                 result = int.Parse(tb.Text);
-                return  true;
+                return true;
             }
             catch
             {
@@ -275,10 +277,14 @@ namespace RadarForm
             }
             else
             {
-                // no else
+                //no else
             }
+            //FpgaCommunicator.CurrentRange = FpgaCommunicator.CurrentRange == RangeType.Rt5 ? RangeType.Rt11 : RangeType.Rt5;
+            //this.Text = $"Form{FpgaCommunicator.CurrentRange.ToString()}";
+            //FpgaCommunicator.IsAmplifierOpen = true;
+            //FpgaCommunicator.SetFpgaMode();
         }
-        private void rb_10_CheckedChanged(object sender, EventArgs e)
+            private void rb_10_CheckedChanged(object sender, EventArgs e)
         {
             if (!rb_10.Checked) return;
             FpgaCommunicator.CurrentRange = RangeType.Rt11;
@@ -314,37 +320,37 @@ namespace RadarForm
 
         private void rb_Stop_CheckedChanged(object sender, EventArgs e)
         {
-            if(rb_Stop.Checked)
+            if (rb_Stop.Checked)
                 controller.AntennaSetRotationRate(RotateRate.Rpm0);
         }
 
         private void rb_2rpm_CheckedChanged(object sender, EventArgs e)
         {
-            if(rb_2rpm.Checked)
+            if (rb_2rpm.Checked)
                 controller.AntennaSetRotationRate(RotateRate.Rpm2);
         }
 
         private void rb_5rpm_CheckedChanged(object sender, EventArgs e)
         {
-            if(rb_5rpm.Checked)
+            if (rb_5rpm.Checked)
                 controller.AntennaSetRotationRate(RotateRate.Rpm5);
         }
 
         private void rb_10rmp_CheckedChanged(object sender, EventArgs e)
         {
-            if(rb_10rmp.Checked)
+            if (rb_10rmp.Checked)
                 controller.AntennaSetRotationRate(RotateRate.Rpm10);
         }
 
         private void rb_20rmp_CheckedChanged(object sender, EventArgs e)
         {
-            if(rb_20rmp.Checked)
+            if (rb_20rmp.Checked)
                 controller.AntennaSetRotationRate(RotateRate.Rpm20);
         }
 
         private void rb_toZero_CheckedChanged(object sender, EventArgs e)
         {
-            if(rb_toZero.Checked)
+            if (rb_toZero.Checked)
                 controller.AntennaSetZeroDegree();
         }
 

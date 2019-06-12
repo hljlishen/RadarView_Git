@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TargetManagerPackage
 {
@@ -8,6 +9,7 @@ namespace TargetManagerPackage
         public override void Corelate(Sector center, Sector next, Sector previous)
         {
             center.StableTracks.Sort(); //排序,分高的航迹在最后
+            //List<TargetTrack> exchangeTracks = new List<TargetTrack>();
 
             for(int i = center.StableTracks.Count - 1; i >=0; i--)
             {
@@ -19,20 +21,51 @@ namespace TargetManagerPackage
                         {
                             //与上个扇区的点相关上
                             previous.AcceptTrackFromOtherSector(center.StableTracks[i]);
+                            //exchangeTracks.Add(center.StableTracks[i]);
                             center.RemoveTrack(center.StableTracks[i]);
                         }
                         else
                         {
                             //与三个扇区的点都未相关上，应该对航迹减分
                             center.StableTracks[i].ScoreAdd(-3);    //未相关上,减三分
-                            if(!center.StableTracks[i].IsFake)
-                                center.StableTracks[i].Update(center.StableTracks[i].PredictCoordinate(DateTime.Now));  //用预测位置更新
+                            if (center.StableTracks[i].Score <= 0)
+                            {
+                                TargetTrack t = center.StableTracks[i];
+                                center.RemoveTrack(center.StableTracks[i]);
+
+                                t.Destory();
+                            }
+                            else
+                            {
+                                if (!center.StableTracks[i].IsFake)
+                                    center.StableTracks[i].Update(center.StableTracks[i].PredictCoordinate(DateTime.Now));  //用预测位置更新
+                                if (!center.IsAngleInArea(center.StableTracks[i].CurrentCoordinate.Az))
+                                {
+                                    TargetTrack t = center.StableTracks[i];
+                                    center.RemoveTrack(center.StableTracks[i]);
+                                    if (next.IsAngleInArea(t.CurrentCoordinate.Az))
+                                    {
+                                        //exchangeTracks.Add(t);
+                                        next.AcceptTrackFromOtherSector(t);
+                                    }
+                                    else if (previous.IsAngleInArea(t.CurrentCoordinate.Az))
+                                    {
+                                        //exchangeTracks.Add(t);
+                                        previous.AcceptTrackFromOtherSector(t);
+                                    }
+                                    else
+                                    {
+                                        t.Destory();
+                                    }
+                                }
+                            }
                         }
                     }
                     else
                     {
                         //与下个扇区的点相关上
                         next.AcceptTrackFromOtherSector(center.StableTracks[i]);
+                        //exchangeTracks.Add(center.StableTracks[i]);
                         center.RemoveTrack(center.StableTracks[i]);
                     }
                 }
@@ -40,11 +73,11 @@ namespace TargetManagerPackage
                 {
 
                 }
-
-                center.DeleteUnqualifiedTracks();
-                center.LoadExchangeTracks();        //将上一扇区移动过来的航迹添加进来
-                NotifyUpdateSectorTrack(center);    //通知更新该扇区的航迹
             }
+
+            center.DeleteUnqualifiedTracks();
+            center.LoadExchangeTracks();        //将上一扇区移动过来的航迹添加进来
+            NotifyUpdateSectorTrack(center);    //通知更新该扇区的航迹
         }
 
         private bool CorelateTrack(TargetTrack track, Sector sector)

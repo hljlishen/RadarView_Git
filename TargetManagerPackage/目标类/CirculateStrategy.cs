@@ -18,7 +18,9 @@
                 {
                     latestId = i+1;
                     Id[i] = 1;
-                    return i + 1;
+                    int ret = i + 1;
+
+                    return ret;
                 }
                 isFirstLoop = false;
             }

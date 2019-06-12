@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using System;
+using System.Collections.Generic;
 using TargetManagerPackage;
 using Utilities;
 
@@ -27,7 +26,7 @@ namespace RadarDisplayPackage
             set
             {
                 base.Distance = value;
-                distanceNumbers = new[] {value/4, value/2, value * 3 / 4, value };
+                distanceNumbers = new[] { value / 4, value / 2, value * 3 / 4, value };
             }
         }
 
@@ -68,7 +67,7 @@ namespace RadarDisplayPackage
             return ret.ToArray();
         }
 
-        public override void Draw( )
+        public override void Draw()
         {
             float x, y;
 
@@ -102,7 +101,7 @@ namespace RadarDisplayPackage
         {
             Point2F[] p = new Point2F[12];
 
-            for(int i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
                 p[i] = coordinateSystem.CalIntersectionPoint(angleLines[i]);
             }
@@ -119,7 +118,7 @@ namespace RadarDisplayPackage
             canvas.DrawText(text, rightTextFromation, new RectF(p[3].X + 2, p[3].Y - 10, p[3].X + 40, p[3].Y + 5), textBrush);
 
             text = angleLines[4].ToString("0") + "°";
-            canvas.DrawText(text, rightTextFromation, new RectF(p[4].X , p[4].Y , p[4].X + 40, p[4].Y + 10), textBrush);
+            canvas.DrawText(text, rightTextFromation, new RectF(p[4].X, p[4].Y, p[4].X + 40, p[4].Y + 10), textBrush);
 
             text = angleLines[5].ToString("0") + "°";
             canvas.DrawText(text, rightTextFromation, new RectF(p[5].X, p[5].Y, p[5].X + 40, p[5].Y + 10), textBrush);
@@ -137,7 +136,7 @@ namespace RadarDisplayPackage
             canvas.DrawText(text, leftTextFromation, new RectF(p[9].X - 45, p[9].Y - 10, p[9].X - 5, p[9].Y + 10), textBrush);
 
             text = angleLines[10].ToString("0") + "°";
-            canvas.DrawText(text, leftTextFromation, new RectF(p[10].X - 45, p[10].Y - 15, p[10].X-5 , p[10].Y -2), textBrush);
+            canvas.DrawText(text, leftTextFromation, new RectF(p[10].X - 45, p[10].Y - 15, p[10].X - 5, p[10].Y - 2), textBrush);
 
             text = angleLines[11].ToString("0") + "°";
             canvas.DrawText(text, leftTextFromation, new RectF(p[11].X - 45, p[11].Y - 20, p[11].X + 2, p[11].Y - 2), textBrush);

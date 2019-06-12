@@ -41,25 +41,17 @@ namespace TargetManagerPackage
                 track.SectorIndex = dot.SectorIndex;
                 targetManager.NotifyAllObservers(track, NotifyType.Add);
                 targetManager.Sectors[dot.SectorIndex].AddTrack(track);
+                sender.UpdateTrack(track);
             }
             else
             {
                 track.Locations.Add(track.CurrentCoordinate);
                 track.Update(dot.CurrentCoordinate);
-                //if (dot.SectorIndex != track.SectorIndex)
-                //{
-                //    targetManager.NotifyAllObservers(track, NotifyType.Update);
-                //}
-                //else
-                //{
-                //    targetManager.NotifyAllObservers(track, NotifyType.Update);
-                //}
-                TargetTrack.SetTrackHeight(track, TrackHeight);
+
+                //TargetTrack.SetTrackHeight(track, TrackHeight);
                 targetManager.NotifyAllObservers(track, NotifyType.Update);
             }
-            SystemCommunicator.UpdateTrack(track);  //发送给系统
-            sender.UpdateTrack(track);
-            OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendTrack(track);
+            //OpticalDeviceCommunicator.CreateOpticalDeviceCommunicator().SendTrack(track);
         }
     }
 }

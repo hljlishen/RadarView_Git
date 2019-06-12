@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Utilities;
 using TargetManagerPackage.目标类;
+using Utilities;
 
 namespace TargetManagerPackage
 {
@@ -13,6 +13,7 @@ namespace TargetManagerPackage
         public int TrackId { get; set; } = 10;         //批号
         public PolarCoordinate PredictLocation; //预测坐标
         public List<PolarCoordinate> Locations; //历史坐标，最新的在最后
+        public static double SpeedMax = 25;
         public const double XSpeedMaximum = 16;
         public const double YSpeedMaximum = 16;
         public const double ZSpeedMaximum = 10;
@@ -24,6 +25,8 @@ namespace TargetManagerPackage
         public double XSpeed { get; set; } = 0;
         public double YSpeed { get; set; } = 0;
         public double ZSpeed { get; set; } = 0;
+
+        public static List<ITargetTrackFilter> filters = new List<ITargetTrackFilter>();
 
         internal static FindTrackIdStrategy FindIdStrategy { get; set; } = null;
         internal static TrackSender Sender { get; set; } = null;
@@ -44,9 +47,11 @@ namespace TargetManagerPackage
             if (Locations.Count == 0)   //没有历史位置，返回当前位置
                 return CurrentCoordinate;
             TimeSpan interval = time - LastRefreshTime;
+
             double x = CurrentCoordinate.X + XSpeed * interval.TotalSeconds;
             double y = CurrentCoordinate.Y + YSpeed * interval.TotalSeconds;
-            double z = CurrentCoordinate.Z + ZSpeed * interval.TotalSeconds;
+            //double z = CurrentCoordinate.Z + ZSpeed * interval.TotalSeconds;
+            double z = CurrentCoordinate.Z; //不预测高度
 
             return PolarCoordinate.RetangularToPolarCoordinate((float)x, (float)y, (float)z);
         }
@@ -63,7 +68,7 @@ namespace TargetManagerPackage
             Score = Score < ScoreMinimum ? ScoreMinimum : Score;
         }
 
-        public static void SetTrackHeight(TargetTrack track , float height)
+        public static void SetTrackHeight(TargetTrack track, float height)
         {
             float angle = (float)Tools.RadianToDegree((float)Math.Asin(height / track.Dis));
             track.El = angle;
@@ -93,43 +98,36 @@ namespace TargetManagerPackage
         {
             (XSpeed, YSpeed, ZSpeed) = CalSpeed(CurrentCoordinate, c, DateTime.Now - LastRefreshTime);  //计算三个方向速度
 
-            //距离判断
-            if (c.Dis < 1000)
-            {
-                Random random = new Random(DateTime.Now.Millisecond);
-                AdjustHeigthTo(80 + random.Next(-5, 5), c);
-            }
-
-            if (c.Dis >= 1000 && c.Dis < 2000)
-            {
-                Random random = new Random(DateTime.Now.Millisecond);
-                AdjustHeigthTo(150 + random.Next(-5, 5), c);
-            }
-
-            if (c.Dis >= 2000)
-            {
-                Random random = new Random(DateTime.Now.Millisecond);
-                AdjustHeigthTo(250 + random.Next(-5, 5), c);
-            }
-
-            //OutputInfo("update: ");
             Locations.Add(CurrentCoordinate.Copy());   //保存历史航迹
             CurrentCoordinate = c;
+
+            //检测该航迹是否应该被删除
+            if (ShouldDestory()) Score = -20;
+
             SetRefreshTimeNow();        //设置更新时间
 
-            //Sender.UpdateTrack(this);
+            Sender.UpdateTrack(this);
+        }
+        private bool ShouldDestory()
+        {
+            foreach (var filter in filters)
+            {
+                if (!filter.Pass(this))
+                    return true;
+            }
+            return false;
         }
 
         public static void AdjustHeigthTo(float height, PolarCoordinate c)
         {
             double projectedDis = c.Dis * Math.Cos(Tools.DegreeToRadian(c.El));
-            c.El = (float)Tools.RadianToDegree( Math.Atan2(height, projectedDis));
+            c.El = (float)Tools.RadianToDegree(Math.Atan2(height, projectedDis));
             c.Dis = (float)Math.Sqrt(Math.Pow(projectedDis, 2) + Math.Pow(height, 2));
         }
 
         public void OutputInfo(string infoHead)
         {
-            string info = infoHead + $"id={TrackId}   socre={Score}    historyCount={Locations.Count}";
+            string info = infoHead + $"id={TrackId}   socre={Score}    historyCount={Locations.Count}   sector={SectorIndex}";
             Console.WriteLine(info);
         }
 
@@ -145,7 +143,7 @@ namespace TargetManagerPackage
             double ySpeed = (curruntCoordinate.Y - lastCoordinate.Y) / time.TotalSeconds;
             double zSpeed = (curruntCoordinate.Z - lastCoordinate.Z) / time.TotalSeconds;
 
-            return ((float) xSpeed, (float) ySpeed, (float) zSpeed);
+            return ((float)xSpeed, (float)ySpeed, (float)zSpeed);
         }
 
         public static TargetTrack CreateTargetTrack(TargetDot current, TargetDot pre, int initScore)
@@ -197,15 +195,15 @@ namespace TargetManagerPackage
 
         public int CompareTo(object obj)
         {
-            TargetTrack track = (TargetTrack) obj;
+            TargetTrack track = (TargetTrack)obj;
             return Score.CompareTo(track.Score);
         }
 
         public float GetCorelateRadius()
         {
             if (Locations.Count == 0)
-                return 200;
-            return 500;
+                return 100;
+            return 100;
         }
 
         public void Focus()

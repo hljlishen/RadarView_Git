@@ -44,11 +44,18 @@ namespace TargetManagerPackage
             }
         }
 
-        protected void NotifyUpdateSectorTrack(Sector s)
+        protected void NotifyUpdateSectorTrack(Sector s, List<TargetTrack> other = null)
         {
-            lock(_locker)
-            foreach (ITargetObserver ob in Observers)
-                ob.NotifyUpdateSectorTrack(s.StableTracks, s.Index);
+            lock (_locker)
+            {
+                foreach (ITargetObserver ob in Observers)
+                {
+                    List<TargetTrack> displayTracks = new List<TargetTrack>(s.StableTracks);
+                    if (other != null)
+                        displayTracks.AddRange(other);
+                    ob.NotifyUpdateSectorTrack(displayTracks, s.Index);
+                }
+            }
         }
 
         protected void NotifyDeleteSectorTrack(Sector s)

@@ -206,7 +206,7 @@
             this.groupBox5.Controls.Add(this.tb_height);
             this.groupBox5.Controls.Add(this.label3);
             this.groupBox5.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox5.Location = new System.Drawing.Point(7, 313);
+            this.groupBox5.Location = new System.Drawing.Point(6, 303);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(467, 89);
             this.groupBox5.TabIndex = 20;
@@ -221,7 +221,7 @@
             this.tb_distance.Name = "tb_distance";
             this.tb_distance.Size = new System.Drawing.Size(94, 21);
             this.tb_distance.TabIndex = 10;
-            this.tb_distance.Text = "3200";
+            this.tb_distance.Text = "3000";
             this.tb_distance.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_distance_KeyDown);
             // 
             // btn_distance
@@ -351,7 +351,7 @@
             this.groupBox1.Controls.Add(this.lab_trackHeight);
             this.groupBox1.Controls.Add(this.btn_largeSectionSweep);
             this.groupBox1.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox1.Location = new System.Drawing.Point(6, 77);
+            this.groupBox1.Location = new System.Drawing.Point(7, 77);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(467, 220);
             this.groupBox1.TabIndex = 18;
@@ -367,7 +367,7 @@
             this.groupBox8.Controls.Add(this.rb_close);
             this.groupBox8.Controls.Add(this.rb_5);
             this.groupBox8.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox8.Location = new System.Drawing.Point(26, 113);
+            this.groupBox8.Location = new System.Drawing.Point(25, 114);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(419, 88);
             this.groupBox8.TabIndex = 21;
@@ -378,9 +378,9 @@
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(277, 41);
+            this.button1.Location = new System.Drawing.Point(320, 41);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 23);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 21;
             this.button1.Text = "归位";
             this.button1.UseVisualStyleBackColor = false;
@@ -390,7 +390,7 @@
             // 
             this.btn_AntennaZero.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_AntennaZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AntennaZero.Location = new System.Drawing.Point(183, 41);
+            this.btn_AntennaZero.Location = new System.Drawing.Point(134, 15);
             this.btn_AntennaZero.Name = "btn_AntennaZero";
             this.btn_AntennaZero.Size = new System.Drawing.Size(57, 23);
             this.btn_AntennaZero.TabIndex = 21;
@@ -403,9 +403,9 @@
             // 
             this.btn_powerAmplifierCtrl.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_powerAmplifierCtrl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_powerAmplifierCtrl.Location = new System.Drawing.Point(22, 41);
+            this.btn_powerAmplifierCtrl.Location = new System.Drawing.Point(13, 41);
             this.btn_powerAmplifierCtrl.Name = "btn_powerAmplifierCtrl";
-            this.btn_powerAmplifierCtrl.Size = new System.Drawing.Size(110, 23);
+            this.btn_powerAmplifierCtrl.Size = new System.Drawing.Size(72, 23);
             this.btn_powerAmplifierCtrl.TabIndex = 19;
             this.btn_powerAmplifierCtrl.Text = "关发射";
             this.btn_powerAmplifierCtrl.UseVisualStyleBackColor = false;
@@ -414,20 +414,18 @@
             // rb_10
             // 
             this.rb_10.AutoSize = true;
-            this.rb_10.Location = new System.Drawing.Point(110, 44);
+            this.rb_10.Location = new System.Drawing.Point(193, 44);
             this.rb_10.Name = "rb_10";
             this.rb_10.Size = new System.Drawing.Size(35, 16);
             this.rb_10.TabIndex = 20;
-            this.rb_10.TabStop = true;
             this.rb_10.Text = "10";
             this.rb_10.UseVisualStyleBackColor = true;
-            this.rb_10.Visible = false;
             this.rb_10.CheckedChanged += new System.EventHandler(this.rb_10_CheckedChanged);
             // 
             // rb_close
             // 
             this.rb_close.AutoSize = true;
-            this.rb_close.Location = new System.Drawing.Point(73, 44);
+            this.rb_close.Location = new System.Drawing.Point(103, 44);
             this.rb_close.Name = "rb_close";
             this.rb_close.Size = new System.Drawing.Size(59, 16);
             this.rb_close.TabIndex = 20;
@@ -439,14 +437,14 @@
             // rb_5
             // 
             this.rb_5.AutoSize = true;
-            this.rb_5.Location = new System.Drawing.Point(183, 44);
+            this.rb_5.Checked = true;
+            this.rb_5.Location = new System.Drawing.Point(251, 44);
             this.rb_5.Name = "rb_5";
             this.rb_5.Size = new System.Drawing.Size(29, 16);
             this.rb_5.TabIndex = 20;
             this.rb_5.TabStop = true;
             this.rb_5.Text = "5";
             this.rb_5.UseVisualStyleBackColor = true;
-            this.rb_5.Visible = false;
             this.rb_5.CheckedChanged += new System.EventHandler(this.rb_5_CheckedChanged);
             // 
             // groupBox3
@@ -458,7 +456,7 @@
             this.groupBox3.Controls.Add(this.rb_2rpm);
             this.groupBox3.Controls.Add(this.rb_Stop);
             this.groupBox3.ForeColor = System.Drawing.Color.Chartreuse;
-            this.groupBox3.Location = new System.Drawing.Point(25, 21);
+            this.groupBox3.Location = new System.Drawing.Point(26, 20);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(419, 87);
             this.groupBox3.TabIndex = 20;

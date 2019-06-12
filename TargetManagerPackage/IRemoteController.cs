@@ -51,7 +51,7 @@ namespace TargetManagerPackage
 
         public void ExecuteCmd(byte[] cmdBytes)
         {
-            ushort angle = BitConverter.ToUInt16(cmdBytes, 1);
+            ushort angle = BitConverter.ToUInt16(cmdBytes, 9);
             double angleD = (double)angle / 100;
 
             AngleArea area = CalSweepArea((float)angleD);
@@ -81,8 +81,8 @@ namespace TargetManagerPackage
 
         public bool IsCmdExecutable(byte[] cmdBytes)
         {
-            if (cmdBytes.Length != 6) return false;
-            if (cmdBytes[0] != 0x81) return false;
+           //if (cmdBytes.Length != 15) return false;
+            if (cmdBytes[0] != 0x31) return false;
 
             return true;
         }

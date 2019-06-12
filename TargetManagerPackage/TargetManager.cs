@@ -1,15 +1,14 @@
 ﻿using CycleDataDrivePackage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TargetManagerPackage
 {
-    public class TargetManager :ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
+    public class TargetManager : ITargetDataProvider, ITargetManagerController, ILeaveAngleAreaObserver //目标管理器
     {
         public Sector[] Sectors;                  //扇区数组
         private readonly DotViewDeleter _viewDeleter;     //目标删除器
-        private readonly Clotter _clotter;                //凝聚器
+        //private readonly Clotter _clotter;                //凝聚器
         private readonly Clotter _clotter47;
         private readonly TrackCorelator _trackCorelator;  //航迹相关器
         private DotCorelator _dotCorelator;               //自由点相关器
@@ -53,6 +52,7 @@ namespace TargetManagerPackage
         {
             DistanceCellFilter.AddCircleFilter(new CircleFilter(4900, 5100, 2500000));
             DistanceCellFilter.AddCircleFilter(new CircleFilter(3450, 3700, 18000000));
+            DistanceCellFilter.AddCircleFilter(new CircleFilter(2310, 2370, int.MaxValue));
         }
 
         public void AddTrackGenerator(PolarCoordinate coordinate)
@@ -232,7 +232,7 @@ namespace TargetManagerPackage
         {
             _mode = toMode;
 
-            switch(toMode)
+            switch (toMode)
             {
                 case TargetManagerMode.Intelligent:
                     _dotCorelator = new DotCorelator_Intelligence(_dotCorelator.Observers);
@@ -256,7 +256,7 @@ namespace TargetManagerPackage
             if (!_obs.Contains(ob) && ob != null)
                 _obs?.Add(ob);
 
-            _clotter?.RegisterObserver(ob);           //代理凝聚器观察者的注册
+            //_clotter?.RegisterObserver(ob);           //代理凝聚器观察者的注册
             _trackCorelator.RegisterObserver(ob);    //代理相关器观察者的注册 
             _dotCorelator.RegisterObserver(ob);
             _freeDotDeleter.RegisterObserver(ob);
@@ -269,7 +269,7 @@ namespace TargetManagerPackage
             if (_obs.Contains(ob))
                 _obs?.Remove(ob);
 
-            _clotter?.UnregisterObserver(ob);             //代理凝聚器观察者的反注册
+            //_clotter?.UnregisterObserver(ob);             //代理凝聚器观察者的反注册
             _trackCorelator.UnregisterObserver(ob);      //代理相关器观察者的反注册 
             _dotCorelator.UnregisterObserver(ob);
             _freeDotDeleter.UnregisterObserver(ob);
@@ -329,6 +329,10 @@ namespace TargetManagerPackage
             {
                 //s的编号为index
                 Sector s = (Sector)o;
+                if(s.Index == 8)
+                {
+
+                }
 
                 Sector s1 = NextSector(s);
                 _viewDeleter.DeleteViews(s1, false);
