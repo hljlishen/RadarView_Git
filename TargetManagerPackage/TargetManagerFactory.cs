@@ -17,20 +17,23 @@ namespace TargetManagerPackage
             //ITrackSerializer serializer = new QhOpticalDeviceSerializer();//清
             //IPort port = new UdpPort("10.14.16.88", 5600, 6000);    //清
             ITrackSerializer serializer = new Casc12thSerializer();     //12院协议
-            //IPort port = new UdpPort("192.168.10.33", 10011, 10012);    //12院Udp接口
-            IPort port = new UdpPort("192.168.1.45", 8081, 8080);    //本地测试接口
+            //IPort udp = new UdpPort("192.168.10.33", 8080, 10022);
+            //IPort udp = new UdpPort("192.168.10.33", 10011, 10022);
+            IPort port = new UdpPort("192.168.10.33", 10011, 10012);    //12院Udp接口
+            //IPort port = new UdpPort("192.168.1.45", 8081, 8080);    //本地测试接口
             port.Open();
             TrackSender sender = new TrackSender(port, serializer);
-            TargetTrack.Sender = sender;
+            ScoreBiggerThanDecorator decorator = new ScoreBiggerThanDecorator(sender);
+            TargetTrack.Sender = decorator;
 
-            MouseTargetTracker.sender = sender;
+            MouseTargetTracker.sender = decorator;
             //TargetTrack.FindIdStrategy = new FromBeginningStrategy();
             TargetTrack.FindIdStrategy = new CirculateStrategy();
 
 
             //初始化RemoteController
             Casa12thSectionSweepCmdProcessor p = new Casa12thSectionSweepCmdProcessor(CreateAntennaContoller());
-            IPort udp = new UdpPort("192.168.10.99", 8080, 1002);
+
             RemoteController remoteController = new RemoteController(port);
             remoteController.AddProcessor(p);
 

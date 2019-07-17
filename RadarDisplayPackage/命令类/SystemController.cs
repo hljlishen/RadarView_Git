@@ -54,6 +54,7 @@ namespace RadarDisplayPackage
             SetCycleDataFilterSpeedMinimum(GetCycleDataFilterSpeedMinimum());
             SetAzAdjustment(GetAzAdjustment());
             SetElAdjustment(GetElAdjustment());
+            SetElDiffAdjustment(GetElDiffAdjustment());
             SetAntennaStopDegree(GetAntennaStopDegree());
         }
 
@@ -203,6 +204,14 @@ namespace RadarDisplayPackage
             DistanceCell.ElAdjustment = adjustment;
             config.SetElAdjustment(adjustment);
         }
+
+        public void SetElDiffAdjustment(float eldDiff)
+        {
+            DistanceCell.ElDifAdjustment = eldDiff;
+            config.SetElDiffAdjustment(eldDiff);
+        }
+
+        public float GetElDiffAdjustment() => config.GetElDiffAdjustment();
 
         public float GetAntennaStopDegree() => config.GetStopDegree();
 

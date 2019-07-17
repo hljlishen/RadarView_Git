@@ -1,7 +1,7 @@
 ﻿
 namespace TargetManagerPackage
 {
-    public class TrackSender
+    public class TrackSender : ITrackSender
     {
         private IPort port;
         private ITrackSerializer serializer;

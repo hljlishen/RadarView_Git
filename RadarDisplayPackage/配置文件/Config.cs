@@ -17,7 +17,7 @@ namespace RadarDisplayPackage
         private string azAdjustmentKeyName = "azAdjustment";
         private string elAdjustmentKeyName = "elAdjustment";
         private string antennaStopDegreeKeyName = "antennaStopDegree";
-
+        private string elDiffAdjustmentKeyName = "elDiffAdjustment";
         public Config()
         {
             ini = new IniFileOperator(@".\config.ini");
@@ -45,6 +45,10 @@ namespace RadarDisplayPackage
         public void SetElAdjustment(float adjustment) => ini.WriteIniData(sectionName, elAdjustmentKeyName, adjustment.ToString("0.00"));
 
         public float GetElAdjustment() => float.Parse(ini.ReadIniData(sectionName, elAdjustmentKeyName));
+
+        public void SetElDiffAdjustment(float elDiff) => ini.WriteIniData(sectionName, elDiffAdjustmentKeyName, elDiff.ToString("0.00"));
+
+        public float GetElDiffAdjustment() => float.Parse(ini.ReadIniData(sectionName, elDiffAdjustmentKeyName));
 
         public void SetStopDegree(float degree) => ini.WriteIniData(sectionName, antennaStopDegreeKeyName, degree.ToString("0.00"));
 

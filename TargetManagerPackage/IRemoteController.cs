@@ -55,6 +55,10 @@ namespace TargetManagerPackage
             double angleD = (double)angle / 100;
 
             AngleArea area = CalSweepArea((float)angleD);
+
+            //if (area.EqualsTo(sweepController.GetSweepArea()))
+            //    return;
+
             sweepController.SetSectionSweepMode(area);
             sweepController.SetRotateRate(RotateRate.Rpm2);
         }

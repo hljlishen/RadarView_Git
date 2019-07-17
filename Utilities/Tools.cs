@@ -7,7 +7,7 @@ namespace Utilities
 {
     public class Tools
     {
-        public const float Interval = 0.00001f;
+        public const float Interval = 0.0001f;
         public static ColorF GetColorFFromRgb(int r, int g, int b) => new ColorF(new ColorI(r, g, b));
 
         public static double DegreeToRadian(double angle) => Math.PI * angle / 180;//角度转弧度

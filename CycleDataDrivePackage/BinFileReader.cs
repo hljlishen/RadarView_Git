@@ -8,12 +8,22 @@ namespace CycleDataDrivePackage
     {
         private BinaryReader _reader;
         private int _readLength = 1472;
+        UltraHighAccurateTimer timer;
 
         public BinFileReader()
         {
             Source = "";
             _reader = LoadFile(Source);
             Interval = 2;
+            //timer = new UltraHighAccurateTimer();
+            //timer.Interval = Interval;
+            //timer.tick += Timer_tick;
+            //timer.Start();
+        }
+
+        private void Timer_tick()
+        {
+            
         }
 
         private BinaryReader LoadFile(string fileName)

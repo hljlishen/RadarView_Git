@@ -24,7 +24,10 @@ namespace CycleDataDrivePackage
             }
         }
 
-        public void RecordBytes(byte[] data, int pos, int count) => _writer?.Write(data, pos, count);
+        public void RecordBytes(byte[] data, int pos, int count)
+        {
+            //_writer?.Write(data, pos, count);     //??
+        }
 
         private bool IsEmptyFile(string file)
         {

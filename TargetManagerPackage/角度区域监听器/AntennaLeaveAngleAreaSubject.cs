@@ -5,10 +5,11 @@ namespace TargetManagerPackage
 {
     public class AntennaLeaveAngleAreaSubject : ILeaveAngleAreaSubject, IAntennaObserver,IDisposable
     {
-        protected List<KeyValuePair<ILeaveAngleAreaObserver, AngleArea>> Areas;
+        protected List<KeyValuePair<ILeaveAngleAreaObserver, AngleArea>> Areas;     //problem2
         private float _preciousAntennaAngle;
         private float _currentAntennaAngle;
         private readonly IAntennaDataProvider _antenna;
+        private object _locker = new object();
 
         public AntennaLeaveAngleAreaSubject()
         {
@@ -19,36 +20,45 @@ namespace TargetManagerPackage
 
         public void RegisterAngleArea(ILeaveAngleAreaObserver ob, AngleArea area)
         {
-            foreach(var p in Areas)
+            lock (_locker)
             {
-                if (p.Key == ob && p.Value == area)  //已经注册过
-                    return;
-            }
+                foreach (var p in Areas)
+                {
+                    if (p.Key == ob && p.Value == area)  //已经注册过
+                        return;
+                }
 
-            var pair = new KeyValuePair<ILeaveAngleAreaObserver, AngleArea>(ob, area);
-            Areas.Add(pair);
+                var pair = new KeyValuePair<ILeaveAngleAreaObserver, AngleArea>(ob, area);
+                Areas.Add(pair);
+            }
         }
 
         public void UnregisterAngleArea(ILeaveAngleAreaObserver ob, AngleArea area)
         {
-            foreach (var p in Areas)
+            lock (_locker)
             {
-                if (p.Key != ob || p.Value != area) continue;
-                Areas.Remove(p);
-                break;
+                foreach (var p in Areas)    //problem4
+                {
+                    if (p.Key != ob || p.Value != area) continue;
+                    Areas.Remove(p);
+                    break;
+                }
             }
         }
 
         public void AntennaNotifyChange()
         {
-            _preciousAntennaAngle = _currentAntennaAngle;
-            _currentAntennaAngle = _antenna.GetCurrentAntennaAngle();
-
-            for (int i = Areas.Count - 1; i >= 0; i--)   //遍历每个角度区域，判断天线是否刚刚扫过该区域，如果是则通知观察者
+            lock (_locker)
             {
-                if (LeavingAngleArea(Areas[i].Value))
+                _preciousAntennaAngle = _currentAntennaAngle;
+                _currentAntennaAngle = _antenna.GetCurrentAntennaAngle();
+
+                for (int i = Areas.Count - 1; i >= 0; i--)   //遍历每个角度区域，判断天线是否刚刚扫过该区域，如果是则通知观察者
                 {
-                    Areas[i].Key.NotifyLeaveAngleArea(Areas[i].Value);
+                    if (LeavingAngleArea(Areas[i].Value))
+                    {
+                        Areas[i].Key.NotifyLeaveAngleArea(Areas[i].Value);  //problem3
+                    }
                 }
             }
         }

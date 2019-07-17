@@ -9,13 +9,31 @@ namespace TargetManagerPackage
 {
     class AzimuthCellFilter
     {
-        public static AngleArea PassArea { get; set; } = null;
+        private static object _locker = new object();
+        private static AngleArea passArea = null;
+        public static AngleArea PassArea
+        {
+            get
+            {
+                return passArea;
+            }
+            set
+            {
+                lock(_locker)
+                {
+                    passArea = value;
+                }
+            }
+        }
 
         public static bool Pass(AzimuthCell cell)
         {
-            if (PassArea == null)
-                return true;
-            return PassArea.IsAngleInArea(cell.Angle);
+            lock (_locker)
+            {
+                if (PassArea == null)
+                    return true;
+                return PassArea.IsAngleInArea(cell.Angle);
+            }
         }
     }
 }

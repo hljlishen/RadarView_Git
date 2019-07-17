@@ -18,6 +18,7 @@ namespace RadarForm
             tb_azAngleAdjustment.Text = controller.GetAzAdjustment().ToString("0.00");
             tb_elAdjustment.Text = controller.GetElAdjustment().ToString("0.00");
             tb_antennaStopDegree.Text = controller.GetAntennaStopDegree().ToString("0.00");
+            tb_elDiff.Text = controller.GetElDiffAdjustment().ToString("0.00");
         }
 
         private void btn_confirm_Click(object sender, EventArgs e)
@@ -54,6 +55,16 @@ namespace RadarForm
                 return;
             }
             controller.SetAntennaStopDegree(adjustment);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!Form1.ParseFloat(tb_elDiff, out var eldDiff))
+            {
+                MessageBox.Show(@"请输入数字");
+                return;
+            }
+            controller.SetElDiffAdjustment(eldDiff);
         }
     }
 }

@@ -112,6 +112,9 @@ namespace TargetManagerPackage
         public void NotifyNewCycleData(byte[] rawData)
         {
             AzimuthCell cell = new AzimuthCell(rawData);
+
+            //if (cell == null) return;
+
             SaveAzimuthCell(cell);
         }
     }

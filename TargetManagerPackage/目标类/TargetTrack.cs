@@ -29,7 +29,7 @@ namespace TargetManagerPackage
         public static List<ITargetTrackFilter> filters = new List<ITargetTrackFilter>();
 
         internal static FindTrackIdStrategy FindIdStrategy { get; set; } = null;
-        internal static TrackSender Sender { get; set; } = null;
+        internal static ITrackSender Sender { get; set; } = null;
 
         public override int SectorIndex
         {
@@ -107,6 +107,7 @@ namespace TargetManagerPackage
             SetRefreshTimeNow();        //设置更新时间
 
             Sender.UpdateTrack(this);
+            //SystemCommunicator.UpdateTrack(this);  //发送目标信息给控制中心
         }
         private bool ShouldDestory()
         {

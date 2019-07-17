@@ -50,9 +50,9 @@ namespace TargetManagerPackage
 
         private void InitDistanceCellFilter()
         {
-            DistanceCellFilter.AddCircleFilter(new CircleFilter(4900, 5100, 2500000));
-            DistanceCellFilter.AddCircleFilter(new CircleFilter(3450, 3700, 18000000));
-            DistanceCellFilter.AddCircleFilter(new CircleFilter(2310, 2370, int.MaxValue));
+            //DistanceCellFilter.AddCircleFilter(new CircleFilter(4900, 5100, 2500000));
+            //DistanceCellFilter.AddCircleFilter(new CircleFilter(3450, 3700, 18000000));
+            DistanceCellFilter.AddCircleFilter(new CircleFilter(2150, 2210, int.MaxValue));
         }
 
         public void AddTrackGenerator(PolarCoordinate coordinate)

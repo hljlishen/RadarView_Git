@@ -11,6 +11,7 @@ namespace TargetManagerPackage
         private readonly AntennaRotateController _rotateController;     //
         private bool isStoping = false;
         private float stopDegree;
+        private static object _locker = new object();
 
         public AntennaSectionSweepController()
         {
@@ -21,37 +22,49 @@ namespace TargetManagerPackage
 
         public void SetSectionSweepMode(AngleArea area) //扇扫模式
         {
-            isStoping = false;
-            if (_isSectionSweeping)
+            lock (_locker)
             {
-                StopSectionSweep();     //先停止扇扫
+                isStoping = false;
+                if (_isSectionSweeping)
+                {
+                    StopSectionSweep();     //先停止扇扫
+                }
+                BeginSectionSweep(area);
+                NotifySweepModeChange();
             }
-            BeginSectionSweep(area);
-            NotifySweepModeChange();
         }
 
         public void SetRotateDirection(RotateDirection direction)       //切换成正常扫描模式
         {
-            isStoping = false;
-            StopSectionSweep();
-            _rotateController.SetRotateDirection(direction);
-            NotifySweepModeChange();                            //通知观察者扫描状态改变
+            lock (_locker)
+            {
+                isStoping = false;
+                StopSectionSweep();
+                _rotateController.SetRotateDirection(direction);
+                NotifySweepModeChange();
+            }//通知观察者扫描状态改变
         }
 
         public void SetRotateRate(RotateRate rate)    //不改变方向，只改变转速，界面
         {
-            isStoping = false;
-            _rotateController.SetRotateRate(rate);
-            if (_isSectionSweeping)
-                BeginSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
+            lock (_locker)
+            {
+                isStoping = false;
+                _rotateController.SetRotateRate(rate);
+                if (_isSectionSweeping)
+                    BeginSectionSweep(_sweepSection); //扇扫状态,重新计算惯性区域
+            }
         }
 
         public void SetAntennaToZeroDegree(float stopDegree)
         {
-            this.stopDegree = stopDegree;
-            StopSectionSweep();
-            SetRotateRate(RotateRate.Rpm2);
-            isStoping = true;
+            lock (_locker)
+            {
+                this.stopDegree = stopDegree;
+                StopSectionSweep();
+                SetRotateRate(RotateRate.Rpm2);
+                isStoping = true;
+            }
         }
 
         public override void NotifyNewCycleData(byte[] rawData)
@@ -65,24 +78,33 @@ namespace TargetManagerPackage
 
         private void BeginSectionSweep(AngleArea area)
         {
-            _isSectionSweeping = true;
-            _sweepSection = area;
-            UnregisterAngleAreaNotification();
-            RegisterAngleAreaNotification(area);
-            AzimuthCellFilter.PassArea = area;
+            lock (_locker)
+            {
+                _isSectionSweeping = true;
+                _sweepSection = area;
+                UnregisterAngleAreaNotification();
+                RegisterAngleAreaNotification(area);
+                AzimuthCellFilter.PassArea = area;
+            }
         }
 
         private void UnregisterAngleAreaNotification()
         {
-            var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
-            antennaLeaveAngleAreaSubject.UnregisterAngleArea(this, _modifiedSection);
+            lock (_locker)
+            {
+                var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
+                antennaLeaveAngleAreaSubject.UnregisterAngleArea(this, _modifiedSection);
+            }
         }
 
         private void RegisterAngleAreaNotification(AngleArea area)
         {
-            var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
-            _modifiedSection = _rotateController.CalAntiInertiaSection(area);
-            antennaLeaveAngleAreaSubject.RegisterAngleArea(this, _modifiedSection);
+            lock (_locker)
+            {
+                var antennaLeaveAngleAreaSubject = TargetManagerFactory.CreateAntennaLeaveAngleAreaSubject();
+                _modifiedSection = _rotateController.CalAntiInertiaSection(area);
+                antennaLeaveAngleAreaSubject.RegisterAngleArea(this, _modifiedSection);
+            }
         }
 
         public override float GetSweepBeginAngle() => _sweepSection.BeginAngle;
@@ -91,18 +113,26 @@ namespace TargetManagerPackage
 
         protected void StopSectionSweep()
         {
-            _sweepSection = null;
-            _isSectionSweeping = false;
-            UnregisterAngleAreaNotification();
-            AzimuthCellFilter.PassArea = null;
+            lock (_locker)
+            {
+                _sweepSection = null;
+                _isSectionSweeping = false;
+                UnregisterAngleAreaNotification();
+                AzimuthCellFilter.PassArea = null;
+            }
         }
 
         public void NotifyLeaveAngleArea(AngleArea area) => AntennaLeaveSectionSweepAngleArea();//天线扫过了扇扫区域，需要翻转天线
 
         private void AntennaLeaveSectionSweepAngleArea()
         {
-            _rotateController.ReverseSweepDirection();
-            TargetManagerFactory.CreateTrackManager().DeleteOutRangedTargets(_sweepSection);
+            lock (_locker)
+            {
+                _rotateController.ReverseSweepDirection();
+
+                if (_sweepSection != null)
+                    TargetManagerFactory.CreateTrackManager().DeleteOutRangedTargets(_sweepSection);
+            }
         }
 
         public void RegisterSweepModeObserver(ISweepModeObserver ob)
@@ -113,18 +143,38 @@ namespace TargetManagerPackage
 
         public void UnregisterSweepModeObserver(ISweepModeObserver ob)
         {
-            if (ob != null && _sweepModeObs.Contains(ob))
-                _sweepModeObs.Remove(ob);
+            lock (_locker)
+            {
+                if (ob != null && _sweepModeObs.Contains(ob))
+                    _sweepModeObs.Remove(ob);
+            }
         }
 
         protected void NotifySweepModeChange()
         {
-            foreach (var ob in _sweepModeObs)
+            lock (_locker)
             {
-                ob.NotifySweepModeChange(_isSectionSweeping ? SweepMode.Section : SweepMode.Normal);
+                foreach (var ob in _sweepModeObs)
+                {
+                    ob.NotifySweepModeChange(_isSectionSweeping ? SweepMode.Section : SweepMode.Normal);
+                }
             }
         }
 
-        public AngleArea GetSweepSection() => _sweepSection;
+        public AngleArea GetSweepSection()
+        {
+            AngleArea ret;
+            lock (_locker)
+            {
+                ret = new AngleArea(_sweepSection.BeginAngle, _sweepSection.EndAngle);
+            }
+
+            return ret;
+        }
+
+        public AngleArea GetSweepArea()
+        {
+            return _sweepSection;
+        }
     }
 }

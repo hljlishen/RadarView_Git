@@ -6,6 +6,8 @@ namespace CycleDataDrivePackage
     public class DistanceCell
     {
         public static float ElAdjustment = -5f;
+        public static float ElDifAdjustment = 0.83f;    //第一套参数
+        //public static float ElDifAdjustment = 2.28ff;    //第二套参数
         public const float AntennaFixedEl = 12;
         public bool adopted = false;    //是否已经被录取
         public int index;               //单元编号
@@ -45,7 +47,8 @@ namespace CycleDataDrivePackage
 
             double eldif = el0 - el1;
             //eldif -= 2.28f;/* 第二套设备俯仰角校正系数*/
-            eldif -= 0.83f;/* 第一套设备俯仰角校正系数*/
+            //eldif -= 0.83f;/* 第一套设备俯仰角校正系数*/
+            eldif -= ElDifAdjustment;
             if (eldif < -Math.PI)
                 eldif += Math.PI * 2;
             else if (eldif > Math.PI)

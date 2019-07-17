@@ -65,5 +65,11 @@ namespace TargetManagerPackage
             }
             return ret;
         }
+
+        public bool EqualsTo(AngleArea other)
+        {
+            if (other == null) return false;
+            return Tools.FloatEquals(BeginAngle, other.BeginAngle) && Tools.FloatEquals(EndAngle, other.EndAngle);
+        }
     }
 }

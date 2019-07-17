@@ -1,6 +1,7 @@
 ﻿using RadarDisplayPackage;
 using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using TargetManagerPackage;
 
@@ -153,7 +154,10 @@ namespace RadarForm
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            controller.AntennaSetRotationRate(0);
+            //controller.AntennaSetRotationRate(0);
+            controller.AntennaSetZeroDegree();
+
+            Thread.Sleep(30000);    //等待半分钟
             Environment.Exit(0);    //强制退出所有线程???
         }
 
@@ -284,18 +288,18 @@ namespace RadarForm
             //FpgaCommunicator.IsAmplifierOpen = true;
             //FpgaCommunicator.SetFpgaMode();
         }
-            private void rb_10_CheckedChanged(object sender, EventArgs e)
+        private void rb_10_CheckedChanged(object sender, EventArgs e)
         {
             if (!rb_10.Checked) return;
             FpgaCommunicator.CurrentRange = RangeType.Rt11;
-            ovd.Distance = 10000;
+            //ovd.Distance = 10000;
         }
 
         private void rb_5_CheckedChanged(object sender, EventArgs e)
         {
             if (!rb_5.Checked) return;
             FpgaCommunicator.CurrentRange = RangeType.Rt5;
-            ovd.Distance = 5000;
+            //ovd.Distance = 5000;
         }
 
         private void rb_close_CheckedChanged(object sender, EventArgs e)

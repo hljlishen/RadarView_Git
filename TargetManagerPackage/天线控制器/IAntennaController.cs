@@ -25,5 +25,7 @@
         void SetRotateRate(RotateRate rate);
 
         void SetAntennaToZeroDegree(float degree);
+
+        AngleArea GetSweepArea();
     }
 }

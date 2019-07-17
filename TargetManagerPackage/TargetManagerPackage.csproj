@@ -71,6 +71,8 @@
     <Compile Include="目标类\TrackIdComparer.cs" />
     <Compile Include="通信类\EthernetData.cs" />
     <Compile Include="MouseTargetTracker.cs" />
+    <Compile Include="通信类\ITrackSender.cs" />
+    <Compile Include="通信类\ScoreBiggerThanDecorator.cs" />
     <Compile Include="通信类\TrackSender.cs" />
     <Compile Include="通信类\X68Command.cs" />
     <Compile Include="通信类\X80Command.cs" />

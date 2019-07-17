@@ -5,7 +5,7 @@ namespace TargetManagerPackage
     public class MouseTargetTracker
     {
         public TargetTrack track { get; set; }
-        public static TrackSender sender;
+        public static ITrackSender sender;
         private readonly TargetManager targetManager;
         private static float trackHeight = 150f;
         public static float TrackHeight
@@ -36,6 +36,7 @@ namespace TargetManagerPackage
             if (track == null)
             {
                 track = TargetTrack.CreateTargetTrack(dot, null, 13);
+                //TargetTrack.SetTrackHeight(track, 120);
                 track.IsFake = true;
                 //TargetTrack.SetTrackHeight(track, TrackHeight);
                 track.SectorIndex = dot.SectorIndex;
@@ -46,6 +47,7 @@ namespace TargetManagerPackage
             else
             {
                 track.Locations.Add(track.CurrentCoordinate);
+                //TargetTrack.SetTrackHeight(track, 120);
                 track.Update(dot.CurrentCoordinate);
 
                 //TargetTrack.SetTrackHeight(track, TrackHeight);
