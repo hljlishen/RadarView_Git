@@ -155,9 +155,11 @@ namespace RadarForm
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //controller.AntennaSetRotationRate(0);
-            controller.AntennaSetZeroDegree();
+            //controller.AntennaSetZeroDegree();
 
-            Thread.Sleep(30000);    //等待半分钟
+            //Thread.Sleep(30000);    //等待半分钟
+
+            new 天线归位(controller).ShowDialog();
             Environment.Exit(0);    //强制退出所有线程???
         }
 

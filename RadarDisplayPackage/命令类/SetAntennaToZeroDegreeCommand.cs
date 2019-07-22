@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadarDisplayPackage
+﻿namespace RadarDisplayPackage
 {
     class SetAntennaToDegreeCommand : AntennaCommand
     {
@@ -13,6 +7,10 @@ namespace RadarDisplayPackage
         {
             this.stopDegree = degree;
         }
-        public override void Execute() => antenna.SetAntennaToZeroDegree(stopDegree);
+        public override void Execute()
+        {
+            antenna.SetRotateDirection(TargetManagerPackage.RotateDirection.ClockWise);
+            antenna.SetAntennaToZeroDegree(stopDegree);
+        }
     }
 }
